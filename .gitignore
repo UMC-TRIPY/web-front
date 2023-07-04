@@ -33,3 +33,12 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+!src/apis/.gitkeep
+!src/components/.gitkeep
+!src/constants/.gitkeep
+!src/hooks/.gitkeep
+!src/states/.gitkeep
+!src/types/.gitkeep
+!src/utils/.gitkeep
+!src/assets/.gitkeep
