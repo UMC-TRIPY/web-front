@@ -1,6 +1,7 @@
 'use client';
 
 import ContentList from '@/components/community/ContentList';
+import Dropdown from '@/components/community/Dropdown';
 import TabList from '@/components/community/TabList';
 import { useState } from 'react';
 
@@ -23,29 +24,29 @@ const sampleContents: IContent[] = [
         imageSrc: 'image1',
         nickName: '규',
         title: '내용을 몰라용',
-        like: 123,
-        view: 123
+        like: 1,
+        view: 1
     },
     {
         imageSrc: 'image2',
         nickName: '루카',
         title: '내용을 몰라용',
-        like: 4213,
-        view: 4123
+        like: 2,
+        view: 2
     },
     {
         imageSrc: 'image3',
         nickName: '시미',
         title: '내용을 몰라용',
-        like: 2313,
-        view: 1213
+        like: 3,
+        view: 3
     },
     {
         imageSrc: 'image4',
         nickName: '레니',
         title: '내용을 몰라용',
-        like: 6321,
-        view: 3241
+        like: 4,
+        view: 4
     }
 ];
 
@@ -103,6 +104,8 @@ const info = () => {
             clicked: false
         }
     ]);
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+    const [category, setCategory] = useState('전체');
 
     const handleClickTab = (id: number) => {
         setTabs(
@@ -126,13 +129,22 @@ const info = () => {
                 <div
                     style={{
                         display: 'flex',
-                        flexBasis: '40%',
+                        flexBasis: '30%',
                         justifyContent: 'space-around',
                         alignItems: 'center'
                     }}
                 >
-                    <div>검색구분</div>
-                    <div>드랍다운</div>
+                    <div
+                        className='relative'
+                        data-te-dropdown-ref
+                        onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                    >
+                        <Dropdown
+                            category={category}
+                            isDropdownOpen={isDropdownOpen}
+                        />
+                    </div>
+
                     <div
                         style={{
                             display: 'flex',
