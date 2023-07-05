@@ -5,7 +5,11 @@ const ContentItem = (props: any) => {
     return (
         <div
             className='content'
-            style={{ display: 'flex', justifyContent: 'space-between' }}
+            style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                marginTop: '15px'
+            }}
         >
             <div>이미지</div>
             <div>닉네임</div>

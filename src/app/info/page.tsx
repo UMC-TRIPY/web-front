@@ -9,7 +9,7 @@ const info = () => {
     return (
         <div
             className='info-Container'
-            style={{ width: '60vw', margin: '0 auto' }}
+            style={{ width: '60vw', margin: '0 auto', marginTop: '15px' }}
         >
             <div
                 className='header'
@@ -30,7 +30,11 @@ const info = () => {
             </div>
             <div
                 className='tab-bar'
-                style={{ display: 'flex', justifyContent: 'space-around' }}
+                style={{
+                    display: 'flex',
+                    justifyContent: 'space-around',
+                    marginTop: '15px'
+                }}
             >
                 <div>여행자 보험</div>
                 <div>관광지</div>
@@ -44,6 +48,23 @@ const info = () => {
                 <div>날씨</div>
             </div>
             <ContentList contents={contents} />
+            <div
+                className='pagination'
+                style={{ display: 'flex', justifyContent: 'center' }}
+            >
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: ' space-between',
+                        width: '5%',
+                        marginTop: '15px'
+                    }}
+                >
+                    <div>{'<'}</div>
+                    <div>1</div>
+                    <div>{'>'}</div>
+                </div>
+            </div>
         </div>
     );
 };
