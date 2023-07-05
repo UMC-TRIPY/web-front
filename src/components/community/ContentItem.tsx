@@ -11,11 +11,13 @@ const ContentItem = (props: any) => {
                 marginTop: '15px'
             }}
         >
-            <div>이미지</div>
-            <div>닉네임</div>
-            <div>제목</div>
-            <div>좋아요</div>
-            <div>뷰 {content}</div>
+            <div>
+                <img src={content.imageSrc} />
+            </div>
+            <div>{content.nickName}</div>
+            <div>{content.title}</div>
+            <div>{content.like}</div>
+            <div>{content.view}</div>
         </div>
     );
 };

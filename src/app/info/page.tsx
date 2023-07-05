@@ -1,10 +1,63 @@
 'use client';
 
 import ContentList from '@/components/community/ContentList';
+import TabList from '@/components/community/TabList';
 import { useState } from 'react';
 
+const tabs = [
+    '여행자 보험',
+    '관광지',
+    '물가',
+    '맛집',
+    '음식',
+    '환전',
+    '현금',
+    '카드',
+    '쇼핑',
+    '날씨'
+];
+
+interface Content {
+    imageSrc: string;
+    nickName: string;
+    title: string;
+    like: number;
+    view: number;
+}
+
+const sampleContents: Content[] = [
+    {
+        imageSrc: 'image1',
+        nickName: '규',
+        title: '내용을 몰라용',
+        like: 123,
+        view: 123
+    },
+    {
+        imageSrc: 'image2',
+        nickName: '루카',
+        title: '내용을 몰라용',
+        like: 4213,
+        view: 4123
+    },
+    {
+        imageSrc: 'image3',
+        nickName: '시미',
+        title: '내용을 몰라용',
+        like: 2313,
+        view: 1213
+    },
+    {
+        imageSrc: 'image4',
+        nickName: '레니',
+        title: '내용을 몰라용',
+        like: 6321,
+        view: 3241
+    }
+];
+
 const info = () => {
-    const [contents, setContents] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    const [contents, setContents] = useState(sampleContents);
 
     return (
         <div
@@ -28,25 +81,7 @@ const info = () => {
                     <div>검색어를 입력하세요</div>
                 </div>
             </div>
-            <div
-                className='tab-bar'
-                style={{
-                    display: 'flex',
-                    justifyContent: 'space-around',
-                    marginTop: '15px'
-                }}
-            >
-                <div>여행자 보험</div>
-                <div>관광지</div>
-                <div>물가</div>
-                <div>맛집</div>
-                <div>음식</div>
-                <div>환전</div>
-                <div>현금</div>
-                <div>카드</div>
-                <div>쇼핑</div>
-                <div>날씨</div>
-            </div>
+            <TabList tabs={tabs} />
             <ContentList contents={contents} />
             <div
                 className='pagination'
