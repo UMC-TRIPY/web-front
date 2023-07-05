@@ -11,7 +11,7 @@ const TabListItem = (props: any) => {
             className={
                 tab.clicked
                     ? 'text-main-color border-b-2 border-yellow-300 cursor-pointer'
-                    : 'cursor-pointer'
+                    : 'text-[#A3A3A3] cursor-pointer'
             }
             onClick={() => handleClickTab(tab.id)}
         >

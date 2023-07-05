@@ -21,32 +21,32 @@ interface ITab {
 
 const sampleContents: IContent[] = [
     {
-        imageSrc: 'image1',
+        imageSrc: '/images/user.svg',
         nickName: '규',
         title: '내용을 몰라용',
-        like: 1,
-        view: 1
+        like: 9999,
+        view: 9999
     },
     {
-        imageSrc: 'image2',
+        imageSrc: '/images/user.svg',
         nickName: '루카',
         title: '내용을 몰라용',
-        like: 2,
-        view: 2
+        like: 9999,
+        view: 9999
     },
     {
-        imageSrc: 'image3',
+        imageSrc: '/images/user.svg',
         nickName: '시미',
         title: '내용을 몰라용',
-        like: 3,
-        view: 3
+        like: 9999,
+        view: 9999
     },
     {
-        imageSrc: 'image4',
+        imageSrc: '/images/user.svg',
         nickName: '레니',
         title: '내용을 몰라용',
-        like: 4,
-        view: 4
+        like: 9999,
+        view: 9999
     }
 ];
 
@@ -129,7 +129,7 @@ const info = () => {
                 <div
                     style={{
                         display: 'flex',
-                        flexBasis: '30%',
+                        flexBasis: '50%',
                         justifyContent: 'space-around',
                         alignItems: 'center'
                     }}
@@ -145,18 +145,11 @@ const info = () => {
                         />
                     </div>
 
-                    <div
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center'
-                        }}
-                    >
+                    <div className='flex items-center w-4/5'>
                         <label
                             htmlFor='small-input'
                             className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'
-                        >
-                            Small input
-                        </label>
+                        ></label>
                         <input
                             type='text'
                             id='small-input'
@@ -176,8 +169,9 @@ const info = () => {
                     style={{
                         display: 'flex',
                         justifyContent: ' space-between',
-                        width: '5%',
-                        marginTop: '15px'
+                        width: '8%',
+                        marginTop: '15px',
+                        color: '#A3A3A3'
                     }}
                 >
                     <div>{'<'}</div>

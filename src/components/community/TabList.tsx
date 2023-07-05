@@ -5,7 +5,7 @@ const TabList = (props: any) => {
     const { tabs, handleClickTab } = props;
     return (
         <div
-            className='tab-list'
+            className='border-b-2 border-gray-100'
             style={{
                 display: 'flex',
                 justifyContent: 'space-around',
