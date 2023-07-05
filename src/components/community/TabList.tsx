@@ -2,7 +2,7 @@ import React from 'react';
 import TabListItem from './TabListItem';
 
 const TabList = (props: any) => {
-    const { tabs } = props;
+    const { tabs, handleClickTab } = props;
     return (
         <div
             className='tab-list'
@@ -13,7 +13,11 @@ const TabList = (props: any) => {
             }}
         >
             {tabs.map((tab: any, idx: number) => (
-                <TabListItem tab={tab} key={idx} />
+                <TabListItem
+                    tab={tab}
+                    handleClickTab={handleClickTab}
+                    key={idx}
+                />
             ))}
         </div>
     );
