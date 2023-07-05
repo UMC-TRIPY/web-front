@@ -1,4 +1,11 @@
+'use client';
+
+import ContentList from '@/components/community/ContentList';
+import { useState } from 'react';
+
 const info = () => {
+    const [contents, setContents] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+
     return (
         <div
             className='info-Container'
@@ -36,6 +43,7 @@ const info = () => {
                 <div>쇼핑</div>
                 <div>날씨</div>
             </div>
+            <ContentList contents={contents} />
         </div>
     );
 };
