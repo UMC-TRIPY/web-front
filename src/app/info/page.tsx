@@ -22,7 +22,7 @@ interface ITab {
 const sampleContents: IContent[] = [
     {
         imageSrc: '/images/user.svg',
-        nickName: '규',
+        nickName: '규규규규규규규규규규',
         title: '내용을 몰라용',
         like: 9999,
         view: 9999
@@ -117,23 +117,10 @@ const info = () => {
         );
     };
     return (
-        <div
-            className='info-Container'
-            style={{ width: '60vw', margin: '0 auto', marginTop: '15px' }}
-        >
-            <div
-                className='header'
-                style={{ display: 'flex', justifyContent: 'space-between' }}
-            >
+        <div className='w-3/5 m-auto mt-4'>
+            <div className='flex justify-between'>
                 <div className='text-3xl font-bold'>도쿄 커뮤니티</div>
-                <div
-                    style={{
-                        display: 'flex',
-                        flexBasis: '50%',
-                        justifyContent: 'space-around',
-                        alignItems: 'center'
-                    }}
-                >
+                <div className='flex basis-1/2 justify-around item-center'>
                     <div
                         className='relative'
                         data-te-dropdown-ref
@@ -161,19 +148,8 @@ const info = () => {
             </div>
             <TabList tabs={tabs} handleClickTab={handleClickTab} />
             <ContentList contents={contents} />
-            <div
-                className='pagination'
-                style={{ display: 'flex', justifyContent: 'center' }}
-            >
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: ' space-between',
-                        width: '8%',
-                        marginTop: '15px',
-                        color: '#A3A3A3'
-                    }}
-                >
+            <div className='flex justify-center'>
+                <div className='flex justify-between mt-4 w-1/12 text-[#A3A3A3]'>
                     <div>{'<'}</div>
                     <div>1</div>
                     <div>{'>'}</div>

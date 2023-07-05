@@ -4,14 +4,7 @@ import TabListItem from './TabListItem';
 const TabList = (props: any) => {
     const { tabs, handleClickTab } = props;
     return (
-        <div
-            className='border-b-2 border-gray-100'
-            style={{
-                display: 'flex',
-                justifyContent: 'space-around',
-                marginTop: '15px'
-            }}
-        >
+        <div className='flex justify-around mt-4 border-b-2 border-gray-100'>
             {tabs.map((tab: any, idx: number) => (
                 <TabListItem
                     tab={tab}
