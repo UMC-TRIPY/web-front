@@ -8,7 +8,8 @@ const ContentItem = (props: any) => {
             style={{
                 display: 'flex',
                 justifyContent: 'space-between',
-                marginTop: '15px'
+                alignItems: 'center',
+                lineHeight: '2.5'
             }}
         >
             <div>
