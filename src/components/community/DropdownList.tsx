@@ -1,4 +1,4 @@
-const Dropdown = (props: any) => {
+const DropdownList = (props: any) => {
     return (
         <div
             className='transition ease-in-out delay-150 bg-yellow-300 transform -translate-y-1 '
@@ -9,4 +9,4 @@ const Dropdown = (props: any) => {
     );
 };
 
-export default Dropdown;
+export default DropdownList;
