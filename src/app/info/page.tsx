@@ -3,6 +3,8 @@
 import ContentList from '@/components/community/ContentList';
 import Dropdown from '@/components/community/Dropdown';
 import TabList from '@/components/community/TabList';
+import Conversation from '@/components/conversation/Conversation';
+import ConversationList from '@/components/conversation/ConversationList';
 import { useState } from 'react';
 
 interface IContent {
@@ -155,6 +157,7 @@ const info = () => {
                     <div>{'>'}</div>
                 </div>
             </div>
+            <Conversation />
         </div>
     );
 };
