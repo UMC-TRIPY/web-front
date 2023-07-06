@@ -4,7 +4,12 @@ interface ITab {
     clicked: boolean;
 }
 
-const TabListItem = (props: any) => {
+interface ITabItemProps {
+    tab: ITab;
+    handleClickTab: any;
+}
+
+const TabItem = (props: ITabItemProps) => {
     const { tab, handleClickTab } = props;
     return (
         <div
@@ -20,4 +25,4 @@ const TabListItem = (props: any) => {
     );
 };
 
-export default TabListItem;
+export default TabItem;
