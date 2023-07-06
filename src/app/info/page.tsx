@@ -1,3 +1,5 @@
+'use client';
+
 import Community from '@/components/community/Community';
 import Conversation from '@/components/conversation/Conversation';
 
