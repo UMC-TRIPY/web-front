@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 :root {
     /* 최대 가로축 길이 1280px */
     @apply max-w-screen-xl mx-auto;
