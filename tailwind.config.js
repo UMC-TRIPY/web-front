@@ -10,10 +10,10 @@ module.exports = {
             backgroundImage: {
                 'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
                 'gradient-conic':
-                'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
+                    'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))'
             },
             colors: {
-                'main-color': '#FFE91D'
+                'main-color': '#FFE91D',
                 primary: '#FFE457',
                 infomenu: '#868686',
                 lightgrey: '#E5E5E5',
