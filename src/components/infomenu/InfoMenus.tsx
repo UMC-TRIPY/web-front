@@ -49,10 +49,6 @@ export default function InfoMenus() {
         setMenus(updatedMenus);
     };
 
-    useEffect(() => {
-        console.log('ss');
-    }, [menus]);
-
     return (
         <div className='flex justify-between'>
             <div className='flex items-end'>
