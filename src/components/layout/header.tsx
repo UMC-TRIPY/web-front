@@ -1,7 +1,7 @@
 'use client';
 
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 interface MenuProps {
     menu: string;
@@ -24,7 +24,7 @@ export default function Header () {
 
     // 메뉴바 선택항목 상태구현
     const [menus, setMenus] = useState<[string, boolean][]>([
-        ['여행정보', true],
+        ['여행정보', false],
         ['일정관리', false],
         ['여행가방', false],
         ['커뮤니티', false],
@@ -82,20 +82,27 @@ export default function Header () {
                         ))}
                     </nav>
                 </div>
+                <div className="flex items-center space-x-6">
                     {isLoggedIn ? (
-                        <div className="flex items-center space-x-6">
-                            <Link href='/'>마이페이지</Link>
-                            <Link href='/info' onClick={handleLogout}>로그아웃</Link>
+                        <>
+                            <Link href='/mypage'>마이페이지</Link>
+                            <button onClick={handleLogout} className="focus:outline-none">
+                                로그아웃
+                            </button>
                             <Link href='/'>
                                 <img className='w-12 h-12' src='/images/user.svg' alt="프로필 사진" />
                             </Link>
-                        </div>
+                        </>
                     ) : (
-                        <div className="flex items-center space-x-6">
-                            <Link href='/info' onClick={handleLogin}>로그인</Link>
+                        <>
+                        
+                            <button onClick={handleLogin} className="focus:outline-none">
+                                로그인
+                            </button>
                             <Link href='/'>회원가입</Link>
-                        </div>
+                        </>
                     )}
+                </div>
             </div>
         </header>
     );
