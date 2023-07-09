@@ -33,10 +33,10 @@ export default function Header () {
 
     const Menu = ({ menu, select, index, onClick }: MenuProps) => {
         return (
-            <div className='flex flex-col items-center'>
+            <div className='relative flex flex-col items-center'>
                 {select && (
                     <img
-                        className='block'
+                        className='absolute top-0 transform -translate-y-full'
                         src='/images/selected.png'
                         alt='none'
                     />
