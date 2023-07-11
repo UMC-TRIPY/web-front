@@ -16,9 +16,16 @@ module.exports = {
                 'main-color': '#FFE91D',
                 primary: '#FFE457',
                 infomenu: '#868686',
+                brightgrey: '#F9F9F9',
                 lightgrey: '#E5E5E5',
                 grey: '#A3A3A3',
                 darkgrey: '#666666'
+            },
+            width: {
+                'box-width': '412px'
+            },
+            height: {
+                'box-height': '424px'
             }
         }
     },

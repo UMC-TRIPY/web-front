@@ -3,8 +3,6 @@ import { IoThunderstormOutline } from 'react-icons/io5';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import InfoWeather from './InfoWeather';
 import ExchangeRate from './ExchangeRate';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // css import
 
 export default function InfoCity() {
     const temperatures = [
@@ -64,12 +62,6 @@ export default function InfoCity() {
                         </button>
                     </div>
                 </div>
-                {/* <Calendar
-                    className='absolute'
-                    calendarType='US'
-                    onChange={onChange}
-                    value={date}
-                /> */}
             </div>
         </div>
     );
