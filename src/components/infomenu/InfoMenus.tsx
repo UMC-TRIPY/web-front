@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 
 interface MenuProps {
@@ -16,6 +16,7 @@ export default function InfoMenus() {
         ['후기', false],
         ['회화', false]
     ]);
+    const [place, setPlace] = useState<string>('');
 
     const Menu = ({ menu, select, index, onClick }: MenuProps) => {
         return (
@@ -50,7 +51,7 @@ export default function InfoMenus() {
     };
 
     return (
-        <div className='flex justify-between'>
+        <div className='flex justify-between mt-6'>
             <div className='flex items-end'>
                 {menus.map((menu, index) => (
                     <Menu
@@ -67,8 +68,20 @@ export default function InfoMenus() {
                     className='border border-grey w-96 h-14 rounded-lg py-3.5 pl-6'
                     type='text'
                     placeholder='보고 싶은 여행지를 입력하세요'
+                    value={place}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setPlace(e.target.value)
+                    }
                 />
-                <BiSearch size='24' className='absolute self-end mr-5' />
+                <BiSearch
+                    onClick={() =>
+                        place === ''
+                            ? alert('1글자 이상 입력해주세요.')
+                            : alert(`${place} 검색 중...`)
+                    }
+                    size='24'
+                    className='absolute self-end mr-5 hover:cursor-pointer'
+                />
             </div>
         </div>
     );

@@ -1,22 +1,73 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { IoThunderstormOutline } from 'react-icons/io5';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import InfoWeather from './InfoWeather';
 import ExchangeRate from './ExchangeRate';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import { ko } from 'date-fns/locale';
+import format from 'date-fns/format';
 
 export default function InfoCity() {
+    const [startDate, setStartDate] = useState<null | Date>(null);
+    const [endDate, setEndDate] = useState<null | Date>(null);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
     const temperatures = [
         ['16º', '1º', '1~3월'],
         ['16º', '1º', '4~6월'],
         ['16º', '1º', '7~9월'],
         ['16º', '1º', '10~12월']
     ];
-    const SelectDates = ({ title }: { title: string }) => {
+    const SelectDates = ({
+        title,
+        value
+    }: {
+        title: null | string;
+        value: null | Date;
+    }) => {
         return (
-            <div className='flex items-center justify-between px-5 h-16 w-80 text-grey border border-lightgrey rounded-l'>
-                {title}
+            <div
+                onClick={(e: React.MouseEvent<HTMLElement>) => {
+                    e.preventDefault();
+                    setIsOpen(!isOpen);
+                }}
+                className='flex items-center justify-between px-5 h-16 w-80 text-grey border border-lightgrey rounded-l hover:cursor-pointer'
+            >
+                {value === null ? title : format(value, 'yyyy-MM-dd')}
                 <AiOutlineCalendar size={24} />
             </div>
+        );
+    };
+    const onChange = (dates: any) => {
+        const [start, end] = dates;
+        setStartDate(start);
+        setEndDate(end);
+    };
+    useEffect(() => {
+        endDate === null ? setIsOpen(isOpen) : setIsOpen(!isOpen);
+    }, [endDate]);
+    window.onload = () => {
+        let weekends = document.getElementsByClassName(
+            'react-datepicker__day-name'
+        );
+        Object.values(weekends).filter((weekend) =>
+            weekend.innerHTML === '일'
+                ? (weekend.style.color = 'red')
+                : weekend.innerHTML === '토'
+                ? (weekend.style.color = 'blue')
+                : ''
+        );
+        let weekendsColor = document.getElementsByClassName(
+            'react-datepicker__day--weekend'
+        );
+        console.log(
+            Object.values(weekendsColor).filter((weekend) =>
+                weekend.ariaLabel?.indexOf('일요일') !== -1
+                    ? (weekend.style.color = 'red')
+                    : weekend.ariaLabel?.indexOf('토요일') !== -1
+                    ? (weekend.style.color = 'blue')
+                    : ''
+            )
         );
     };
     return (
@@ -52,8 +103,8 @@ export default function InfoCity() {
                 <div className=''>
                     <span className='text-2xl'>여행계획을 시작해볼까요?</span>
                     <div className='flex mt-3'>
-                        <SelectDates title='출발일' />
-                        <SelectDates title='도착일' />
+                        <SelectDates title='출발일' value={startDate} />
+                        <SelectDates title='도착일' value={endDate} />
                         <button
                             type='button'
                             className='w-auto  bg-black text-white rounded-r px-4'
@@ -61,6 +112,25 @@ export default function InfoCity() {
                             로그인하기
                         </button>
                     </div>
+                </div>
+                <div
+                    className={
+                        isOpen
+                            ? 'block absolute mt-[522px] ml-[80px]'
+                            : 'hidden'
+                        // 'block absolute'
+                    }
+                >
+                    <DatePicker
+                        dateFormatCalendar='yyyy년 MM월'
+                        selected={startDate}
+                        onChange={onChange}
+                        startDate={startDate}
+                        endDate={endDate}
+                        selectsRange
+                        inline
+                        locale={ko}
+                    />
                 </div>
             </div>
         </div>
