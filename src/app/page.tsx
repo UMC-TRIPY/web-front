@@ -2,19 +2,26 @@
 
 import react, { useState } from 'react';
 import Image from 'next/image';
-import Portal from '@/components/modal/Portal';
 import Modal from '@/components/modal/Modal';
 
 export default function Home() {
-    const [modal, setModal] = useState(0);
+    const [modal, setModal] = useState(false);
 
     return (
         <main className='flex min-h-screen flex-col items-center justify-between p-24'>
-            <div onClick={() => setModal(1)}>aa</div>
+            <button onClick={() => setModal(true)}>모달 예시 버튼</button>
             {modal && (
-                <Portal selector='#body'>
-                    <Modal>asdasdsadas</Modal>
-                </Portal>
+                <Modal
+                    modalMode={1}
+                    title='회원가입 하기'
+                    setModalState={setModal}
+                    onClickCompleteButton={() => setModal(false)}
+                    completeText='로그인'
+                >
+                    <div className='p-5'>
+                        모달창 테스트, 여기에 원하는 화면을 구현해 넣어주세요.
+                    </div>
+                </Modal>
             )}
         </main>
     );
