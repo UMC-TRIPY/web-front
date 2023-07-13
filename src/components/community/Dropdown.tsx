@@ -1,16 +1,32 @@
 import React from 'react';
 import DropdownList from './DropdownList';
 
+const categories = [
+    '여행자 보험',
+    '관광지',
+    '물가',
+    '맛집',
+    '음식',
+    '환전',
+    '현금',
+    '카드',
+    '쇼핑',
+    '날씨'
+];
+
 const Dropdown = (props: any) => {
-    const { category, isDropdownOpen } = props;
+    const { category, setCategory, isDropdownOpen, setIsDropdownOpen } = props;
     return (
-        <div>
+        <div
+            className='flex justify-around w-3/12 bg-neutral-50'
+            onClick={() => setIsDropdownOpen((prev: boolean) => !prev)}
+        >
             <button
-                className='flex items-center whitespace-nowrap rounded bg-neutral-50 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#fbfbfb] transition duration-150 ease-in-out hover:bg-neutral-100 hover:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] focus:bg-neutral-100 focus:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-[0_8px_9px_-4px_rgba(251,251,251,0.3),0_4px_18px_0_rgba(251,251,251,0.2)] motion-reduce:transition-none'
+                className='flex items-center whitespace-nowrap rounded text-xs font-medium uppercase leading-normal text-neutral-800 shadow-[0_4px_9px_-4px_#fbfbfb]'
                 type='button'
             >
-                {category}
-                <span className='ml-2 w-2'>
+                <span>{category}</span>
+                <span>
                     <svg
                         xmlns='http://www.w3.org/2000/svg'
                         viewBox='0 0 20 20'
@@ -26,12 +42,17 @@ const Dropdown = (props: any) => {
                 </span>
             </button>
             <DropdownList visibility={isDropdownOpen}>
-                <ul>
-                    <li>item 1</li>
-                    <li>item 2</li>
-                    <li>item 3</li>
-                    <li>item 4</li>
-                </ul>
+                <div className='flex flex-col gap-2'>
+                    {categories.map((category, idx) => (
+                        <div
+                            className='flex justify-center w-full border-t-1 hover:text-[blue] hover:cursor-pointer border-b-2'
+                            key={idx}
+                            onClick={() => setCategory(categories[idx])}
+                        >
+                            {category}
+                        </div>
+                    ))}
+                </div>
             </DropdownList>
         </div>
     );
