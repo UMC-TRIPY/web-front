@@ -15,6 +15,7 @@ export default function ExchangeRate() {
             )
             .then((res) => {
                 setCur(res.data.krw.jpy);
+                console.log(`환율 정보 : ${res.data.krw.jpy}`);
             })
             .catch((err) => console.log(err));
     }, []);
