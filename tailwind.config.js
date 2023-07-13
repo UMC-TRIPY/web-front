@@ -14,6 +14,8 @@ module.exports = {
             },
             colors: {
                 'main-color': '#FFE91D',
+                'tag-blue': '#57CDFF',
+                'tag-red': '#FF7F57',
                 primary: '#FFE457',
                 infomenu: '#868686',
                 brightgrey: '#F9F9F9',
