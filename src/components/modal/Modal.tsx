@@ -4,7 +4,7 @@ import { IoCloseOutline } from 'react-icons/io5';
 
 //mode
 // 끄기만 있는거, => 확인버튼이 아래
-// 취소, 완료 있는거 => 확인버튼이 없음
+// 취소, 완료 있는거 => 확인버튼이 완료
 
 type Props = {
     modalMode: Number;
@@ -15,23 +15,57 @@ type Props = {
     completeText: String;
 };
 
-/**
- *
- * @param  modalMode: 모달의 종류를 정합니다.
- * @param title?: 모달의 제목
- * @param setModalState @type {Function} : 모달이 보일지 안보일지 state로 조절합니다 <Boolean>.
- * @param onClickCompleteButton: Function;
-    @param completeText: String;
- * @param children: React.ReactNode
- */
 export default function Modal({
+    modalMode,
     setModalState,
     title,
     children,
     onClickCompleteButton,
     completeText
 }: Props) {
-    const modal = [];
+    const modal: React.ReactNode[] = [
+        <>
+            <div className='flex basis-[15%] justify-between items-center px-5'>
+                <div className='font-bold text-xl'>{title}</div>
+                <button
+                    className='items-center'
+                    onClick={() => {
+                        setModalState(false);
+                    }}
+                >
+                    <IoCloseOutline size='40px' />
+                </button>
+            </div>
+            <div className='basis-[70%]'>{children}</div>
+            <button
+                className='basis-[15%] justify-center items-center rounded-b-lg border-t border-gray-200 bg-gray-50'
+                onClick={() => onClickCompleteButton()}
+            >
+                <span className='text-xs'>{completeText}</span>
+            </button>
+        </>,
+        <>
+            <div className='flex basis-[15%] justify-between items-center px-5 rounded-t-lg border-b border-gray-200 bg-gray-50'>
+                <button
+                    className='items-center'
+                    onClick={() => {
+                        setModalState(false);
+                    }}
+                >
+                    <span className='text-xs'>취소</span>
+                </button>
+                <div className='font-bold text-xl'>{title}</div>
+
+                <button
+                    className='justify-center items-center'
+                    onClick={() => onClickCompleteButton()}
+                >
+                    <span className='text-xs'>{completeText}</span>
+                </button>
+            </div>
+            <div className='basis-[85%]'>{children}</div>
+        </>
+    ];
 
     return (
         <Portal selector='#body'>
@@ -42,25 +76,8 @@ export default function Modal({
                         setModalState(false);
                     }}
                 ></div>
-                <div className='absolute flex flex-col top-1/3 left-1/3 w-96 h-96 bg-neutral-50 z-101'>
-                    <div className='flex basis-[15%] justify-between items-center px-5'>
-                        <div className='font-bold text-xl'>{title}</div>
-                        <button
-                            className='items-center'
-                            onClick={() => {
-                                setModalState(false);
-                            }}
-                        >
-                            <IoCloseOutline size='40px' />
-                        </button>
-                    </div>
-                    <div className='basis-[70%]'>{children}</div>
-                    <button
-                        className='basis-[15%] justify-center items-center border-t border-gray-200 bg-gray-50'
-                        onClick={() => onClickCompleteButton()}
-                    >
-                        <span className='text-xs'>{completeText}</span>
-                    </button>
+                <div className='absolute flex flex-col top-1/3 left-1/3 w-96 h-96 rounded-lg bg-neutral-50 z-101'>
+                    {modal[modalMode as number]}
                 </div>
             </div>
         </Portal>
