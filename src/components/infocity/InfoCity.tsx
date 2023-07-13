@@ -18,6 +18,14 @@ export default function InfoCity() {
         ['16º', '1º', '7~9월'],
         ['16º', '1º', '10~12월']
     ];
+    const activeColor = () => {
+        let outsideMonth: any = document.getElementsByClassName(
+            'react-datepicker__day--outside-month'
+        );
+        Object.values(outsideMonth).map((day: any) => {
+            day.style.color = '#A3A3A3';
+        });
+    };
     const SelectDates = ({
         title,
         value
@@ -46,30 +54,10 @@ export default function InfoCity() {
     useEffect(() => {
         endDate === null ? setIsOpen(isOpen) : setIsOpen(!isOpen);
     }, [endDate]);
-    window.onload = () => {
-        let weekends = document.getElementsByClassName(
-            'react-datepicker__day-name'
-        );
-        Object.values(weekends).filter((weekend) =>
-            weekend.innerHTML === '일'
-                ? (weekend.style.color = 'red')
-                : weekend.innerHTML === '토'
-                ? (weekend.style.color = 'blue')
-                : ''
-        );
-        let weekendsColor = document.getElementsByClassName(
-            'react-datepicker__day--weekend'
-        );
-        console.log(
-            Object.values(weekendsColor).filter((weekend) =>
-                weekend.ariaLabel?.indexOf('일요일') !== -1
-                    ? (weekend.style.color = 'red')
-                    : weekend.ariaLabel?.indexOf('토요일') !== -1
-                    ? (weekend.style.color = 'blue')
-                    : ''
-            )
-        );
-    };
+    useEffect(() => {
+        activeColor();
+    }, []);
+    const date = new Date();
     return (
         <div className='flex justify-between mt-32'>
             <img src='/images/location.png' alt='none' />
@@ -118,7 +106,6 @@ export default function InfoCity() {
                         isOpen
                             ? 'block absolute mt-[522px] ml-[80px]'
                             : 'hidden'
-                        // 'block absolute'
                     }
                 >
                     <DatePicker
@@ -130,6 +117,41 @@ export default function InfoCity() {
                         selectsRange
                         inline
                         locale={ko}
+                        onMonthChange={activeColor}
+                        renderCustomHeader={({
+                            date,
+                            decreaseMonth,
+                            increaseMonth,
+                            prevMonthButtonDisabled,
+                            nextMonthButtonDisabled
+                        }: any) => (
+                            <div className='flex justify-between px-5 py-3 text-base'>
+                                <div className='font-bold'>
+                                    {date.getFullYear()}년 {date.getMonth() + 1}
+                                    월
+                                </div>
+                                <div>
+                                    <button
+                                        type='button'
+                                        onClick={decreaseMonth}
+                                        disabled={prevMonthButtonDisabled}
+                                    >
+                                        <img
+                                            className='rotate-180'
+                                            src='/images/calendararrow.png'
+                                        />
+                                    </button>
+                                    <button
+                                        type='button'
+                                        onClick={increaseMonth}
+                                        className='ml-6'
+                                        disabled={nextMonthButtonDisabled}
+                                    >
+                                        <img src='/images/calendararrow.png' />
+                                    </button>
+                                </div>
+                            </div>
+                        )}
                     />
                 </div>
             </div>
