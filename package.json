@@ -1,44 +1,45 @@
 {
-  "name": "tripy-frontend",
-  "version": "0.1.0",
-  "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
-  },
-  "dependencies": {
-    "@types/node": "20.3.3",
-    "@types/react": "18.2.14",
-    "@types/react-dom": "18.2.6",
-    "autoprefixer": "10.4.14",
-    "date-fns": "^2.30.0",
-    "eslint": "8.44.0",
-    "eslint-config-next": "13.4.8",
-    "next": "13.4.8",
-    "postcss": "8.4.24",
-    "react": "18.2.0",
-    "react-calendar": "^4.3.0",
-    "react-datepicker": "^4.15.0",
-    "react-dom": "18.2.0",
-    "react-icons": "^4.10.1",
-    "react-query": "^3.39.3",
-    "recoil": "^0.7.7",
-    "tailwindcss": "3.3.2",
-    "typescript": "5.1.6"
-  },
-  "devDependencies": {
-    "@storybook/addon-essentials": "^7.0.25",
-    "@storybook/addon-interactions": "^7.0.25",
-    "@storybook/addon-links": "^7.0.25",
-    "@storybook/blocks": "^7.0.25",
-    "@storybook/nextjs": "^7.0.25",
-    "@storybook/react": "^7.0.25",
-    "@storybook/testing-library": "^0.0.14-next.2",
-    "eslint-plugin-storybook": "^0.6.12",
-    "storybook": "^7.0.25"
-  }
+    "name": "tripy-frontend",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
+        "storybook": "storybook dev -p 6006",
+        "build-storybook": "storybook build"
+    },
+    "dependencies": {
+        "@types/node": "20.3.3",
+        "@types/react": "18.2.14",
+        "@types/react-datepicker": "^4.11.2",
+        "@types/react-dom": "18.2.6",
+        "autoprefixer": "10.4.14",
+        "date-fns": "^2.30.0",
+        "eslint": "8.44.0",
+        "eslint-config-next": "13.4.8",
+        "next": "13.4.8",
+        "postcss": "8.4.24",
+        "react": "18.2.0",
+        "react-calendar": "^4.3.0",
+        "react-datepicker": "^4.16.0",
+        "react-dom": "18.2.0",
+        "react-icons": "^4.10.1",
+        "react-query": "^3.39.3",
+        "recoil": "^0.7.7",
+        "tailwindcss": "3.3.2",
+        "typescript": "5.1.6"
+    },
+    "devDependencies": {
+        "@storybook/addon-essentials": "^7.0.25",
+        "@storybook/addon-interactions": "^7.0.25",
+        "@storybook/addon-links": "^7.0.25",
+        "@storybook/blocks": "^7.0.25",
+        "@storybook/nextjs": "^7.0.25",
+        "@storybook/react": "^7.0.25",
+        "@storybook/testing-library": "^0.0.14-next.2",
+        "eslint-plugin-storybook": "^0.6.12",
+        "storybook": "^7.0.25"
+    }
 }
