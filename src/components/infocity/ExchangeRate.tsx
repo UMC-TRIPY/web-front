@@ -1,22 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LiaExchangeAltSolid } from 'react-icons/lia';
+import axios from 'axios';
 
 export default function ExchangeRate() {
+    const [cur, setCur] = useState<number>(0);
+    // 환율 대한민국 고정할거면 원화 자리에 krw 고정
+    // 나라 정보와 환율도 가져와야함 => 백엔드에서 페이지 접속할 때 넘겨줘야함
+    // 환율 가져오면 그에 따른 뒷자리도 가져와야함 => 배열로 만들어두기?
+    useEffect(() => {
+        axios
+            .get(
+                // ~~/currencies/{원화}/{환전하고 싶은 통화}.json
+                'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/krw.json'
+            )
+            .then((res) => {
+                setCur(res.data.krw.jpy);
+            })
+            .catch((err) => console.log(err));
+    }, []);
     const [before, setBefore] = useState<string>('');
     const [after, setAfter] = useState<string>(before);
     const [isWon, setIsWon] = useState<boolean>(true);
 
     // 한국 돈 => 외국 돈
     const wonToOther = (inputValue: string) => {
-        let temp = (Number(inputValue) / 9.21).toFixed(2);
-        let a = Number(temp.substring(0, temp.indexOf('.'))).toLocaleString();
-        let b = temp.substring(temp.indexOf('.'), temp.length);
-        return a + b;
+        let change = (Number(inputValue) * cur).toFixed(2);
+        let won = Number(
+            change.substring(0, change.indexOf('.'))
+        ).toLocaleString();
+        let other = change.substring(change.indexOf('.'), change.length);
+        return won + other;
     };
 
     // 외국 돈 => 한국 돈
     const otherToWon = (inputValue: string) => {
-        return Number((Number(inputValue) * 9.21).toFixed(0)).toLocaleString();
+        return Number((Number(inputValue) / cur).toFixed(0)).toLocaleString();
     };
 
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,6 +46,7 @@ export default function ExchangeRate() {
         const send = isWon ? wonToOther(inputValue) : otherToWon(inputValue);
         setAfter(send);
     };
+
     return (
         <div className='flex justify-between items-center mt-3'>
             {/* 환율 api 연동 해야합니다 */}
