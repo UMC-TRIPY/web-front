@@ -104,7 +104,7 @@ export default function InfoCity() {
                 <div
                     className={
                         isOpen
-                            ? 'block absolute mt-[522px] ml-[80px]'
+                            ? 'block absolute mt-[522px] ml-[80px] z-10'
                             : 'hidden'
                     }
                 >
