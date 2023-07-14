@@ -17,7 +17,8 @@ export default function RootLayout({
 }) {
     return (
         <html lang='en'>
-            <body className={inter.className}>
+            <body id='body' className={inter.className}>
+                {/* <div className='modal absolute top-1/4 left-1/4'></div> */}
                 <Header />
                 {children}
                 <Footer />
