@@ -121,13 +121,13 @@ const Community = () => {
         <div>
             <div className='flex justify-between'>
                 <div className='text-3xl font-bold'>도쿄 커뮤니티</div>
-                <div className='flex basis-1/2 justify-around item-center'>
-                    <div onClick={() => setIsDropdownOpen(!isDropdownOpen)}>
-                        <Dropdown
-                            category={category}
-                            isDropdownOpen={isDropdownOpen}
-                        />
-                    </div>
+                <div className='flex gap-2 basis-1/2 justify-around item-center bg-white'>
+                    <Dropdown
+                        setCategory={setCategory}
+                        setIsDropdownOpen={setIsDropdownOpen}
+                        category={category}
+                        isDropdownOpen={isDropdownOpen}
+                    />
                     <InputBox />
                 </div>
             </div>

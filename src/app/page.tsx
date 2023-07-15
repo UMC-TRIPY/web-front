@@ -3,6 +3,7 @@
 import react, { useState } from 'react';
 import Image from 'next/image';
 import Modal from '@/components/modal/Modal';
+import GoogleLoginButton from '@/components/button/GoogleLoginButton';
 
 export default function Home() {
     const [modal, setModal] = useState(false);
@@ -20,6 +21,7 @@ export default function Home() {
                 >
                     <div className='p-5'>
                         모달창 테스트, 여기에 원하는 화면을 구현해 넣어주세요.
+                        <GoogleLoginButton />
                     </div>
                 </Modal>
             )}
