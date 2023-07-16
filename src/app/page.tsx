@@ -318,15 +318,26 @@ export default function Home() {
             {modal && (
                 <Modal
                     modalMode={1}
-                    title='회원가입 하기'
+                    title='로그인 하기'
                     setModalState={setModal}
                     onClickCompleteButton={() => setModal(false)}
-                    completeText='로그인'
+                    completeText='X'
                 >
-                    <div className='p-5'>
-                        모달창 테스트, 여기에 원하는 화면을 구현해 넣어주세요.
-                        <KakaoLoginButton />
-                        <GoogleLoginButton />
+                    <div className='flex flex-col'>
+                        <div className='flex flex-col gap-4 justify-center h-4/5 p-5'>
+                            <KakaoLoginButton />
+                            <GoogleLoginButton />
+                        </div>
+                        <div className='text-xs text-center text-grey mt-4 p-5'>
+                            소셜 로그인으로 가입 시&nbsp;
+                            <span className='text-kakao-color'>
+                                이용약관, 개인정보처리방침, 전자금융거래약관
+                            </span>
+                            에 동의함으로 처리됩니다.
+                        </div>
+                        <div className='flex justify-center items-center pt-4 h-1/6 border-t border-lightgrey cursor-pointer'>
+                            회원가입
+                        </div>
                     </div>
                 </Modal>
             )} */}

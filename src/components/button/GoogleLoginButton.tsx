@@ -12,13 +12,13 @@ const GoogleLoginButton = () => {
     return (
         <>
             <div
-                className='flex border-2 border-[#262626] border-black cursor-pointer h-16 rounded-xl overflow-hidden'
+                className='flex border-2 border-dark-black border-black cursor-pointer h-16 rounded-xl overflow-hidden'
                 onClick={handleGoogleLogin}
             >
-                <div className='flex bg-[#262626] basis-2/12 justify-center items-center text-2xl '>
+                <div className='flex bg-dark-black basis-2/12 justify-center items-center text-2xl '>
                     <FcGoogle />
                 </div>
-                <div className='flex text-black basis-10/12 justify-center items-center'>
+                <div className='flex text-dark-black basis-10/12 justify-center items-center'>
                     구글로 로그인하기
                 </div>
             </div>

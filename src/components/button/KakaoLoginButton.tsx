@@ -18,7 +18,7 @@ const KakaoLoginButton = () => {
                 <div className='flex bg-kakao-color basis-2/12 justify-center items-center text-2xl'>
                     <RiKakaoTalkFill />
                 </div>
-                <div className='flex text-black basis-10/12 justify-center items-center'>
+                <div className='flex text-dark-black basis-10/12 justify-center items-center'>
                     카카오로 로그인하기
                 </div>
             </div>
