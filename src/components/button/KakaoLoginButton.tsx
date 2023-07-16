@@ -1,4 +1,5 @@
 import { kakaoInit } from '@/utils/oauth';
+import { RiKakaoTalkFill } from 'react-icons/ri';
 
 const KakaoLoginButton = () => {
     const kakaoLogin = async () => {
@@ -9,9 +10,19 @@ const KakaoLoginButton = () => {
     };
 
     return (
-        <div>
-            <div onClick={kakaoLogin}>kakao</div>
-        </div>
+        <>
+            <div
+                className='flex border-2 border-kakao-color border-black cursor-pointer h-16 rounded-xl'
+                onClick={kakaoLogin}
+            >
+                <div className='flex bg-kakao-color basis-2/12 justify-center items-center text-2xl'>
+                    <RiKakaoTalkFill />
+                </div>
+                <div className='flex text-black basis-10/12 justify-center items-center'>
+                    카카오로 로그인하기
+                </div>
+            </div>
+        </>
     );
 };
 

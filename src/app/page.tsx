@@ -325,8 +325,8 @@ export default function Home() {
                 >
                     <div className='p-5'>
                         모달창 테스트, 여기에 원하는 화면을 구현해 넣어주세요.
-                        <GoogleLoginButton />
                         <KakaoLoginButton />
+                        <GoogleLoginButton />
                     </div>
                 </Modal>
             )} */}
