@@ -9,6 +9,7 @@ import Community from '@/components/community/Community';
 import CardCarousel from '@/components/main/CardCarousel';
 
 import GoogleLoginButton from '@/components/button/GoogleLoginButton';
+import KakaoLoginButton from '@/components/button/KakaoLoginButton';
 
 import ILocation from '@/models/interface/Ilocation';
 import { FiThumbsUp, FiEye } from 'react-icons/fi';
@@ -325,6 +326,7 @@ export default function Home() {
                     <div className='p-5'>
                         모달창 테스트, 여기에 원하는 화면을 구현해 넣어주세요.
                         <GoogleLoginButton />
+                        <KakaoLoginButton />
                     </div>
                 </Modal>
             )} */}
