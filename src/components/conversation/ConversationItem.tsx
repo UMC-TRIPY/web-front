@@ -10,10 +10,11 @@ interface IConversationContent {
 
 interface IConversationProps {
     content: IConversationContent;
+    handleClickSpeak: any;
 }
 
 const ConversationItem = (props: IConversationProps) => {
-    const { content } = props;
+    const { content, handleClickSpeak } = props;
     return (
         <div className={content.class}>
             <div>{content.korean}</div>
@@ -23,6 +24,7 @@ const ConversationItem = (props: IConversationProps) => {
                     <Image
                         src='/images/listen.svg'
                         className='cursor-pointer'
+                        onClick={() => handleClickSpeak(content.id)}
                         alt=''
                         width={40}
                         height={40}
