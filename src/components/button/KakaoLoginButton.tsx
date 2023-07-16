@@ -1,4 +1,4 @@
-import { kakaoInit } from '@/utils/kakao';
+import { kakaoInit } from '@/utils/oauth';
 
 const KakaoLoginButton = () => {
     const kakaoLogin = async () => {
