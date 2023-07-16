@@ -24,10 +24,12 @@ module.exports = {
                 darkgrey: '#666666'
             },
             width: {
-                'box-width': '412px'
+                'box-width': '412px',
             },
             height: {
-                'box-height': '424px'
+                'box-height': '424px',
+                'req-box-height': '704px',
+                'req-half-height': '342px'
             }
         }
     },
