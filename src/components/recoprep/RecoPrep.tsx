@@ -79,7 +79,7 @@ export default function RecoPrep() {
         );
     };
     return (
-        <div className='mt-16'>
+        <div className='my-16'>
             <div className='flex justify-between'>
                 <span className='text-3xl font-bold'>추천 준비물</span>
                 <div className='flex'>
