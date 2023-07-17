@@ -13,8 +13,8 @@ function Friend (props: FriendProps) {
                 {props.name}
             </div>
             <div className="flex">
-                <RoundBtn label="초대하기" color="bg-lightgrey" px="6" />
-                <RoundBtn label="친구끊기" color="bg-lightgrey" px="6"/>
+                <RoundBtn label="초대하기" color="bg-lightgrey" px={6} />
+                <RoundBtn label="친구끊기" color="bg-lightgrey" px={6}/>
             </div>
         </div>
     )

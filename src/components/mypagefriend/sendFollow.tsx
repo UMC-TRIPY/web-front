@@ -14,8 +14,8 @@ function Friend (props: FriendProps) {
                 {props.name}
             </div>
             <div className="flex">
-                <RoundBtn label="요청" color="bg-lightgrey" px="10" />
-                <RoundBtn label="차단" color="bg-lightgrey" px="10" />
+                <RoundBtn label="요청" color="bg-lightgrey" px={10} />
+                <RoundBtn label="차단" color="bg-lightgrey" px={10} />
             </div>
         </div>
     )

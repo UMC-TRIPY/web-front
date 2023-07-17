@@ -13,7 +13,7 @@ function Friend (props: FriendProps) {
                 {props.name}
             </div>
             <div className="flex">
-                <RoundBtn label="요청취소" color="bg-lightgrey" px="6"/>
+                <RoundBtn label="요청취소" color="bg-lightgrey" px={6}/>
             </div>
         </div>
     )
