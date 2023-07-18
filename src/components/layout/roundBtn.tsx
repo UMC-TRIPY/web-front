@@ -3,7 +3,7 @@ import React from "react";
 interface RoundBtnProps {
     label: string;
     color: string;
-    px: number;
+    px?: number;
     onClick?: () => void;
 }
 

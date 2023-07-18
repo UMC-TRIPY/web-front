@@ -35,8 +35,11 @@ function Follower () {
 
     return (
         <div className="h-req-half-height bg-brightgrey p-7 m-2.5 mt-5 rounded-lg overflow-y-auto">
-            <div className="text-3xl font-bold">
-                친구 요청
+            <div className="flex justify-between">
+                <div className="text-3xl font-bold">
+                    친구 요청
+                </div>
+                <RoundBtn label={`${friends.length}개`} color="bg-primary" />
             </div>
             <div className="mt-12">
                 {friends.map((friend, index) => (
