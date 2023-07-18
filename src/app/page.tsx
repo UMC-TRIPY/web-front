@@ -249,6 +249,7 @@ export default function Home() {
                 </div>
                 <div className='w-full my-44'>
                     <CardCarousel
+                        mode={0}
                         title='인기 여행지'
                         size={4}
                         items={dummyLocation}
