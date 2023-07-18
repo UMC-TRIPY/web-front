@@ -1,5 +1,5 @@
 import RoundBtn from "../layout/roundBtn";
-import React from "react";
+import React, { useState } from "react";
 
 interface FriendProps {
     name: string;
@@ -20,16 +20,27 @@ function Friend (props: FriendProps) {
 }
 
 function Following () {
+    const [friends, setFriends] = useState([
+        '미리',
+        '메이',
+        '규',
+        '루카',
+        '레니',
+        '시미',
+        '초이',
+        '폴',
+        '에그먼',
+    ]);
+
     return (
-        <div className="h-req-half-height bg-brightgrey p-7 m-2.5 rounded-lg">
+        <div className="h-req-half-height bg-brightgrey p-7 m-2.5 rounded-lg overflow-y-auto">
             <div className="text-3xl font-bold">
                 내가 보낸 요청
             </div>
             <div className="mt-12">
-                <Friend name="유저닉네임10글자자"/>
-                <Friend name="유저닉네임10글자자"/>
-                <Friend name="유저닉네임10글자자"/>
-                <Friend name="유저닉네임10글자자"/>
+                {friends.map((friend, index) => (
+                    <Friend key={index} name={friend} />
+                ))}
             </div>
         </div>
     )

@@ -1,6 +1,6 @@
 import { BiSearch } from "react-icons/bi";
 import RoundBtn from "../layout/roundBtn";
-import React from "react";
+import React, { useState } from "react";
 
 interface FriendProps {
     name: string;
@@ -22,6 +22,18 @@ function Friend (props: FriendProps) {
 }
 
 function SendFollow () {
+    const [friends, setFriends] = useState([
+        '미리',
+        '메이',
+        '규',
+        '루카',
+        '레니',
+        '시미',
+        '초이',
+        '폴',
+        '에그먼',
+    ]);
+
     return (
         <div className="h-req-box-height bg-brightgrey p-7 m-2.5 rounded-lg">
             <div>
@@ -40,7 +52,9 @@ function SendFollow () {
                     />
                 </div>
                 <div className="mt-6">
-                    <Friend name="유저닉네임10글자자"/>
+                    {friends.map((friend, index) => (
+                        <Friend key={index} name={friend} />
+                    ))}
                 </div>
             </div>
         </div>
