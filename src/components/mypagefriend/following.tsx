@@ -6,6 +6,7 @@ interface FriendProps {
 }
 
 function Friend (props: FriendProps) {
+    // 친구 프사 + 닉네임 + 버튼
     return (
         <div className="flex my-4 justify-between">
             <div className="flex items-center">

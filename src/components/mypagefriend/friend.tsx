@@ -5,7 +5,8 @@ interface FriendProps {
     name: string;
 }
 
-function Friend (props: FriendProps) {
+function Friend (props: FriendProps) { 
+    // 친구 프사 + 닉네임 + 버튼
     return (
         <div className="flex my-5 justify-between">
             <div className="flex items-center">

@@ -19,8 +19,11 @@ export default function mypage () {
     if(activeMenu === '정보') {
         content = (
             <>
+                {/* 프로필 사진 */}
                 <ProfilePic />
+                {/* 기본정보 */}
                 <MyInfo />
+                {/* 탈퇴/수정 버튼 */}
                 <ConfirmBtns />
             </>
         );
@@ -39,7 +42,9 @@ export default function mypage () {
     } else if (activeMenu === '친구관리') {
         content = (
             <>
+                {/* 나의 친구 */}
                 <MyFriends />
+                {/* 친구 요청 */}
                 <FriendReq />
             </>
         );
@@ -47,6 +52,7 @@ export default function mypage () {
 
     return (
         <div>
+            {/* 상단 탭바 */}
             <MypageMenus activeMenu={activeMenu} onMenuClick={handleMenuClick}/>
             {content}
         </div>

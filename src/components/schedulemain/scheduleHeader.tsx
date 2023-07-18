@@ -55,7 +55,9 @@ function ScheduleHeader () {
                 </div>
                 <div className="flex my-[25px] items-center">
                     최근 검색어
+                    <div className="mx-2">
                     <City />
+                    </div>
                 </div>
             </div>
         </div>
