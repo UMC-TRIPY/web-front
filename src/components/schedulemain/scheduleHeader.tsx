@@ -3,7 +3,7 @@ import { BiSearch, BiX } from "react-icons/bi";
 
 
 function City () {
-    const searchedCities = [
+    const searchedCities = [ // 최근 검색어
         '부산',
         '홍콩',
         '도쿄',
@@ -56,7 +56,7 @@ function ScheduleHeader () {
                 <div className="flex my-[25px] items-center">
                     최근 검색어
                     <div className="mx-2">
-                    <City />
+                        <City /> {/* 최근 검색어 map으로 출력 */}
                     </div>
                 </div>
             </div>
