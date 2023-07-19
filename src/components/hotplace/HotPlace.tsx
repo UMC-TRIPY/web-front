@@ -2,7 +2,7 @@ import { Loader } from '@googlemaps/js-api-loader';
 
 export default function HotPlace() {
     // 환경변수에서 Map Key 가져옴
-    const mapKey: any = process.env.NEXT_PUBLIC_MAP_KEY;
+    const mapKey: any = process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY;
     const apiOptions: any = {
         apiKey: mapKey
     };
