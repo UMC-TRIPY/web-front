@@ -3,22 +3,25 @@ import { LiaExchangeAltSolid } from 'react-icons/lia';
 import axios from 'axios';
 
 export default function ExchangeRate() {
+    const currencyKey = process.env.NEXT_PUBLIC_EXCHANGE_KEY;
     const [cur, setCur] = useState<number>(0);
     // 환율 대한민국 고정할거면 원화 자리에 krw 고정
     // 나라 정보와 환율도 가져와야함 => 백엔드에서 페이지 접속할 때 넘겨줘야함
     // 환율 가져오면 그에 따른 뒷자리도 가져와야함 => 배열로 만들어두기?
     useEffect(() => {
         axios
-            .get(
-                // ~~/currencies/{원화}/{환전하고 싶은 통화}.json
-                'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/krw.json'
-            )
+            .get(`http://data.fixer.io/api/latest?access_key=${currencyKey}`)
             .then((res) => {
-                setCur(res.data.krw.jpy);
-                console.log(`환율 정보 : ${res.data.krw.jpy}`);
+                // base가 EUR 이기 떄문에 원화와 바꾸고자하는 환율을 가져와서 계산해주어야함
+                // API는 일 100회 제한
+                let won = res.data.rates.KRW;
+                let other = res.data.rates.JPY;
+                setCur(other / won);
+                console.log('환율 정보 : ' + other / won);
             })
             .catch((err) => console.log(err));
     }, []);
+
     const [before, setBefore] = useState<string>('');
     const [after, setAfter] = useState<string>(before);
     const [isWon, setIsWon] = useState<boolean>(true);
