@@ -4,6 +4,7 @@ import format from "date-fns/format";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { ko } from 'date-fns/locale';
+import Calendar from "../infocity/Calendar";
 
 interface MenuProps {
     menu: string;
@@ -94,14 +95,6 @@ function DetailBox () {
     const [startDate, setStartDate] = useState<null | Date>(null);
     const [endDate, setEndDate] = useState<null | Date>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const activeColor = () => {
-        let outsideMonth: any = document.getElementsByClassName(
-            'react-datepicker__day--outside-month'
-        );
-        Object.values(outsideMonth).map((day: any) => {
-            day.style.color = '#A3A3A3';
-        });
-    };
     const SelectDates = ({
         title,
         value
@@ -122,18 +115,6 @@ function DetailBox () {
             </div>
         );
     };
-    const onChange = (dates: any) => {
-        const [start, end] = dates;
-        setStartDate(start);
-        setEndDate(end);
-    };
-    useEffect(() => {
-        endDate === null ? setIsOpen(isOpen) : setIsOpen(!isOpen);
-    }, [endDate]);
-    useEffect(() => {
-        activeColor();
-    }, []);
-    const date = new Date();
 
     return (
         <div className="mt-12">
@@ -172,63 +153,23 @@ function DetailBox () {
             </div>
             {/* 날짜 선택창 */}
             <div className="flex flex-row justify-between mx-2.5">
-                    <SelectDates title='출발일' value={startDate} />
-                    <SelectDates title='도착일' value={endDate} />
-                    <RoundBtn color="primary" label="등록" />
+                <SelectDates title='출발일' value={startDate} />
+                <SelectDates title='도착일' value={endDate} />
+                <RoundBtn color="primary" label="등록" />
             </div>
-            <div
-                    className={
-                        isOpen
-                            ? 'block absolute mt-[522px] ml-[80px] z-10'
-                            : 'hidden'
-                    }
-                >
-                    <DatePicker
-                        dateFormatCalendar='yyyy년 MM월'
-                        selected={startDate}
-                        onChange={onChange}
-                        startDate={startDate}
-                        endDate={endDate}
-                        selectsRange
-                        inline
-                        locale={ko}
-                        onMonthChange={activeColor}
-                        renderCustomHeader={({
-                            date,
-                            decreaseMonth,
-                            increaseMonth,
-                            prevMonthButtonDisabled,
-                            nextMonthButtonDisabled
-                        }: any) => (
-                            <div className='flex justify-between px-5 py-3 text-base'>
-                                <div className='font-bold'>
-                                    {date.getFullYear()}년 {date.getMonth() + 1}
-                                    월
-                                </div>
-                                <div>
-                                    <button
-                                        type='button'
-                                        onClick={decreaseMonth}
-                                        disabled={prevMonthButtonDisabled}
-                                    >
-                                        <img
-                                            className='rotate-180'
-                                            src='/images/calendararrow.png'
-                                        />
-                                    </button>
-                                    <button
-                                        type='button'
-                                        onClick={increaseMonth}
-                                        className='ml-6'
-                                        disabled={nextMonthButtonDisabled}
-                                    >
-                                        <img src='/images/calendararrow.png' />
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-                    />
-                </div>
+            <Calendar
+                startDate={startDate}
+                endDate={endDate}
+                isOpen={isOpen}
+                setStartDate={setStartDate}
+                setEndDate={setEndDate}
+                setIsOpen={setIsOpen}
+                claName={
+                    isOpen
+                        ? 'block absolute ml-[320px] z-10'
+                        : 'hidden'
+                }
+            />
         </div>
     )
 }
