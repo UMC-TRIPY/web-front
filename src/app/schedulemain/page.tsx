@@ -6,7 +6,7 @@ import ScheduleMain from '@/components/schedulemain/scheduleMain';
 export default function schedule() {
     return (
         <div>
-            <DetailSchedule />
+            <ScheduleMain />
         </div>
     );
 }

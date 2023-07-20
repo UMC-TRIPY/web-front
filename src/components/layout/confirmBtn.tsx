@@ -8,7 +8,7 @@ interface ConfirmBtnProps {
 
 function ConfirmBtn (props:ConfirmBtnProps) {
     return (
-        <div className="m-2 mt-14 mb-48">
+        <div className="m-2">
             <button
                 className={`${props.color} px-11 py-3.5 rounded-md`}
                 onClick={props.onClick}
