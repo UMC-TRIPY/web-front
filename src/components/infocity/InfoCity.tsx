@@ -1,31 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { IoThunderstormOutline } from 'react-icons/io5';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import InfoWeather from './InfoWeather';
 import ExchangeRate from './ExchangeRate';
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-import { ko } from 'date-fns/locale';
 import format from 'date-fns/format';
+import Calendar from './Calendar';
 
 export default function InfoCity() {
-    const [startDate, setStartDate] = useState<null | Date>(null);
-    const [endDate, setEndDate] = useState<null | Date>(null);
+    const [startDate, setStartDate] = useState<Date | null>(null);
+    const [endDate, setEndDate] = useState<Date | null>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [isUser, setIsUser] = useState<boolean>(false);
     const temperatures = [
         ['16º', '1º', '1~3월'],
         ['16º', '1º', '4~6월'],
         ['16º', '1º', '7~9월'],
         ['16º', '1º', '10~12월']
     ];
-    const activeColor = () => {
-        let outsideMonth: any = document.getElementsByClassName(
-            'react-datepicker__day--outside-month'
-        );
-        Object.values(outsideMonth).map((day: any) => {
-            day.style.color = '#A3A3A3';
-        });
-    };
     const SelectDates = ({
         title,
         value
@@ -39,25 +30,13 @@ export default function InfoCity() {
                     e.preventDefault();
                     setIsOpen(!isOpen);
                 }}
-                className='flex items-center justify-between px-5 h-16 w-80 text-grey border border-lightgrey rounded-l hover:cursor-pointer'
+                className='flex items-center justify-between px-5 h-16 w-5/12 text-grey border border-lightgrey rounded-l hover:cursor-pointer'
             >
                 {value === null ? title : format(value, 'yyyy-MM-dd')}
                 <AiOutlineCalendar size={24} />
             </div>
         );
     };
-    const onChange = (dates: any) => {
-        const [start, end] = dates;
-        setStartDate(start);
-        setEndDate(end);
-    };
-    useEffect(() => {
-        endDate === null ? setIsOpen(isOpen) : setIsOpen(!isOpen);
-    }, [endDate]);
-    useEffect(() => {
-        activeColor();
-    }, []);
-    const date = new Date();
     return (
         <div className='flex justify-between mt-32'>
             <img src='/images/location.png' alt='none' />
@@ -84,7 +63,18 @@ export default function InfoCity() {
                 </div>
                 {/* 환율 계산 부분 */}
                 <div className=''>
-                    <span className='text-2xl'>환율 계산기</span>
+                    <div className='flex text-xs items-center'>
+                        <span className='text-2xl mr-4'>환율 계산기</span>
+                        <button
+                            className={
+                                isUser
+                                    ? 'bg-lightgrey py-1 px-3 rounded-2xl text-darkgrey'
+                                    : 'hidden'
+                            }
+                        >
+                            환율정보 저장하기
+                        </button>
+                    </div>
                     <ExchangeRate />
                 </div>
                 {/* 날짜 선택 부분 */}
@@ -95,65 +85,31 @@ export default function InfoCity() {
                         <SelectDates title='도착일' value={endDate} />
                         <button
                             type='button'
-                            className='w-auto  bg-black text-white rounded-r px-4'
+                            onClick={() => setIsUser(!isUser)}
+                            className={
+                                isUser
+                                    ? 'w-2/12  bg-primary rounded-r px-4'
+                                    : 'w-2/12  bg-black text-white rounded-r px-4'
+                            }
                         >
-                            로그인하기
+                            {isUser ? '등록하기' : '로그인하기'}
                         </button>
                     </div>
                 </div>
-                <div
-                    className={
+                {/* Calendar 사용시 아래 7개 props 필수 */}
+                <Calendar
+                    startDate={startDate}
+                    endDate={endDate}
+                    isOpen={isOpen}
+                    setStartDate={setStartDate}
+                    setEndDate={setEndDate}
+                    setIsOpen={setIsOpen}
+                    claName={
                         isOpen
                             ? 'block absolute mt-[522px] ml-[80px] z-10'
                             : 'hidden'
                     }
-                >
-                    <DatePicker
-                        dateFormatCalendar='yyyy년 MM월'
-                        selected={startDate}
-                        onChange={onChange}
-                        startDate={startDate}
-                        endDate={endDate}
-                        selectsRange
-                        inline
-                        locale={ko}
-                        onMonthChange={activeColor}
-                        renderCustomHeader={({
-                            date,
-                            decreaseMonth,
-                            increaseMonth,
-                            prevMonthButtonDisabled,
-                            nextMonthButtonDisabled
-                        }: any) => (
-                            <div className='flex justify-between px-5 py-3 text-base'>
-                                <div className='font-bold'>
-                                    {date.getFullYear()}년 {date.getMonth() + 1}
-                                    월
-                                </div>
-                                <div>
-                                    <button
-                                        type='button'
-                                        onClick={decreaseMonth}
-                                        disabled={prevMonthButtonDisabled}
-                                    >
-                                        <img
-                                            className='rotate-180'
-                                            src='/images/calendararrow.png'
-                                        />
-                                    </button>
-                                    <button
-                                        type='button'
-                                        onClick={increaseMonth}
-                                        className='ml-6'
-                                        disabled={nextMonthButtonDisabled}
-                                    >
-                                        <img src='/images/calendararrow.png' />
-                                    </button>
-                                </div>
-                            </div>
-                        )}
-                    />
-                </div>
+                />
             </div>
         </div>
     );
