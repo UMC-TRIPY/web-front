@@ -21,7 +21,9 @@ module.exports = {
                 brightgrey: '#F9F9F9',
                 lightgrey: '#E5E5E5',
                 grey: '#A3A3A3',
-                darkgrey: '#666666'
+                darkgrey: '#666666',
+                'kakao-color': '#FAE100',
+                'dark-black': '#262626'
             },
             width: {
                 'box-width': '412px',

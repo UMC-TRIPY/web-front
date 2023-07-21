@@ -9,8 +9,9 @@ import Community from '@/components/community/Community';
 import CardCarousel from '@/components/main/CardCarousel';
 
 import GoogleLoginButton from '@/components/button/GoogleLoginButton';
+import KakaoLoginButton from '@/components/button/KakaoLoginButton';
 
-import ILocation from '@/models/interface/Ilocation';
+import ILocation from '@/models/interface/ILocation';
 import { FiThumbsUp, FiEye } from 'react-icons/fi';
 
 const dummyItem = <div>abc</div>;
@@ -124,7 +125,6 @@ const dummyCommunity = [
 ];
 
 export default function Home() {
-    const [modal, setModal] = useState(false);
     const [isAbroad, setIsAbroad] = useState<boolean>(true);
 
     return (
@@ -313,22 +313,6 @@ export default function Home() {
                     <span className='text-xl'>프로모션 부가설명</span>
                 </div>
             </div>
-
-            {/* <button onClick={() => setModal(true)}>모달 예시 버튼</button>
-            {modal && (
-                <Modal
-                    modalMode={1}
-                    title='회원가입 하기'
-                    setModalState={setModal}
-                    onClickCompleteButton={() => setModal(false)}
-                    completeText='로그인'
-                >
-                    <div className='p-5'>
-                        모달창 테스트, 여기에 원하는 화면을 구현해 넣어주세요.
-                        <GoogleLoginButton />
-                    </div>
-                </Modal>
-            )} */}
         </main>
     );
 }
