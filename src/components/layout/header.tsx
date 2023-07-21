@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import LoginModal from '../modal/LoginModal';
-import ScheduleAddModal from '../modal/ScheduleEditModal';
+import ScheduleAddModal from '../modal/ScheduleAddModal';
 
 interface MenuProps {
     menu: string;
