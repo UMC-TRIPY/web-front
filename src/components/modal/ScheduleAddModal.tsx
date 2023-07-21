@@ -1,24 +1,26 @@
 import React from 'react';
 import Modal from './Modal';
+import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
 
 const ScheduleAddModal = ({ setIsModal }: any) => {
     return (
         <Modal
             modalMode={1}
-            title='일정 편집'
+            title='일정 등록'
             setModalState={setIsModal}
             onClickCompleteButton={() => setIsModal(false)}
             completeText='저장'
         >
             <div className='flex flex-col h-full p-4'>
-                <div className='flex justify-between basis-[10%] items-center'>
-                    <div>색버튼</div>
-                    <div className='w-[70%]'>
-                        <input
-                            className='w-full'
-                            placeholder='일정을 등록하세요'
-                        ></input>
+                <div className='flex basis-[10%] justify-between items-center'>
+                    <div className='w-[15%] flex justify-between items-center'>
+                        <div className='w-8 h-8 rounded-lg bg-[#57CDFF]'></div>
+                        <MdOutlineKeyboardArrowDown />
                     </div>
+                    <input
+                        className='w-[80%] h-8 justify-center items-center rounded-xl overflow-hidden border pl-2 align-middle'
+                        placeholder='일정을 등록하세요'
+                    ></input>
                 </div>
                 <div className='flex basis-[10%] items-center'>
                     <div>요일</div>
