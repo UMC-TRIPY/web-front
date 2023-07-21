@@ -41,7 +41,7 @@ export default function Modal({
                 className='basis-[15%] justify-center items-center rounded-b-lg border-t border-gray-200 bg-gray-50'
                 onClick={() => onClickCompleteButton()}
             >
-                <span className='text-xs'>{completeText}</span>
+                <span className='text-xl'>{completeText}</span>
             </button>
         </>,
         <>
