@@ -76,7 +76,10 @@ export default function Modal({
                         setModalState(false);
                     }}
                 ></div>
-                <div className='absolute flex flex-col top-1/3 left-1/3 w-96 h-96 rounded-lg bg-neutral-50 z-101'>
+                <div
+                    className='absolute flex flex-col top-1/3 left-1/3 w-1/3 rounded-lg bg-neutral-50 z-101'
+                    style={{ minHeight: '24rem' }}
+                >
                     {modal[modalMode as number]}
                 </div>
             </div>
