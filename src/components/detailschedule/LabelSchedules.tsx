@@ -149,7 +149,7 @@ export default function LabelSchedules() {
             {schedules.map((schedule, index) => {
                 return (
                     <>
-                        <div key={`schcon${index}`} className='mb-3 mt-10'>
+                        <div key={`schcon${index}`} className='mb-3'>
                             <span key={`schdaynum${index}`} className='mr-8 '>
                                 {index + 1}일차
                             </span>

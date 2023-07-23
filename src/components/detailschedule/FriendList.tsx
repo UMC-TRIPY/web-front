@@ -33,7 +33,7 @@ export default function FriendList() {
 
     return (
         <div>
-            <div className='py-5'>
+            <div className='py-5 mb-10'>
                 <div className='flex justify-between items-center'>
                     <div>
                         <div className='pb-2'>일정 공유 중인 친구</div>
