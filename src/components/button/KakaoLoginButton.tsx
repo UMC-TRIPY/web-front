@@ -12,7 +12,7 @@ const KakaoLoginButton = () => {
     return (
         <>
             <div
-                className='flex border-2 border-kakao-color border-black cursor-pointer h-16 rounded-xl'
+                className='flex w-3/5 border-2 border-kakao-color border-black cursor-pointer h-16 rounded-xl'
                 onClick={kakaoLogin}
             >
                 <div className='flex bg-kakao-color basis-2/12 justify-center items-center text-2xl'>
