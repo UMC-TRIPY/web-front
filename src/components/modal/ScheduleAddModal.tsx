@@ -60,7 +60,7 @@ const ScheduleAddModal = ({ setIsModal }: any) => {
                         placeholder='예산을 추가해보세요'
                     ></input>
                 </div>
-                <div className='basis-[40%]'>
+                <div className='basis-[50%]'>
                     <div className='flex items-center gap-2 p-2 bg-lightgrey'>
                         <div>메모</div>
                         <AiOutlineLink />
@@ -69,7 +69,7 @@ const ScheduleAddModal = ({ setIsModal }: any) => {
                     </div>
                     <div>
                         <textarea
-                            className='h-full w-full bg-lightgrey pl-2'
+                            className='h-24 w-full bg-lightgrey pl-2'
                             placeholder='메모를 입력하세요'
                         ></textarea>
                     </div>

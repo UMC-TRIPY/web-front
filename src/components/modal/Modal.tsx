@@ -25,7 +25,7 @@ export default function Modal({
 }: Props) {
     const modal: React.ReactNode[] = [
         <>
-            <div className='flex basis-[15%] justify-between items-center px-5'>
+            <div className='flex basis-[15%] justify-between items-center px-5 p-4'>
                 <div className='font-bold text-xl'>{title}</div>
                 <button
                     className='items-center'
@@ -45,7 +45,7 @@ export default function Modal({
             </button>
         </>,
         <>
-            <div className='flex basis-[15%] justify-between items-center px-5 rounded-t-lg border-b border-gray-200 bg-gray-50'>
+            <div className='flex basis-[15%] justify-between items-center px-5 rounded-t-lg border-b border-gray-200 bg-gray-50 p-4'>
                 <button
                     className='items-center'
                     onClick={() => {
