@@ -4,6 +4,7 @@ import Link from 'next/link';
 import React, { useState } from 'react';
 import LoginModal from '../modal/LoginModal';
 import ScheduleAddModal from '../modal/ScheduleAddModal';
+import ScheduleDeleteModal from '../modal/ScheduleDeleteModal';
 
 interface MenuProps {
     menu: string;
@@ -17,11 +18,15 @@ export default function Header() {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isModal, setIsModal] = useState(false);
 
-    // 일정 편집 모달 테스트용. 스케줄 페이지로 이동 필요.
+    // 일정 추가 모달 테스트용. 스케줄 페이지로 이동 필요.
     const [isScheduleAddModal, setIsScheduleAddModal] = useState(false);
 
-    const handleScheduleEdit = () => {
-        setIsScheduleAddModal(true);
+    // 일정 삭제 모달 테스트용. 스케줄 페이지로 이동 필요.
+    const [isScheduleDeleteModal, setIsScheduleDeleteModal] = useState(false);
+
+    const addSchedule = () => {
+        // setIsScheduleAddModal(true);
+        setIsScheduleDeleteModal(true);
     };
 
     const handleLogin = () => {
@@ -123,7 +128,7 @@ export default function Header() {
                             >
                                 로그인
                             </button>
-                            <Link href='/' onClick={handleScheduleEdit}>
+                            <Link href='/' onClick={addSchedule}>
                                 회원가입
                             </Link>
                         </>
@@ -131,8 +136,11 @@ export default function Header() {
                 </div>
             </div>
             {isModal && <LoginModal setIsModal={setIsModal} />}
-            {isScheduleAddModal && (
+            {/* {isScheduleAddModal && (
                 <ScheduleAddModal setIsModal={setIsScheduleAddModal} />
+            )} */}
+            {isScheduleDeleteModal && (
+                <ScheduleDeleteModal setIsModal={setIsScheduleDeleteModal} />
             )}
         </header>
     );

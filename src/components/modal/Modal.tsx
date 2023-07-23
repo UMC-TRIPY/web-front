@@ -38,7 +38,7 @@ export default function Modal({
             </div>
             <div className='basis-[70%]'>{children}</div>
             <button
-                className='basis-[15%] justify-center items-center rounded-b-lg border-t border-gray-200 bg-gray-50'
+                className='grow justify-center items-center rounded-b-lg border-t border-gray-200 bg-gray-50'
                 onClick={() => onClickCompleteButton()}
             >
                 <span className='text-xl'>{completeText}</span>
@@ -57,7 +57,7 @@ export default function Modal({
                 <div className='font-bold text-xl'>{title}</div>
 
                 <button
-                    className='justify-center items-center'
+                    className='grow justify-center items-center'
                     onClick={() => onClickCompleteButton()}
                 >
                     <span className='text-xs'>{completeText}</span>
