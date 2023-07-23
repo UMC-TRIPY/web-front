@@ -148,7 +148,7 @@ export default function LabelSchedules() {
         <div className='text-xl mb-16'>
             {schedules.map((schedule, index) => {
                 return (
-                    <>
+                    <div key={index} className='mb-8'>
                         <div key={`schcon${index}`} className='mb-3'>
                             <span key={`schdaynum${index}`} className='mr-8 '>
                                 {index + 1}일차
@@ -198,7 +198,7 @@ export default function LabelSchedules() {
                                 </div>
                             );
                         })}
-                    </>
+                    </div>
                 );
             })}
         </div>
