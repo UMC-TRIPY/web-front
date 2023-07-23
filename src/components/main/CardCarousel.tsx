@@ -19,7 +19,7 @@ const CardCarousel = ({ mode, title, items, size }: Props) => {
      * @param items
      * @returns
      */
-    const renderItem = (mode, items: any) => {
+    const renderItem = (mode: number, items: any) => {
         const slideGroups = [];
         let slideGroup;
 
@@ -136,6 +136,7 @@ const CardCarousel = ({ mode, title, items, size }: Props) => {
                 emulateTouch={true}
                 showArrows={false}
                 showIndicators={false}
+                showThumbs={false}
                 showStatus={false}
                 selectedItem={curSlide}
             >

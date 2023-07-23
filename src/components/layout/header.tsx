@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import React, { useState } from 'react';
 import LoginModal from '../modal/LoginModal';
+import ScheduleAddModal from '../modal/ScheduleAddModal';
 
 interface MenuProps {
     menu: string;
@@ -15,6 +16,13 @@ export default function Header() {
     // 로그인, 로그아웃 상태구현
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isModal, setIsModal] = useState(false);
+
+    // 일정 편집 모달 테스트용. 스케줄 페이지로 이동 필요.
+    const [isScheduleAddModal, setIsScheduleAddModal] = useState(false);
+
+    const handleScheduleEdit = () => {
+        setIsScheduleAddModal(true);
+    };
 
     const handleLogin = () => {
         setIsModal(true);
@@ -115,12 +123,17 @@ export default function Header() {
                             >
                                 로그인
                             </button>
-                            <Link href='/'>회원가입</Link>
+                            <Link href='/' onClick={handleScheduleEdit}>
+                                회원가입
+                            </Link>
                         </>
                     )}
                 </div>
             </div>
             {isModal && <LoginModal setIsModal={setIsModal} />}
+            {isScheduleAddModal && (
+                <ScheduleAddModal setIsModal={setIsScheduleAddModal} />
+            )}
         </header>
     );
 }
