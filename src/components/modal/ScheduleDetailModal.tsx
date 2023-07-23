@@ -11,7 +11,7 @@ const ScheduleDetailModal = ({ setIsModal }: any) => {
             onClickCompleteButton={() => setIsModal(false)}
             completeText=''
         >
-            <div className='h-96 overflow-scroll p-8'>
+            <div className='h-96 overflow-scroll pl-8 pr-8'>
                 <LabelSchedules />
             </div>
         </Modal>
