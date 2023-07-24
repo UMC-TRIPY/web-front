@@ -16,14 +16,14 @@ function Follower () {
     ]);
 
     return (
-        <div className="h-req-half-height bg-brightgrey p-7 m-2.5 mt-5 rounded-lg overflow-y-auto">
+        <div className="h-[342px] bg-brightgrey p-7 m-2.5 mt-5 rounded-lg">
             <div className="flex justify-between">
                 <div className="text-3xl font-bold">
                     친구 요청
                 </div>
                 <RoundBtn label={`${friends.length}개`} color="bg-primary" />
             </div>
-            <div className="mt-12">
+            <div className="mt-8 h-[220px] overflow-y-auto">
                 {friends.map((friend, index) => (
                     <FriendTwoBtn key={index} name={friend} label1="수락" label2="거절" px={6}/>
                 ))}

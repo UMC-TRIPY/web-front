@@ -17,7 +17,7 @@ function SendFollow () {
     ]);
 
     return (
-        <div className="h-req-box-height bg-brightgrey p-7 m-2.5 rounded-lg">
+        <div className="h-[704px] bg-brightgrey p-7 m-2.5 rounded-lg">
             <div>
                 <div className="text-3xl font-bold">
                     친구 요청 보내기
@@ -33,7 +33,7 @@ function SendFollow () {
                         className='absolute self-end mr-5 hover:cursor-pointer'
                     />
                 </div>
-                <div className="mt-6">
+                <div className="mt-6 h-[480px] overflow-y-auto">
                     {friends.map((friend, index) => (
                         <FriendTwoBtn key={index} name={friend} label1="요청" label2="차단" px={6} />
                     ))}

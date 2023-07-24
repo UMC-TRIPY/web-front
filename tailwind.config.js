@@ -30,8 +30,6 @@ module.exports = {
             },
             height: {
                 'box-height': '424px',
-                'req-box-height': '704px',
-                'req-half-height': '342px'
             }
         }
     },
