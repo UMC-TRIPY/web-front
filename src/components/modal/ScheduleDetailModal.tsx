@@ -12,7 +12,7 @@ const ScheduleDetailModal = ({ setIsModal }: any) => {
             completeText=''
         >
             <div className='h-96 overflow-scroll pl-8 pr-8'>
-                <LabelSchedules />
+                <LabelSchedules status='modal' />
             </div>
         </Modal>
     );

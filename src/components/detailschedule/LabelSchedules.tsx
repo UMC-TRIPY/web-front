@@ -1,6 +1,10 @@
 import { CiLocationOn } from 'react-icons/ci';
 
-export default function LabelSchedules() {
+interface ILabelScheduleProps {
+    status: 'page' | 'modal';
+}
+
+export default function LabelSchedules({ status }: ILabelScheduleProps) {
     const schedules = [
         {
             date: '6월30일(토)',
@@ -145,62 +149,100 @@ export default function LabelSchedules() {
         }
     ];
     return (
-        <div className='text-xl mb-16'>
-            {schedules.map((schedule, index) => {
-                return (
-                    <div key={index} className='mb-8'>
-                        <div key={`schcon${index}`} className='mb-3'>
-                            <span key={`schdaynum${index}`} className='mr-8 '>
-                                {index + 1}일차
-                            </span>
-                            <span key={`schdate${index}`}>{schedule.date}</span>
-                        </div>
-                        {schedule.todos.map((todo, idx) => {
-                            return (
-                                <div
-                                    key={`schwrap${idx}`}
-                                    className={`border border-lightgrey border-l-8 rounded-lg pl-9 mb-2 ${todo.color}`}
-                                >
-                                    <div
-                                        key={`schtime${idx}`}
-                                        className='text-xs text-grey py-2.5'
+        <>
+            {status === 'page' ? (
+                <div className='text-xl mb-16'>
+                    {schedules.map((schedule, index) => {
+                        return (
+                            <div key={index} className='mb-8'>
+                                <div key={`schcon${index}`} className='mb-3'>
+                                    <span
+                                        key={`schdaynum${index}`}
+                                        className='mr-8 '
                                     >
-                                        {todo.time}
-                                    </div>
-                                    <div
-                                        key={`schcontent${idx}`}
-                                        className='flex justify-between text-base'
-                                    >
+                                        {index + 1}일차
+                                    </span>
+                                    <span key={`schdate${index}`}>
+                                        {schedule.date}
+                                    </span>
+                                </div>
+                                {schedule.todos.map((todo, idx) => {
+                                    return (
                                         <div
-                                            key={`schinwrap${idx}`}
-                                            className='flex'
+                                            key={`schwrap${idx}`}
+                                            className={`border border-lightgrey border-l-8 rounded-lg pl-9 mb-2 ${todo.color}`}
                                         >
                                             <div
-                                                key={`schdetail${idx}`}
-                                                className='mr-10 mb-4'
+                                                key={`schtime${idx}`}
+                                                className='text-xs text-grey py-2.5'
                                             >
-                                                {todo.content}
+                                                {todo.time}
                                             </div>
                                             <div
-                                                key={`schadd${idx}`}
-                                                className='text-grey'
+                                                key={`schcontent${idx}`}
+                                                className='flex justify-between text-base'
                                             >
+                                                <div
+                                                    key={`schinwrap${idx}`}
+                                                    className='flex'
+                                                >
+                                                    <div
+                                                        key={`schdetail${idx}`}
+                                                        className='mr-10 mb-4'
+                                                    >
+                                                        {todo.content}
+                                                    </div>
+                                                    <div
+                                                        key={`schadd${idx}`}
+                                                        className='text-grey'
+                                                    >
+                                                        {todo.additional}
+                                                    </div>
+                                                </div>
+                                                <div className='flex text-base items-center'>
+                                                    <CiLocationOn size={20} />
+                                                    <span className='ml-2 mr-4'>
+                                                        {todo.place}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        );
+                    })}
+                </div>
+            ) : (
+                <div>
+                    {schedules.map((schedule, index) => (
+                        <div className='mb-4' key={index}>
+                            <div className='flex gap-4 text-grey mb-2'>
+                                <span>{index + 1}일차</span>
+                                <span>{schedule.date}</span>
+                            </div>
+                            {schedule.todos.map((todo, idx) => (
+                                <div
+                                    key={idx}
+                                    className={`border border-lightgrey border-l-8 rounded-lg pl-9 mb-2 ${todo.color}`}
+                                >
+                                    <div className='text-xs text-grey py-2.5'>
+                                        {todo.time}
+                                    </div>
+                                    <div className='flex justify-between'>
+                                        <div className='flex flex-col gap-2'>
+                                            <div>{todo.content}</div>
+                                            <div className='text-grey'>
                                                 {todo.additional}
                                             </div>
                                         </div>
-                                        <div className='flex text-base items-center'>
-                                            <CiLocationOn size={20} />
-                                            <span className='ml-2 mr-4'>
-                                                {todo.place}
-                                            </span>
-                                        </div>
                                     </div>
                                 </div>
-                            );
-                        })}
-                    </div>
-                );
-            })}
-        </div>
+                            ))}
+                        </div>
+                    ))}
+                </div>
+            )}
+        </>
     );
 }
