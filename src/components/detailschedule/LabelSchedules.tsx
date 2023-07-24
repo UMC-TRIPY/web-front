@@ -224,13 +224,13 @@ export default function LabelSchedules({ status }: ILabelScheduleProps) {
                             {schedule.todos.map((todo, idx) => (
                                 <div
                                     key={idx}
-                                    className={`border border-lightgrey border-l-8 rounded-lg pl-9 mb-2 ${todo.color}`}
+                                    className={`border border-lightgrey border-l-8 rounded-lg p-2 pl-7 mb-2 ${todo.color}`}
                                 >
-                                    <div className='text-xs text-grey py-2.5'>
+                                    <div className='text-xs text-grey pb-2'>
                                         {todo.time}
                                     </div>
                                     <div className='flex justify-between'>
-                                        <div className='flex flex-col gap-2'>
+                                        <div className='flex flex-col'>
                                             <div>{todo.content}</div>
                                             <div className='text-grey'>
                                                 {todo.additional}
