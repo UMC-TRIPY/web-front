@@ -11,7 +11,7 @@ const ScheduleDetailModal = ({ setIsModal }: any) => {
             onClickCompleteButton={() => setIsModal(false)}
             completeText=''
         >
-            <div className='h-96 overflow-scroll pl-8 pr-8 bg-gradient-to-b from-neutral-50 from-90% to-main-color'>
+            <div className='h-96 overflow-scroll pl-8 pr-8 bg-gradient-to-t from-blur to-white to-30%'>
                 <LabelSchedules status='modal' />
             </div>
         </Modal>

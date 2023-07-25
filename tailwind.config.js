@@ -23,10 +23,11 @@ module.exports = {
                 grey: '#A3A3A3',
                 darkgrey: '#666666',
                 'kakao-color': '#FAE100',
-                'dark-black': '#262626'
+                'dark-black': '#262626',
+                blur: 'rgba(232, 232, 232, 1)'
             },
             width: {
-                'box-width': '412px',
+                'box-width': '412px'
             },
             height: {
                 'box-height': '424px',
