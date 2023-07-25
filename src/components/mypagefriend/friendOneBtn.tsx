@@ -11,7 +11,7 @@ interface FriendProps {
 function FriendOneBtn (props: FriendProps) { 
     // 친구 프사 + 닉네임 + 버튼
     return (
-        <div className="flex my-4 justify-between">
+        <div className="flex my-4 justify-between mr-2">
             <div className="flex items-center">
                 <img className="mr-5" src="/images/user.svg" alt="친구 프로필사진" />
                 {props.name}

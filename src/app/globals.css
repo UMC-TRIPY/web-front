@@ -57,3 +57,17 @@ body {
         }
     }
 }
+
+/* 해당 스타일은 Chrome, Safari, Opera 등에서 작동 */
+/* 스크롤바 전체 스타일 */
+::-webkit-scrollbar {
+    width: 2px; /* 스크롤바의 너비 */
+}
+/* 스크롤바 thumb 색상 */
+::-webkit-scrollbar-thumb {
+    background-color: grey;
+}
+/* 스크롤바 트랙 스타일 */
+::-webkit-scrollbar-track {
+    background-color: lightgrey;
+} 
