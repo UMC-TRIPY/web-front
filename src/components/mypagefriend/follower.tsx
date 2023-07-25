@@ -1,25 +1,6 @@
 import RoundBtn from "../layout/roundBtn";
 import React, { useState } from "react";
-
-interface FriendProps {
-    name: string;
-}
-
-function Friend (props: FriendProps) {
-    // 친구 프사 + 닉네임 + 버튼
-    return (
-        <div className="flex my-4 justify-between">
-            <div className="flex items-center">
-                <img className="mr-5" src="/images/user.svg" alt="친구 프로필사진" />
-                {props.name}
-            </div>
-            <div className="flex">
-                <RoundBtn label="수락" color="bg-lightgrey" px={10}/>
-                <RoundBtn label="거절" color="bg-lightgrey" px={10}/>
-            </div>
-        </div>
-    )
-}
+import FriendTwoBtn from "./friendTwoBtn";
 
 function Follower () {
     const [friends, setFriends] = useState([
@@ -35,16 +16,16 @@ function Follower () {
     ]);
 
     return (
-        <div className="h-req-half-height bg-brightgrey p-7 m-2.5 mt-5 rounded-lg overflow-y-auto">
+        <div className="h-[342px] bg-brightgrey p-7 m-2.5 mt-5 rounded-lg">
             <div className="flex justify-between">
                 <div className="text-3xl font-bold">
                     친구 요청
                 </div>
                 <RoundBtn label={`${friends.length}개`} color="bg-primary" />
             </div>
-            <div className="mt-12">
+            <div className="mt-8 h-[220px] overflow-y-auto">
                 {friends.map((friend, index) => (
-                    <Friend key={index} name={friend} />
+                    <FriendTwoBtn key={index} name={friend} label1="수락" label2="거절" px={6}/>
                 ))}
             </div>
         </div>

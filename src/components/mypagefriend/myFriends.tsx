@@ -1,4 +1,4 @@
-import Friend from "./friend";
+import FriendTwoBtn from "./friendTwoBtn";
 import React, { useState } from "react";
 
 function MyFriends () {
@@ -32,7 +32,7 @@ function MyFriends () {
             <div className="text-3xl font-bold mx-4 mt-20">나의 친구</div>
             <div className="mx-4 py-4">
                 {currentFriends.map((friend, index) => (
-                    <Friend key={index} name={friend} />
+                    <FriendTwoBtn key={index} name={friend} label1="초대하기" label2="친구끊기" px={6} />
                 ))}
             </div>
             <div className="flex justify-center">

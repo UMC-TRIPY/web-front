@@ -1,26 +1,7 @@
 import { BiSearch } from "react-icons/bi";
 import RoundBtn from "../layout/roundBtn";
 import React, { useState } from "react";
-
-interface FriendProps {
-    name: string;
-}
-
-function Friend (props: FriendProps) {
-    // 친구 프사 + 닉네임 + 버튼
-    return (
-        <div className="flex my-4 justify-between">
-            <div className="flex items-center">
-                <img className="mr-5" src="/images/user.svg" alt="친구 프로필사진" />
-                {props.name}
-            </div>
-            <div className="flex">
-                <RoundBtn label="요청" color="bg-lightgrey" px={10} />
-                <RoundBtn label="차단" color="bg-lightgrey" px={10} />
-            </div>
-        </div>
-    )
-}
+import FriendTwoBtn from "./friendTwoBtn";
 
 function SendFollow () {
     const [friends, setFriends] = useState([
@@ -36,7 +17,7 @@ function SendFollow () {
     ]);
 
     return (
-        <div className="h-req-box-height bg-brightgrey p-7 m-2.5 rounded-lg">
+        <div className="h-[704px] bg-brightgrey p-7 m-2.5 rounded-lg">
             <div>
                 <div className="text-3xl font-bold">
                     친구 요청 보내기
@@ -52,9 +33,9 @@ function SendFollow () {
                         className='absolute self-end mr-5 hover:cursor-pointer'
                     />
                 </div>
-                <div className="mt-6">
+                <div className="mt-6 h-[480px] overflow-y-auto">
                     {friends.map((friend, index) => (
-                        <Friend key={index} name={friend} />
+                        <FriendTwoBtn key={index} name={friend} label1="요청" label2="차단" px={6} />
                     ))}
                 </div>
             </div>
