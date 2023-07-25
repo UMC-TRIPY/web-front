@@ -13,7 +13,7 @@ export default function DetailSchedule() {
             {/* 친구 목록 */}
             <FriendList />
             {/* 여행 일정 */}
-            <LabelSchedules />
+            <LabelSchedules status='page' />
         </div>
     );
 }
