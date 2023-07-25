@@ -24,17 +24,16 @@ module.exports = {
                 darkgrey: '#666666',
                 'kakao-color': '#FAE100',
                 'dark-black': '#262626',
-                blur: 'rgba(232, 232, 232, 1)'
+                blur: 'rgba(232, 232, 232, 1)',
+                'blur-end': 'rgba(232, 232, 232, 0)'
             },
             width: {
                 'box-width': '412px'
             },
             height: {
-                'box-height': '424px',
+                'box-height': '424px'
             }
         }
     },
-    plugins: [
-        require('tailwind-scrollbar'),
-    ]
+    plugins: [require('tailwind-scrollbar')]
 };
