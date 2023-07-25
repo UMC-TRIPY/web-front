@@ -5,6 +5,7 @@ import React, { useState } from 'react';
 import LoginModal from '../modal/LoginModal';
 import ScheduleAddModal from '../modal/ScheduleAddModal';
 import ScheduleDeleteModal from '../modal/ScheduleDeleteModal';
+import ScheduleDetailModal from '../modal/ScheduleDetailModal';
 
 interface MenuProps {
     menu: string;
@@ -24,9 +25,13 @@ export default function Header() {
     // 일정 삭제 모달 테스트용. 스케줄 페이지로 이동 필요.
     const [isScheduleDeleteModal, setIsScheduleDeleteModal] = useState(false);
 
+    // 일정 상세보기 모달 테스트용. 일정 등록 페이지로 이동 필요.
+    const [isScheduleDetailModal, setIsScheduleDetailModal] = useState(false);
+
     const addSchedule = () => {
         // setIsScheduleAddModal(true);
-        setIsScheduleDeleteModal(true);
+        // setIsScheduleDeleteModal(true);
+        setIsScheduleDetailModal(true);
     };
 
     const handleLogin = () => {
@@ -139,8 +144,11 @@ export default function Header() {
             {/* {isScheduleAddModal && (
                 <ScheduleAddModal setIsModal={setIsScheduleAddModal} />
             )} */}
-            {isScheduleDeleteModal && (
+            {/* {isScheduleDeleteModal && (
                 <ScheduleDeleteModal setIsModal={setIsScheduleDeleteModal} />
+            )} */}
+            {isScheduleDetailModal && (
+                <ScheduleDetailModal setIsModal={setIsScheduleDetailModal} />
             )}
         </header>
     );
