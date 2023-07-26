@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import RoundBtn from '../layout/roundBtn';
 
-interface TravelProps {
+interface Props {
     travels: {
         id: number;
         dates: string;
@@ -10,7 +10,7 @@ interface TravelProps {
     name: string;
 }
 
-interface Props {
+interface TravelProps {
     travel: {
         id: number;
         dates: string;
@@ -18,7 +18,18 @@ interface Props {
     };
 }
 
-export default function ListComp({ travels, name }: TravelProps) {
+interface MyBagProps {
+    travel: {
+        id: number;
+        dates: string;
+        places: string;
+    };
+    index: number;
+}
+
+export default function ListComp({ travels, name }: Props) {
+    const [lists, setLists] =
+        useState<{ id: number; dates: string; places: string }[]>(travels);
     const [currentPage, setCurrentPage] = useState(1);
     const [travelsPerPage] = useState(8);
     const handlePrevClick = () => {
@@ -30,13 +41,24 @@ export default function ListComp({ travels, name }: TravelProps) {
 
     const indexOfLastTravel = currentPage * travelsPerPage;
     const indexOfFirstTravel = indexOfLastTravel - travelsPerPage;
-    const currentTravels = travels.slice(indexOfFirstTravel, indexOfLastTravel);
+    const currentTravels = lists.slice(indexOfFirstTravel, indexOfLastTravel);
 
     const Content = ({ content }: { content: string }) => (
         <div className='w-1/3 text-center'>{content}</div>
     );
 
-    const TravelList = ({ travel }: Props) => {
+    const onClick = (index: number) => {
+        if (confirm('정말 삭제하시겠습니까??') === true) {
+            const newTravels = [...lists];
+            newTravels.splice(index, 1);
+            setLists(newTravels);
+            alert('삭제 완료!');
+        } else {
+            return;
+        }
+    };
+
+    const TravelList = ({ travel }: TravelProps) => {
         return (
             <div className='flex items-center justify-between py-[16.5px]'>
                 <Content content={travel.dates} />
@@ -49,14 +71,18 @@ export default function ListComp({ travels, name }: TravelProps) {
         );
     };
 
-    const MyBagList = ({ travel }: Props) => {
+    const MyBagList = ({ travel, index }: MyBagProps) => {
         return (
             <div className='flex items-center justify-between py-[16.5px]'>
                 <Content content={travel.dates} />
                 <Content content={travel.places} />
                 <div className='flex w-1/3 justify-center'>
                     <RoundBtn label='상세보기' color='bg-lightgrey' />
-                    <RoundBtn label='삭제하기' color='bg-lightgrey' />
+                    <RoundBtn
+                        label='삭제하기'
+                        color='bg-lightgrey'
+                        onClick={() => onClick(index)}
+                    />
                 </div>
             </div>
         );
@@ -85,6 +111,7 @@ export default function ListComp({ travels, name }: TravelProps) {
                             <MyBagList
                                 key={`MyBagList${index}`}
                                 travel={travel}
+                                index={index}
                             />
                         )
                     )}
@@ -102,7 +129,7 @@ export default function ListComp({ travels, name }: TravelProps) {
                 <button
                     className='mx-4 px-2'
                     onClick={handleNextClick}
-                    disabled={indexOfLastTravel >= travels.length}
+                    disabled={indexOfLastTravel >= lists.length}
                 >
                     &gt;
                 </button>
