@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Portal from '@/components/modal/Portal';
 import { IoCloseOutline } from 'react-icons/io5';
 
@@ -66,6 +66,17 @@ export default function Modal({
             <div className='basis-[85%]'>{children}</div>
         </>
     ];
+
+    useEffect(() => {
+        /* TODO: 스크롤이 내려가 있는 상태로 모달창 띄우는 방법도 고려 */
+        window.scrollTo(0, 0);
+        // const portal = document.getElementById('portal');
+        // if (portal) portal.classList.add(`top-[${window.scrollY}px]`);
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
 
     return (
         <Portal selector='#body'>
