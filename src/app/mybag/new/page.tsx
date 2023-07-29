@@ -1,6 +1,7 @@
 'use client';
 
 import OtherSchedule from '@/components/detailschedule/OtherSchedule';
+import NewBagModal from '@/components/modal/NewBagModal';
 import BagList from '@/components/mybag/BagList';
 import EmptyBag from '@/components/mybag/EmptyBag';
 import TopTab from '@/components/mybag/TopTab';
@@ -32,6 +33,8 @@ const NewBag = () => {
         }
     ]);
 
+    const [isNewBagModal, setIsNewBagModal] = useState<boolean>(false);
+
     const handleClickTab = (e: any) => {
         setTabs(
             tabs.map((tab) =>
@@ -51,7 +54,10 @@ const NewBag = () => {
             <div className='h-96'>
                 <div className='flex h-full'>
                     <BagList bagList={bagList} />
-                    <EmptyBag />
+                    <EmptyBag setIsNewBagModal={setIsNewBagModal} />
+                    {isNewBagModal && (
+                        <NewBagModal setIsModal={setIsNewBagModal} />
+                    )}
                 </div>
             </div>
         </>

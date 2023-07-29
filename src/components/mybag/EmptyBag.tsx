@@ -2,10 +2,13 @@ import Image from 'next/image';
 import React from 'react';
 import RoundBtn from '../layout/roundBtn';
 
-const EmptyBag = () => {
+const EmptyBag = ({ setIsNewBagModal }: any) => {
     return (
         <>
-            <div className='flex justify-center items-center basis-[25%]'>
+            <div
+                className='flex justify-center items-center basis-[25%]'
+                onClick={() => setIsNewBagModal(true)}
+            >
                 <div className='flex flex-col items-center gap-8 cursor-pointer'>
                     <Image
                         src='/images/bag.svg'
