@@ -1,6 +1,7 @@
 'use client';
 
 import OtherSchedule from '@/components/detailschedule/OtherSchedule';
+import RoundBtn from '@/components/layout/roundBtn';
 import TopTab from '@/components/mybag/TopTab';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -35,6 +36,24 @@ const NewBag = () => {
                 <TopTab tabs={tabs} handleClickTab={handleClickTab} />
             </div>
             <OtherSchedule />
+            <div className='h-96'>
+                <div className='flex h-full'>
+                    <div className='flex justify-center items-center basis-[25%]'>
+                        <div className='flex flex-col items-center gap-8 cursor-pointer'>
+                            <Image
+                                src='/images/bag.svg'
+                                alt='my-bag'
+                                width={150}
+                                height={150}
+                            />
+                            <RoundBtn
+                                label='가방 추가하기'
+                                color='bg-lightgrey'
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
     );
 };
