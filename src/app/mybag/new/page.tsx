@@ -21,6 +21,17 @@ const NewBag = () => {
         }
     ]);
 
+    const [bagList, setBagList] = useState([
+        {
+            id: '0',
+            name: '캐리어'
+        },
+        {
+            id: '1',
+            name: '크로스백'
+        }
+    ]);
+
     const handleClickTab = (e: any) => {
         setTabs(
             tabs.map((tab) =>
@@ -39,7 +50,7 @@ const NewBag = () => {
             <OtherSchedule />
             <div className='h-96'>
                 <div className='flex h-full'>
-                    <BagList />
+                    <BagList bagList={bagList} />
                     <EmptyBag />
                 </div>
             </div>
