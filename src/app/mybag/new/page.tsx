@@ -45,6 +45,14 @@ const NewBag = () => {
         );
     };
 
+    const handleAddNewBag = (bagName: string) => {
+        setBagList([
+            ...bagList,
+            { id: bagList.length.toString(), name: bagName }
+        ]);
+        setIsNewBagModal(false);
+    };
+
     return (
         <>
             <div className='flex items-end h-36 gap-4 text-grey mb-4'>
@@ -56,7 +64,10 @@ const NewBag = () => {
                     <BagList bagList={bagList} />
                     <EmptyBag setIsNewBagModal={setIsNewBagModal} />
                     {isNewBagModal && (
-                        <NewBagModal setIsModal={setIsNewBagModal} />
+                        <NewBagModal
+                            setIsModal={setIsNewBagModal}
+                            handleAddNewBag={handleAddNewBag}
+                        />
                     )}
                 </div>
             </div>
