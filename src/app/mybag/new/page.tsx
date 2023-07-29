@@ -1,7 +1,7 @@
 'use client';
 
 import OtherSchedule from '@/components/detailschedule/OtherSchedule';
-import RoundBtn from '@/components/layout/roundBtn';
+import BagList from '@/components/mybag/BagList';
 import EmptyBag from '@/components/mybag/EmptyBag';
 import TopTab from '@/components/mybag/TopTab';
 import Image from 'next/image';
@@ -39,6 +39,7 @@ const NewBag = () => {
             <OtherSchedule />
             <div className='h-96'>
                 <div className='flex h-full'>
+                    <BagList />
                     <EmptyBag />
                 </div>
             </div>
