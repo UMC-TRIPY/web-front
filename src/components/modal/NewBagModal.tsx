@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 import { FiAlertTriangle } from 'react-icons/fi';
 import Modal from './Modal';
@@ -9,15 +10,22 @@ const NewBagModal = ({ setIsModal }: any) => {
             title=''
             setModalState={setIsModal}
             onClickCompleteButton={() => setIsModal(false)}
-            completeText='삭제하기'
+            completeText='추가하기'
         >
             <div className='flex flex-col'>
                 <div className='flex justify-center items-center h-2/5 p-5'>
-                    <FiAlertTriangle className='text-[#EB5757] text-8xl' />
+                    <Image
+                        src='/images/selectedBag.svg'
+                        alt='my-bag'
+                        width={100}
+                        height={100}
+                    />
                 </div>
-                <div className='text-xl text-center text-dark-black p-5'>
-                    <div>일정을 삭제하시겠습니까?</div>
-                    <div> 삭제한 일정은 복구할 수 없습니다.</div>
+                <div className='flex justify-center mb-8'>
+                    <input
+                        className='w-4/5 h-12 text-xs text-center placeholder:text-[#C1C1C1] rounded-xl border pl-2 align-middle'
+                        placeholder='가방의 이름을 입력해주세요'
+                    />
                 </div>
             </div>
         </Modal>
