@@ -6,6 +6,30 @@ import Community from '@/components/community/Community';
 import Conversation from '@/components/conversation/Conversation';
 import HotPlace from '@/components/hotplace/HotPlace';
 import CardCarousel from '@/components/main/CardCarousel';
+import ILocation from '@/models/interface/ILocation';
+
+const dummyLocation: ILocation[] = [
+    {
+        title: '런던',
+        desc: '000개의 리뷰',
+        img: ''
+    },
+    {
+        title: '도쿄',
+        desc: '000개의 리뷰',
+        img: '/images/tokyo.png'
+    },
+    {
+        title: '파리',
+        desc: '000개의 리뷰',
+        img: '/images/paris.png'
+    },
+    {
+        title: '뉴욕',
+        desc: '000개의 리뷰',
+        img: 'https://static01.nyt.com/images/2022/09/29/travel/36hours-nyc11/36hours-nyc11-mobileMasterAt3x-v2.jpg'
+    }
+];
 
 const items = [
     {
@@ -64,9 +88,24 @@ const info = () => {
             <InfoCity />
             {/* 인기 여행지 */}
             <HotPlace />
+            <div className='my-16'>
+                <CardCarousel
+                    mode={0}
+                    title=''
+                    size={4}
+                    items={dummyLocation}
+                />
+            </div>
             {/* 추천 준비물 */}
             {/* <RecoPrep /> */}
-            <CardCarousel mode={1} title='추천 준비물' size={3} items={items} />
+            <div className='my-16'>
+                <CardCarousel
+                    mode={1}
+                    title='추천 준비물'
+                    size={3}
+                    items={items}
+                />
+            </div>
             <Community />
             <Conversation />
         </div>
