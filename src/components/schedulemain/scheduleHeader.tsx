@@ -1,6 +1,7 @@
+// scheduleHeader.tsx
+
 import { BiSearch, BiX } from "react-icons/bi";
 import { useState } from "react";
-
 import SearchboxModal from "../modal/SearchboxModal";
 
 
@@ -19,7 +20,7 @@ function City () {
             {searchedCities.map((searchedCity, index) => {
                 return (
                     <div className="border border-grey rounded-full mx-2" key={index}>
-                        <div className="flex px-2 py-1  text-[14px]">
+                        <div className="flex px-2 py-1 text-[12px]">
                             {searchedCities[index]}
                             <button
                                 className="px-1"
@@ -49,7 +50,7 @@ function ScheduleHeader () {
                 </div>
                 <div className="flex relative justify-center">
                     <input 
-                        className="border-b border-grey w-[630px] pb-5 pl-5"
+                        className="border-b border-grey w-[630px] pb-5 pl-5 focus:outline-none"
                         type="text" 
                         placeholder="여행일정을 생성할 도시를 입력하세요"
                         onClick={() => setModal(true)}
@@ -67,7 +68,9 @@ function ScheduleHeader () {
                 </div>
             </div>
             {modal && (
-                <SearchboxModal />
+                <div className="flex justify-center items-center">
+                    <SearchboxModal setIsModal={setModal} />
+                </div>
             )}
         </div>
     )
