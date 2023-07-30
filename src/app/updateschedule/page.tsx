@@ -3,30 +3,31 @@ import LabelSchedules from '../../components/detailschedule/LabelSchedules';
 import FriendList from '../../components/detailschedule/FriendList';
 import OtherSchedule from '../../components/detailschedule/OtherSchedule';
 import CommonHeader from '../../components/detailschedule/CommonHeader';
-
-interface IscheduleItem {
-    lineColor: string;
-    color: string;
-    time: number;
-    hour: number;
-    title: string;
-    location?: string;
-}
+import IscheduleItem from '@/models/interface/IscheduleItem';
+import ScheduleBlock from '@/components/scheduleblock/scheduleBlock';
 
 const dummySchedule: IscheduleItem[] = [
+    // 몇번째 칸인지도 넣기?
     {
         lineColor: '#FF7F57',
         color: '#FFF3EF',
-        time: 7,
-        hour: 2,
+        startTime: new Date('2023-07-25 10:00:00'),
+        endTime: new Date('2023-07-25 12:00:00'),
         title: '자차로 이동'
     },
     {
         lineColor: '#FF7F57',
         color: '#FFF3EF',
-        time: 11,
-        hour: 3,
+        startTime: new Date('2023-07-25 14:30:00'),
+        endTime: new Date('2023-07-25 19:00:00'),
         title: '자고싶다'
+    },
+    {
+        lineColor: '#FF7F57',
+        color: '#FFF3EF',
+        startTime: new Date('2023-07-25 20:00:00'),
+        endTime: new Date('2023-07-25 21:00:00'),
+        title: '변경사항 왜 적용안돼'
     }
 ];
 
@@ -76,41 +77,30 @@ export default function updateschedule() {
             if (i % 2 == 1) {
                 // 00 ~ 30
                 times.push(
-                    <div className='flex w-[22rem] h-7 border border-t-0 border-l-0 border-dashed border-gray-200'></div>
+                    <div className='flex w-[22rem] h-7 border border-t-0 border-l-0 border-dashed border-gray-200'>
+                        {i}
+                    </div>
                 );
             } else {
                 // 30 ~ 00
                 times.push(
-                    <div className='flex w-[22rem] h-7 border border-t-0 border-l-0 border-gray-200'></div>
+                    <div className='flex w-[22rem] h-7 border border-t-0 border-l-0 border-gray-200'>
+                        {i}
+                    </div>
                 );
             }
         }
 
+        return times;
+    };
+
+    const renderScheduleBlock = (item: IscheduleItem[]) => {
+        const blocks = [];
         for (let schedule of item) {
             console.log(schedule);
-            let { lineColor, color, time, hour, title, location } = schedule;
-
-            times.splice(
-                time,
-                hour,
-                <div
-                    className='flex w-[22rem] pl-3 border-l-4'
-                    style={{
-                        height: `calc(1.75rem * ${hour})`,
-                        borderLeftColor: lineColor,
-                        backgroundColor: color
-                    }}
-                >
-                    <span>{}</span>
-                    <span>{title}</span>
-                    <span>{location}</span>
-                </div>
-            );
+            blocks.push(<ScheduleBlock item={schedule} />);
         }
-
-        // console.log(times);
-
-        return times;
+        return blocks;
     };
 
     return (
@@ -127,20 +117,36 @@ export default function updateschedule() {
                     {/* Default */}
                     {renderTimeTable()}
                 </div>
-                <div>{renderDateTable('6/30 (금)', dummySchedule)}</div>
+                <div>
+                    <div>{renderDateTable('6/30 (금)', dummySchedule)}</div>
+                </div>
                 <div>
                     <div>{renderDateTable('7/1 (토)', dummySchedule)}</div>
                 </div>
                 <div>
                     <div>{renderDateTable('7/2 (일)', dummySchedule)}</div>
                 </div>
-                {/* <div
-                    className='absolute top-[1.75rem] left-[4.5rem] bg-slate-700 opacity-50'
+                <div>
+                    <div>{renderDateTable('7/2 (일)', dummySchedule)}</div>
+                </div>
+                <div>
+                    <div>{renderDateTable('7/2 (일)', dummySchedule)}</div>
+                </div>
+                <div>
+                    <div>{renderDateTable('7/2 (일)', dummySchedule)}</div>
+                </div>
+                <div>
+                    <div>{renderDateTable('7/2 (일)', dummySchedule)}</div>
+                </div>
+                <div
+                    className='absolute top-[1.75rem] left-[4.5rem] bottom-0 right-0 bg-slate-700 opacity-50'
                     style={{
-                        width: 'calc(100% - 4.5rem)',
+                        width: `calc((22rem * 7))`,
                         height: 'calc(100% - 1.75rem)'
                     }}
-                ></div> */}
+                >
+                    {renderScheduleBlock(dummySchedule)}
+                </div>
             </div>
         </div>
     );

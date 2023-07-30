@@ -1,8 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-:root {
-    /* 최대 가로축 길이 1280px */
+
+/* :root {
+    최대 가로축 길이 1280px
     @apply max-w-screen-xl mx-auto;
     --foreground-rgb: 0, 0, 0;
     --background-start-rgb: 214, 219, 220;
@@ -20,9 +21,9 @@
 body {
 }
 
-/* Calendar CSS */
+Calendar CSS
 .react-datepicker {
-    /* !importan는 CSS의 우선순위를 높여주는 키워드입니다 */
+    !importan는 CSS의 우선순위를 높여주는 키워드입니다
     border: 1px solid white !important;
     box-shadow: 2.5px 2.5px 2.5px 2.5px #0000001a;
     .react-datepicker__month-container {
@@ -56,4 +57,4 @@ body {
             }
         }
     }
-}
+} */
