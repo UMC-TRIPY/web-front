@@ -1,5 +1,7 @@
 import { BiSearch, BiX } from "react-icons/bi";
+import { useState } from "react";
 
+import SearchboxModal from "../modal/SearchboxModal";
 
 
 function City () {
@@ -36,6 +38,9 @@ function City () {
 }
 
 function ScheduleHeader () {
+    // 모달 상태 제어
+    const [modal, setModal] = useState(false);
+
     return (
         <div className="flex justify-center">
             <div className="flex-col text-center">
@@ -47,6 +52,7 @@ function ScheduleHeader () {
                         className="border-b border-grey w-[630px] pb-5 pl-5"
                         type="text" 
                         placeholder="여행일정을 생성할 도시를 입력하세요"
+                        onClick={() => setModal(true)}
                     />
                     <BiSearch   
                             size={32}
@@ -60,6 +66,9 @@ function ScheduleHeader () {
                     </div>
                 </div>
             </div>
+            {modal && (
+                <SearchboxModal />
+            )}
         </div>
     )
 }
