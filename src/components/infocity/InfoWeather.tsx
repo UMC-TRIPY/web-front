@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import {
-    IoThunderstormOutline,
     IoCloudyOutline,
     IoSunnyOutline,
     IoSnowOutline,
@@ -17,15 +16,36 @@ interface Informations {
 export default function InfoWeather() {
     const [today, setToday] = useState<string>('');
     const [temperatures, setTemperatures] = useState<any>([]);
+    const [weather, setWeather] = useState<string>('');
     const weatehrKey = process.env.NEXT_PUBLIC_WEATHER_KEY;
-    console.log(temperatures);
+
+    const WeatherComp = () => {
+        if (weather === 'Snow') return <IoSnowOutline size={40} />;
+        else if (weather === 'Clear')
+            return <IoSunnyOutline size={40} key={`sunnyicon`} />;
+        else if (weather === 'mist' || weather === 'Clouds')
+            return <IoCloudyOutline size={40} key={`cloudyicon`} />;
+        else return <IoRainyOutline size={40} key={`rainyicon`} />;
+    };
+
     useEffect(() => {
-        let temp = [['1일 후'], ['2일 후'], ['3일 후'], ['4일 후']];
+        let temp: any = [];
+        for (let i = 1; i <= 4; i++) {
+            const forecast = new Date();
+            const forecasts = new Date(
+                forecast.setDate(forecast.getDate() + i)
+            );
+            const forecastMonth = forecasts.getMonth() + 1;
+            const forecastDate = forecasts.getDate();
+            temp.push([`${forecastMonth}/${forecastDate}`]);
+        }
         axios
             .get(
                 `https://api.openweathermap.org/data/2.5/forecast/daily?q=Tokyo&cnt=5&appid=${weatehrKey}&units=metric`
             )
             .then((res) => {
+                console.log(res.data);
+                setWeather(res.data.list[1].weather[0].main);
                 setToday(`${res.data.list[0].temp.day.toFixed(0)}º`);
                 for (let i = 0; i < 4; i++) {
                     temp[i].unshift(
@@ -69,12 +89,12 @@ export default function InfoWeather() {
         <div className='flex'>
             <div className='w-20 h-32 mt-3 border border-grey rounded flex flex-col items-center'>
                 <span className='text-xs text-grey my-3'>현지 기온</span>
-                <IoCloudyOutline size={40} />
+                {weather === '' ? 'Loading...' : <WeatherComp />}
                 <span className='my-3 text-lg'>{today}</span>
             </div>
             <div className=' h-32 mt-3 border border-grey rounded flex flex-col items-center ml-5 w-full'>
                 <span className='text-xs text-grey my-3'>
-                    월별 현지/대한민국 기온
+                    일일 현지/대한민국 기온
                 </span>
                 <div className='flex justify-evenly w-full'>
                     {temperatures.length === 0
