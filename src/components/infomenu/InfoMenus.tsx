@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 
 interface MenuProps {
@@ -8,13 +8,24 @@ interface MenuProps {
     onClick: (index: number) => void;
 }
 
+interface Props {
+    menu: string;
+    select: boolean;
+    location: {
+        min: number;
+        max: number;
+    };
+}
+
 export default function InfoMenus() {
-    const [menus, setMenus] = useState<[string, boolean][]>([
-        ['메인', true],
-        ['명소', false],
-        ['준비물', false],
-        ['후기', false],
-        ['회화', false]
+    const [menus, setMenus] = useState<
+        [string, boolean, { min: number; max: number }][]
+    >([
+        ['메인', true, { min: 0, max: 800 }],
+        ['명소', false, { min: 800, max: 2025 }],
+        ['준비물', false, { min: 2025, max: 2525 }],
+        ['후기', false, { min: 2525, max: 2820 }],
+        ['회화', false, { min: 2820, max: 5000 }]
     ]);
     const [place, setPlace] = useState<string>('');
 
@@ -43,15 +54,30 @@ export default function InfoMenus() {
     };
 
     const menuClick = (selectedIndex: number) => {
-        const updatedMenus: [string, boolean][] = menus.map((menu, index) => [
-            menu[0],
-            index === selectedIndex
-        ]);
+        const updatedMenus: [string, boolean, { min: number; max: number }][] =
+            menus.map((menu, index) => [
+                menu[0],
+                index === selectedIndex,
+                menu[2]
+            ]);
+        scrollTo({ top: menus[selectedIndex][2].min, behavior: 'smooth' });
         setMenus(updatedMenus);
     };
 
+    window.addEventListener('scroll', () => {
+        const updatedMenus: [string, boolean, { min: number; max: number }][] =
+            menus.map((menu, index) => [
+                menu[0],
+                scrollY >= menu[2].min && scrollY < menu[2].max,
+                menu[2]
+            ]);
+        setMenus(updatedMenus);
+    });
+
+    useEffect(() => {}, [menus]);
+
     return (
-        <div className='flex justify-between mt-6'>
+        <div className='flex justify-between py-6 sticky top-0 bg-white z-10'>
             <div className='flex items-end'>
                 {menus.map((menu, index) => (
                     <Menu

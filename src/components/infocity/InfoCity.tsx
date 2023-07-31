@@ -31,7 +31,7 @@ export default function InfoCity() {
         );
     };
     return (
-        <div className='flex justify-between mt-32'>
+        <div className='flex justify-between mt-28'>
             <img src='/images/location.png' alt='none' />
             <div className='h-11/12  flex flex-col justify-between'>
                 <div className='text-5xl font-bold  '>도쿄</div>
