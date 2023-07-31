@@ -5,10 +5,14 @@ import OtherSchedule from '../../components/detailschedule/OtherSchedule';
 import CommonHeader from '../../components/detailschedule/CommonHeader';
 import IscheduleItem from '@/models/interface/IscheduleItem';
 import ScheduleBlock from '@/components/scheduleblock/scheduleBlock';
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { useCallback } from 'react';
 
 const dummySchedule: IscheduleItem[] = [
     // 몇번째 칸인지도 넣기?
     {
+        id: 1,
         lineColor: '#FF7F57',
         color: '#FFF3EF',
         startTime: new Date('2023-07-25 10:00:00'),
@@ -16,6 +20,7 @@ const dummySchedule: IscheduleItem[] = [
         title: '자차로 이동'
     },
     {
+        id: 2,
         lineColor: '#FF7F57',
         color: '#FFF3EF',
         startTime: new Date('2023-07-25 14:30:00'),
@@ -23,6 +28,7 @@ const dummySchedule: IscheduleItem[] = [
         title: '자고싶다'
     },
     {
+        id: 3,
         lineColor: '#FF7F57',
         color: '#FFF3EF',
         startTime: new Date('2023-07-25 20:00:00'),
@@ -94,14 +100,21 @@ export default function updateschedule() {
         return times;
     };
 
-    const renderScheduleBlock = (item: IscheduleItem[]) => {
-        const blocks = [];
-        for (let schedule of item) {
-            console.log(schedule);
-            blocks.push(<ScheduleBlock item={schedule} />);
-        }
-        return blocks;
-    };
+    const renderScheduleBlock = useCallback(
+        (schedule: IscheduleItem, index: number) => {
+            return (
+                <ScheduleBlock item={schedule} />
+                // <Card
+                //   key={card.id}
+                //   index={index}
+                //   id={card.id}
+                //   text={card.text}
+                //   moveCard={moveCard}
+                // />
+            );
+        },
+        []
+    );
 
     return (
         <div className='mt-20 p-20'>
@@ -138,15 +151,19 @@ export default function updateschedule() {
                 <div>
                     <div>{renderDateTable('7/2 (일)', dummySchedule)}</div>
                 </div>
-                <div
-                    className='absolute top-[1.75rem] left-[4.5rem] bottom-0 right-0 bg-slate-700 opacity-50'
-                    style={{
-                        width: `calc((22rem * 7))`,
-                        height: 'calc(100% - 1.75rem)'
-                    }}
-                >
-                    {renderScheduleBlock(dummySchedule)}
-                </div>
+                <DndProvider backend={HTML5Backend}>
+                    <div
+                        className='absolute top-[1.75rem] left-[4.5rem] bottom-0 right-0 bg-slate-700 opacity-50'
+                        style={{
+                            width: `calc((22rem * 7))`,
+                            height: 'calc(100% - 1.75rem)'
+                        }}
+                    >
+                        {dummySchedule.map((item: IscheduleItem, idx: number) =>
+                            renderScheduleBlock(item, idx)
+                        )}
+                    </div>
+                </DndProvider>
             </div>
         </div>
     );
