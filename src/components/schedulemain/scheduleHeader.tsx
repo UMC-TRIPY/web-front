@@ -1,8 +1,8 @@
-// scheduleHeader.tsx
-
-import { BiSearch, BiX } from "react-icons/bi";
 import { useState } from "react";
 import SearchboxModal from "../modal/SearchboxModal";
+
+import { BiSearch } from "react-icons/bi";
+import { RxCross1 } from 'react-icons/rx';
 
 
 function City () {
@@ -20,15 +20,13 @@ function City () {
             {searchedCities.map((searchedCity, index) => {
                 return (
                     <div className="border border-grey rounded-full mx-2" key={index}>
-                        <div className="flex px-2 py-1 text-[12px]">
+                        <div className="flex px-3 py-2 text-[12px]">
                             {searchedCities[index]}
                             <button
-                                className="px-1"
+                                className="pl-2 pb-0.5" // RxCross가 중앙에 위치하기 위해 pb-0.5
                                 onClick={() => onClick(searchedCity)}
                             >
-                                <BiX 
-                                    size={16}
-                                />
+                                <RxCross1 size={12}/>
                             </button>
                         </div>
                     </div>
