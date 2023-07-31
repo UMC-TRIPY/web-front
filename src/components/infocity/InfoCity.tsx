@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { IoThunderstormOutline } from 'react-icons/io5';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import InfoWeather from './InfoWeather';
 import ExchangeRate from './ExchangeRate';
@@ -11,12 +10,6 @@ export default function InfoCity() {
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [isUser, setIsUser] = useState<boolean>(false);
-    const temperatures = [
-        ['16º', '1º', '1~3월'],
-        ['16º', '1º', '4~6월'],
-        ['16º', '1º', '7~9월'],
-        ['16º', '1º', '10~12월']
-    ];
     const SelectDates = ({
         title,
         value
@@ -45,21 +38,7 @@ export default function InfoCity() {
                 {/* 날씨 부분 */}
                 <div>
                     <span className='text-2xl'>날씨</span>
-                    <div className='flex'>
-                        <div className='w-20 h-32 mt-3 border border-grey rounded flex flex-col items-center'>
-                            <span className='text-xs text-grey my-3'>
-                                현지 기온
-                            </span>
-                            <IoThunderstormOutline size={40} />
-                            <span className='my-3 text-lg'>16º</span>
-                        </div>
-                        <div className=' h-32 mt-3 border border-grey rounded flex flex-col items-center ml-5'>
-                            <span className='text-xs text-grey my-3'>
-                                월별 현지/대한민국 기온
-                            </span>
-                            <InfoWeather temperatures={temperatures} />
-                        </div>
-                    </div>
+                    <InfoWeather />
                 </div>
                 {/* 환율 계산 부분 */}
                 <div className=''>

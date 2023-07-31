@@ -3,21 +3,25 @@ import { LiaExchangeAltSolid } from 'react-icons/lia';
 import axios from 'axios';
 
 export default function ExchangeRate() {
-    const currencyKey = process.env.NEXT_PUBLIC_EXCHANGE_KEY;
     const [cur, setCur] = useState<number>(0);
     // 환율 대한민국 고정할거면 원화 자리에 krw 고정
     // 나라 정보와 환율도 가져와야함 => 백엔드에서 페이지 접속할 때 넘겨줘야함
     // 환율 가져오면 그에 따른 뒷자리도 가져와야함 => 배열로 만들어두기?
     useEffect(() => {
         axios
-            .get(`http://data.fixer.io/api/latest?access_key=${currencyKey}`)
+            .get('/api/exchange')
             .then((res) => {
-                // base가 EUR 이기 떄문에 원화와 바꾸고자하는 환율을 가져와서 계산해주어야함
-                // API는 일 100회 제한
-                let won = res.data.rates.KRW;
-                let other = res.data.rates.JPY;
-                setCur(other / won);
-                console.log('환율 정보 : ' + other / won);
+                const datas = [...res.data];
+                // 여행페이지에 해당하는 국가 외화 includes 안에 넣어주기
+                const tempCurrency = datas.filter((data) =>
+                    data.cur_unit.includes('JPY')
+                );
+                // 외화 표기에 100 표시 있으면 100으로 나눠줌
+                const other = tempCurrency[0].cur_unit.includes('(100)')
+                    ? Number(tempCurrency[0].kftc_bkpr) / 100
+                    : Number(tempCurrency[0].kftc_bkpr);
+                setCur(1 / other);
+                console.log('환율 정보 : ' + 1 / other);
             })
             .catch((err) => console.log(err));
     }, []);
@@ -62,8 +66,8 @@ export default function ExchangeRate() {
                 <input
                     className={
                         before === ''
-                            ? 'flex flex-col justify-center text-center text-right border border-lightgrey rounded-r w-60 px-3'
-                            : 'flex flex-col justify-center text-center text-right border border-lightgrey rounded-r w-60 px-[25px]'
+                            ? 'flex flex-col justify-center text-right border border-lightgrey rounded-r w-60 px-3'
+                            : 'flex flex-col justify-center text-right border border-lightgrey rounded-r w-60 px-[25px]'
                     }
                     type='text'
                     placeholder='숫자를 입력해주세요.'
@@ -95,7 +99,7 @@ export default function ExchangeRate() {
                     <div>{isWon ? '일본' : '대한민국'}</div>
                     <div>{isWon ? 'JPY' : 'KRW'}</div>
                 </div>
-                <div className='flex flex-col justify-center text-center text-right border border-lightgrey rounded-r w-60 px-3'>
+                <div className='flex flex-col justify-center text-right border border-lightgrey rounded-r w-60 px-3'>
                     {before === '' ? 0 : after}
                     {isWon ? '엔' : '원'}
                 </div>
