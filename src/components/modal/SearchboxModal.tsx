@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import TransparentModal from './TransparentModal';
 import { BiSearch } from 'react-icons/bi';
 import { RxCross1 } from 'react-icons/rx';
+import DetailBox from '../schedulemain/detailBox';
+import HotSearch from '../schedulemain/hotSearch';
 
 interface CityProps {
     selectedCities: string[];
@@ -19,7 +21,7 @@ function City({ selectedCities, setSelectedCities }: CityProps) {
         { id: 6, place: '브루클린' },
         { id: 7, place: '벨기에' },
     ];
-    
+    const [isCreatingSchedule, setIsCreatingSchedule] = useState<boolean>(false);
     const onClick = (refCity: string) => {
         if (!selectedCities.includes(refCity)) { // 이미 선택된 도시가 아니면
             setSelectedCities(prevCities => [...prevCities, refCity]); // 배열에 삽입
@@ -27,6 +29,10 @@ function City({ selectedCities, setSelectedCities }: CityProps) {
     };
     const onRemoveCity = (city: string) => { // 선택된 도시 삭제
         setSelectedCities(prevCities => prevCities.filter(item => item !== city));
+    };
+    const onCreateSchedule = () => { // 선택된 도시로 일정 생성
+        console.log('선택된 도시들:', selectedCities);
+        setIsCreatingSchedule(true);
     };
 
     if (selectedCities.length > 0) { // 도시를 선택한 경우
@@ -44,7 +50,10 @@ function City({ selectedCities, setSelectedCities }: CityProps) {
                             </button>
                         </div>
                     ))}
-                    <button className='px-3 py-2 rounded-full bg-primary text-[12px]'>
+                    <button 
+                        className='px-3 py-2 rounded-full bg-primary text-[12px]'
+                        onClick={onCreateSchedule} // 배열에 담긴 도시들을 모달창 밖에 출력하고싶어요
+                        >
                         일정 생성
                     </button>
                 </div>
@@ -95,6 +104,12 @@ function City({ selectedCities, setSelectedCities }: CityProps) {
 
 function SearchboxModal ({ setIsModal }: any) {
     const [selectedCities, setSelectedCities] = useState<string[]>([]);
+    const [isCreatingSchedule, setIsCreatingSchedule] = useState<boolean>(false);
+
+    const handleCreateSchedule = () => {
+        setIsCreatingSchedule(true);
+    };
+    
     return (
         <TransparentModal
             modalMode={1}
@@ -112,6 +127,27 @@ function SearchboxModal ({ setIsModal }: any) {
                     />
                 </div>
             </div>
+             {/* 일정 생성 버튼 */}
+      <div className="flex justify-center mt-4">
+        {!isCreatingSchedule ? (
+          <button
+            className="px-3 py-2 rounded-full bg-primary text-[12px]"
+            onClick={handleCreateSchedule}
+          >
+            일정 생성
+          </button>
+        ) : (
+          <div className="mt-4 p-3 border border-grey rounded">
+            <p>선택된 도시들:</p>
+            <ul>
+              {selectedCities.map((city, index) => (
+                <li key={index}>{city}</li>
+              ))}
+            </ul>
+            
+          </div>
+        )}
+      </div>
         </TransparentModal>
     );
 };

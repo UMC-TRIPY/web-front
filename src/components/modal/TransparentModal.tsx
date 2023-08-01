@@ -58,20 +58,13 @@ export default function TransparentModal({
     ];
 
     useEffect(() => {
-        // 모달이 열릴 때 body에 padding-right를 추가하여 스크롤을 없애기
-        document.body.style.overflow = 'hidden';
-        document.body.style.paddingRight = '1px';
+        // 모달이 열릴 때 가로 스크롤을 없애기
+        document.body.style.overflowX = 'hidden';
 
         // 모달 내용의 높이 측정하여 state에 저장
         if (contentRef.current) {
             setContentHeight(contentRef.current.offsetHeight);
         }
-        
-        return () => {
-            // 모달이 닫힐 때 padding-right를 제거하여 스크롤 복구
-            document.body.style.overflow = 'unset';
-            document.body.style.paddingRight = '0';
-        };
     }, []);
 
     return (

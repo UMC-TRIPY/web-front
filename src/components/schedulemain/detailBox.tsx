@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineCalendar } from 'react-icons/ai';
 import format from "date-fns/format";
-import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { ko } from 'date-fns/locale';
 import Calendar from "../infocity/Calendar";
+import SearchboxModal from "../modal/SearchboxModal";
+import HotSearch from "./hotSearch";
 
 interface MenuProps {
     menu: string;
@@ -40,6 +40,8 @@ function RoundBtn (props: RoundBtnProps) {
         </button>
     )
 }
+
+
 
 function DetailBox () {
     const [menus, setMenus] = useState<[string, boolean][]>([
@@ -83,14 +85,6 @@ function DetailBox () {
         setMenus(updatedMenus);
     };
 
-    const [cities, setCities] = useState([
-        "런던",
-        "제주도",
-        "대만",
-        "도쿄",
-        "하와이",
-    ])
-
     // 날짜 선택 부분
     const [startDate, setStartDate] = useState<null | Date>(null);
     const [endDate, setEndDate] = useState<null | Date>(null);
@@ -115,7 +109,7 @@ function DetailBox () {
             </div>
         );
     };
-
+    const [selectedCities, setSelectedCities] = useState<string[]>([]);
     return (
         <div className="mt-12">
             {/* 해외, 국내 탭바 */}
@@ -138,19 +132,7 @@ function DetailBox () {
                     <RoundBtn color="lightgrey" label="검색" />
             </div>
             {/* 인기 검색어 */}
-            <div className="flex flex-col bg-brightgrey rounded-md px-[33px] py-2.5 mx-4">
-                <div className="py-2.5">
-                    인기 검색어
-                </div>
-                <div className="flex flex-col">
-                    {cities.map((city, index) => (
-                        <div key={index} className="flex items-start py-2.5">
-                            <span className="text-grey mr-4">{index + 1}</span>
-                            <button>{city}</button>
-                        </div>
-                    ))}
-                </div>
-            </div>
+            <HotSearch selectedCities={selectedCities}/>
             {/* 날짜 선택창 */}
             <div className="flex flex-row justify-between mx-2.5">
                 <SelectDates title='출발일' value={startDate} />
