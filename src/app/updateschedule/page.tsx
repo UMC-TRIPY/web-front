@@ -8,6 +8,14 @@ import ScheduleBlock from '@/components/scheduleblock/ScheduleBlock';
 import { useCallback, useState } from 'react';
 import { dateTotable } from '@/utils/dateUtil';
 
+/**
+ * Todo
+ * 1. 스케쥴 블록 제한사항 걸기
+ * 2. 스케쥴 블록 이동할곳 미리보기?
+ * 3. 스케쥴 블록 마우스 포인터 맞추기
+ * 4. 코드 리팩토링 필요
+ */
+
 export default function Updateschedule() {
     const [schedule, setSchedule] = useState<IScheduleItem[]>([
         // 몇번째 칸인지도 넣기?
