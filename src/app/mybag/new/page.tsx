@@ -67,9 +67,11 @@ const NewBag = () => {
                     {lastClicedTab.current ? (
                         <DirectoryList />
                     ) : (
-                        <BagList bagList={bagList} />
+                        <>
+                            <BagList bagList={bagList} />
+                            <EmptyBag setIsNewBagModal={setIsNewBagModal} />
+                        </>
                     )}
-                    <EmptyBag setIsNewBagModal={setIsNewBagModal} />
                     {isNewBagModal && (
                         <NewBagModal
                             setIsModal={setIsNewBagModal}
