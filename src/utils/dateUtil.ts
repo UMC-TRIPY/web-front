@@ -6,6 +6,18 @@ export const dateTotable = (date: Date): number => {
     return convertedNum;
 };
 
+export const tableToDate = (num: number): Date => {
+    const date = new Date();
+    console.log(num);
+    date.setHours(6 + Math.floor(num / 2));
+    if (num % 2 === 1) {
+        date.setMinutes(30);
+    } else {
+        date.setMinutes(0);
+    }
+    return date;
+};
+
 export const compareDate = (startDate: Date, endDate: Date): number => {
     const minutes =
         endDate.getHours() * 60 +
