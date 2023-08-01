@@ -4,7 +4,7 @@ import FriendList from '../../components/detailschedule/FriendList';
 import OtherSchedule from '../../components/detailschedule/OtherSchedule';
 import CommonHeader from '../../components/detailschedule/CommonHeader';
 import IscheduleItem from '@/models/interface/IscheduleItem';
-import ScheduleBlock from '@/components/scheduleblock/scheduleBlock';
+import ScheduleBlock from '@/components/scheduleblock/ScheduleBlock';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useCallback } from 'react';
@@ -78,7 +78,6 @@ export default function updateschedule() {
                 {date}
             </div>
         ];
-
         for (let i = 1; i < 35; i += 1) {
             if (i % 2 == 1) {
                 // 00 ~ 30
@@ -104,13 +103,6 @@ export default function updateschedule() {
         (schedule: IscheduleItem, index: number) => {
             return (
                 <ScheduleBlock item={schedule} />
-                // <Card
-                //   key={card.id}
-                //   index={index}
-                //   id={card.id}
-                //   text={card.text}
-                //   moveCard={moveCard}
-                // />
             );
         },
         []
@@ -151,19 +143,19 @@ export default function updateschedule() {
                 <div>
                     <div>{renderDateTable('7/2 (일)', dummySchedule)}</div>
                 </div>
-                <DndProvider backend={HTML5Backend}>
-                    <div
-                        className='absolute top-[1.75rem] left-[4.5rem] bottom-0 right-0 bg-slate-700 opacity-50'
-                        style={{
-                            width: `calc((22rem * 7))`,
-                            height: 'calc(100% - 1.75rem)'
-                        }}
-                    >
-                        {dummySchedule.map((item: IscheduleItem, idx: number) =>
-                            renderScheduleBlock(item, idx)
-                        )}
-                    </div>
-                </DndProvider>
+                {/* <DndProvider backend={HTML5Backend}> */}
+                <div
+                    className='absolute top-[1.75rem] left-[4.5rem] bottom-0 right-0 bg-slate-700 opacity-50'
+                    style={{
+                        width: `calc((22rem * 7))`,
+                        height: 'calc(100% - 1.75rem)'
+                    }}
+                >
+                    {dummySchedule.map((item: IscheduleItem, idx: number) =>
+                        renderScheduleBlock(item, idx)
+                    )}
+                </div>
+                {/* </DndProvider> */}
             </div>
         </div>
     );

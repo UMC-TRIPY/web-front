@@ -1,7 +1,7 @@
 import IscheduleItem from '@/models/interface/IscheduleItem';
 import { dateTotable, compareDate, formatAMPM } from '@/utils/dateUtil';
 import React from 'react';
-import { useDrag, useDrop } from 'react-dnd';
+// import { useDrag, useDrop } from 'react-dnd';
 
 type Props = {
     item: IscheduleItem;
@@ -12,6 +12,12 @@ const ScheduleBlock = (props: Props) => {
         props.item;
     const minutes = compareDate(startTime, endTime);
 
+    const dragFunction = (event, type) => {
+        event.preventDefault()
+        event.stopPropgation()
+        console.log(type)
+    }
+
     return (
         <div
             className='absolute w-[20rem] p-3 border-l-4'
@@ -21,6 +27,9 @@ const ScheduleBlock = (props: Props) => {
                 borderLeftColor: lineColor,
                 backgroundColor: color
             }}
+            onDrop={(event) => dragFunction(event, 'drop')}
+            onDragEnter={(event) => dragFunction(event, 'enter')}
+            onDragLeave={(event) => dragFunction(event, 'leave')}
         >
             <span className='text-xs'>
                 {formatAMPM(startTime)} ~ {formatAMPM(endTime)}
