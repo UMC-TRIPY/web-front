@@ -3,10 +3,11 @@
 import OtherSchedule from '@/components/detailschedule/OtherSchedule';
 import NewBagModal from '@/components/modal/NewBagModal';
 import BagList from '@/components/mybag/BagList';
+import DirectoryList from '@/components/mybag/DirectoryList';
 import EmptyBag from '@/components/mybag/EmptyBag';
 import TopTab from '@/components/mybag/TopTab';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 const NewBag = () => {
     const [tabs, setTabs] = useState([
@@ -34,8 +35,10 @@ const NewBag = () => {
     ]);
 
     const [isNewBagModal, setIsNewBagModal] = useState<boolean>(false);
+    const lastClicedTab = useRef<number>(0);
 
     const handleClickTab = (e: any) => {
+        lastClicedTab.current = parseInt(e.target.id);
         setTabs(
             tabs.map((tab) =>
                 tab.id === e.target.id
@@ -61,7 +64,11 @@ const NewBag = () => {
             <OtherSchedule />
             <div className='h-96'>
                 <div className='flex h-full'>
-                    <BagList bagList={bagList} />
+                    {lastClicedTab.current ? (
+                        <DirectoryList />
+                    ) : (
+                        <BagList bagList={bagList} />
+                    )}
                     <EmptyBag setIsNewBagModal={setIsNewBagModal} />
                     {isNewBagModal && (
                         <NewBagModal
