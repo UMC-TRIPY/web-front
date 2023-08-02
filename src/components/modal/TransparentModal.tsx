@@ -78,7 +78,7 @@ export default function TransparentModal({
                 ></div>
                 <div
                     className='absolute flex flex-col top-[345px] w-[690px] rounded-lg bg-white z-101 shadow-md'
-                    style={{ height: `${contentHeight}px`, minHeight: '6rem', maxHeight: '30rem' }}
+                    style={{ height: `${contentHeight}px`, minHeight: '6rem'}}
                 >
                     {transparentModal[modalMode as number]}
                 </div>

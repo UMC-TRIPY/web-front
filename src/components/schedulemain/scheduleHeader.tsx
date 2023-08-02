@@ -1,6 +1,5 @@
 import { useState } from "react";
 import SearchboxModal from "../modal/SearchboxModal";
-
 import { BiSearch } from "react-icons/bi";
 import { RxCross1 } from 'react-icons/rx';
 
@@ -19,7 +18,7 @@ function City () {
         <div className="flex">
             {searchedCities.map((searchedCity, index) => {
                 return (
-                    <div className="border border-grey rounded-full mx-2" key={index}>
+                    <div className="border border-grey rounded-full mr-2" key={index}>
                         <div className="flex px-3 py-2 text-[12px]">
                             {searchedCities[index]}
                             <button
@@ -36,7 +35,13 @@ function City () {
     )
 }
 
-function ScheduleHeader () {
+interface ScheduleHeaderProps {
+    selectedCities: string[];
+    setSelectedCities: React.Dispatch<React.SetStateAction<string[]>>;
+    onCreateSchedule: () => void;
+}
+
+function ScheduleHeader ({ selectedCities, setSelectedCities, onCreateSchedule }: ScheduleHeaderProps) {
     // 모달 상태 제어
     const [modal, setModal] = useState(false);
 
@@ -59,7 +64,7 @@ function ScheduleHeader () {
                     />
                 </div>
                 <div className="flex my-[25px] items-center">
-                    최근 검색어
+                    <span className="mr-2">최근 검색어</span>
                     <div className="mx-2">
                         <City /> {/* 최근 검색어 map으로 출력 */}
                     </div>
@@ -67,7 +72,12 @@ function ScheduleHeader () {
             </div>
             {modal && (
                 <div className="flex justify-center items-center">
-                    <SearchboxModal setIsModal={setModal} />
+                    <SearchboxModal 
+                        setIsModal={setModal} 
+                        selectedCities={selectedCities} 
+                        setSelectedCities={setSelectedCities} 
+                        onCreateSchedule={() => {}}
+                    />
                 </div>
             )}
         </div>

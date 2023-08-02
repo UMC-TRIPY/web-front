@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { AiOutlineCalendar } from 'react-icons/ai';
 import format from "date-fns/format";
 import 'react-datepicker/dist/react-datepicker.css';
 import Calendar from "../infocity/Calendar";
-import SearchboxModal from "../modal/SearchboxModal";
 import HotSearch from "./hotSearch";
+import SelectedPlaces from "./selectedPlaces";
 
 interface MenuProps {
     menu: string;
@@ -41,9 +41,12 @@ function RoundBtn (props: RoundBtnProps) {
     )
 }
 
+interface DetailBoxProps {
+    selectedCities: string[];
+    setSelectedCities: React.Dispatch<React.SetStateAction<string[]>>;
+}
 
-
-function DetailBox () {
+function DetailBox ({ selectedCities, setSelectedCities }: DetailBoxProps) {
     const [menus, setMenus] = useState<[string, boolean][]>([
         ["해외", true],
         ["국내", false]
@@ -109,7 +112,7 @@ function DetailBox () {
             </div>
         );
     };
-    const [selectedCities, setSelectedCities] = useState<string[]>([]);
+
     return (
         <div className="mt-12">
             {/* 해외, 국내 탭바 */}
@@ -132,7 +135,11 @@ function DetailBox () {
                     <RoundBtn color="lightgrey" label="검색" />
             </div>
             {/* 인기 검색어 */}
-            <HotSearch selectedCities={selectedCities}/>
+            {selectedCities.length > 0 ? (
+                <SelectedPlaces selectedCities={selectedCities} setSelectedCities={setSelectedCities}/> 
+                ) : (
+                <HotSearch />
+            )}
             {/* 날짜 선택창 */}
             <div className="flex flex-row justify-between mx-2.5">
                 <SelectDates title='출발일' value={startDate} />

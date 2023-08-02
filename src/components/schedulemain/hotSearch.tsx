@@ -1,8 +1,6 @@
 import React, { useState } from "react"
-interface HotSearchProps {
-    selectedCities: string[];
-}
-export default function HotSearch(props: HotSearchProps) {
+
+export default function HotSearch() {
     const [cities, setCities] = useState([
         "런던",
         "제주도",
@@ -10,7 +8,6 @@ export default function HotSearch(props: HotSearchProps) {
         "도쿄",
         "하와이",
     ])
-    const [selectedCities, setSelectedCities] = useState<string[]>([]);
     return (
         <div className="flex flex-col bg-brightgrey rounded-md px-[33px] py-2.5 mx-4">
             <div className="py-2.5">
@@ -24,11 +21,6 @@ export default function HotSearch(props: HotSearchProps) {
                     </div>
                 ))}
             </div>
-            {/* 추가: 선택된 도시 출력 */}    
-            {selectedCities.length > 0 && (
-            <div className="py-2.5">선택된 도시: {selectedCities.join(", ")}</div>
-            )}
-        </div>
-        
+        </div>      
     )
 }
