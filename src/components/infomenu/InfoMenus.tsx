@@ -8,15 +8,6 @@ interface MenuProps {
     onClick: (index: number) => void;
 }
 
-interface Props {
-    menu: string;
-    select: boolean;
-    location: {
-        min: number;
-        max: number;
-    };
-}
-
 export default function InfoMenus() {
     const [menus, setMenus] = useState<
         [string, boolean, { min: number; max: number }][]
@@ -24,8 +15,7 @@ export default function InfoMenus() {
         ['메인', true, { min: 0, max: 800 }],
         ['명소', false, { min: 800, max: 2025 }],
         ['준비물', false, { min: 2025, max: 2525 }],
-        ['후기', false, { min: 2525, max: 2820 }],
-        ['회화', false, { min: 2820, max: 5000 }]
+        ['후기/회화', false, { min: 2525, max: 5000 }]
     ]);
     const [place, setPlace] = useState<string>('');
 
