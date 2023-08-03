@@ -2,7 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { LiaExchangeAltSolid } from 'react-icons/lia';
 import axios from 'axios';
 
-export default function ExchangeRate() {
+export default function ExchangeRate({
+    currencyKo,
+    currencyEn,
+    country
+}: {
+    currencyKo: string;
+    currencyEn: string;
+    country: string;
+}) {
     const [cur, setCur] = useState<number>(0);
     // 환율 대한민국 고정할거면 원화 자리에 krw 고정
     // 나라 정보와 환율도 가져와야함 => 백엔드에서 페이지 접속할 때 넘겨줘야함
@@ -14,12 +22,12 @@ export default function ExchangeRate() {
                 const datas = [...res.data];
                 // 여행페이지에 해당하는 국가 외화 includes 안에 넣어주기
                 const tempCurrency = datas.filter((data) =>
-                    data.cur_unit.includes('JPY')
+                    data.cur_unit.includes(currencyEn)
                 );
                 // 외화 표기에 100 표시 있으면 100으로 나눠줌
                 const other = tempCurrency[0].cur_unit.includes('(100)')
                     ? Number(tempCurrency[0].kftc_bkpr) / 100
-                    : Number(tempCurrency[0].kftc_bkpr);
+                    : Number(tempCurrency[0].kftc_bkpr.replace(/,/g, ''));
                 setCur(1 / other);
                 console.log('환율 정보 : ' + 1 / other);
             })
@@ -57,11 +65,10 @@ export default function ExchangeRate() {
 
     return (
         <div className='flex justify-between items-center mt-3'>
-            {/* 환율 api 연동 해야합니다 */}
             <div className='flex'>
                 <div className='flex flex-col justify-center text-center bg-lightgrey text-darkgrey rounded-l w-24 h-16'>
-                    <div>{isWon ? '대한민국' : '일본'}</div>
-                    <div>{isWon ? 'KRW' : 'JPY'}</div>
+                    <div>{isWon ? '대한민국' : country}</div>
+                    <div>{isWon ? 'KRW' : currencyEn}</div>
                 </div>
                 <input
                     className={
@@ -82,7 +89,7 @@ export default function ExchangeRate() {
                             : 'self-center absolute ml-[310px]'
                     }
                 >
-                    {isWon ? '원' : '엔'}
+                    {isWon ? '원' : currencyKo}
                 </div>
             </div>
             <LiaExchangeAltSolid
@@ -96,12 +103,12 @@ export default function ExchangeRate() {
             />
             <div className='flex'>
                 <div className='flex flex-col justify-center text-center bg-lightgrey text-darkgrey rounded-l w-24 h-16'>
-                    <div>{isWon ? '일본' : '대한민국'}</div>
-                    <div>{isWon ? 'JPY' : 'KRW'}</div>
+                    <div>{isWon ? country : '대한민국'}</div>
+                    <div>{isWon ? currencyEn : 'KRW'}</div>
                 </div>
                 <div className='flex flex-col justify-center text-right border border-lightgrey rounded-r w-60 px-3'>
                     {before === '' ? 0 : after}
-                    {isWon ? '엔' : '원'}
+                    {isWon ? currencyKo : '원'}
                 </div>
             </div>
         </div>

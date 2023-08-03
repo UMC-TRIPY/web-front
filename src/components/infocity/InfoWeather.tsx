@@ -13,7 +13,7 @@ interface Informations {
     month: string;
 }
 
-export default function InfoWeather() {
+export default function InfoWeather({ cityName }: { cityName: string }) {
     const [today, setToday] = useState<string>('');
     const [temperatures, setTemperatures] = useState<any>([]);
     const [weather, setWeather] = useState<string>('');
@@ -41,15 +41,15 @@ export default function InfoWeather() {
         }
         axios
             .get(
-                `https://api.openweathermap.org/data/2.5/forecast/daily?q=Tokyo&cnt=5&appid=${weatehrKey}&units=metric`
+                `https://api.openweathermap.org/data/2.5/forecast/daily?q=${cityName}&cnt=5&appid=${weatehrKey}&units=metric`
             )
             .then((res) => {
                 console.log(res.data);
-                setWeather(res.data.list[1].weather[0].main);
-                setToday(`${res.data.list[0].temp.day.toFixed(0)}º`);
+                setWeather(res.data.list[0].weather[0].main);
+                setToday(`${Math.round(res.data.list[0].temp.day)}º`);
                 for (let i = 0; i < 4; i++) {
                     temp[i].unshift(
-                        `${res.data.list[i + 1].temp.day.toFixed(0)}º`
+                        `${Math.round(res.data.list[i + 1].temp.day)}º`
                     );
                 }
                 axios
@@ -59,7 +59,7 @@ export default function InfoWeather() {
                     .then((res) => {
                         for (let i = 0; i < 4; i++) {
                             temp[i].unshift(
-                                `${res.data.list[i + 1].temp.day.toFixed(0)}º`
+                                `${Math.round(res.data.list[i + 1].temp.day)}º`
                             );
                         }
                         setTemperatures(temp);
@@ -104,8 +104,8 @@ export default function InfoWeather() {
                                   return (
                                       <Information
                                           key={`info${index}`}
-                                          local={temperature[0]}
-                                          korea={temperature[1]}
+                                          korea={temperature[0]}
+                                          local={temperature[1]}
                                           month={temperature[2]}
                                       />
                                   );

@@ -1,6 +1,7 @@
 import { Loader } from '@googlemaps/js-api-loader';
+import { useState } from 'react';
 
-export default function HotPlace() {
+export default function HotPlace({ city, zoom }: { city: any; zoom: number }) {
     // 환경변수에서 Map Key 가져옴
     const mapKey: any = process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY;
     const apiOptions: any = {
@@ -16,22 +17,34 @@ export default function HotPlace() {
     });
     function displayMap() {
         // 초기 위치 및 확대 정도 설정
+        let latMid = 0;
+        let lngMid = 0;
+        for (let i = 0; i < city.length; i++) {
+            latMid += Number(city[i].lat);
+            lngMid += Number(city[i].lng);
+        }
+        latMid /= 4;
+        lngMid /= 4;
         const mapOptions = {
-            center: { lat: 34.67187893957369, lng: 135.47977941591452 },
-            zoom: 14
+            center: { lat: latMid, lng: lngMid },
+            zoom: zoom
         };
         // 지도의 초기 위치 및 확대 정도 적용하여 id='map'인 요소에 적용
         const mapDiv = document.getElementById('map');
         const map = new google.maps.Map(mapDiv, mapOptions);
         return map;
     }
+
     function addMarkers(map: any) {
         // 지도에 위도, 경도 이용하여 마커 추가하는 작업
-        const locations: any = {
-            universalStudio: { lat: 34.66542228376301, lng: 135.4323451300621 },
-            dotonbori: { lat: 34.6688500051718, lng: 135.50278316819896 },
-            osakajo: { lat: 34.68725079622799, lng: 135.52586927613112 }
-        };
+        const temp = city.map((t: any) => {
+            return { name: t.name, lat: t.lat, lng: t.lng };
+        });
+        const locations: any = {};
+        temp.map(
+            (t: any) =>
+                (locations[t.name] = { lat: Number(t.lat), lng: Number(t.lng) })
+        );
         const markers = [];
         for (const location in locations) {
             // for문을 이용하여 가져온 지도에 위치 넣는 작업
