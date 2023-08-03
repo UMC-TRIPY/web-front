@@ -3,7 +3,7 @@ import { TiWeatherStormy } from 'react-icons/ti';
 
 const WeatherSection = () => {
     return (
-        <div className='h-2/5 bg-lightgrey'>
+        <div className='h-2/5 bg-brightgrey'>
             <div className='flex h-1/5 items-center text-2xl font-bold pl-8'>
                 날씨
             </div>
@@ -33,18 +33,66 @@ const WeatherSection = () => {
     );
 };
 
+const MaterialSection = () => {
+    const materials = [
+        '비치웨어',
+        '자외선 차단제',
+        '양산',
+        '슬리퍼',
+        '여권',
+        '선글라스',
+        '미니 선풍기',
+        '우산',
+        '우비',
+        '부채',
+        '여행용 방수팩',
+        '수영 모자',
+        '모기약'
+    ];
+    return (
+        <div className='h-2/6 bg-brightgrey'>
+            <div className='flex items-center h-2/5 text-2xl font-bold pl-8'>
+                여행지별 추천 준비물
+            </div>
+            <div className='flex flex-wrap gap-4 w-[90%] m-auto'>
+                {materials.map((material, idx) => (
+                    <div
+                        key={idx}
+                        className='flex justify-center items-center w-fit h-8 p-4 bg-lightgrey rounded-full'
+                    >
+                        {material}
+                    </div>
+                ))}
+            </div>
+        </div>
+    );
+};
+
+const MemoSection = () => {
+    return (
+        <div className='h-2/6 bg-brightgrey'>
+            <div className='flex items-center h-1/5 text-2xl font-bold pl-8 py-8'>
+                메모
+            </div>
+            <textarea
+                className='w-full h-full pl-8 resize-none text-xl bg-brightgrey placeholder::text-grey outline-none'
+                placeholder='메모를 입력하세요.'
+            ></textarea>
+        </div>
+    );
+};
 const BagDetail = () => {
     return (
         <div className='h-screen'>
-            <div>{'<'} 가방 목록 보기</div>
+            <div className='flex items-center h-16 text-xl text-dark-black'>
+                {'<'} 가방 목록 보기
+            </div>
 
             <div className='flex h-full'>
-                <div className='h-full w-1/2'>
+                <div className='flex flex-col gap-4 h-full w-1/2'>
                     <WeatherSection />
-                    <div className='h-1/5 basis-[15%]'>
-                        여헹지별 추천 준비물
-                    </div>
-                    <div className='h-2/5 basis-[15%]'>메모</div>
+                    <MaterialSection />
+                    <MemoSection />
                 </div>
                 <div>캐리어</div>
             </div>
