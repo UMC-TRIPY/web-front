@@ -33,22 +33,23 @@ const WeatherSection = () => {
     );
 };
 
+const materials = [
+    '비치웨어',
+    '자외선 차단제',
+    '양산',
+    '슬리퍼',
+    '여권',
+    '선글라스',
+    '미니 선풍기',
+    '우산',
+    '우비',
+    '부채',
+    '여행용 방수팩',
+    '수영 모자',
+    '모기약'
+];
+
 const MaterialSection = () => {
-    const materials = [
-        '비치웨어',
-        '자외선 차단제',
-        '양산',
-        '슬리퍼',
-        '여권',
-        '선글라스',
-        '미니 선풍기',
-        '우산',
-        '우비',
-        '부채',
-        '여행용 방수팩',
-        '수영 모자',
-        '모기약'
-    ];
     return (
         <div className='h-2/6 bg-brightgrey'>
             <div className='flex items-center h-2/5 text-2xl font-bold pl-8'>
@@ -65,6 +66,32 @@ const MaterialSection = () => {
                 ))}
             </div>
         </div>
+    );
+};
+
+const CarrierSection = () => {
+    return (
+        <>
+            <div className='h-1/5'>캐리어 헤더</div>
+            <div className='flex flex-col gap-8 p-4 bg-brightgrey'>
+                {materials.map((material, idx) => (
+                    <div
+                        key={idx}
+                        className='flex justify-between items-center mx-4'
+                    >
+                        <div className='flex gap-4'>
+                            <input
+                                type='checkbox'
+                                className='flex justify-center items-center w-6 h-6 rounded-full appearance-none border-2 bg-white checked:bg-main-color checked:after:content-["✓"] cursor-pointer'
+                            ></input>
+                            <div>{material}</div>
+                            <div className='cursor-pointer'>X</div>
+                        </div>
+                        <div className='cursor-pointer'>↓</div>
+                    </div>
+                ))}
+            </div>
+        </>
     );
 };
 
@@ -88,13 +115,15 @@ const BagDetail = () => {
                 {'<'} 가방 목록 보기
             </div>
 
-            <div className='flex h-full'>
+            <div className='flex gap-4 h-full'>
                 <div className='flex flex-col gap-4 h-full w-1/2'>
                     <WeatherSection />
                     <MaterialSection />
                     <MemoSection />
                 </div>
-                <div>캐리어</div>
+                <div className='w-1/2'>
+                    <CarrierSection />
+                </div>
             </div>
         </div>
     );
