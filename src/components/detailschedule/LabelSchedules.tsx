@@ -1,7 +1,7 @@
 import { CiLocationOn } from 'react-icons/ci';
 
 interface ILabelScheduleProps {
-    status: 'page' | 'modal';
+    status: 'page' | 'modal' | 'modal2';
 }
 
 export default function LabelSchedules({ status }: ILabelScheduleProps) {
@@ -224,18 +224,30 @@ export default function LabelSchedules({ status }: ILabelScheduleProps) {
                             {schedule.todos.map((todo, idx) => (
                                 <div
                                     key={idx}
-                                    className={`border border-lightgrey border-l-8 rounded-lg p-2 pl-7 mb-2 ${todo.color}`}
+                                    className={`flex items-center justify-between border border-lightgrey border-l-8 rounded-lg p-2 pl-7 mb-2 ${todo.color}`}
                                 >
-                                    <div className='text-xs text-grey pb-2'>
-                                        {todo.time}
-                                    </div>
-                                    <div className='flex justify-between'>
-                                        <div className='flex flex-col'>
-                                            <div>{todo.content}</div>
-                                            <div className='text-grey'>
-                                                {todo.additional}
+                                    <div>
+                                        <div className='text-xs text-grey pb-2'>
+                                            {todo.time}
+                                        </div>
+                                        <div className='flex justify-between'>
+                                            <div className='flex flex-col'>
+                                                <div>{todo.content}</div>
+                                                <div className='text-grey'>
+                                                    {todo.additional}
+                                                </div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div>
+                                    {status === 'modal2' && ( // modal2일 때 체크박스
+                                        <div className='flex items-center'>
+                                            <input
+                                                type='checkbox'
+                                                className='mr-2'
+                                            />
+                                        </div>
+                                    )}
                                     </div>
                                 </div>
                             ))}

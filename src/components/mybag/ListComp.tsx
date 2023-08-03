@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import RoundBtn from '../layout/roundBtn';
+import ScheduleDetailModal from '../modal/ScheduleDetailModal';
+import BagPackingModal from '../modal/BagpackingModal';
 
 interface Props {
     travels: {
@@ -32,6 +34,8 @@ export default function ListComp({ travels, name }: Props) {
         useState<{ id: number; dates: string; places: string }[]>(travels);
     const [currentPage, setCurrentPage] = useState(1);
     const [travelsPerPage] = useState(8);
+    const [modal, setModal] = useState(false);
+
     const handlePrevClick = () => {
         setCurrentPage((prevPage) => prevPage - 1);
     };
@@ -59,14 +63,43 @@ export default function ListComp({ travels, name }: Props) {
     };
 
     const TravelList = ({ travel }: TravelProps) => {
+        const [modalInfo, setModalInfo] = useState({
+            isOpen: false,
+            selectedPlace: '',
+        });
+    
+        const handleModalOpen = (place: string) => {
+            setModalInfo({
+                isOpen: true,
+                selectedPlace: place,
+            });
+        };
+    
+        const handleModalClose = () => {
+            setModalInfo({
+                isOpen: false,
+                selectedPlace: '',
+            });
+        };
         return (
-            <div className='flex items-center justify-between py-[16.5px]'>
-                <Content content={travel.dates} />
-                <Content content={travel.places} />
-                <div className='flex w-1/3 justify-center'>
-                    <RoundBtn label='상세보기' color='bg-lightgrey' />
-                    <RoundBtn label='가방 만들기' color='bg-lightgrey' />
+            <div>
+                <div className='flex items-center justify-between py-[16.5px]'>
+                    <Content content={travel.dates} />
+                    <Content content={travel.places} />
+                    <div className='flex w-1/3 justify-center'>
+                        <RoundBtn 
+                            label='상세보기' 
+                            color='bg-lightgrey' 
+                            onClick={() => handleModalOpen(travel.places)}
+                        />
+                        <RoundBtn label='가방 만들기' color='bg-lightgrey' />
+                    </div>
                 </div>
+                {modalInfo.isOpen && (
+                    <div>
+                        <BagPackingModal setIsModal={handleModalClose} selectedPlace={modalInfo.selectedPlace}/>
+                    </div>
+                )}
             </div>
         );
     };
@@ -77,7 +110,11 @@ export default function ListComp({ travels, name }: Props) {
                 <Content content={travel.dates} />
                 <Content content={travel.places} />
                 <div className='flex w-1/3 justify-center'>
-                    <RoundBtn label='상세보기' color='bg-lightgrey' />
+                    <RoundBtn 
+                        label='상세보기' 
+                        color='bg-lightgrey' 
+                        onClick={() => setModal(true)}
+                    />
                     <RoundBtn
                         label='삭제하기'
                         color='bg-lightgrey'
