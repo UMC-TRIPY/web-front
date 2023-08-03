@@ -3,7 +3,7 @@ import GoogleLoginButton from '../button/GoogleLoginButton';
 import KakaoLoginButton from '../button/KakaoLoginButton';
 import Modal from './Modal';
 
-const LoginModal = ({ setIsModal }: any) => {
+const LoginModal = ({ setIsModal, setIsLoggedIn }: any) => {
     return (
         <Modal
             modalMode={0}
@@ -14,7 +14,10 @@ const LoginModal = ({ setIsModal }: any) => {
         >
             <div className='flex flex-col'>
                 <div className='flex flex-col gap-4 justify-center items-center h-4/5 p-5'>
-                    <KakaoLoginButton />
+                    <KakaoLoginButton
+                        setIsModal={setIsModal}
+                        setIsLoggedIn={setIsLoggedIn}
+                    />
                     <GoogleLoginButton />
                 </div>
                 <div className='text-xs text-center text-grey p-5'>

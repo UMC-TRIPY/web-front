@@ -1,7 +1,8 @@
 'use client';
 
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { useParams, useRouter } from 'next/navigation';
+import React, { useEffect, useRef, useState } from 'react';
 import LoginModal from '../modal/LoginModal';
 import ScheduleAddModal from '../modal/ScheduleAddModal';
 import ScheduleDeleteModal from '../modal/ScheduleDeleteModal';
@@ -14,10 +15,13 @@ interface MenuProps {
     onClick: (index: number) => void;
 }
 
+let count = 0;
+
 export default function Header() {
     // 로그인, 로그아웃 상태구현
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [isModal, setIsModal] = useState(false);
+    const router = useRouter();
 
     // 일정 추가 모달 테스트용. 스케줄 페이지로 이동 필요.
     const [isScheduleAddModal, setIsScheduleAddModal] = useState(false);
@@ -81,6 +85,9 @@ export default function Header() {
             menu[0],
             index === selectedIndex
         ]);
+        if (selectedIndex === 0) router.push('/schedulemain');
+        if (selectedIndex === 1) router.push('/schedule');
+        if (selectedIndex === 2) router.push('/mybag');
         setMenus(updatedMenus);
     };
 
@@ -140,7 +147,12 @@ export default function Header() {
                     )}
                 </div>
             </div>
-            {isModal && <LoginModal setIsModal={setIsModal} />}
+            {isModal && (
+                <LoginModal
+                    setIsModal={setIsModal}
+                    setIsLoggedIn={setIsLoggedIn}
+                />
+            )}
             {/* {isScheduleAddModal && (
                 <ScheduleAddModal setIsModal={setIsScheduleAddModal} />
             )} */}
