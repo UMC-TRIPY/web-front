@@ -77,6 +77,45 @@
                     "image": "/images/umedaFloatingGarden.png"
                 }
             ]
+        },
+        {
+            "country": "미국",
+            "cityKo": "뉴욕",
+            "cityEn": "New York",
+            "currencyKo": "달러",
+            "currencyEn": "USD",
+            "mainPhoto": "newyorkPic",
+            "zoom": 12,
+            "location": [
+                {
+                    "name": "자유의 여신상",
+                    "reviews": "999개 리뷰",
+                    "lat": "40.68925192542671",
+                    "lng": "-74.04449949203813",
+                    "image": "/images/statueofliberty.png"
+                },
+                {
+                    "name": "타임즈 스퀘어",
+                    "reviews": "999개 리뷰",
+                    "lat": "40.75795033514446",
+                    "lng": "-73.98554077727864",
+                    "image": "/images/timessquare.png"
+                },
+                {
+                    "name": "엠파이어 스테이트 빌딩",
+                    "reviews": "999개 리뷰",
+                    "lat": "40.74841608744076",
+                    "lng": " -73.98567513087048",
+                    "image": "/images/empirestatebuilding.png"
+                },
+                {
+                    "name": "센트럴 파크",
+                    "reviews": "999개 리뷰",
+                    "lat": "40.782550681366374",
+                    "lng": "-73.96558417540143",
+                    "image": "/images/centralpark.png"
+                }
+            ]
         }
     ]
 }

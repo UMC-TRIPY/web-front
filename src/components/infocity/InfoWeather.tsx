@@ -46,10 +46,14 @@ export default function InfoWeather({ cityName }: { cityName: string }) {
             .then((res) => {
                 console.log(res.data);
                 setWeather(res.data.list[1].weather[0].main);
-                setToday(`${res.data.list[0].temp.day.toFixed(0)}º`);
+                setToday(
+                    `${Math.round(res.data.list[0].temp.day.toFixed(0))}º`
+                );
                 for (let i = 0; i < 4; i++) {
                     temp[i].unshift(
-                        `${res.data.list[i + 1].temp.day.toFixed(0)}º`
+                        `${Math.round(
+                            res.data.list[i + 1].temp.day.toFixed(0)
+                        )}º`
                     );
                 }
                 axios
@@ -59,7 +63,9 @@ export default function InfoWeather({ cityName }: { cityName: string }) {
                     .then((res) => {
                         for (let i = 0; i < 4; i++) {
                             temp[i].unshift(
-                                `${res.data.list[i + 1].temp.day.toFixed(0)}º`
+                                `${Math.round(
+                                    res.data.list[i + 1].temp.day.toFixed(0)
+                                )}º`
                             );
                         }
                         setTemperatures(temp);

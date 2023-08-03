@@ -27,7 +27,7 @@ export default function ExchangeRate({
                 // 외화 표기에 100 표시 있으면 100으로 나눠줌
                 const other = tempCurrency[0].cur_unit.includes('(100)')
                     ? Number(tempCurrency[0].kftc_bkpr) / 100
-                    : Number(tempCurrency[0].kftc_bkpr);
+                    : Number(tempCurrency[0].kftc_bkpr.replace(/,/g, ''));
                 setCur(1 / other);
                 console.log('환율 정보 : ' + 1 / other);
             })

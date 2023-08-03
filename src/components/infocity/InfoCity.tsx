@@ -38,9 +38,10 @@ export default function InfoCity({ city }: any) {
                 alt='none'
                 width={522}
                 height={522}
+                className='rounded-lg'
             />
             <div className='h-11/12  flex flex-col justify-between'>
-                <div className='text-5xl font-bold  '>{city.cityKo}</div>
+                <div className='text-5xl font-bold'>{city.cityKo}</div>
                 {/* 날씨 부분 */}
                 <div>
                     <span className='text-2xl'>날씨</span>

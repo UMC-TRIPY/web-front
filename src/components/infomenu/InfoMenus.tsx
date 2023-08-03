@@ -1,3 +1,6 @@
+import Image from 'next/image';
+import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 
@@ -8,7 +11,11 @@ interface MenuProps {
     onClick: (index: number) => void;
 }
 
-export default function InfoMenus({ setCityName }: { setCityName: any }) {
+export default function InfoMenus() {
+    const para = useParams();
+    const currentLocation = para.city;
+    const [place, setPlace] = useState<string>('');
+    const [activeFocus, setActiveFocus] = useState<boolean>(false);
     const [menus, setMenus] = useState<
         [string, boolean, { min: number; max: number }][]
     >([
@@ -17,16 +24,16 @@ export default function InfoMenus({ setCityName }: { setCityName: any }) {
         ['준비물', false, { min: 2025, max: 2525 }],
         ['후기/회화', false, { min: 2525, max: 5000 }]
     ]);
-    const [place, setPlace] = useState<string>('');
 
     const Menu = ({ menu, select, index, onClick }: MenuProps) => {
         return (
             <div className='flex flex-col items-center'>
                 {select && (
-                    <img
-                        className='block'
+                    <Image
                         src='/images/selected.png'
                         alt='none'
+                        width={16}
+                        height={16}
                     />
                 )}
                 <span
@@ -78,7 +85,8 @@ export default function InfoMenus({ setCityName }: { setCityName: any }) {
         ['부다페스트', 'budapest'],
         ['파리', 'paris'],
         ['나폴리', 'neapolitan'],
-        ['나트랑', 'nha-trang']
+        ['나트랑', 'nhatrang'],
+        ['뉴욕', 'newyork']
     ];
     const results = travels
         .filter((t) => t[0][0].includes(place[0]))
@@ -86,18 +94,7 @@ export default function InfoMenus({ setCityName }: { setCityName: any }) {
 
     const length = results.length === 0 ? true : false;
 
-    const onSearch = () => {
-        if (place === '') {
-            alert('1글자 이상 입력해주세요.');
-            return;
-        }
-        setCityName(place);
-        setPlace('');
-    };
-
-    const [activeFocus, setActiveFocus] = useState<boolean>(false);
-
-    useEffect(() => {}, [menus]);
+    useEffect(() => {}, []);
 
     return (
         <div className='flex justify-between py-6 sticky top-0 bg-white z-10'>
@@ -122,7 +119,7 @@ export default function InfoMenus({ setCityName }: { setCityName: any }) {
                         setPlace(e.target.value)
                     }
                     onFocus={() => setActiveFocus(true)}
-                    onBlur={() => setActiveFocus(false)}
+                    onBlur={() => setTimeout(() => setActiveFocus(false), 250)}
                 />
                 <div
                     className={
@@ -136,24 +133,37 @@ export default function InfoMenus({ setCityName }: { setCityName: any }) {
                     }
                 >
                     {results.map((result, idx) => (
-                        <div
-                            key={`result${idx}`}
-                            className='py-4 pl-8 border-y border-morelightgrey cursor-pointer'
-                            onClick={() => {
-                                console.log(result);
-                                setCityName(result[0]);
-                            }}
-                            onFocus={(e) => console.log(e)}
+                        <Link
+                            key={`resultlink${idx}`}
+                            href={`/info/${result[1]}`}
                         >
-                            {result[0]}
-                        </div>
+                            <div
+                                key={`result${idx}`}
+                                className='py-4 pl-8 border-y border-morelightgrey cursor-pointer'
+                                onClick={() => {}}
+                            >
+                                {result[0]}
+                            </div>
+                        </Link>
                     ))}
                 </div>
-                <BiSearch
-                    onClick={() => onSearch()}
-                    size='24'
+                <Link
+                    href={
+                        place === ''
+                            ? `/info/${currentLocation}`
+                            : `/info/${results.map((result) => result[1])}`
+                    }
                     className='absolute self-end mr-5 hover:cursor-pointer'
-                />
+                >
+                    <BiSearch
+                        onClick={() => {
+                            if (place === '') {
+                                alert('1글자 이상 입력해주세요.');
+                            }
+                        }}
+                        size='24'
+                    />
+                </Link>
             </div>
         </div>
     );
