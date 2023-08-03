@@ -1,5 +1,8 @@
+'use client';
+
 import Image from 'next/image';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
 import { TiWeatherStormy } from 'react-icons/ti';
 
 const WeatherSection = () => {
@@ -35,19 +38,19 @@ const WeatherSection = () => {
 };
 
 const materials = [
-    '비치웨어',
-    '자외선 차단제',
-    '양산',
-    '슬리퍼',
-    '여권',
-    '선글라스',
-    '미니 선풍기',
-    '우산',
-    '우비',
-    '부채',
-    '여행용 방수팩',
-    '수영 모자',
-    '모기약'
+    { id: 0, name: '비치웨어', clicked: false },
+    { id: 1, name: '자외선 차단제', clicked: false },
+    { id: 2, name: '양산', clicked: false },
+    { id: 3, name: '슬리퍼', clicked: false },
+    { id: 4, name: '여권', clicked: false },
+    { id: 5, name: '선글라스', clicked: false },
+    { id: 6, name: '미니 선풍기', clicked: false },
+    { id: 7, name: '우산', clicked: false },
+    { id: 8, name: '우비', clicked: false },
+    { id: 9, name: '부채', clicked: false },
+    { id: 10, name: '여행용 방수팩', clicked: false },
+    { id: 11, name: '수영 모자', clicked: false },
+    { id: 12, name: '모기약', clicked: false }
 ];
 
 const MaterialSection = () => {
@@ -62,7 +65,7 @@ const MaterialSection = () => {
                         key={idx}
                         className='flex justify-center items-center w-fit h-8 p-4 bg-lightgrey rounded-full'
                     >
-                        {material}
+                        {material.name}
                     </div>
                 ))}
             </div>
@@ -71,15 +74,43 @@ const MaterialSection = () => {
 };
 
 const CarrierSection = () => {
+    const [materials, setMaterials] = useState([
+        { id: '0', name: '비치웨어', clicked: false },
+        { id: '1', name: '자외선 차단제', clicked: false },
+        { id: '2', name: '양산', clicked: false },
+        { id: '3', name: '슬리퍼', clicked: false },
+        { id: '4', name: '여권', clicked: false },
+        { id: '5', name: '선글라스', clicked: false },
+        { id: '6', name: '미니 선풍기', clicked: false },
+        { id: '7', name: '우산', clicked: false },
+        { id: '8', name: '우비', clicked: false },
+        { id: '9', name: '부채', clicked: false },
+        { id: '10', name: '여행용 방수팩', clicked: false },
+        { id: '11', name: '수영 모자', clicked: false },
+        { id: '12', name: '모기약', clicked: false }
+    ]);
+
+    const handleCheckbox = (e: any) => {
+        const id = e.target.id;
+        setMaterials(
+            materials.map((material) =>
+                material.id === id
+                    ? { ...material, clicked: !material.clicked }
+                    : material
+            )
+        );
+    };
+
     return (
         <>
             <div>
-                <div className='flex justify-center'>
+                <div id='carrier-header' className='flex justify-center'>
                     <Image
                         src='/images/carrierHandle.svg'
                         alt=''
                         width={250}
                         height={200}
+                        priority={true}
                     />
                     <div className='absolute text-white text-2xl pt-1'>
                         캐리어
@@ -92,18 +123,36 @@ const CarrierSection = () => {
                     </div>
                 </div>
             </div>
-            <div className='flex flex-col gap-8 p-4 bg-brightgrey'>
+            <div
+                id='carrier-body'
+                className='flex flex-col gap-8 p-4 bg-brightgrey'
+            >
+                <div className='flex justify-end'>
+                    <div className='flex justify-center items-center w-fit h-8 p-4 bg-lightgrey rounded-full cursor-pointer'>
+                        추가하기
+                    </div>
+                </div>
+
                 {materials.map((material, idx) => (
                     <div
                         key={idx}
                         className='flex justify-between items-center mx-4'
                     >
-                        <div className='flex gap-4'>
+                        <div
+                            className={
+                                'flex gap-4 px-4 py-2 rounded-full transition-all duration-500' +
+                                (material.clicked
+                                    ? ' bg-lightgrey text-xs text-grey'
+                                    : '')
+                            }
+                        >
                             <input
+                                id={material.id}
                                 type='checkbox'
-                                className='flex justify-center items-center w-6 h-6 rounded-full appearance-none border-2 bg-white checked:bg-main-color checked:after:content-["✓"] cursor-pointer'
+                                className='flex justify-center items-center w-6 h-6 rounded-full appearance-none border-2 bg-white checked:after:content-["✓"] cursor-pointer'
+                                onClick={(e) => handleCheckbox(e)}
                             ></input>
-                            <div>{material}</div>
+                            <div>{material.name}</div>
                             <div className='cursor-pointer'>X</div>
                         </div>
                         <div className='cursor-pointer'>↓</div>
@@ -129,9 +178,14 @@ const MemoSection = () => {
 };
 
 const BagDetail = () => {
+    const route = useRouter();
+
     return (
         <div className='h-screen'>
-            <div className='flex items-center h-16 text-xl text-dark-black'>
+            <div
+                className='flex items-center h-16 text-xl text-dark-black cursor-pointer'
+                onClick={() => route.push('/mybag/new')}
+            >
                 {'<'} 가방 목록 보기
             </div>
 
