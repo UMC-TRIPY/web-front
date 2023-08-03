@@ -1,5 +1,7 @@
-import { BiSearch, BiX } from "react-icons/bi";
-
+import { useState } from "react";
+import SearchboxModal from "../modal/SearchboxModal";
+import { BiSearch } from "react-icons/bi";
+import { RxCross1 } from 'react-icons/rx';
 
 
 function City () {
@@ -16,16 +18,14 @@ function City () {
         <div className="flex">
             {searchedCities.map((searchedCity, index) => {
                 return (
-                    <div className="border border-grey rounded-full mx-2" key={index}>
-                        <div className="flex px-2 py-1  text-[14px]">
+                    <div className="border border-grey rounded-full mr-2" key={index}>
+                        <div className="flex px-3 py-2 text-[12px]">
                             {searchedCities[index]}
                             <button
-                                className="px-1"
+                                className="pl-2 pb-0.5" // RxCross가 중앙에 위치하기 위해 pb-0.5
                                 onClick={() => onClick(searchedCity)}
                             >
-                                <BiX 
-                                    size={16}
-                                />
+                                <RxCross1 size={12}/>
                             </button>
                         </div>
                     </div>
@@ -35,7 +35,16 @@ function City () {
     )
 }
 
-function ScheduleHeader () {
+interface ScheduleHeaderProps {
+    selectedCities: string[];
+    setSelectedCities: React.Dispatch<React.SetStateAction<string[]>>;
+    onCreateSchedule: () => void;
+}
+
+function ScheduleHeader ({ selectedCities, setSelectedCities, onCreateSchedule }: ScheduleHeaderProps) {
+    // 모달 상태 제어
+    const [modal, setModal] = useState(false);
+
     return (
         <div className="flex justify-center">
             <div className="flex-col text-center">
@@ -44,9 +53,10 @@ function ScheduleHeader () {
                 </div>
                 <div className="flex relative justify-center">
                     <input 
-                        className="border-b border-grey w-[630px] pb-5 pl-5"
+                        className="border-b border-grey w-[630px] pb-5 pl-5 focus:outline-none"
                         type="text" 
                         placeholder="여행일정을 생성할 도시를 입력하세요"
+                        onClick={() => setModal(true)}
                     />
                     <BiSearch   
                             size={32}
@@ -54,12 +64,22 @@ function ScheduleHeader () {
                     />
                 </div>
                 <div className="flex my-[25px] items-center">
-                    최근 검색어
+                    <span className="mr-2">최근 검색어</span>
                     <div className="mx-2">
                         <City /> {/* 최근 검색어 map으로 출력 */}
                     </div>
                 </div>
             </div>
+            {modal && (
+                <div className="flex justify-center items-center">
+                    <SearchboxModal 
+                        setIsModal={setModal} 
+                        selectedCities={selectedCities} 
+                        setSelectedCities={setSelectedCities} 
+                        onCreateSchedule={() => {}}
+                    />
+                </div>
+            )}
         </div>
     )
 }
