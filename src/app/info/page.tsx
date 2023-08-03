@@ -7,29 +7,7 @@ import Conversation from '@/components/conversation/Conversation';
 import HotPlace from '@/components/hotplace/HotPlace';
 import CardCarousel from '@/components/main/CardCarousel';
 import ILocation from '@/models/interface/ILocation';
-
-const dummyLocation: ILocation[] = [
-    {
-        title: '런던',
-        desc: '000개의 리뷰',
-        img: ''
-    },
-    {
-        title: '도쿄',
-        desc: '000개의 리뷰',
-        img: '/images/tokyo.png'
-    },
-    {
-        title: '파리',
-        desc: '000개의 리뷰',
-        img: '/images/paris.png'
-    },
-    {
-        title: '뉴욕',
-        desc: '000개의 리뷰',
-        img: 'https://static01.nyt.com/images/2022/09/29/travel/36hours-nyc11/36hours-nyc11-mobileMasterAt3x-v2.jpg'
-    }
-];
+import { useState } from 'react';
 
 const items = [
     {
@@ -80,21 +58,22 @@ const items = [
 ];
 
 const info = () => {
+    const [cityName, setCityName] = useState<string>('오사카');
+    const datas = require('../../../public/data/dummy.json');
+    const city = datas.datas.filter((data: any) => data.cityKo === cityName);
+    const dummyCity = city[0].location.map((loc: any) => {
+        return { title: loc.name, desc: loc.reviews, img: loc.image };
+    });
     return (
         <div>
             {/* 화면 위치 및 검색 기능 부분 */}
-            <InfoMenus />
+            <InfoMenus setCityName={setCityName} />
             {/* 여행 도시 관한 정보 부분 */}
-            <InfoCity />
+            <InfoCity city={city[0]} />
             {/* 인기 여행지 */}
-            <HotPlace />
+            <HotPlace city={city[0].location} zoom={city[0].zoom} />
             <div className='my-16'>
-                <CardCarousel
-                    mode={0}
-                    title=''
-                    size={4}
-                    items={dummyLocation}
-                />
+                <CardCarousel mode={0} title='' size={4} items={dummyCity} />
             </div>
             {/* 추천 준비물 */}
             {/* <RecoPrep /> */}

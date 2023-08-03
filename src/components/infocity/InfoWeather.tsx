@@ -13,7 +13,7 @@ interface Informations {
     month: string;
 }
 
-export default function InfoWeather() {
+export default function InfoWeather({ cityName }: { cityName: string }) {
     const [today, setToday] = useState<string>('');
     const [temperatures, setTemperatures] = useState<any>([]);
     const [weather, setWeather] = useState<string>('');
@@ -41,7 +41,7 @@ export default function InfoWeather() {
         }
         axios
             .get(
-                `https://api.openweathermap.org/data/2.5/forecast/daily?q=Tokyo&cnt=5&appid=${weatehrKey}&units=metric`
+                `https://api.openweathermap.org/data/2.5/forecast/daily?q=${cityName}&cnt=5&appid=${weatehrKey}&units=metric`
             )
             .then((res) => {
                 console.log(res.data);

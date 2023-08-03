@@ -6,7 +6,7 @@ import format from 'date-fns/format';
 import Calendar from './Calendar';
 import Image from 'next/image';
 
-export default function InfoCity() {
+export default function InfoCity({ city }: any) {
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -34,20 +34,20 @@ export default function InfoCity() {
     return (
         <div className='flex justify-between mt-28'>
             <Image
-                src='/images/location.png'
+                src={`/images/${city.mainPhoto}.png`}
                 alt='none'
                 width={522}
                 height={522}
             />
             <div className='h-11/12  flex flex-col justify-between'>
-                <div className='text-5xl font-bold  '>도쿄</div>
+                <div className='text-5xl font-bold  '>{city.cityKo}</div>
                 {/* 날씨 부분 */}
                 <div>
                     <span className='text-2xl'>날씨</span>
-                    <InfoWeather />
+                    <InfoWeather cityName={city.cityEn} />
                 </div>
                 {/* 환율 계산 부분 */}
-                <div className=''>
+                <div>
                     <div className='flex text-xs items-center'>
                         <span className='text-2xl mr-4'>환율 계산기</span>
                         <button
@@ -60,10 +60,14 @@ export default function InfoCity() {
                             환율정보 저장하기
                         </button>
                     </div>
-                    <ExchangeRate />
+                    <ExchangeRate
+                        currencyKo={city.currencyKo}
+                        currencyEn={city.currencyEn}
+                        country={city.country}
+                    />
                 </div>
                 {/* 날짜 선택 부분 */}
-                <div className=''>
+                <div>
                     <span className='text-2xl'>여행계획을 시작해볼까요?</span>
                     <div className='flex mt-3'>
                         <SelectDates title='출발일' value={startDate} />
