@@ -11,7 +11,7 @@ const KakaoOAuth = () => {
     useEffect(() => {
         // TODO: authCode를 서버에 넘겨준 다음 200 받으면 메인 페이지로 이동
         splitAuthCode().then((res) => setAuthCode(res));
-        // router.push('/');
+        router.push('/');
     }, []);
     return (
         <div>

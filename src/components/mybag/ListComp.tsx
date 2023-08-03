@@ -3,6 +3,7 @@ import RoundBtn from '../layout/roundBtn';
 import ScheduleDetailModal from '../modal/ScheduleDetailModal';
 import BagPackingModal from '../modal/BagpackingModal';
 import MyBagModal from '../modal/MyBagModal';
+import { useRouter } from 'next/navigation';
 
 interface Props {
     travels: {
@@ -37,6 +38,8 @@ export default function ListComp({ travels, name }: Props) {
     const [travelsPerPage] = useState(8);
     const [modal, setModal] = useState(false);
 
+    const router = useRouter();
+
     const handlePrevClick = () => {
         setCurrentPage((prevPage) => prevPage - 1);
     };
@@ -66,20 +69,20 @@ export default function ListComp({ travels, name }: Props) {
     const TravelList = ({ travel }: TravelProps) => {
         const [modalInfo, setModalInfo] = useState({
             isOpen: false,
-            selectedPlace: '',
+            selectedPlace: ''
         });
-    
+
         const handleModalOpen = (place: string) => {
             setModalInfo({
                 isOpen: true,
-                selectedPlace: place,
+                selectedPlace: place
             });
         };
-    
+
         const handleModalClose = () => {
             setModalInfo({
                 isOpen: false,
-                selectedPlace: '',
+                selectedPlace: ''
             });
         };
         return (
@@ -88,17 +91,24 @@ export default function ListComp({ travels, name }: Props) {
                     <Content content={travel.dates} />
                     <Content content={travel.places} />
                     <div className='flex w-1/3 justify-center'>
-                        <RoundBtn 
-                            label='상세보기' 
-                            color='bg-lightgrey' 
+                        <RoundBtn
+                            label='상세보기'
+                            color='bg-lightgrey'
                             onClick={() => handleModalOpen(travel.places)}
                         />
-                        <RoundBtn label='가방 만들기' color='bg-lightgrey' />
+                        <RoundBtn
+                            label='가방 만들기'
+                            color='bg-lightgrey'
+                            onClick={() => router.push('/mybag/new')}
+                        />
                     </div>
                 </div>
                 {modalInfo.isOpen && (
                     <div>
-                        <BagPackingModal setIsModal={handleModalClose} selectedPlace={modalInfo.selectedPlace}/>
+                        <BagPackingModal
+                            setIsModal={handleModalClose}
+                            selectedPlace={modalInfo.selectedPlace}
+                        />
                     </div>
                 )}
             </div>
@@ -108,20 +118,20 @@ export default function ListComp({ travels, name }: Props) {
     const MyBagList = ({ travel, index }: MyBagProps) => {
         const [modalInfo, setModalInfo] = useState({
             isOpen: false,
-            selectedPlace: '',
+            selectedPlace: ''
         });
-    
+
         const handleModalOpen = (place: string) => {
             setModalInfo({
                 isOpen: true,
-                selectedPlace: place,
+                selectedPlace: place
             });
         };
-    
+
         const handleModalClose = () => {
             setModalInfo({
                 isOpen: false,
-                selectedPlace: '',
+                selectedPlace: ''
             });
         };
 
@@ -130,9 +140,9 @@ export default function ListComp({ travels, name }: Props) {
                 <Content content={travel.dates} />
                 <Content content={travel.places} />
                 <div className='flex w-1/3 justify-center'>
-                    <RoundBtn 
-                        label='상세보기' 
-                        color='bg-lightgrey' 
+                    <RoundBtn
+                        label='상세보기'
+                        color='bg-lightgrey'
                         onClick={() => handleModalOpen(travel.places)}
                     />
                     <RoundBtn
@@ -143,7 +153,10 @@ export default function ListComp({ travels, name }: Props) {
                 </div>
                 {modalInfo.isOpen && (
                     <div>
-                        <MyBagModal setIsModal={handleModalClose} selectedPlace={modalInfo.selectedPlace}/>
+                        <MyBagModal
+                            setIsModal={handleModalClose}
+                            selectedPlace={modalInfo.selectedPlace}
+                        />
                     </div>
                 )}
             </div>

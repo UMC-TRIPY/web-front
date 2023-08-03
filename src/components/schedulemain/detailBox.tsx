@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { AiOutlineCalendar } from 'react-icons/ai';
-import format from "date-fns/format";
+import format from 'date-fns/format';
 import 'react-datepicker/dist/react-datepicker.css';
-import Calendar from "../infocity/Calendar";
-import HotSearch from "./hotSearch";
-import SelectedPlaces from "./selectedPlaces";
+import Calendar from '../infocity/Calendar';
+import HotSearch from './hotSearch';
+import SelectedPlaces from './selectedPlaces';
+import { useRouter } from 'next/navigation';
 
 interface MenuProps {
     menu: string;
@@ -17,28 +18,30 @@ interface RoundBoxProps {
     placeholder: string;
 }
 
-function RoundBox (props: RoundBoxProps) {
+function RoundBox(props: RoundBoxProps) {
     return (
-        <input 
+        <input
             className={`border border-lightgrey w-[368px] rounded-md p-5 mx-1.5 my-4`}
             placeholder={props.placeholder}
         />
-    )
+    );
 }
 
 interface RoundBtnProps {
     label: string;
     color: string;
+    onClick?: () => void;
 }
 
-function RoundBtn (props: RoundBtnProps) {
+function RoundBtn(props: RoundBtnProps) {
     return (
         <button
             className={`bg-${props.color} rounded-md w-[140px] py-4 mx-1.5 my-4`}
+            onClick={props.onClick}
         >
-        {props.label}
+            {props.label}
         </button>
-    )
+    );
 }
 
 interface DetailBoxProps {
@@ -46,10 +49,10 @@ interface DetailBoxProps {
     setSelectedCities: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-function DetailBox ({ selectedCities, setSelectedCities }: DetailBoxProps) {
+function DetailBox({ selectedCities, setSelectedCities }: DetailBoxProps) {
     const [menus, setMenus] = useState<[string, boolean][]>([
-        ["해외", true],
-        ["국내", false]
+        ['해외', true],
+        ['국내', false]
     ]);
 
     const Menu = ({ menu, select, index, onClick }: MenuProps) => {
@@ -92,6 +95,8 @@ function DetailBox ({ selectedCities, setSelectedCities }: DetailBoxProps) {
     const [startDate, setStartDate] = useState<null | Date>(null);
     const [endDate, setEndDate] = useState<null | Date>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
+    const router = useRouter();
+
     const SelectDates = ({
         title,
         value
@@ -114,7 +119,7 @@ function DetailBox ({ selectedCities, setSelectedCities }: DetailBoxProps) {
     };
 
     return (
-        <div className="mt-12">
+        <div className='mt-12'>
             {/* 해외, 국내 탭바 */}
             <div className='flex items-end'>
                 {menus.map((menu, index) => (
@@ -128,23 +133,30 @@ function DetailBox ({ selectedCities, setSelectedCities }: DetailBoxProps) {
                 ))}
             </div>
             {/* 세부 검색창 */}
-            <div className="flex flex-row justify-between mx-2.5">
-                    <RoundBox placeholder="대륙" />
-                    <RoundBox placeholder="국가" />
-                    <RoundBox placeholder="도시" />
-                    <RoundBtn color="lightgrey" label="검색" />
+            <div className='flex flex-row justify-between mx-2.5'>
+                <RoundBox placeholder='대륙' />
+                <RoundBox placeholder='국가' />
+                <RoundBox placeholder='도시' />
+                <RoundBtn color='lightgrey' label='검색' />
             </div>
             {/* 인기 검색어 */}
             {selectedCities.length > 0 ? (
-                <SelectedPlaces selectedCities={selectedCities} setSelectedCities={setSelectedCities}/> 
-                ) : (
+                <SelectedPlaces
+                    selectedCities={selectedCities}
+                    setSelectedCities={setSelectedCities}
+                />
+            ) : (
                 <HotSearch />
             )}
             {/* 날짜 선택창 */}
-            <div className="flex flex-row justify-between mx-2.5">
+            <div className='flex flex-row justify-between mx-2.5'>
                 <SelectDates title='출발일' value={startDate} />
                 <SelectDates title='도착일' value={endDate} />
-                <RoundBtn color="primary" label="등록" />
+                <RoundBtn
+                    color='primary'
+                    label='등록'
+                    onClick={() => router.push('/info/tokyo')}
+                />
             </div>
             <Calendar
                 startDate={startDate}
@@ -153,14 +165,10 @@ function DetailBox ({ selectedCities, setSelectedCities }: DetailBoxProps) {
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
                 setIsOpen={setIsOpen}
-                claName={
-                    isOpen
-                        ? 'block absolute ml-[320px] z-10'
-                        : 'hidden'
-                }
+                claName={isOpen ? 'block absolute ml-[320px] z-10' : 'hidden'}
             />
         </div>
-    )
+    );
 }
 
 export default DetailBox;
