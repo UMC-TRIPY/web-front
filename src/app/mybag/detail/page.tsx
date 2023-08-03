@@ -81,6 +81,9 @@ const CarrierSection = () => {
                         width={250}
                         height={200}
                     />
+                    <div className='absolute text-white text-2xl pt-1'>
+                        캐리어
+                    </div>
                 </div>
                 <div className='flex justify-center'>
                     <div className='flex justify-between w-[38%]'>
