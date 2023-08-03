@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
-import { AiOutlinePicture } from 'react-icons/ai';
+import { AiOutlineLink, AiOutlinePicture } from 'react-icons/ai';
 import { GoFileDirectory } from 'react-icons/go';
 
 const DirectoryList = () => {
     const [directories, setDirectories] = useState([
+        {
+            id: 0,
+            name: '링크',
+            image: <AiOutlineLink size={200} className='text-main-color' />
+        },
         {
             id: 0,
             name: '갤러리',
