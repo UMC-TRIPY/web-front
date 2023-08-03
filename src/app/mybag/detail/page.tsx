@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 import { TiWeatherStormy } from 'react-icons/ti';
 
@@ -72,7 +73,22 @@ const MaterialSection = () => {
 const CarrierSection = () => {
     return (
         <>
-            <div className='h-1/5'>캐리어 헤더</div>
+            <div>
+                <div className='flex justify-center'>
+                    <Image
+                        src='/images/carrierHandle.svg'
+                        alt=''
+                        width={250}
+                        height={200}
+                    />
+                </div>
+                <div className='flex justify-center'>
+                    <div className='flex justify-between w-[38%]'>
+                        <div className='w-8 h-12 bg-lightgrey'></div>
+                        <div className='w-8 h-12 bg-lightgrey'></div>
+                    </div>
+                </div>
+            </div>
             <div className='flex flex-col gap-8 p-4 bg-brightgrey'>
                 {materials.map((material, idx) => (
                     <div
@@ -108,6 +124,7 @@ const MemoSection = () => {
         </div>
     );
 };
+
 const BagDetail = () => {
     return (
         <div className='h-screen'>
