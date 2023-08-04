@@ -61,6 +61,12 @@ const Page = () => {
             );
         }
     };
+    const onClick = (city: string) => {
+        const move = travels.filter(
+            (travel: [string, string]) => travel[0] === city
+        )[0][1];
+        router.push(`/info/${move}`);
+    };
     return (
         <div className='flex flex-col py-20'>
             <div className='mb-11 text-center text-5xl font-bold'>
@@ -206,7 +212,9 @@ const Page = () => {
                     {cities.map((city, index) => (
                         <div key={index} className='flex items-start py-2.5'>
                             <span className='text-grey mr-4'>{index + 1}</span>
-                            <button>{city}</button>
+                            <button onClick={() => onClick(city)}>
+                                {city}
+                            </button>
                         </div>
                     ))}
                 </div>

@@ -133,6 +133,10 @@
         ["파리", "paris"],
         ["나폴리", "neapolitan"],
         ["나트랑", "nhatrang"],
-        ["뉴욕", "newyork"]
+        ["뉴욕", "newyork"],
+        ["런던", "london"],
+        ["제주도", "jeju"],
+        ["대만", "taiwan"],
+        ["하와이", "hawai"]
     ]
 }
