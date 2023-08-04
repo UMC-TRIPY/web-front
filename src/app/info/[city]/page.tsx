@@ -58,6 +58,7 @@ const items = [
 
 const Page = () => {
     const datas = require('../../../../public/data/dummy.json');
+    const travels = datas.travels;
     const para = useParams();
     const cityName: any = datas.datas.filter((data: any) => {
         const cityName = data.cityEn;
@@ -76,7 +77,7 @@ const Page = () => {
             ) : (
                 <>
                     {/* 화면 위치 및 검색 기능 부분 */}
-                    <InfoMenus />
+                    <InfoMenus travels={travels} />
                     {/* 여행 도시 관한 정보 부분 */}
                     <InfoCity city={cityName} />
                     {/* 인기 여행지 */}
