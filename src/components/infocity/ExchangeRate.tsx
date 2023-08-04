@@ -12,24 +12,21 @@ export default function ExchangeRate({
     country: string;
 }) {
     const [cur, setCur] = useState<number>(0);
-    // 환율 대한민국 고정할거면 원화 자리에 krw 고정
-    // 나라 정보와 환율도 가져와야함 => 백엔드에서 페이지 접속할 때 넘겨줘야함
-    // 환율 가져오면 그에 따른 뒷자리도 가져와야함 => 배열로 만들어두기?
+    const currencyKey = process.env.NEXT_PUBLIC_EXCHANGE_KEY;
     useEffect(() => {
         axios
-            .get('/api/exchange')
+            .get(`http://data.fixer.io/api/latest?access_key=${currencyKey}`)
             .then((res) => {
-                const datas = [...res.data];
-                // 여행페이지에 해당하는 국가 외화 includes 안에 넣어주기
-                const tempCurrency = datas.filter((data) =>
-                    data.cur_unit.includes(currencyEn)
-                );
-                // 외화 표기에 100 표시 있으면 100으로 나눠줌
-                const other = tempCurrency[0].cur_unit.includes('(100)')
-                    ? Number(tempCurrency[0].kftc_bkpr) / 100
-                    : Number(tempCurrency[0].kftc_bkpr.replace(/,/g, ''));
-                setCur(1 / other);
-                console.log('환율 정보 : ' + 1 / other);
+                console.log(res);
+                const ko = res.data.rates.KRW;
+                const otherName = Object.keys(res.data.rates);
+                const otherValue = Object.values(res.data.rates);
+                let other;
+                otherName.filter((cur, idx) => {
+                    if (cur === currencyEn) other = otherValue[idx];
+                });
+                setCur(other / ko);
+                console.log('환율 정보 : ' + other / ko);
             })
             .catch((err) => console.log(err));
     }, []);
