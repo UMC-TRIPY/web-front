@@ -2,6 +2,8 @@ import { Loader } from '@googlemaps/js-api-loader';
 import { useState } from 'react';
 
 export default function HotPlace({ city, zoom }: { city: any; zoom: number }) {
+    const [latMid, setLatMid] = useState(0);
+    const [lngMid, setLngMid] = useState(0);
     // 환경변수에서 Map Key 가져옴
     const mapKey: any = process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY;
     const apiOptions: any = {
@@ -17,14 +19,16 @@ export default function HotPlace({ city, zoom }: { city: any; zoom: number }) {
     });
     function displayMap() {
         // 초기 위치 및 확대 정도 설정
-        let latMid = 0;
-        let lngMid = 0;
+        let lat = 0;
+        let lng = 0;
         for (let i = 0; i < city.length; i++) {
-            latMid += Number(city[i].lat);
-            lngMid += Number(city[i].lng);
+            lat += Number(city[i].lat);
+            lng += Number(city[i].lng);
         }
-        latMid /= 4;
-        lngMid /= 4;
+        lat /= 4;
+        lng /= 4;
+        setLatMid(lat);
+        setLngMid(lng);
         const mapOptions = {
             center: { lat: latMid, lng: lngMid },
             zoom: zoom
