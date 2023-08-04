@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import React, { useState } from 'react';
 import ConfirmBtns from "@/components/mypage/confirmBtns";
 import MyInfo from "@/components/mypage/myInfo";
 import MypageMenus from "@/components/mypage/mypageMenus";
@@ -9,7 +9,7 @@ import FriendReq from "@/components/mypagefriend/friendReq";
 import MyFriends from "@/components/mypagefriend/myFriends";
 
 export default function mypage () {
-    const [activeMenu, setActiveMenu] = useState('정보');
+    const [activeMenu, setActiveMenu] = useState<string>('정보');
 
     const handleMenuClick = (menu: string) => {
         setActiveMenu(menu);
