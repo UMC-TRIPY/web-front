@@ -5,7 +5,7 @@ export default function HotPlace({ city, zoom }: { city: any; zoom: number }) {
     const [latMid, setLatMid] = useState(0);
     const [lngMid, setLngMid] = useState(0);
     // 환경변수에서 Map Key 가져옴
-    const mapKey: any = process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY;
+    const mapKey: string | undefined = process.env.NEXT_PUBLIC_GOOGLE_MAP_KEY;
     const apiOptions: any = {
         apiKey: mapKey
     };
@@ -34,7 +34,7 @@ export default function HotPlace({ city, zoom }: { city: any; zoom: number }) {
             zoom: zoom
         };
         // 지도의 초기 위치 및 확대 정도 적용하여 id='map'인 요소에 적용
-        const mapDiv = document.getElementById('map');
+        const mapDiv: any = document.getElementById('map');
         const map = new google.maps.Map(mapDiv, mapOptions);
         return map;
     }

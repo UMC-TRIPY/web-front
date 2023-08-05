@@ -117,5 +117,26 @@
                 }
             ]
         }
+    ],
+    "travels": [
+        ["오사카", "osaka"],
+        ["오키나와", "okinawa"],
+        ["오스트리아", "austria"],
+        ["오타쿠", "otaku"],
+        ["오키키", "okay"],
+        ["유나이티드", "united"],
+        ["도쿄", "tokyo"],
+        ["다낭", "danang"],
+        ["싸이판", "saipan"],
+        ["보라카이", "boracay"],
+        ["부다페스트", "budapest"],
+        ["파리", "paris"],
+        ["나폴리", "neapolitan"],
+        ["나트랑", "nhatrang"],
+        ["뉴욕", "newyork"],
+        ["런던", "london"],
+        ["제주도", "jeju"],
+        ["대만", "taiwan"],
+        ["하와이", "hawai"]
     ]
 }
