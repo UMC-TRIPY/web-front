@@ -3,7 +3,7 @@
 import DetailSchedule from '@/components/detailschedule/DetailSchedule';
 import ScheduleMain from '@/components/schedulemain/scheduleMain';
 
-export default function schedule() {
+export default function SchedulePage() {
     return (
         <div>
             <DetailSchedule />
