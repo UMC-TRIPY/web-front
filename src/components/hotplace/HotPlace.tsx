@@ -30,7 +30,7 @@ export default function HotPlace({ city, zoom }: { city: any; zoom: number }) {
             zoom: zoom
         };
         // 지도의 초기 위치 및 확대 정도 적용하여 id='map'인 요소에 적용
-        const mapDiv = document.getElementById('map');
+        const mapDiv: any = document.getElementById('map');
         const map = new google.maps.Map(mapDiv, mapOptions);
         return map;
     }

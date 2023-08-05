@@ -42,6 +42,7 @@
         "@storybook/nextjs": "^7.0.25",
         "@storybook/react": "^7.0.25",
         "@storybook/testing-library": "^0.0.14-next.2",
+        "@types/google.maps": "^3.53.6",
         "eslint-plugin-storybook": "^0.6.12",
         "storybook": "^7.0.25",
         "tailwind-scrollbar": "^3.0.4"
