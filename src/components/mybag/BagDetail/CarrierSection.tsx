@@ -25,6 +25,20 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
         );
     };
 
+    const [isAdd, setIsAdd] = useState<boolean>(false);
+    const [addText, setAddText] = useState<string>('');
+
+    const handleClickAdd = () => {
+        setIsAdd((prev) => !prev);
+    };
+
+    const handleClickEnd = () => {
+        const id = materials.length.toString();
+        setIsAdd(false);
+        setMaterials([...materials, { id, name: addText, clicked: false }]);
+        setAddText('');
+    };
+
     return (
         <>
             <div>
@@ -51,11 +65,31 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                 id='carrier-body'
                 className='flex flex-col gap-8 p-4 bg-brightgrey'
             >
-                <div className='flex justify-end'>
-                    <div className='flex justify-center items-center w-fit h-8 p-4 bg-lightgrey rounded-full cursor-pointer'>
-                        추가하기
+                <div className='flex justify-end gap-2'>
+                    {isAdd && (
+                        <div
+                            className='flex justify-center items-center w-fit h-8 p-4 bg-lightgrey rounded-full cursor-pointer'
+                            onClick={handleClickEnd}
+                        >
+                            입력완료
+                        </div>
+                    )}
+                    <div
+                        className='flex justify-center items-center w-fit h-8 p-4 bg-lightgrey rounded-full cursor-pointer'
+                        onClick={handleClickAdd}
+                    >
+                        {isAdd ? '취소' : '추가하기'}
                     </div>
                 </div>
+                {isAdd && (
+                    <div>
+                        <input
+                            placeholder='준비물을 입력해보세요'
+                            value={addText}
+                            onChange={(e) => setAddText(e.target.value)}
+                        ></input>
+                    </div>
+                )}
 
                 {materials.map((material, idx) => (
                     <div
