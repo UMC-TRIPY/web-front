@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { AiOutlineClose } from 'react-icons/ai';
 
 interface IMaterial {
     id: string;
@@ -35,7 +36,8 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
     const handleClickEnd = () => {
         const id = materials.length.toString();
         setIsAdd(false);
-        setMaterials([...materials, { id, name: addText, clicked: false }]);
+        if (addText.length > 0)
+            setMaterials([...materials, { id, name: addText, clicked: false }]);
         setAddText('');
     };
 
@@ -63,7 +65,7 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
             </div>
             <div
                 id='carrier-body'
-                className='flex flex-col gap-8 p-4 bg-brightgrey'
+                className='flex flex-col gap-8 p-4 bg-brightgrey '
             >
                 <div className='flex justify-end gap-2'>
                     {isAdd && (
@@ -82,12 +84,14 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                     </div>
                 </div>
                 {isAdd && (
-                    <div>
+                    <div className='flex items-center w-fit p-2 ml-4 bg-white rounded-full'>
                         <input
+                            className='border-0 pl-2 rounded-full outline-none'
                             placeholder='준비물을 입력해보세요'
                             value={addText}
                             onChange={(e) => setAddText(e.target.value)}
-                        ></input>
+                        />
+                        <AiOutlineClose />
                     </div>
                 )}
 
@@ -107,11 +111,13 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                             <input
                                 id={material.id}
                                 type='checkbox'
-                                className='flex justify-center items-center w-6 h-6 rounded-full appearance-none border-2 bg-white checked:after:content-["✓"] cursor-pointer'
+                                className='flex justify-center items-center w-6 rounded-full appearance-none border-2 bg-white checked:after:content-["✓"] cursor-pointer'
                                 onClick={(e) => handleCheckbox(e)}
                             ></input>
                             <div>{material.name}</div>
-                            <div className='cursor-pointer'>X</div>
+                            <div className='cursor-pointer'>
+                                <AiOutlineClose />
+                            </div>
                         </div>
                         <div className='cursor-pointer'>↓</div>
                     </div>
