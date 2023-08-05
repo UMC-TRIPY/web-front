@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import DetailBox from './detailBox';
 import MyTravel from './myTravel';
-import ScheduleHeader from './ScheduleHeader';
+import ScheduleHeader from '@/components/schedulemain/ScheduleHeader';
 
 function ScheduleMain() {
     const [selectedCities, setSelectedCities] = useState<string[]>([]);
