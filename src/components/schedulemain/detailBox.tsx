@@ -4,8 +4,8 @@ import format from 'date-fns/format';
 import 'react-datepicker/dist/react-datepicker.css';
 import Calendar from '../infocity/Calendar';
 import HotSearch from './hotSearch';
-import SelectedPlaces from './SelectedPlaces';
 import { useRouter } from 'next/navigation';
+import SelectedPlaces from './SelectedPlaces';
 
 interface MenuProps {
     menu: string;

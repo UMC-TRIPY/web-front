@@ -1,6 +1,12 @@
 import { Loader } from '@googlemaps/js-api-loader';
 import { useState } from 'react';
 
+declare global {
+    interface Window {
+        google: any;
+    }
+}
+
 export default function HotPlace({ city, zoom }: { city: any; zoom: number }) {
     const [latMid, setLatMid] = useState(0);
     const [lngMid, setLngMid] = useState(0);
@@ -35,7 +41,7 @@ export default function HotPlace({ city, zoom }: { city: any; zoom: number }) {
         };
         // 지도의 초기 위치 및 확대 정도 적용하여 id='map'인 요소에 적용
         const mapDiv: any = document.getElementById('map');
-        const map = new google.maps.Map(mapDiv, mapOptions);
+        const map = new window.google.maps.Map(mapDiv, mapOptions);
         return map;
     }
 
@@ -57,7 +63,7 @@ export default function HotPlace({ city, zoom }: { city: any; zoom: number }) {
                 position: locations[location]
                 // icon: '' 아이콘에 다른 이미지 파일 넣을 수 있음
             };
-            const marker = new google.maps.Marker(markerOptions);
+            const marker = new window.google.maps.Marker(markerOptions);
             markers.push(marker);
         }
         return markers;
