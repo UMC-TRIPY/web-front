@@ -41,6 +41,10 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
         setAddText('');
     };
 
+    const handleClickDelete = (id: string) => {
+        setMaterials(materials.filter((material) => material.id !== id));
+    };
+
     return (
         <>
             <div>
@@ -91,7 +95,10 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                             value={addText}
                             onChange={(e) => setAddText(e.target.value)}
                         />
-                        <AiOutlineClose />
+                        <AiOutlineClose
+                            className='cursor-pointer'
+                            onClick={() => setAddText('')}
+                        />
                     </div>
                 )}
 
@@ -115,7 +122,10 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                                 onClick={(e) => handleCheckbox(e)}
                             ></input>
                             <div>{material.name}</div>
-                            <div className='cursor-pointer'>
+                            <div
+                                className='cursor-pointer'
+                                onClick={() => handleClickDelete(material.id)}
+                            >
                                 <AiOutlineClose />
                             </div>
                         </div>
