@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { AiOutlineClose } from 'react-icons/ai';
 
 interface IMaterial {
     id: string;
@@ -23,6 +24,25 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                     : material
             )
         );
+    };
+
+    const [isAdd, setIsAdd] = useState<boolean>(false);
+    const [addText, setAddText] = useState<string>('');
+
+    const handleClickAdd = () => {
+        setIsAdd((prev) => !prev);
+    };
+
+    const handleClickEnd = () => {
+        const id = materials.length.toString();
+        setIsAdd(false);
+        if (addText.length > 0)
+            setMaterials([...materials, { id, name: addText, clicked: false }]);
+        setAddText('');
+    };
+
+    const handleClickDelete = (id: string) => {
+        setMaterials(materials.filter((material) => material.id !== id));
     };
 
     return (
@@ -49,13 +69,38 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
             </div>
             <div
                 id='carrier-body'
-                className='flex flex-col gap-8 p-4 bg-brightgrey'
+                className='flex flex-col gap-8 p-4 bg-brightgrey '
             >
-                <div className='flex justify-end'>
-                    <div className='flex justify-center items-center w-fit h-8 p-4 bg-lightgrey rounded-full cursor-pointer'>
-                        추가하기
+                <div className='flex justify-end gap-2'>
+                    {isAdd && (
+                        <div
+                            className='flex justify-center items-center w-fit h-8 p-4 bg-lightgrey rounded-full cursor-pointer'
+                            onClick={handleClickEnd}
+                        >
+                            입력완료
+                        </div>
+                    )}
+                    <div
+                        className='flex justify-center items-center w-fit h-8 p-4 bg-lightgrey rounded-full cursor-pointer'
+                        onClick={handleClickAdd}
+                    >
+                        {isAdd ? '취소' : '추가하기'}
                     </div>
                 </div>
+                {isAdd && (
+                    <div className='flex items-center w-fit p-2 ml-4 bg-white rounded-full'>
+                        <input
+                            className='border-0 pl-2 rounded-full outline-none'
+                            placeholder='준비물을 입력해보세요'
+                            value={addText}
+                            onChange={(e) => setAddText(e.target.value)}
+                        />
+                        <AiOutlineClose
+                            className='cursor-pointer'
+                            onClick={() => setAddText('')}
+                        />
+                    </div>
+                )}
 
                 {materials.map((material, idx) => (
                     <div
@@ -73,11 +118,16 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                             <input
                                 id={material.id}
                                 type='checkbox'
-                                className='flex justify-center items-center w-6 h-6 rounded-full appearance-none border-2 bg-white checked:after:content-["✓"] cursor-pointer'
+                                className='flex justify-center items-center w-6 rounded-full appearance-none border-2 bg-white checked:after:content-["✓"] cursor-pointer'
                                 onClick={(e) => handleCheckbox(e)}
                             ></input>
                             <div>{material.name}</div>
-                            <div className='cursor-pointer'>X</div>
+                            <div
+                                className='cursor-pointer'
+                                onClick={() => handleClickDelete(material.id)}
+                            >
+                                <AiOutlineClose />
+                            </div>
                         </div>
                         <div className='cursor-pointer'>↓</div>
                     </div>
