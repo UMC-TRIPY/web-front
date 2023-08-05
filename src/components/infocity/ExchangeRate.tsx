@@ -21,7 +21,7 @@ export default function ExchangeRate({
                 const ko = res.data.rates.KRW;
                 const otherName = Object.keys(res.data.rates);
                 const otherValue = Object.values(res.data.rates);
-                let other;
+                let other: any;
                 otherName.filter((cur, idx) => {
                     if (cur === currencyEn) other = otherValue[idx];
                 });
