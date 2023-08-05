@@ -3,7 +3,7 @@ import DetailBox from "./detailBox";
 import MyTravel from "./myTravel";
 import ScheduleHeader from "./scheduleHeader";
 
-function scheduleMain () {
+function ScheduleMain () {
     const [selectedCities, setSelectedCities] = useState<string[]>([]);
     
     return (
@@ -22,4 +22,4 @@ function scheduleMain () {
     )
 }
 
-export default scheduleMain;
+export default ScheduleMain;
