@@ -43,8 +43,8 @@ function MyTravel () {
                     </div>    
                 </div>
                 <div className="py-5">
-                    {currentTravels.map((travel, index) => (
-                    <div className="flex items-center justify-between py-[16.5px]">
+                    {currentTravels.map((travel) => (
+                    <div key={travel.id} className="flex items-center justify-between py-[16.5px]">
                         <div className="w-1/3 text-center">
                             {travel.dates}
                         </div>
