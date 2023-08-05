@@ -123,7 +123,7 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                             ></input>
                             <div>{material.name}</div>
                             <div
-                                className='cursor-pointer'
+                                className='flex items-center cursor-pointer'
                                 onClick={() => handleClickDelete(material.id)}
                             >
                                 <AiOutlineClose />
