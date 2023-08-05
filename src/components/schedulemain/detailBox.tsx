@@ -5,7 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import Calendar from '../infocity/Calendar';
 import HotSearch from './hotSearch';
 import { useRouter } from 'next/navigation';
-import SelectedPlaces from './SelectedPlaces';
+import SelectedPlaces from './selectedPlaces';
 
 interface MenuProps {
     menu: string;
