@@ -8,7 +8,7 @@ import ProfilePic from "@/components/mypage/profilePic";
 import FriendReq from "@/components/mypagefriend/friendReq";
 import MyFriends from "@/components/mypagefriend/myFriends";
 
-export default function mypage () {
+export default function Mypage () {
     const [activeMenu, setActiveMenu] = useState<string>('정보');
 
     const handleMenuClick = (menu: string) => {
