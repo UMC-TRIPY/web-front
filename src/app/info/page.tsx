@@ -109,14 +109,7 @@ const Page = () => {
                 </Link>
             </div>
             {modal && (
-                <SearchModal
-                    setModalState={setIsModal}
-                    justify='justify-center'
-                    top='top-[330px]'
-                    width='w-1/2'
-                    maxW='max-w-[640px]'
-                    results={results}
-                />
+                <SearchModal setModalState={setIsModal} results={results} />
             )}
             <div className='flex self-center w-1/2 items-center mb-16'>
                 <span className='mr-2'>최근 검색어</span>

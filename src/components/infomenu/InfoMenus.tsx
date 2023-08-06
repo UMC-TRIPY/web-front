@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
-import SearchModal from '../modal/SearchCityModal';
 import { useRouter } from 'next/navigation';
+import FixedSearchCityModal from '../modal/FixedSearchCityModal';
 
 interface MenuProps {
     menu: string;
@@ -104,50 +104,48 @@ export default function InfoMenus({
                     />
                 ))}
             </div>
-            <div className='flex flex-col justify-center w-1/3'>
-                <input
-                    className='border border-grey h-14 rounded-lg py-3.5 pl-6 searchPlace'
-                    type='text'
-                    placeholder='보고 싶은 여행지를 입력하세요'
-                    value={place}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setPlace(e.target.value)
-                    }
-                    onClick={() => setIsModal(true)}
-                    onKeyDown={onKeyDown}
-                />
-                <Link
-                    onClick={() => {
-                        if (place === '') {
-                            alert('1글자 이상 입력해주세요.');
+            <div className='w-1/3 flex flex-row-reverse items-end'>
+                <div className='flex flex-col justify-center w-full'>
+                    <input
+                        className='border border-grey h-14 rounded-lg py-3.5 pl-6 searchPlace'
+                        type='text'
+                        placeholder='보고 싶은 여행지를 입력하세요'
+                        value={place}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setPlace(e.target.value)
                         }
+                        onClick={() => setIsModal(true)}
+                        onKeyDown={onKeyDown}
+                    />
+                    <Link
+                        onClick={() => {
+                            if (place === '') {
+                                alert('1글자 이상 입력해주세요.');
+                            }
 
-                        if (results.length !== 1) {
-                            alert('해당 여행지가 없습니다.');
+                            if (results.length !== 1) {
+                                alert('해당 여행지가 없습니다.');
+                            }
+                        }}
+                        href={
+                            place === ''
+                                ? `/info/${currentLocation}`
+                                : results.length === 1
+                                ? `/info/${results.map((result) => result[1])}`
+                                : `/info/${currentLocation}`
                         }
-                    }}
-                    href={
-                        place === ''
-                            ? `/info/${currentLocation}`
-                            : results.length === 1
-                            ? `/info/${results.map((result) => result[1])}`
-                            : `/info/${currentLocation}`
-                    }
-                    className='absolute self-end mr-5 hover:cursor-pointer'
-                >
-                    <BiSearch size='24' />
-                </Link>
+                        className='absolute self-end mr-5 hover:cursor-pointer'
+                    >
+                        <BiSearch size='24' />
+                    </Link>
+                </div>
+                {modal && (
+                    <FixedSearchCityModal
+                        setIsModal={setIsModal}
+                        results={results}
+                    />
+                )}
             </div>
-            {modal && (
-                <SearchModal
-                    setModalState={setIsModal}
-                    justify='justify-end'
-                    top='top-[200px]'
-                    width='w-1/3'
-                    maxW='max-w-[430px]'
-                    results={results}
-                />
-            )}
         </div>
     );
 }
