@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
+import { FiEdit } from 'react-icons/fi';
 
 interface IMaterial {
     id: string;
@@ -37,7 +38,7 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
         const id = materials.length.toString();
         setIsAdd(false);
         if (addText.length > 0)
-            setMaterials([...materials, { id, name: addText, clicked: false }]);
+            setMaterials([{ id, name: addText, clicked: false }, ...materials]);
         setAddText('');
     };
 
@@ -130,7 +131,11 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                                 <AiOutlineClose />
                             </div>
                         </div>
-                        <div className='cursor-pointer'>↓</div>
+                        <FiEdit
+                            className='cursor-pointer'
+                            // onClick={(e) => console.log(e)}
+                        />
+                        {/* <div className='cursor-pointer'>↓</div> */}
                     </div>
                 ))}
             </div>
