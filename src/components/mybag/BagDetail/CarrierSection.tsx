@@ -117,13 +117,14 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                         >
                             <input
                                 id={material.id}
+                                checked={material.clicked}
                                 type='checkbox'
                                 className='flex justify-center items-center w-6 rounded-full appearance-none border-2 bg-white checked:after:content-["✓"] cursor-pointer'
-                                onClick={(e) => handleCheckbox(e)}
+                                onChange={(e) => handleCheckbox(e)}
                             ></input>
                             <div>{material.name}</div>
                             <div
-                                className='cursor-pointer'
+                                className='flex items-center cursor-pointer'
                                 onClick={() => handleClickDelete(material.id)}
                             >
                                 <AiOutlineClose />
