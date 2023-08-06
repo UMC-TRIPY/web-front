@@ -4,27 +4,16 @@ import Link from 'next/link';
 
 type Props = {
     setModalState: Function;
-    justify: string;
-    top: string;
-    maxW: string;
-    width: string;
     results: [string, string][];
 };
 
-export default function SearchModal({
-    setModalState,
-    justify,
-    top,
-    width,
-    maxW,
-    results
-}: Props) {
+export default function SearchModal({ setModalState, results }: Props) {
     useEffect(() => {
         document.body.style.overflowX = 'hidden';
     });
     return (
         <Portal selector='#body'>
-            <div className={`flex items-center ${justify}`}>
+            <div className={`flex items-center justify-center`}>
                 <div
                     className='absolute top-0 left-0 w-screen h-screen'
                     onClick={() => {
@@ -32,7 +21,7 @@ export default function SearchModal({
                     }}
                 ></div>
                 <div
-                    className={`absolute flex flex-col rounded-lg max-h-56 bg-white z-101 shadow-md ${top} ${maxW} ${width} ${
+                    className={`absolute flex flex-col rounded-lg max-h-56 bg-white z-101 shadow-md top-[330px] max-w-[640px] w-1/2 ${
                         results.length > 4
                             ? 'overflow-y-scroll'
                             : 'overflow-y-hidden'
