@@ -48,12 +48,15 @@ const BagDetail = () => {
     ]);
 
     const handleClickRecoMaterial = (id: string) => {
+        const MATERIAL_LENGTH = materials.length.toString();
         const restRecoMaterial = recommendMaterials.filter(
             (material) => material.id !== id
         );
         const clickedMaterial = recommendMaterials.filter(
             (material) => material.id === id
         );
+        clickedMaterial[0].id = MATERIAL_LENGTH;
+
         setRecommendMaterials(restRecoMaterial);
         setMaterials([...clickedMaterial, ...materials]);
     };
