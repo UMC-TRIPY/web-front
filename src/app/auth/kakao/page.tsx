@@ -6,7 +6,6 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const KakaoOAuth = () => {
-    const [authCode, setAuthCode] = useState<string>();
     const router = useRouter();
 
     useEffect(() => {
@@ -16,7 +15,6 @@ const KakaoOAuth = () => {
     return (
         <div>
             <div>카카오 리다이렉트 페이지</div>
-            <div>{authCode}</div>
         </div>
     );
 };
