@@ -14,7 +14,6 @@ export const addBagMaterial = async (
 };
 
 export const getMaterials = async () => {
-    const result = await Server.get<MaterialReturnType[]>('/api/materials');
-    console.log('getMaterials API: ', result);
-    return result;
+    const result = await Server.get<MaterialReturnType[]>('/materials');
+    return result.data;
 };

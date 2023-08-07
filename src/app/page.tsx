@@ -1,6 +1,6 @@
 'use client';
 
-import react, { useState } from 'react';
+import react, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Modal from '@/components/modal/Modal';
 import { BiSearch } from 'react-icons/bi';
