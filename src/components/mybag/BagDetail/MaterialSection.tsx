@@ -3,7 +3,6 @@ import React, { useState } from 'react';
 interface IMaterial {
     id: string;
     name: string;
-    clicked: boolean;
 }
 
 const MaterialSection = ({
