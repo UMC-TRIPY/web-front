@@ -45,6 +45,30 @@ function ScheduleHeader ({ selectedCities, setSelectedCities, onCreateSchedule }
     // 모달 상태 제어
     const [modal, setModal] = useState(false);
     const [inputValue, setInputValue] = useState('');
+    const [place, setPlace] = useState<string>('');
+    
+    const refCities: { id: number; place: string }[] = [
+        // 자동완성 검색어 원본
+        { id: 1, place: '도쿄' },
+        { id: 2, place: '브라질' },
+        { id: 3, place: '방콕' },
+        { id: 4, place: '부산' },
+        { id: 5, place: '베트남' },
+        { id: 6, place: '브루클린' },
+        { id: 7, place: '벨기에' },
+        { id: 8, place: '오사카'},
+        { id: 9, place: '오키나와'},
+        { id: 10, place: '대구'},
+        { id: 11, place: '대전'},
+        { id: 12, place: '다낭'},
+        { id: 13, place: '인천'},
+    ];
+
+    const results = refCities
+        .filter((t) => t.place[0].includes(place[0]))
+        .filter((t) => t.place.includes(place.replace(/ /g, '')));
+
+    const length = results.length === 0 ? true : false;
 
     return (
         <div className="flex justify-center">
@@ -58,7 +82,10 @@ function ScheduleHeader ({ selectedCities, setSelectedCities, onCreateSchedule }
                         type="text" 
                         placeholder="여행일정을 생성할 도시를 입력하세요"
                         onClick={() => setModal(true)}
-                        onChange={(e) => setInputValue(e.target.value)}
+                        value={place}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setPlace(e.target.value)
+                        }
                     />
                     <BiSearch   
                             size={32}
@@ -80,6 +107,7 @@ function ScheduleHeader ({ selectedCities, setSelectedCities, onCreateSchedule }
                         setSelectedCities={setSelectedCities} 
                         onCreateSchedule={() => {}}
                         inputCity={inputValue}
+                        results={results}
                     />
                 </div>
             )}

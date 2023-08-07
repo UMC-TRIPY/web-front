@@ -30,6 +30,7 @@ interface SearchboxModalProps {
     selectedCities: string[];
     setSelectedCities: React.Dispatch<React.SetStateAction<string[]>>;
     inputCity: string;
+    results: { id: number; place: string }[];
 }
 
 function SearchboxModal({
@@ -37,37 +38,14 @@ function SearchboxModal({
     selectedCities,
     setSelectedCities,
     onCreateSchedule,
-    inputCity,
+    results,
 }: SearchboxModalProps) {
     const [isExpanded, setIsExpanded] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
     const [contentHeight, setContentHeight] = useState<number | undefined>(undefined);
 
-    const refCities: { id: number; place: string }[] = [
-        // 자동완성 검색어 원본
-        { id: 1, place: '도쿄' },
-        { id: 2, place: '브라질' },
-        { id: 3, place: '방콕' },
-        { id: 4, place: '부산' },
-        { id: 5, place: '베트남' },
-        { id: 6, place: '브루클린' },
-        { id: 7, place: '벨기에' },
-        { id: 8, place: '오사카'},
-        { id: 9, place: '오키나와'},
-        { id: 10, place: '대구'},
-        { id: 11, place: '대전'},
-        { id: 12, place: '다낭'},
-        { id: 13, place: '인천'},
-    ];
 
-    // 자동완성된 결과를 담는 배열 results
-    const [results, setResults] = useState<{ id: number; place: string }[]>([]);
-    useEffect(() => {
-        const filteredResults = refCities.filter((refCity) =>
-            refCity.place.includes(inputCity)
-        );
-        setResults(filteredResults);
-    }, [inputCity]);
+
 
     const onClickCity = (refCity: string) => {
         if (!selectedCities.includes(refCity)) {
