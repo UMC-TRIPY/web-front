@@ -1,11 +1,12 @@
 'use client';
 
+import { getMaterials } from '@/apis/material';
 import CarrierSection from '@/components/mybag/BagDetail/CarrierSection';
 import MaterialSection from '@/components/mybag/BagDetail/MaterialSection';
 import MemoSection from '@/components/mybag/BagDetail/MemoSection';
 import WeatherSection from '@/components/mybag/BagDetail/WeatherSection';
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 interface IMaterial {
     id: string;
@@ -45,6 +46,16 @@ const BagDetail = () => {
         { id: '11', name: '수영 모자' },
         { id: '12', name: '모기약' }
     ]);
+
+    // useEffect(() => {
+    //     getMaterials().then((res:IMaterial[]) => {
+    //         setMaterials(
+    //             res.map((data) => {
+    //                 return { ...data, checked: false, edited: false };
+    //             })
+    //         );
+    //     });
+    // }, []);
 
     const handleClickRecoMaterial = (id: string) => {
         const MATERIAL_LENGTH = materials.length.toString();
