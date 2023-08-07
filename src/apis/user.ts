@@ -4,7 +4,7 @@ import { Server } from './setting';
 export const getKakaoAccessToken = async () => {
     const authCode = splitAuthCode();
     console.log('kakao authCode: ', authCode);
-    const result = await Server.post('/api/auth/kakao', { code: authCode });
+    const result = await Server.post('/auth/kakao', { code: authCode });
     console.log('kakao API: ', result);
     // localStorage.set('access', result.data.access_token);
     // localStorage.set('refresh', result.data.refresh_token);
@@ -13,7 +13,7 @@ export const getKakaoAccessToken = async () => {
 export const getGoogleAccessToken = async () => {
     const authCode = splitAuthCode();
     console.log('google authCode: ', authCode);
-    const result = await Server.post('/api/auth/google', { code: authCode });
+    const result = await Server.post('/auth/google', { code: authCode });
     console.log('google API: ', result);
     // localStorage.set('access', result.data.access_token);
     // localStorage.set('refresh', result.data.refresh_token);
@@ -25,9 +25,14 @@ export const getRefresh = async () => {
     const refreshToken = localStorage.get('refresh');
     // TODO: return 값으로 받아온 access token 으로 재요청
     const result = await Server.post(
-        '/api/auth/refresh',
+        '/auth/refresh',
         { refresh_token: refreshToken },
         { headers: { Authorization: accessToken } }
     );
     console.log('refresh: ', result);
+};
+
+export const logout = async () => {
+    const refreshToken = localStorage.get('refresh');
+    return await Server.post('/auth/logout', { refresh_token: refreshToken });
 };
