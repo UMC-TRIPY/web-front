@@ -1,4 +1,5 @@
 import { Server } from './setting';
+import { MaterialReturnType } from './types';
 
 export const addBagMaterial = async (
     bagIndex: number,
@@ -13,7 +14,7 @@ export const addBagMaterial = async (
 };
 
 export const getMaterials = async () => {
-    const result = await Server.get('/api/materials');
+    const result = await Server.get<MaterialReturnType[]>('/api/materials');
     console.log('getMaterials API: ', result);
     return result;
 };
