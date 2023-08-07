@@ -9,12 +9,13 @@ import { IoCloseOutline } from 'react-icons/io5';
 // 취소, 완료 있는거 => 확인버튼이 완료
 
 type Props = {
-    modalMode: Number;
-    title?: String;
+    modalMode: number;
+    title?: string;
     setModalState: Function;
     children: React.ReactNode;
     onClickCompleteButton: Function;
-    completeText: String;
+    completeText: string;
+    contentHeight: number | undefined;
 };
 
 export default function TransparentModal({
@@ -23,10 +24,11 @@ export default function TransparentModal({
     title,
     children,
     onClickCompleteButton,
-    completeText
+    completeText,
+    contentHeight
 }: Props) {
-    const contentRef = useRef<HTMLDivElement>(null);
-    const [contentHeight, setContentHeight] = useState<number>(0);
+    const modalContentRef = useRef<HTMLDivElement>(null);
+    const [contentHeightState, setContentHeightState] = useState<number>(0);
 
     const transparentModal: React.ReactNode[] = [
         <>
@@ -51,7 +53,7 @@ export default function TransparentModal({
         </>,
         <>
             {/* 모달 내용의 높이를 측정하여 state에 저장 */}
-            <div ref={contentRef} className='basis-[85%]'>
+            <div ref={modalContentRef} className='basis-[85%]'>
                 {children}
             </div>
         </>
@@ -62,8 +64,8 @@ export default function TransparentModal({
         document.body.style.overflowX = 'hidden';
 
         // 모달 내용의 높이 측정하여 state에 저장
-        if (contentRef.current) {
-            setContentHeight(contentRef.current.offsetHeight);
+        if (modalContentRef.current) {
+            setContentHeightState(modalContentRef.current.offsetHeight);
         }
     }, []);
 
@@ -78,7 +80,9 @@ export default function TransparentModal({
                 ></div>
                 <div
                     className='absolute flex flex-col top-[345px] w-[690px] rounded-lg bg-white z-101 shadow-md'
-                    style={{ height: `${contentHeight}px`, minHeight: '6rem'}}
+                    style={{ 
+                        height: contentHeight ? `${contentHeight}px` : undefined, 
+                    }}
                 >
                     {transparentModal[modalMode as number]}
                 </div>
