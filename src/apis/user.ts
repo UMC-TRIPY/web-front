@@ -18,3 +18,16 @@ export const getGoogleAccessToken = async () => {
     // localStorage.set('access', result.data.access_token);
     // localStorage.set('refresh', result.data.refresh_token);
 };
+
+// 만료된 액세스 토큰 갱신
+export const getRefresh = async () => {
+    const accessToken = localStorage.get('access');
+    const refreshToken = localStorage.get('refresh');
+    // TODO: return 값으로 받아온 access token 으로 재요청
+    const result = await Server.post(
+        '/api/auth/refresh',
+        { refresh_token: refreshToken },
+        { headers: { Authorization: accessToken } }
+    );
+    console.log('refresh: ', result);
+};
