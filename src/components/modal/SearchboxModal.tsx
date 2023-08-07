@@ -29,20 +29,22 @@ interface SearchboxModalProps {
     onCreateSchedule: () => void;
     selectedCities: string[];
     setSelectedCities: React.Dispatch<React.SetStateAction<string[]>>;
+    inputCity: string;
 }
 
 function SearchboxModal({
     setIsModal,
     selectedCities,
     setSelectedCities,
-    onCreateSchedule
+    onCreateSchedule,
+    inputCity,
 }: SearchboxModalProps) {
     const [isExpanded, setIsExpanded] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
     const [contentHeight, setContentHeight] = useState<number | undefined>(undefined);
 
-    const refCities = [
-        // 자동완성 검색어
+    const refCities: { id: number; place: string }[] = [
+        // 자동완성 검색어 원본
         { id: 1, place: '도쿄' },
         { id: 2, place: '브라질' },
         { id: 3, place: '방콕' },
@@ -50,8 +52,22 @@ function SearchboxModal({
         { id: 5, place: '베트남' },
         { id: 6, place: '브루클린' },
         { id: 7, place: '벨기에' },
-        { id:8,place:'몰라'}
+        { id: 8, place: '오사카'},
+        { id: 9, place: '오키나와'},
+        { id: 10, place: '대구'},
+        { id: 11, place: '대전'},
+        { id: 12, place: '다낭'},
+        { id: 13, place: '인천'},
     ];
+
+    // 자동완성된 결과를 담는 배열 results
+    const [results, setResults] = useState<{ id: number; place: string }[]>([]);
+    useEffect(() => {
+        const filteredResults = refCities.filter((refCity) =>
+            refCity.place.includes(inputCity)
+        );
+        setResults(filteredResults);
+    }, [inputCity]);
 
     const onClickCity = (refCity: string) => {
         if (!selectedCities.includes(refCity)) {
@@ -117,7 +133,7 @@ function SearchboxModal({
                                 일정 생성
                             </button>
                         </div>
-                        {refCities.map((refCity, index) => (
+                        {results.slice(0, 7).map((result, index) => (
                             <div
                                 className='border-b border-lightgrey py-[14px]'
                                 key={index}
@@ -125,12 +141,12 @@ function SearchboxModal({
                                 <div className='flex justify-between items-center'>
                                     <div className='flex'>
                                         <BiSearch size={24} className='mr-3' />
-                                        {refCity.place}
+                                        {result.place}
                                     </div>
                                     <button
                                         className='px-4 py-2 rounded-full bg-lightgrey text-[12px]'
                                         onClick={() =>
-                                            onClickCity(refCity.place)
+                                            onClickCity(result.place)
                                         }
                                     >
                                         선택
@@ -156,7 +172,7 @@ function SearchboxModal({
             <div className={`px-[30px] pt-2 ${isExpanded ? 'pb-0.5' : ''}`}>
                 <div className='border-b border-grey'></div>
                 <div className='p-3.5'>
-                    {refCities.map((refCity, index) => (
+                    {results.slice(0, 7).map((result, index) => (
                         <div
                             className='border-b border-lightgrey py-[14px]'
                             key={index}
@@ -164,11 +180,11 @@ function SearchboxModal({
                             <div className='flex justify-between items-center'>
                                 <div className='flex'>
                                     <BiSearch size={24} className='mr-3' />
-                                    {refCity.place}
+                                    {result.place}
                                 </div>
                                 <button
                                     className='px-4 py-2 rounded-full bg-lightgrey text-[12px]'
-                                    onClick={() => onClickCity(refCity.place)}
+                                    onClick={() => onClickCity(result.place)}
                                 >
                                     선택
                                 </button>

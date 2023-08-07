@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import SearchboxModal from "../modal/SearchboxModal";
 import { BiSearch } from "react-icons/bi";
 import { RxCross1 } from 'react-icons/rx';
@@ -44,6 +44,7 @@ interface ScheduleHeaderProps {
 function ScheduleHeader ({ selectedCities, setSelectedCities, onCreateSchedule }: ScheduleHeaderProps) {
     // 모달 상태 제어
     const [modal, setModal] = useState(false);
+    const [inputValue, setInputValue] = useState('');
 
     return (
         <div className="flex justify-center">
@@ -57,6 +58,7 @@ function ScheduleHeader ({ selectedCities, setSelectedCities, onCreateSchedule }
                         type="text" 
                         placeholder="여행일정을 생성할 도시를 입력하세요"
                         onClick={() => setModal(true)}
+                        onChange={(e) => setInputValue(e.target.value)}
                     />
                     <BiSearch   
                             size={32}
@@ -77,6 +79,7 @@ function ScheduleHeader ({ selectedCities, setSelectedCities, onCreateSchedule }
                         selectedCities={selectedCities} 
                         setSelectedCities={setSelectedCities} 
                         onCreateSchedule={() => {}}
+                        inputCity={inputValue}
                     />
                 </div>
             )}
