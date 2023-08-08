@@ -5,8 +5,8 @@ import {
     formatAMPM,
     tableToDate
 } from '@/utils/dateUtil';
-import React from 'react';
-// import { useDrag, useDrop } from 'react-dnd';
+import React, { useState } from 'react';
+import Image from 'next/image';
 
 type Props = {
     item: IScheduleItem;
@@ -14,6 +14,7 @@ type Props = {
 };
 
 const ScheduleBlock = (props: Props) => {
+    const [isDragging, setIsDragging] = useState<boolean>(false);
     const {
         id,
         column,
@@ -27,8 +28,7 @@ const ScheduleBlock = (props: Props) => {
     // const minutes = compareDate(startTime, endTime);
 
     const dragFunction = (event, type) => {
-        // event.preventDefault();
-        // event.stopPropgation();
+        event.preventDefault();
         console.log(type);
     };
 
@@ -44,7 +44,11 @@ const ScheduleBlock = (props: Props) => {
                 backgroundColor: color
             }}
             draggable
-            onDragStart={() => props.handleDragBlock(id)}
+            onDragStart={() => {
+                props.handleDragBlock(id);
+                setIsDragging(true);
+            }}
+            onDragEnd={() => setIsDragging(false)}
             onDragEnter={(event) => dragFunction(event, 'enter')}
             onDragLeave={(event) => dragFunction(event, 'leave')}
         >
@@ -54,7 +58,19 @@ const ScheduleBlock = (props: Props) => {
             </span>
             <br />
             <span>{title}</span>
-            <span>{location}</span>
+
+            {location && (
+                <div className='absolute flex flex-row right-4 bottom-4'>
+                    <Image
+                        className='flex mr-1'
+                        src='/images/mapPin.svg'
+                        width={15}
+                        height={15}
+                        alt='map-pin'
+                    />
+                    <span className='flex text-xs'>{location}</span>
+                </div>
+            )}
         </div>
     );
 };

@@ -1,11 +1,10 @@
-export default interface IscheduleItem {
-    id: number;
+export default interface IScheduleItem {
+    id: number | string;
     column: number;
     lineColor: string;
     color: string;
     startTime: number;
     halfHour: number;
-    // endTime: Date;
     title: string;
     location?: string;
 }

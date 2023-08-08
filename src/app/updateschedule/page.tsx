@@ -22,8 +22,8 @@ export default function Updateschedule() {
         {
             id: 1,
             column: 0,
-            lineColor: '#FF7F57',
-            color: '#FFF3EF',
+            lineColor: '#57CDFF',
+            color: '#EEFAFF',
             startTime: dateTotable(new Date('2023-07-25 10:00:00')),
             halfHour: 4,
             // endTime: new Date('2023-07-25 12:00:00'),
@@ -32,9 +32,9 @@ export default function Updateschedule() {
         {
             id: 2,
             column: 0,
-            lineColor: '#FF7F57',
-            color: '#FFF3EF',
-            startTime: dateTotable(new Date('2023-07-25 14:30:00')),
+            lineColor: '#78CAFA',
+            color: '#EEFAFF',
+            startTime: 10,
             halfHour: 10,
             // endTime: new Date('2023-07-25 19:00:00'),
             title: '자고싶다'
@@ -42,8 +42,8 @@ export default function Updateschedule() {
         {
             id: 3,
             column: 0,
-            lineColor: '#FF7F57',
-            color: '#FFF3EF',
+            lineColor: '#FFE457',
+            color: '#FFFBE7',
             startTime: dateTotable(new Date('2023-07-25 20:00:00')),
             halfHour: 5,
             // endTime: new Date('2023-07-25 21:00:00'),
@@ -57,7 +57,8 @@ export default function Updateschedule() {
             startTime: dateTotable(new Date('2023-07-25 10:00:00')),
             halfHour: 10,
             // endTime: new Date('2023-07-25 21:00:00'),
-            title: '변경사항 왜 적용안돼'
+            title: '변경사항 왜 적용안돼',
+            location: '서울시 강남구'
         }
     ]);
     const [currentDraggingBlockId, setCurrentDraggingBlockId] =
@@ -100,7 +101,7 @@ export default function Updateschedule() {
         return times;
     };
 
-    const renderDateTable = (date: string, item: IscheduleItem[]) => {
+    const renderDateTable = (date: string, item: IScheduleItem[]) => {
         const times: React.ReactNode[] = [
             <div
                 key='first'
