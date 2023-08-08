@@ -92,7 +92,11 @@ export default function InfoMenus({
     };
 
     return (
-        <div className='flex justify-between py-6 sticky top-0 bg-white z-10'>
+        <div
+            className={`flex justify-between py-6 sticky top-0 bg-white ${
+                menus[0][1] ? 'z-0' : 'z-10'
+            }`}
+        >
             <div className='flex items-end'>
                 {menus.map((menu, index) => (
                     <Menu
