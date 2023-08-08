@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import TransparentModal from './TransparentModal';
 import { BiSearch } from 'react-icons/bi';
 import { RxCross1 } from 'react-icons/rx';
@@ -29,29 +29,29 @@ interface SearchboxModalProps {
     onCreateSchedule: () => void;
     selectedCities: string[];
     setSelectedCities: React.Dispatch<React.SetStateAction<string[]>>;
+    results: { id: number; place: string }[];
+    scheduleCreated: boolean;
+    setScheduleCreated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function SearchboxModal({
     setIsModal,
     selectedCities,
     setSelectedCities,
-    onCreateSchedule
+    onCreateSchedule,
+    results,
+    scheduleCreated,
+    setScheduleCreated,
 }: SearchboxModalProps) {
-    const refCities = [
-        // 자동완성 검색어
-        { id: 1, place: '도쿄' },
-        { id: 2, place: '브라질' },
-        { id: 3, place: '방콕' },
-        { id: 4, place: '부산' },
-        { id: 5, place: '베트남' },
-        { id: 6, place: '브루클린' },
-        { id: 7, place: '벨기에' }
-    ];
+    const [isExpanded, setIsExpanded] = useState(false);
+    const contentRef = useRef<HTMLDivElement>(null);
+    const [contentHeight, setContentHeight] = useState<number | undefined>(undefined);
 
     const onClickCity = (refCity: string) => {
         if (!selectedCities.includes(refCity)) {
             // 이미 선택된 도시가 아니면
             setSelectedCities((prevCities) => [...prevCities, refCity]); // 배열에 삽입
+            setIsExpanded(true); // 검색창 확장
         }
     };
 
@@ -60,6 +60,9 @@ function SearchboxModal({
         setSelectedCities((prevCities) =>
             prevCities.filter((item) => item !== city)
         );
+        if (selectedCities.length <= 0) {
+            setIsExpanded(false); // 선택된 도시가 없으면 다시 축소
+        }
     };
 
     const onClickCreateSchedule = () => {
@@ -69,8 +72,17 @@ function SearchboxModal({
             onCreateSchedule();
             setIsModal(false);
             setSelectedCities(selectedCities);
+            setScheduleCreated(true); // 일정 생성 버튼을 누르면 true
         }
     };
+
+    useEffect(() => {
+        // 컨텐츠의 높이를 측정하여 상태에 저장
+        if (contentRef.current) {
+            setContentHeight(contentRef.current.offsetHeight);
+        }
+    }, [selectedCities, isExpanded]);
+
     if (selectedCities.length > 0) {
         // 도시를 선택한 경우
         return (
@@ -80,8 +92,9 @@ function SearchboxModal({
                 setModalState={setIsModal}
                 onClickCompleteButton={() => setIsModal(false)}
                 completeText=''
+                contentHeight={isExpanded ? contentHeight : undefined}
             >
-                <div className='px-[30px] pt-2'>
+                <div className={`px-[30px] pt-2 ${isExpanded ? 'pb-0.5' : ''}`}>
                     <div className='border-b border-grey'></div>
                     <div className='p-3.5'>
                         <div className='flex'>
@@ -99,7 +112,7 @@ function SearchboxModal({
                                 일정 생성
                             </button>
                         </div>
-                        {refCities.map((refCity, index) => (
+                        {results.slice(0, 7).map((result, index) => (
                             <div
                                 className='border-b border-lightgrey py-[14px]'
                                 key={index}
@@ -107,12 +120,12 @@ function SearchboxModal({
                                 <div className='flex justify-between items-center'>
                                     <div className='flex'>
                                         <BiSearch size={24} className='mr-3' />
-                                        {refCity.place}
+                                        {result.place}
                                     </div>
                                     <button
                                         className='px-4 py-2 rounded-full bg-lightgrey text-[12px]'
                                         onClick={() =>
-                                            onClickCity(refCity.place)
+                                            onClickCity(result.place)
                                         }
                                     >
                                         선택
@@ -133,11 +146,12 @@ function SearchboxModal({
             setModalState={setIsModal}
             onClickCompleteButton={() => setIsModal(false)}
             completeText=''
+            contentHeight={isExpanded ? contentHeight : undefined}
         >
-            <div className='px-[30px] pt-2'>
+            <div className={`px-[30px] pt-2 ${isExpanded ? 'pb-0.5' : ''}`}>
                 <div className='border-b border-grey'></div>
                 <div className='p-3.5'>
-                    {refCities.map((refCity, index) => (
+                    {results.slice(0, 7).map((result, index) => (
                         <div
                             className='border-b border-lightgrey py-[14px]'
                             key={index}
@@ -145,11 +159,11 @@ function SearchboxModal({
                             <div className='flex justify-between items-center'>
                                 <div className='flex'>
                                     <BiSearch size={24} className='mr-3' />
-                                    {refCity.place}
+                                    {result.place}
                                 </div>
                                 <button
                                     className='px-4 py-2 rounded-full bg-lightgrey text-[12px]'
-                                    onClick={() => onClickCity(refCity.place)}
+                                    onClick={() => onClickCity(result.place)}
                                 >
                                     선택
                                 </button>
