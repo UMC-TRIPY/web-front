@@ -29,8 +29,9 @@ interface SearchboxModalProps {
     onCreateSchedule: () => void;
     selectedCities: string[];
     setSelectedCities: React.Dispatch<React.SetStateAction<string[]>>;
-    inputCity: string;
     results: { id: number; place: string }[];
+    scheduleCreated: boolean; // 이 부분이 boolean 타입으로 지정되어 있음
+    setScheduleCreated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function SearchboxModal({
@@ -39,13 +40,12 @@ function SearchboxModal({
     setSelectedCities,
     onCreateSchedule,
     results,
+    scheduleCreated,
+    setScheduleCreated,
 }: SearchboxModalProps) {
     const [isExpanded, setIsExpanded] = useState(false);
     const contentRef = useRef<HTMLDivElement>(null);
     const [contentHeight, setContentHeight] = useState<number | undefined>(undefined);
-
-
-
 
     const onClickCity = (refCity: string) => {
         if (!selectedCities.includes(refCity)) {
@@ -56,6 +56,7 @@ function SearchboxModal({
     };
 
     const onClickRemoveCity = (city: string) => {
+        setScheduleCreated(false);
         // 선택된 도시 삭제
         setSelectedCities((prevCities) =>
             prevCities.filter((item) => item !== city)
@@ -72,6 +73,7 @@ function SearchboxModal({
             onCreateSchedule();
             setIsModal(false);
             setSelectedCities(selectedCities);
+            setScheduleCreated(true); // 일정 생성 버튼을 누르면 true
         }
     };
 

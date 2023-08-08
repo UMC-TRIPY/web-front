@@ -39,12 +39,19 @@ interface ScheduleHeaderProps {
     selectedCities: string[];
     setSelectedCities: React.Dispatch<React.SetStateAction<string[]>>;
     onCreateSchedule: () => void;
+    scheduleCreated: boolean;
+    setScheduleCreated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function ScheduleHeader ({ selectedCities, setSelectedCities, onCreateSchedule }: ScheduleHeaderProps) {
+function ScheduleHeader ({ 
+    selectedCities, 
+    setSelectedCities, 
+    onCreateSchedule,
+    scheduleCreated, 
+    setScheduleCreated
+}: ScheduleHeaderProps) {
     // 모달 상태 제어
     const [modal, setModal] = useState(false);
-    const [inputValue, setInputValue] = useState('');
     const [place, setPlace] = useState<string>('');
     
     const refCities: { id: number; place: string }[] = [
@@ -106,8 +113,9 @@ function ScheduleHeader ({ selectedCities, setSelectedCities, onCreateSchedule }
                         selectedCities={selectedCities} 
                         setSelectedCities={setSelectedCities} 
                         onCreateSchedule={() => {}}
-                        inputCity={inputValue}
                         results={results}
+                        scheduleCreated={scheduleCreated}
+                        setScheduleCreated={setScheduleCreated}
                     />
                 </div>
             )}

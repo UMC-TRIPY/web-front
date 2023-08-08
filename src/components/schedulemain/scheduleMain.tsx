@@ -5,6 +5,7 @@ import ScheduleHeader from "./scheduleHeader";
 
 function scheduleMain () {
     const [selectedCities, setSelectedCities] = useState<string[]>([]);
+    const [scheduleCreated, setScheduleCreated] = useState(false);
     
     return (
         <div>
@@ -12,10 +13,17 @@ function scheduleMain () {
             <ScheduleHeader 
                 selectedCities={selectedCities} 
                 setSelectedCities={setSelectedCities} 
-                onCreateSchedule={() => {}}
+                onCreateSchedule={() => {setScheduleCreated(true)}}
+                scheduleCreated={scheduleCreated}
+                setScheduleCreated={setScheduleCreated}
             />
             {/* 하단 검색창 */}
-            <DetailBox selectedCities={selectedCities} setSelectedCities={setSelectedCities}/>     
+            <DetailBox 
+                selectedCities={selectedCities} 
+                setSelectedCities={setSelectedCities}
+                scheduleCreated={scheduleCreated}
+                setScheduleCreated={setScheduleCreated}
+            />     
             {/* 내 여행 목록 */}
             <MyTravel /> 
         </div>

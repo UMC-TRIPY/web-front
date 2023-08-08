@@ -47,9 +47,16 @@ function RoundBtn(props: RoundBtnProps) {
 interface DetailBoxProps {
     selectedCities: string[];
     setSelectedCities: React.Dispatch<React.SetStateAction<string[]>>;
+    scheduleCreated: boolean;
+    setScheduleCreated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function DetailBox({ selectedCities, setSelectedCities }: DetailBoxProps) {
+function DetailBox({ 
+    selectedCities, 
+    setSelectedCities,
+    scheduleCreated,
+    setScheduleCreated,
+}: DetailBoxProps) {
     const [menus, setMenus] = useState<[string, boolean][]>([
         ['해외', true],
         ['국내', false]
@@ -140,7 +147,7 @@ function DetailBox({ selectedCities, setSelectedCities }: DetailBoxProps) {
                 <RoundBtn color='lightgrey' label='검색' />
             </div>
             {/* 인기 검색어 */}
-            {selectedCities.length > 0 ? (
+            {scheduleCreated && selectedCities.length > 0 ? (
                 <SelectedPlaces
                     selectedCities={selectedCities}
                     setSelectedCities={setSelectedCities}
