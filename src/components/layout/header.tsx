@@ -85,7 +85,7 @@ export default function Header() {
             menu[0],
             index === selectedIndex
         ]);
-        if (selectedIndex === 0) router.push('/schedulemain');
+        if (selectedIndex === 0) router.push('/info');
         if (selectedIndex === 1) router.push('/schedule');
         if (selectedIndex === 2) router.push('/mybag');
         setMenus(updatedMenus);

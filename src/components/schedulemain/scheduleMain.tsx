@@ -1,9 +1,9 @@
-import React, { useState } from "react";
-import DetailBox from "./detailBox";
-import MyTravel from "./myTravel";
-import ScheduleHeader from "./scheduleHeader";
+import React, { useState } from 'react';
+import DetailBox from './detailBox';
+import MyTravel from './myTravel';
+import ScheduleHeader from './scheduleHeader';
 
-function scheduleMain () {
+function ScheduleMain() {
     const [selectedCities, setSelectedCities] = useState<string[]>([]);
     const [scheduleCreated, setScheduleCreated] = useState(false);
     
@@ -25,9 +25,9 @@ function scheduleMain () {
                 setScheduleCreated={setScheduleCreated}
             />     
             {/* 내 여행 목록 */}
-            <MyTravel /> 
+            <MyTravel />
         </div>
-    )
+    );
 }
 
-export default scheduleMain;
+export default ScheduleMain;

@@ -3,12 +3,12 @@ import { RiKakaoTalkFill } from 'react-icons/ri';
 
 const KakaoLoginButton = ({ setIsModal, setIsLoggedIn }: any) => {
     const kakaoLogin = async () => {
-        setIsModal(false);
-        setIsLoggedIn(true);
-        // const kakao = kakaoInit();
-        // kakao.Auth.authorize({
-        //     redirectUri: `${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`
-        // });
+        // setIsModal(false);
+        // setIsLoggedIn(true);
+        const kakao = kakaoInit();
+        kakao.Auth.authorize({
+            redirectUri: `${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`
+        });
     };
 
     return (

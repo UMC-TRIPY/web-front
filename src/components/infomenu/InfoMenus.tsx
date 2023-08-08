@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
+import { useRouter } from 'next/navigation';
+import FixedSearchCityModal from '../modal/FixedSearchCityModal';
 
 interface MenuProps {
     menu: string;
@@ -11,11 +13,16 @@ interface MenuProps {
     onClick: (index: number) => void;
 }
 
-export default function InfoMenus() {
+export default function InfoMenus({
+    travels
+}: {
+    travels: [string, string][];
+}) {
+    const router = useRouter();
     const para = useParams();
     const currentLocation = para.city;
     const [place, setPlace] = useState<string>('');
-    const [activeFocus, setActiveFocus] = useState<boolean>(false);
+    const [modal, setIsModal] = useState<boolean>(false);
     const [menus, setMenus] = useState<
         [string, boolean, { min: number; max: number }][]
     >([
@@ -63,7 +70,7 @@ export default function InfoMenus() {
 
     window.addEventListener('scroll', () => {
         const updatedMenus: [string, boolean, { min: number; max: number }][] =
-            menus.map((menu, index) => [
+            menus.map((menu) => [
                 menu[0],
                 scrollY >= menu[2].min && scrollY < menu[2].max,
                 menu[2]
@@ -71,30 +78,18 @@ export default function InfoMenus() {
         setMenus(updatedMenus);
     });
 
-    const travels = [
-        ['오사카', 'osaka'],
-        ['오키나와', 'okinawa'],
-        ['오스트리아', 'austria'],
-        ['오타쿠', 'otaku'],
-        ['오키키', 'okay'],
-        ['유나이티드', 'united'],
-        ['도쿄', 'tokyo'],
-        ['다낭', 'danang'],
-        ['싸이판', 'saipan'],
-        ['보라카이', 'boracay'],
-        ['부다페스트', 'budapest'],
-        ['파리', 'paris'],
-        ['나폴리', 'neapolitan'],
-        ['나트랑', 'nhatrang'],
-        ['뉴욕', 'newyork']
-    ];
     const results = travels
         .filter((t) => t[0][0].includes(place[0]))
         .filter((t) => t[0].includes(place.replace(/ /g, '')));
 
-    const length = results.length === 0 ? true : false;
-
     useEffect(() => {}, []);
+
+    const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
+        console.log(e);
+        if (e.key === 'Enter' && place !== '' && results.length === 1) {
+            router.push(`/info/${results.map((result) => result[1])}`);
+        }
+    };
 
     return (
         <div className='flex justify-between py-6 sticky top-0 bg-white z-10'>
@@ -109,61 +104,47 @@ export default function InfoMenus() {
                     />
                 ))}
             </div>
-            <div className='flex flex-col justify-center'>
-                <input
-                    className='border border-grey w-96 h-14 rounded-lg py-3.5 pl-6 searchPlace'
-                    type='text'
-                    placeholder='보고 싶은 여행지를 입력하세요'
-                    value={place}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setPlace(e.target.value)
-                    }
-                    onFocus={() => setActiveFocus(true)}
-                    onBlur={() => setTimeout(() => setActiveFocus(false), 250)}
-                />
-                <div
-                    className={
-                        length || !activeFocus
-                            ? 'hidden'
-                            : `w-96 max-h-56 absolute top-[104px] bg-white rounded-lg border  ${
-                                  results.length > 4
-                                      ? 'overflow-y-scroll'
-                                      : 'overflow-y-hidden'
-                              }`
-                    }
-                >
-                    {results.map((result, idx) => (
-                        <Link
-                            key={`resultlink${idx}`}
-                            href={`/info/${result[1]}`}
-                        >
-                            <div
-                                key={`result${idx}`}
-                                className='py-4 pl-8 border-y border-morelightgrey cursor-pointer'
-                                onClick={() => {}}
-                            >
-                                {result[0]}
-                            </div>
-                        </Link>
-                    ))}
-                </div>
-                <Link
-                    href={
-                        place === ''
-                            ? `/info/${currentLocation}`
-                            : `/info/${results.map((result) => result[1])}`
-                    }
-                    className='absolute self-end mr-5 hover:cursor-pointer'
-                >
-                    <BiSearch
+            <div className='w-1/3 flex flex-row-reverse items-end'>
+                <div className='flex flex-col justify-center w-full'>
+                    <input
+                        className='border border-grey h-14 rounded-lg py-3.5 pl-6 searchPlace'
+                        type='text'
+                        placeholder='보고 싶은 여행지를 입력하세요'
+                        value={place}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                            setPlace(e.target.value)
+                        }
+                        onClick={() => setIsModal(true)}
+                        onKeyDown={onKeyDown}
+                    />
+                    <Link
                         onClick={() => {
                             if (place === '') {
                                 alert('1글자 이상 입력해주세요.');
                             }
+
+                            if (results.length !== 1) {
+                                alert('해당 여행지가 없습니다.');
+                            }
                         }}
-                        size='24'
+                        href={
+                            place === ''
+                                ? `/info/${currentLocation}`
+                                : results.length === 1
+                                ? `/info/${results.map((result) => result[1])}`
+                                : `/info/${currentLocation}`
+                        }
+                        className='absolute self-end mr-5 hover:cursor-pointer'
+                    >
+                        <BiSearch size='24' />
+                    </Link>
+                </div>
+                {modal && (
+                    <FixedSearchCityModal
+                        setIsModal={setIsModal}
+                        results={results}
                     />
-                </Link>
+                )}
             </div>
         </div>
     );

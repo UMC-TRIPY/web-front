@@ -30,7 +30,7 @@ interface SearchboxModalProps {
     selectedCities: string[];
     setSelectedCities: React.Dispatch<React.SetStateAction<string[]>>;
     results: { id: number; place: string }[];
-    scheduleCreated: boolean; // 이 부분이 boolean 타입으로 지정되어 있음
+    scheduleCreated: boolean;
     setScheduleCreated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -56,7 +56,6 @@ function SearchboxModal({
     };
 
     const onClickRemoveCity = (city: string) => {
-        setScheduleCreated(false);
         // 선택된 도시 삭제
         setSelectedCities((prevCities) =>
             prevCities.filter((item) => item !== city)

@@ -19,16 +19,16 @@ function MyTravel () {
         {id: 12, dates: "언제언제", places: "어디어디"},
         {id: 13, dates: "언제언제", places: "어디어디"},
     ]);
-    const handlePrevClick = () => {
+    const handlePrevClick = (): void => {
         setCurrentPage((prevPage) => prevPage - 1)
     };
-    const handleNextClick = () => {
+    const handleNextClick = (): void => {
         setCurrentPage((prevPage) => prevPage + 1)
     };
 
     const indexOfLastTravel = currentPage * travelsPerPage;
     const indexOfFirstTravel = indexOfLastTravel - travelsPerPage;
-    const currentTravels = travels.slice(indexOfFirstTravel, indexOfLastTravel);
+    const currentTravels = travels.slice(indexOfFirstTravel, indexOfLastTravel) as { id: number; dates: string; places: string }[];
     return (
         <div className="mx-4 mt-16">
             <div className="text-3xl font-bold mb-5">
@@ -43,8 +43,8 @@ function MyTravel () {
                     </div>    
                 </div>
                 <div className="py-5">
-                    {currentTravels.map((travel, index) => (
-                    <div className="flex items-center justify-between py-[16.5px]">
+                    {currentTravels.map((travel) => (
+                    <div key={travel.id} className="flex items-center justify-between py-[16.5px]">
                         <div className="w-1/3 text-center">
                             {travel.dates}
                         </div>
