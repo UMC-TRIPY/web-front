@@ -6,14 +6,18 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { FiEdit } from 'react-icons/fi';
 
 interface IMaterial {
-    id: string;
-    name: string;
+    materials_index: number;
+    materials_name: string;
+}
+
+interface IMaterialProps extends IMaterial {
     checked: boolean;
     edited: boolean;
 }
+
 interface ICarrierProps {
-    materials: IMaterial[];
-    setMaterials: React.Dispatch<React.SetStateAction<IMaterial[]>>;
+    materials: IMaterialProps[];
+    setMaterials: React.Dispatch<React.SetStateAction<IMaterialProps[]>>;
 }
 
 const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
@@ -23,10 +27,10 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
     const [editText, setEditText] = useState<string>('');
 
     const handleCheckbox = (e: any) => {
-        const id = e.target.id;
+        const id = parseInt(e.target.id);
         setMaterials(
             materials.map((material) =>
-                material.id === id
+                material.materials_index === id
                     ? { ...material, checked: !material.checked }
                     : material
             )
@@ -38,27 +42,38 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
     };
 
     const handleClickEndAdd = () => {
-        const id = materials.length.toString();
+        const id = materials.length;
         setIsAdd(false);
         if (addText.length > 0)
             setMaterials([
-                { id, name: addText, checked: false, edited: false },
+                {
+                    materials_index: id,
+                    materials_name: addText,
+                    checked: false,
+                    edited: false
+                },
                 ...materials
             ]);
         setAddText('');
     };
 
-    const handleClickDelete = (id: string) => {
-        setMaterials(materials.filter((material) => material.id !== id));
+    const handleClickDelete = (id: number) => {
+        setMaterials(
+            materials.filter((material) => material.materials_index !== id)
+        );
     };
 
-    const handleClickEdit = (id: string) => {
+    const handleClickEdit = (id: number) => {
         setIsEdit(true);
-        const selected = materials.filter((material) => material.id === id);
-        setEditText(selected[0].name);
+        const selected = materials.filter(
+            (material) => material.materials_index === id
+        );
+        setEditText(selected[0].materials_name);
         setMaterials(
             materials.map((material) =>
-                material.id === id ? { ...material, edited: true } : material
+                material.materials_index === id
+                    ? { ...material, edited: true }
+                    : material
             )
         );
     };
@@ -175,17 +190,19 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                                 }
                             >
                                 <input
-                                    id={material.id}
+                                    id={material.materials_index.toString()}
                                     checked={material.checked}
                                     type='checkbox'
                                     className='flex justify-center items-center w-6 rounded-full appearance-none border-2 bg-white checked:after:content-["✓"] cursor-pointer'
                                     onChange={(e) => handleCheckbox(e)}
                                 ></input>
-                                <div>{material.name}</div>
+                                <div>{material.materials_name}</div>
                                 <div
                                     className='flex items-center cursor-pointer'
                                     onClick={() =>
-                                        handleClickDelete(material.id)
+                                        handleClickDelete(
+                                            material.materials_index
+                                        )
                                     }
                                 >
                                     <AiOutlineClose />
@@ -204,7 +221,9 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                                   <FiEdit
                                       className='cursor-pointer'
                                       onClick={() =>
-                                          handleClickEdit(material.id)
+                                          handleClickEdit(
+                                              material.materials_index
+                                          )
                                       }
                                   />
                               )}

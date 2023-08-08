@@ -9,29 +9,35 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 interface IMaterial {
-    id: string;
-    name: string;
+    materials_index: number;
+    materials_name: string;
+}
+
+interface IMaterialProps extends IMaterial {
+    checked: boolean;
+    edited: boolean;
 }
 
 const BagDetail = () => {
     const route = useRouter();
-    const [materials, setMaterials] = useState([
-        { id: '0', name: '비치웨어', checked: false, edited: false },
-        { id: '1', name: '자외선 차단제', checked: false, edited: false },
-        { id: '2', name: '양산', checked: false, edited: false },
-        { id: '3', name: '슬리퍼', checked: false, edited: false },
-        { id: '4', name: '여권', checked: false, edited: false },
-        { id: '5', name: '선글라스', checked: false, edited: false },
-        { id: '6', name: '미니 선풍기', checked: false, edited: false },
-        { id: '7', name: '우산', checked: false, edited: false },
-        { id: '8', name: '우비', checked: false, edited: false },
-        { id: '9', name: '부채', checked: false, edited: false },
-        { id: '10', name: '여행용 방수팩', checked: false, edited: false },
-        { id: '11', name: '수영 모자', checked: false, edited: false },
-        { id: '12', name: '모기약', checked: false, edited: false }
-    ]);
+    // const [materials, setMaterials] = useState([
+    //     { id: '0', name: '비치웨어', checked: false, edited: false },
+    //     { id: '1', name: '자외선 차단제', checked: false, edited: false },
+    //     { id: '2', name: '양산', checked: false, edited: false },
+    //     { id: '3', name: '슬리퍼', checked: false, edited: false },
+    //     { id: '4', name: '여권', checked: false, edited: false },
+    //     { id: '5', name: '선글라스', checked: false, edited: false },
+    //     { id: '6', name: '미니 선풍기', checked: false, edited: false },
+    //     { id: '7', name: '우산', checked: false, edited: false },
+    //     { id: '8', name: '우비', checked: false, edited: false },
+    //     { id: '9', name: '부채', checked: false, edited: false },
+    //     { id: '10', name: '여행용 방수팩', checked: false, edited: false },
+    //     { id: '11', name: '수영 모자', checked: false, edited: false },
+    //     { id: '12', name: '모기약', checked: false, edited: false }
+    // ]);
+    const [materials, setMaterials] = useState<IMaterialProps[]>([]);
 
-    const [recommendMaterials, setRecommendMaterials] = useState<IMaterial[]>([
+    const [recommendMaterials, setRecommendMaterials] = useState([
         { id: '0', name: '비치웨어' },
         { id: '1', name: '자외선 차단제' },
         { id: '2', name: '양산' },
@@ -47,18 +53,18 @@ const BagDetail = () => {
         { id: '12', name: '모기약' }
     ]);
 
-    // useEffect(() => {
-    //     getMaterials().then((res:IMaterial[]) => {
-    //         setMaterials(
-    //             res.map((data) => {
-    //                 return { ...data, checked: false, edited: false };
-    //             })
-    //         );
-    //     });
-    // }, []);
+    useEffect(() => {
+        getMaterials().then((res: IMaterial[]) => {
+            setMaterials(
+                res.map((data) => {
+                    return { ...data, checked: false, edited: false };
+                })
+            );
+        });
+    }, []);
 
     const handleClickRecoMaterial = (id: string) => {
-        const MATERIAL_LENGTH = materials.length.toString();
+        const MATERIAL_LENGTH = materials.length;
         const restRecoMaterial = recommendMaterials.filter(
             (material) => material.id !== id
         );
@@ -67,8 +73,8 @@ const BagDetail = () => {
         );
 
         const newMaterial = {
-            id: MATERIAL_LENGTH,
-            name: clickedMaterial[0].name,
+            materials_index: MATERIAL_LENGTH,
+            materials_name: clickedMaterial[0].name,
             checked: false,
             edited: false
         };
