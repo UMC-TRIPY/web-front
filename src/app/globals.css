@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+    /* 최대 가로축 길이 1280px */
+    @apply max-w-screen-xl mx-auto;
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --foreground-rgb: 255, 255, 255;
+        --background-start-rgb: 0, 0, 0;
+        --background-end-rgb: 0, 0, 0;
+    }
+}
+
+body {
+}
+
+/* Calendar CSS */
+.react-datepicker {
+    /* !importan는 CSS의 우선순위를 높여주는 키워드입니다 */
+    border: 1px solid white !important;
+    box-shadow: 2.5px 2.5px 2.5px 2.5px #0000001a;
+    .react-datepicker__month-container {
+        .react-datepicker__header {
+            background-color: white;
+            border: none;
+        }
+        .react-datepicker__day-name {
+            margin: 0px 7px 0px 7px;
+        }
+        .react-datepicker__month {
+            .react-datepicker__day {
+                margin: 5px 7px 5px 7px;
+                &:hover {
+                    border-radius: 18px;
+                    background-color: #fff2b4;
+                }
+            }
+            .react-datepicker__day--today,
+            .react-datepicker__day--keyboard-selected {
+                border-radius: 18px;
+                background-color: #fff2b4;
+                font-weight: 400;
+            }
+            .react-datepicker__day--selected,
+            .react-datepicker__day--in-range,
+            .react-datepicker__day--in-selecting-range {
+                border-radius: 18px;
+                background-color: #ffe457;
+                color: black;
+            }
+        }
+    }
+}
+
+/* 해당 스타일은 Chrome, Safari, Opera 등에서 작동 */
+/* 스크롤바 전체 스타일 */
+::-webkit-scrollbar {
+    width: 2px; /* 스크롤바의 너비 */
+}
+/* 스크롤바 thumb 색상 */
+::-webkit-scrollbar-thumb {
+    background-color: grey;
+}
+/* 스크롤바 트랙 스타일 */
+::-webkit-scrollbar-track {
+    background-color: lightgrey;
+}
