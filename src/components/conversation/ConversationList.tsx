@@ -33,10 +33,24 @@ const ConversationList = () => {
             class: 'flex flex-col gap-y-3 pt-4 border-t-2'
         }
     ]);
+
+    const handleClickSpeak = (id: number) => {
+        let voice;
+        contents.map((content) =>
+            content.id === id ? (voice = content.pronunciation) : ''
+        );
+        const utterance = new SpeechSynthesisUtterance(voice);
+        speechSynthesis.speak(utterance);
+    };
+
     return (
         <div className='flex flex-col gap-y-5 mt-4'>
             {contents.map((content) => (
-                <ConversationItem content={content} key={content.id} />
+                <ConversationItem
+                    content={content}
+                    key={content.id}
+                    handleClickSpeak={handleClickSpeak}
+                />
             ))}
         </div>
     );

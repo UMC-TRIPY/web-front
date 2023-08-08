@@ -7,7 +7,12 @@ interface MenuProps {
     onClick: (index: number) => void;
 }
 
-export default function MypageMenus () {
+interface MypageMenusProps {
+    activeMenu: string;
+    onMenuClick: (menu: string) => void;
+}
+
+export default function MypageMenus ({ activeMenu, onMenuClick }: MypageMenusProps) {
     const [menus, setMenus] = useState<[string, boolean][]>([
         ['정보', true],
         ['여행일정', false],
@@ -17,6 +22,10 @@ export default function MypageMenus () {
     ]);
 
     const Menu = ({ menu, select, index, onClick }: MenuProps) => {
+        const handleMenuClick = () => {
+            onClick(index);
+        };
+
         return (
             <div className='relative flex flex-col items-center'>
                 {select && (
@@ -32,7 +41,7 @@ export default function MypageMenus () {
                             ? 'text-primary mx-4 font-bold hover:cursor-pointer'
                             : 'text-infomenu mx-4 font-bold hover:cursor-pointer'
                     }
-                    onClick={() => onClick(index)}
+                    onClick={handleMenuClick}
                 >
                     {menu}
                 </span>
@@ -41,11 +50,8 @@ export default function MypageMenus () {
     };
 
     const menuClick = (selectedIndex: number) => {
-        const updatedMenus: [string, boolean][] = menus.map((menu, index) => [
-            menu[0],
-            index === selectedIndex
-        ]);
-        setMenus(updatedMenus);
+        const selectedMenu = menus[selectedIndex][0];
+        onMenuClick(selectedMenu);
     };
 
     return (
@@ -59,7 +65,7 @@ export default function MypageMenus () {
                         <Menu
                             key={`menu${index}`}
                             menu={menu[0]}
-                            select={menu[1]}
+                            select={menu[0] === activeMenu}
                             index={index}
                             onClick={menuClick}
                         />

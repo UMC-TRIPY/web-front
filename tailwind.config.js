@@ -20,8 +20,13 @@ module.exports = {
                 infomenu: '#868686',
                 brightgrey: '#F9F9F9',
                 lightgrey: '#E5E5E5',
+                morelightgrey: 'rgba(229, 229, 229, 0.5)',
                 grey: '#A3A3A3',
-                darkgrey: '#666666'
+                darkgrey: '#666666',
+                'kakao-color': '#FAE100',
+                'dark-black': '#262626',
+                blur: 'rgba(232, 232, 232, 1)',
+                'blur-end': 'rgba(232, 232, 232, 0)'
             },
             width: {
                 'box-width': '412px'
@@ -31,5 +36,5 @@ module.exports = {
             }
         }
     },
-    plugins: []
+    plugins: [require('tailwind-scrollbar')]
 };

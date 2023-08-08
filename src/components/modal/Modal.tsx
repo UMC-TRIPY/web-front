@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Portal from '@/components/modal/Portal';
 import { IoCloseOutline } from 'react-icons/io5';
 
@@ -25,7 +25,7 @@ export default function Modal({
 }: Props) {
     const modal: React.ReactNode[] = [
         <>
-            <div className='flex basis-[15%] justify-between items-center px-5'>
+            <div className='flex basis-[15%] justify-between items-center px-5 p-4'>
                 <div className='font-bold text-xl'>{title}</div>
                 <button
                     className='items-center'
@@ -38,14 +38,14 @@ export default function Modal({
             </div>
             <div className='basis-[70%]'>{children}</div>
             <button
-                className='basis-[15%] justify-center items-center rounded-b-lg border-t border-gray-200 bg-gray-50'
+                className='grow justify-center items-center rounded-b-lg border-t border-gray-200 bg-gray-50'
                 onClick={() => onClickCompleteButton()}
             >
-                <span className='text-xs'>{completeText}</span>
+                <span className='text-xl'>{completeText}</span>
             </button>
         </>,
         <>
-            <div className='flex basis-[15%] justify-between items-center px-5 rounded-t-lg border-b border-gray-200 bg-gray-50'>
+            <div className='flex basis-[15%] justify-between items-center px-5 rounded-t-lg border-b border-gray-200 bg-gray-50 p-4'>
                 <button
                     className='items-center'
                     onClick={() => {
@@ -57,7 +57,7 @@ export default function Modal({
                 <div className='font-bold text-xl'>{title}</div>
 
                 <button
-                    className='justify-center items-center'
+                    className='grow justify-center items-center'
                     onClick={() => onClickCompleteButton()}
                 >
                     <span className='text-xs'>{completeText}</span>
@@ -66,6 +66,17 @@ export default function Modal({
             <div className='basis-[85%]'>{children}</div>
         </>
     ];
+
+    useEffect(() => {
+        /* TODO: 스크롤이 내려가 있는 상태로 모달창 띄우는 방법도 고려 */
+        window.scrollTo(0, 0);
+        // const portal = document.getElementById('portal');
+        // if (portal) portal.classList.add(`top-[${window.scrollY}px]`);
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
 
     return (
         <Portal selector='#body'>
@@ -76,7 +87,10 @@ export default function Modal({
                         setModalState(false);
                     }}
                 ></div>
-                <div className='absolute flex flex-col top-1/3 left-1/3 w-96 h-96 rounded-lg bg-neutral-50 z-101'>
+                <div
+                    className='absolute flex flex-col top-1/3 left-1/3 w-1/3 rounded-lg bg-neutral-50 z-101'
+                    style={{ minHeight: '24rem' }}
+                >
                     {modal[modalMode as number]}
                 </div>
             </div>

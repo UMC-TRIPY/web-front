@@ -2,23 +2,35 @@ import React, { useEffect, useState } from 'react';
 import { LiaExchangeAltSolid } from 'react-icons/lia';
 import axios from 'axios';
 
-export default function ExchangeRate() {
+export default function ExchangeRate({
+    currencyKo,
+    currencyEn,
+    country
+}: {
+    currencyKo: string;
+    currencyEn: string;
+    country: string;
+}) {
     const [cur, setCur] = useState<number>(0);
-    // 환율 대한민국 고정할거면 원화 자리에 krw 고정
-    // 나라 정보와 환율도 가져와야함 => 백엔드에서 페이지 접속할 때 넘겨줘야함
-    // 환율 가져오면 그에 따른 뒷자리도 가져와야함 => 배열로 만들어두기?
+    const currencyKey = process.env.NEXT_PUBLIC_EXCHANGE_KEY;
     useEffect(() => {
         axios
-            .get(
-                // ~~/currencies/{원화}/{환전하고 싶은 통화}.json
-                'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/krw.json'
-            )
+            .get(`http://data.fixer.io/api/latest?access_key=${currencyKey}`)
             .then((res) => {
-                setCur(res.data.krw.jpy);
-                console.log(`환율 정보 : ${res.data.krw.jpy}`);
+                console.log(res);
+                const ko = res.data.rates.KRW;
+                const otherName = Object.keys(res.data.rates);
+                const otherValue = Object.values(res.data.rates);
+                let other: any;
+                otherName.filter((cur, idx) => {
+                    if (cur === currencyEn) other = otherValue[idx];
+                });
+                setCur(other / ko);
+                console.log('환율 정보 : ' + other / ko);
             })
             .catch((err) => console.log(err));
     }, []);
+
     const [before, setBefore] = useState<string>('');
     const [after, setAfter] = useState<string>(before);
     const [isWon, setIsWon] = useState<boolean>(true);
@@ -50,17 +62,16 @@ export default function ExchangeRate() {
 
     return (
         <div className='flex justify-between items-center mt-3'>
-            {/* 환율 api 연동 해야합니다 */}
             <div className='flex'>
                 <div className='flex flex-col justify-center text-center bg-lightgrey text-darkgrey rounded-l w-24 h-16'>
-                    <div>{isWon ? '대한민국' : '일본'}</div>
-                    <div>{isWon ? 'KRW' : 'JPY'}</div>
+                    <div>{isWon ? '대한민국' : country}</div>
+                    <div>{isWon ? 'KRW' : currencyEn}</div>
                 </div>
                 <input
                     className={
                         before === ''
-                            ? 'flex flex-col justify-center text-center text-right border border-lightgrey rounded-r w-60 px-3'
-                            : 'flex flex-col justify-center text-center text-right border border-lightgrey rounded-r w-60 px-[25px]'
+                            ? 'flex flex-col justify-center text-right border border-lightgrey rounded-r w-60 px-3'
+                            : 'flex flex-col justify-center text-right border border-lightgrey rounded-r w-60 px-[25px]'
                     }
                     type='text'
                     placeholder='숫자를 입력해주세요.'
@@ -75,7 +86,7 @@ export default function ExchangeRate() {
                             : 'self-center absolute ml-[310px]'
                     }
                 >
-                    {isWon ? '원' : '엔'}
+                    {isWon ? '원' : currencyKo}
                 </div>
             </div>
             <LiaExchangeAltSolid
@@ -89,12 +100,12 @@ export default function ExchangeRate() {
             />
             <div className='flex'>
                 <div className='flex flex-col justify-center text-center bg-lightgrey text-darkgrey rounded-l w-24 h-16'>
-                    <div>{isWon ? '일본' : '대한민국'}</div>
-                    <div>{isWon ? 'JPY' : 'KRW'}</div>
+                    <div>{isWon ? country : '대한민국'}</div>
+                    <div>{isWon ? currencyEn : 'KRW'}</div>
                 </div>
-                <div className='flex flex-col justify-center text-center text-right border border-lightgrey rounded-r w-60 px-3'>
+                <div className='flex flex-col justify-center text-right border border-lightgrey rounded-r w-60 px-3'>
                     {before === '' ? 0 : after}
-                    {isWon ? '엔' : '원'}
+                    {isWon ? currencyKo : '원'}
                 </div>
             </div>
         </div>

@@ -4,42 +4,86 @@ import { Carousel } from 'react-responsive-carousel';
 import Image from 'next/image';
 
 type Props = {
+    mode: number;
     title: string;
     size: number;
     items: any;
 };
 
-const CardCarousel = ({ title, items, size }: Props) => {
+const CardCarousel = ({ mode, title, items, size }: Props) => {
     const [curSlide, setCurSlide] = useState<number>(0);
 
-    // 이건 일단 메인페이지용 카드 랜더링.
-    const renderItem = (items: any) => {
+    /**
+     *
+     * @param mode number: 인기여행지 0, 추천준비물 1
+     * @param items
+     * @returns
+     */
+    const renderItem = (mode: number, items: any) => {
         const slideGroups = [];
+        let slideGroup;
 
         for (let i = 0; i < items.length; i += size) {
-            const slideGroup = items
-                .slice(i, i + size)
-                .map((item: any, index: number) => (
-                    <div
-                        key={index}
-                        className='h-96 mx-2 rounded-md bg-gray-100 ease-in duration-300'
-                        style={{
-                            flexBasis: `${100 / size}%`,
-                            backgroundImage: `url(${item.img})`,
-                            backgroundSize: 'cover'
-                        }}
-                    >
-                        <div className='flex flex-col h-5/6 p-5 justify-start'>
-                            <span className='flex font-bold text-2xl'>
-                                {item.title}
-                            </span>
-                            <span className='flex text-sm'>{item.desc}</span>
+            if (mode === 0) {
+                slideGroup = items
+                    .slice(i, i + size)
+                    .map((item: any, index: number) => (
+                        <div
+                            key={index}
+                            className='h-96 mx-2 rounded-md bg-gray-100 ease-in duration-300'
+                            style={{
+                                flexBasis: `${100 / size}%`,
+                                backgroundImage: `url(${item.img})`,
+                                backgroundSize: 'cover'
+                            }}
+                        >
+                            <div className='flex flex-col h-5/6 p-5 justify-start'>
+                                <span className='flex font-bold text-2xl'>
+                                    {item.title}
+                                </span>
+                                <span className='flex text-sm'>
+                                    {item.desc}
+                                </span>
+                            </div>
+                            <button className='flex w-1/3 h-10 ml-5 justify-center items-center rounded-md opacity-50 bg-white hover:opacity-100'>
+                                둘러보기
+                            </button>
                         </div>
-                        <button className='flex w-1/3 h-10 ml-5 justify-center items-center rounded-md opacity-50 bg-white hover:opacity-100'>
-                            둘러보기
-                        </button>
-                    </div>
-                ));
+                    ));
+            } else {
+                slideGroup = items
+                    .slice(i, i + size)
+                    .map((item: any, index: number) => (
+                        <div
+                            key={index}
+                            className='h-96 mx-2 rounded-md bg-gray-100 ease-in duration-300'
+                            style={{
+                                flexBasis: `${100 / size}%`
+                            }}
+                        >
+                            <div className='flex flex-col h-1/6 p-5 justify-start'>
+                                <span className='flex font-bold text-2xl'>
+                                    {item.title}
+                                </span>
+                                <span className='flex text-sm'>
+                                    {item.desc}
+                                </span>
+                            </div>
+                            <img
+                                className='w-full h-4/6 p-5'
+                                src={item.img}
+                                alt='none'
+                            />
+                            <div className='flex justify-end'>
+                                <button className='flex w-1/3 h-8 mr-5 justify-center items-center rounded-3xl bg-lightgrey hover:bg-gray-300'>
+                                    <span className='text-base'>
+                                        가방에 담기
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    ));
+            }
 
             slideGroups.push(slideGroup);
         }
@@ -92,10 +136,11 @@ const CardCarousel = ({ title, items, size }: Props) => {
                 emulateTouch={true}
                 showArrows={false}
                 showIndicators={false}
+                showThumbs={false}
                 showStatus={false}
                 selectedItem={curSlide}
             >
-                {renderItem(items)}
+                {renderItem(mode, items)}
             </Carousel>
         </>
     );
