@@ -27,7 +27,7 @@ const ScheduleBlock = (props: Props) => {
     } = props.item;
     // const minutes = compareDate(startTime, endTime);
 
-    const dragFunction = (event, type) => {
+    const dragFunction = (event: any, type: any) => {
         event.preventDefault();
         console.log(type);
     };

@@ -1,5 +1,5 @@
 export default interface IScheduleItem {
-    id: number | string;
+    id: number;
     column: number;
     lineColor: string;
     color: string;
