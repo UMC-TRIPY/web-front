@@ -61,11 +61,12 @@ export default function Updateschedule() {
             location: '서울시 강남구'
         }
     ]);
-    const [currentDraggingBlockId, setCurrentDraggingBlockId] =
-        useState<number>(null);
+    const [currentDraggingBlockId, setCurrentDraggingBlockId] = useState<
+        number | null
+    >(null);
     // id값으로 찾아서 변경
     // drag and drop
-    const dragFunction = (event, type) => {
+    const dragFunction = (event: any, type: any) => {
         event.preventDefault();
         console.log(type);
     };
