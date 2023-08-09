@@ -106,7 +106,7 @@ const contents: IContent[] = [
     }
 ];
 
-const Community = (cityName: string) => {
+const Community = ({ cityName }: { cityName: string }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [category, setCategory] = useState('전체');
     const totalPages = Math.ceil(contents.length / 10);
