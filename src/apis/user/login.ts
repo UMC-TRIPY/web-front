@@ -1,6 +1,6 @@
 import { splitAuthCode } from '@/utils/oauth';
-import { Server } from './setting';
-import { LogoutReturnType, RefreshReturnType, TokenReturnType } from './types';
+import { Server } from '../setting';
+import { LogoutReturnType, RefreshReturnType, TokenReturnType } from '../types';
 
 export const getKakaoAccessToken = async () => {
     const authCode: string = splitAuthCode();
