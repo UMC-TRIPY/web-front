@@ -1,5 +1,6 @@
 import { LiaExchangeAltSolid } from 'react-icons/lia';
 import { FiEdit } from 'react-icons/fi';
+import HelpBot from '../mybag/HelpBot';
 
 export default function FriendList() {
     const friends = [
@@ -60,13 +61,7 @@ export default function FriendList() {
                     </div>
                 </div>
             </div>
-            <div className='absolute bottom-[200px] flex justify-end w-[1380px]'>
-                <img
-                    className='fixed hover:cursor-pointer'
-                    src='/images/helpbot.png'
-                    alt='none'
-                />
-            </div>
+            <HelpBot width='w-[1380px]' />
         </div>
     );
 }

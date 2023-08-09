@@ -34,8 +34,6 @@ interface MyBagProps {
 export default function ListComp({ travels, name }: Props) {
     const [lists, setLists] =
         useState<{ id: number; dates: string; places: string }[]>(travels);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [travelsPerPage] = useState(8);
     const totalPages = Math.ceil(travels.length / 8);
     const [current, setCurrent] = useState<number>(1);
     const [datas, setDatas] = useState<
