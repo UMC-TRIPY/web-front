@@ -1,8 +1,10 @@
 'use client';
 
+import { isLoggedInState } from '@/states/user';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
+import { useRecoilState } from 'recoil';
 import LoginModal from '../modal/LoginModal';
 import ScheduleAddModal from '../modal/ScheduleAddModal';
 import ScheduleDeleteModal from '../modal/ScheduleDeleteModal';
@@ -19,7 +21,7 @@ let count = 0;
 
 export default function Header() {
     // 로그인, 로그아웃 상태구현
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
     const [isModal, setIsModal] = useState(false);
     const router = useRouter();
 
@@ -40,8 +42,8 @@ export default function Header() {
 
     const handleLogin = () => {
         // 마이페이지 API 테스트용.
-        // setIsModal(true);
-        setIsLoggedIn(true);
+        setIsModal(true);
+        // setIsLoggedIn(true);
     };
 
     const handleLogout = () => {
