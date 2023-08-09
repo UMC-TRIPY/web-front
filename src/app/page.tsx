@@ -13,6 +13,10 @@ import KakaoLoginButton from '@/components/button/KakaoLoginButton';
 
 import ILocation from '@/models/interface/ILocation';
 import { FiThumbsUp, FiEye } from 'react-icons/fi';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { getKakaoAccessToken } from '@/apis/user/login';
+import { useSetRecoilState } from 'recoil';
+import { isLoggedInState } from '@/states/user';
 
 const dummyItem = <div>abc</div>;
 
@@ -126,7 +130,14 @@ const dummyCommunity = [
 
 export default function Home() {
     const [isAbroad, setIsAbroad] = useState<boolean>(true);
+    const setIsLoggedIn = useSetRecoilState(isLoggedInState);
 
+    const searchParams = useSearchParams();
+    const search = searchParams.get('search');
+
+    useEffect(() => {
+        getKakaoAccessToken().then(() => setIsLoggedIn(true));
+    }, [search, setIsLoggedIn]);
     return (
         <main className='flex min-h-screen flex-col p-5'>
             <div className='my-5 text-center'>
