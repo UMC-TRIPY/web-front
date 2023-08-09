@@ -39,8 +39,9 @@ export default function Header() {
     };
 
     const handleLogin = () => {
-        setIsModal(true);
-        // setIsLoggedIn(true);
+        // 마이페이지 API 테스트용.
+        // setIsModal(true);
+        setIsLoggedIn(true);
     };
 
     const handleLogout = () => {
