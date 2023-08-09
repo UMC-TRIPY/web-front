@@ -14,7 +14,7 @@ function MyFriends() {
     useEffect(() => {
         getFriendList().then((data) => {
             setFriendList(data);
-            setCurrentData(friendList.slice(0, 4));
+            setCurrentData(data.slice(0, 4));
         });
     }, []);
 

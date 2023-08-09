@@ -35,8 +35,6 @@ export default function Mypage() {
         content = <div>여행일정 페이지</div>;
     } else if (activeMenu === '내가방') {
         content = <div>내가방 페이지</div>;
-    } else if (activeMenu === '저장한 정보') {
-        content = <div>저장한 정보 페이지</div>;
     } else if (activeMenu === '친구관리') {
         content = (
             <>
