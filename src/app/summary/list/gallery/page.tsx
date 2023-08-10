@@ -1,11 +1,15 @@
 'use client';
+import HelpBot from '@/components/mybag/HelpBot';
 import CommonHeader from '@/components/summary/CommonHeader';
+import GalleryLists from '@/components/summary/GalleryLists';
 
 export default function Page() {
     return (
-        <div>
+        <>
+            <HelpBot width='w-[1380px]' />
             <CommonHeader path='갤러리' />
-            갤러리 페이지입니다.
-        </div>
+            <div className='text-3xl font-bold mt-12 mb-5'>내 갤러리 목록</div>
+            <GalleryLists />
+        </>
     );
 }
