@@ -1,6 +1,11 @@
 import { useRouter } from 'next/navigation';
 
-const datas: any = [
+interface Props {
+    date: string;
+    schedule: [string, string][];
+}
+
+const datas: Props[] = [
     {
         date: '6/30',
         schedule: [
@@ -44,7 +49,7 @@ export default function LinkLists() {
         return `https://www.google.com/s2/favicons?domain=${url}&sz=64`;
     };
     const router = useRouter();
-    const Links = ({ data }: { data: any }) => {
+    const Links = ({ data }: { data: [string, string] }) => {
         return (
             <div className='flex flex-col min-w-[197px] max-w-[197px] h-[197px] items-center justify-between mr-5'>
                 <div className='flex flex-col items-center justify-between h-full py-3'>
@@ -67,7 +72,7 @@ export default function LinkLists() {
     };
     return (
         <div className='flex flex-col'>
-            {datas.map((data: any, idx: number) => {
+            {datas.map((data: Props, idx: number) => {
                 const items = data.schedule.length;
                 return (
                     <div
@@ -85,12 +90,14 @@ export default function LinkLists() {
                             {data.date}
                         </div>
                         <div className='flex'>
-                            {data.schedule.map((schedule: any, idx: number) => (
-                                <Links
-                                    key={`${data.date}schedule${idx}`}
-                                    data={schedule}
-                                />
-                            ))}
+                            {data.schedule.map(
+                                (schedule: [string, string], idx: number) => (
+                                    <Links
+                                        key={`${data.date}schedule${idx}`}
+                                        data={schedule}
+                                    />
+                                )
+                            )}
                         </div>
                     </div>
                 );

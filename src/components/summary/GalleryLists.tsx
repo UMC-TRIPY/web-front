@@ -1,6 +1,11 @@
 import Image from 'next/image';
 
-const datas = [
+interface Props {
+    date: string;
+    galleries: string[];
+}
+
+const datas: Props[] = [
     {
         date: '6/30',
         galleries: [
@@ -29,7 +34,7 @@ const datas = [
 ];
 
 export default function GalleryLists() {
-    const Links = ({ data }: { data: any }) => {
+    const Links = ({ data }: { data: string }) => {
         return (
             <div className='flex flex-col min-w-[197px] max-w-[197px] h-[197px] items-center justify-between mr-5'>
                 <Image src={data} alt='none' width={197} height={197} />
@@ -38,7 +43,7 @@ export default function GalleryLists() {
     };
     return (
         <div className='flex flex-col'>
-            {datas.map((data: any, idx: number) => {
+            {datas.map((data: Props, idx: number) => {
                 const items = data.galleries.length;
                 return (
                     <div
@@ -56,12 +61,14 @@ export default function GalleryLists() {
                             {data.date}
                         </div>
                         <div className='flex'>
-                            {data.galleries.map((gallery: any, idx: number) => (
-                                <Links
-                                    key={`${data.date}galleries${idx}`}
-                                    data={gallery}
-                                />
-                            ))}
+                            {data.galleries.map(
+                                (gallery: string, idx: number) => (
+                                    <Links
+                                        key={`${data.date}galleries${idx}`}
+                                        data={gallery}
+                                    />
+                                )
+                            )}
                         </div>
                     </div>
                 );
