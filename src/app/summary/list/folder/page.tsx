@@ -1,3 +1,10 @@
+'use client';
+import CommonHeader from '@/components/summary/CommonHeader';
+
 export default function Page() {
-    return <div>폴더 페이지입니다.</div>;
+    return (
+        <div>
+            <CommonHeader path='파일목록' />
+        </div>
+    );
 }
