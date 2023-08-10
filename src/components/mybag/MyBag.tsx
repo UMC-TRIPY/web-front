@@ -1,4 +1,5 @@
 import ListComp from './ListComp';
+import HelpBot from './HelpBot';
 
 export default function MyBag() {
     const travels_1 = [
@@ -69,13 +70,7 @@ export default function MyBag() {
             <div className='font-bold text-5xl mt-20 mb-24'>
                 여행 가방을 등록해볼까요?
             </div>
-            <div className='absolute bottom-[200px] flex justify-end w-[1480px]'>
-                <img
-                    className='fixed hover:cursor-pointer'
-                    src='/images/helpbot.png'
-                    alt='none'
-                />
-            </div>
+            <HelpBot width='w-[1480px]' />
             <ListComp name='여행' travels={travels_1} />
             <ListComp name='가방' travels={travels_2} />
         </div>

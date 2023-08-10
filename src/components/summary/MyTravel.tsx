@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import RoundBtn from '../layout/roundBtn';
 import Pagination from '../maincommunity/Pagination';
+import BagPackingModal from '../modal/BagpackingModal';
+import { useRouter } from 'next/navigation';
 
 interface Props {
     id: number;
@@ -41,12 +43,32 @@ const contents = [
 ];
 
 function MyTravel() {
+    const router = useRouter();
     const totalPages = Math.ceil(contents.length / 8);
     const [current, setCurrent] = useState<number>(1);
     const [datas, setDatas] = useState<Props[]>(contents.slice(0, 8));
     useEffect(() => {
         setDatas(contents.slice((current - 1) * 8, current * 8));
     }, [current]);
+
+    const [modalInfo, setModalInfo] = useState({
+        isOpen: false,
+        selectedPlace: ''
+    });
+
+    const handleModalOpen = (place: string) => {
+        setModalInfo({
+            isOpen: true,
+            selectedPlace: place
+        });
+    };
+
+    const handleModalClose = () => {
+        setModalInfo({
+            isOpen: false,
+            selectedPlace: ''
+        });
+    };
     return (
         <div className='mx-4 mt-16'>
             <div className='text-3xl font-bold mb-5'>내 여행 목록</div>
@@ -80,14 +102,34 @@ function MyTravel() {
                                 <RoundBtn
                                     label='상세보기'
                                     color='bg-lightgrey'
+                                    onClick={() => handleModalOpen(data.places)}
                                 />
                                 <RoundBtn
-                                    label='수정하기'
+                                    label='모아보기'
                                     color='bg-lightgrey'
+                                    onClick={() => {
+                                        router.push('/summary/list');
+                                        sessionStorage.setItem(
+                                            'place',
+                                            data.places
+                                        );
+                                        sessionStorage.setItem(
+                                            'date',
+                                            data.dates
+                                        );
+                                    }}
                                 />
                             </div>
                         </div>
                     ))}
+                    {modalInfo.isOpen && (
+                        <div>
+                            <BagPackingModal
+                                setIsModal={handleModalClose}
+                                selectedPlace={modalInfo.selectedPlace}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
             <Pagination

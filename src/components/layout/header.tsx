@@ -53,6 +53,7 @@ export default function Header() {
         ['일정관리', false],
         ['여행가방', false],
         ['커뮤니티', false],
+        ['모아보기', false],
         ['이용안내', false]
     ]);
 
@@ -88,6 +89,8 @@ export default function Header() {
         if (selectedIndex === 0) router.push('/info');
         if (selectedIndex === 1) router.push('/schedule');
         if (selectedIndex === 2) router.push('/mybag');
+        if (selectedIndex === 3) router.push('/community');
+        if (selectedIndex === 4) router.push('/summary');
         setMenus(updatedMenus);
     };
 
