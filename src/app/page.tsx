@@ -132,10 +132,6 @@ export default function Home() {
     const [isAbroad, setIsAbroad] = useState<boolean>(true);
     const setIsLoggedIn = useSetRecoilState(isLoggedInState);
 
-    const router = useRouter();
-    const searchParams = useSearchParams();
-    const code = searchParams.get('code');
-
     return (
         <main className='flex min-h-screen flex-col p-5'>
             <div className='my-5 text-center'>

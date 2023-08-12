@@ -10,7 +10,7 @@ export const getKakaoAccessToken = async () => {
             code
         });
         console.log('kakao accessToken 발급 성공: ', result.data.access_token);
-        localStorage.setItem('uid', result.data.uid.toString());
+        localStorage.setItem('uid', String(result.data.uid));
         localStorage.setItem('access', result.data.access_token);
         localStorage.setItem('refresh', result.data.refresh_token);
     } catch (error: any) {
