@@ -1,38 +1,98 @@
+import React, { useState } from "react"
+
 export default function SelectCountry () {
+    const locations = {
+        "아시아": {
+            "일본": ["도쿄", "오사카", "후쿠오카", "오키나와", "교토", "홋카이도", "일본 기타"],
+        },
+        "유럽": {
+            "영국": ["런던", "리버풀", "맨체스터", "영국 기타"],
+            "프랑스": ["파리", "마르세유", "프랑스 기타"],
+            "이탈리아": ["로마", "피렌체", "밀라노", "베네치아", "이탈리아 기타"],
+            "스페인": ["마드리드", "바르셀로나", "톨레도", "세비야", "그라나다", "스페인 기타"]
+        },
+        "기타": { "기타": "기타" }
+    };
+
+    const AsiaCountries = Object.keys(locations["아시아"]);
+    const EuropeCountries = Object.keys(locations["유럽"]);
+
+    const JapanCities = locations["아시아"]["일본"];
+    const UKCities = locations["유럽"]["영국"];
+    const FranceCities = locations["유럽"]["프랑스"];
+    const ItalyCities = locations["유럽"]["이탈리아"];
+    const SpainCities = locations["유럽"]["스페인"];
+
+    // selectedCity에 선택한 여행지 저장 -> 게시판 필터링시 전달필요
+    const [selectedCity, setSelectedCity] = useState<string>('');
+
+    type CityButtonsProps = {
+        cities: string[];
+    };
+
+    const CityButtons: React.FC<CityButtonsProps> = ({ cities }) => {
+        return (
+          <div className="flex">
+            {cities.map((city, index) => (
+              <button
+                key={index}
+                className={`mr-10 ${
+                  city === selectedCity ? 
+                  'text-primary font-bold border-b-[3px] border-b-primary' 
+                  : 'border-b-[3px] border-brightgrey' // 밑줄 생길때 위아래 밀림 방지
+                }`}
+                onClick={() => setSelectedCity(city)}
+              >
+                {city}
+              </button>
+            ))}
+          </div>
+        );
+    };
+
     return (
         <div className="mx-4">
             <div className="text-3xl font-bold mb-8">게시글 작성</div>
             <div className="text-xl font-bold">국가를 선택해주세요.</div>
-            <div className="h-[336px] bg-brightgrey rounded-lg my-2">
+            <div className="bg-brightgrey rounded-lg my-2">
                 <div className="flex">
                     <div className="h-[336px] flex flex-col justify-between w-1/6 py-4 pl-6 border-r border-lightgrey">
-                        <span className="font-bold text-grey">아시아</span>
-                        <span className="font-bold text-grey">유럽</span>
-                        <span className="font-bold text-grey">기타</span>
+                        {Object.keys(locations).map((continent, index) => {
+                            return (
+                                <span key={index} className="font-bold text-grey">{continent}</span>
+                            )
+                        })}
                     </div>
                     <div className="flex flex-col justify-between w-1/6 py-4 pl-6 border-r border-lightgrey">
-                        <span className="font-bold">일본</span>
-                        <span className="font-bold">영국</span>
-                        <span className="font-bold">프랑스</span>
-                        <span className="font-bold">이탈리아</span>
-                        <span className="font-bold">스페인</span>
-                        <span className="font-bold">기타</span>
+                        {AsiaCountries.map((country, index) => {
+                            return (
+                                <span key={index} className="font-bold">{country}</span>
+                            )
+                        })}
+                        {EuropeCountries.map((country, index) => {
+                            return (
+                                <span key={index} className="font-bold">{country}</span>
+                            )
+                        })}
+                        <span className="font-bold">{Object.keys(locations["기타"])}</span>
                     </div>
                     <div className="flex flex-col justify-between  w-2/3 py-4 pl-6">
-                        <span>도쿄 오사카 후쿠오카 오키나와 교토 홋카이도</span>
-                        <span>런던</span>
-                        <span>파리</span>
-                        <span>로마 피렌체 밀라노 베네치아</span>
-                        <span>마드리드 바르셀로나 톨레도 세비야 그라나다</span>
-                        <span>기타</span>
+                        <CityButtons cities={JapanCities}/>
+                        <CityButtons cities={UKCities}/>
+                        <CityButtons cities={FranceCities}/>
+                        <CityButtons cities={ItalyCities}/>
+                        <CityButtons cities={SpainCities}/>
+                        <CityButtons cities={[locations["기타"]["기타"]]} />
                     </div>
                 </div>
             </div>
             <div className="flex justify-between py-2 mb-2">
                 <div className="w-1/6 h-12 bg-brightgrey rounded-lg flex items-center justify-center">
-                    <span className="text-grey">
-                        국가명
-                    </span>
+                    {selectedCity ? (
+                        <span className="font-bold">{selectedCity}</span>
+                    ) : (
+                        <span className="text-grey">국가명</span>
+                    )}
                 </div>
                 <input 
                     className="w-5/6 ml-5 pl-4 border border-lightgrey rounded-lg"
