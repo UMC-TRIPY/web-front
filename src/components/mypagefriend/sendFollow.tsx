@@ -3,56 +3,17 @@ import RoundBtn from '../layout/roundBtn';
 import React, { useEffect, useState } from 'react';
 import FriendTwoBtn from './friendTwoBtn';
 import { getFriendList } from '@/apis/user/friend';
+import { Friend } from '@/types/user';
 
 function SendFollow() {
-    const [friendList, setFriendList] = useState([
-        {
-            user_index: 0,
-            nickname: '미리',
-            profileImg: 'https://example.com/profile/johndoe.jpg'
-        },
-        {
-            user_index: 1,
-            nickname: '규',
-            profileImg: 'https://example.com/profile/johndoe.jpg'
-        },
-        {
-            user_index: 2,
-            nickname: '루카',
-            profileImg: 'https://example.com/profile/johndoe.jpg'
-        },
-        {
-            user_index: 3,
-            nickname: '레니',
-            profileImg: 'https://example.com/profile/johndoe.jpg'
-        },
-        {
-            user_index: 4,
-            nickname: '시미',
-            profileImg: 'https://example.com/profile/johndoe.jpg'
-        },
-        {
-            user_index: 5,
-            nickname: '초이',
-            profileImg: 'https://example.com/profile/johndoe.jpg'
-        },
-        {
-            user_index: 6,
-            nickname: '폴',
-            profileImg: 'https://example.com/profile/johndoe.jpg'
-        },
-        {
-            user_index: 7,
-            nickname: '에그먼',
-            profileImg: 'https://example.com/profile/johndoe.jpg'
-        }
-    ]);
+    const [friendList, setFriendList] = useState<Friend[]>([]);
 
     useEffect(() => {
         getFriendList().then((data) => {
             setFriendList(data);
         });
     }, []);
+
     return (
         <div className='h-[704px] bg-brightgrey p-7 m-2.5 rounded-lg'>
             <div>
