@@ -132,12 +132,10 @@ export default function Home() {
     const [isAbroad, setIsAbroad] = useState<boolean>(true);
     const setIsLoggedIn = useSetRecoilState(isLoggedInState);
 
+    const router = useRouter();
     const searchParams = useSearchParams();
-    const search = searchParams.get('search');
+    const code = searchParams.get('code');
 
-    useEffect(() => {
-        getKakaoAccessToken().then(() => setIsLoggedIn(true));
-    }, [search, setIsLoggedIn]);
     return (
         <main className='flex min-h-screen flex-col p-5'>
             <div className='my-5 text-center'>
