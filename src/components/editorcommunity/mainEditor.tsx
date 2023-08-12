@@ -16,7 +16,7 @@ export default function MainEditor() {
                                 alt="사진 추가"
                                 width={32}
                             />
-                            <span className="text-grey pt-1">사진</span>
+                            <span className="text-grey pt-1 text-xs">사진</span>
                         </button>
                         <button className="mx-3">
                             <Image 
@@ -24,7 +24,7 @@ export default function MainEditor() {
                                 alt="파일 추가"
                                 width={32}
                             />
-                            <span className="text-grey pt-1">파일</span>
+                            <span className="text-grey pt-1 text-xs">파일</span>
                         </button>
                         <button className="mx-3">
                             <Image 
@@ -32,7 +32,7 @@ export default function MainEditor() {
                                 alt="일정 추가"
                                 width={32}
                             />
-                            <span className="text-grey pt-1">일정</span>
+                            <span className="text-grey pt-1 text-xs">일정</span>
                         </button>
                         <button className="mx-3">
                             <Image 
@@ -40,7 +40,7 @@ export default function MainEditor() {
                                 alt="장소 추가"
                                 width={32}
                             />
-                            <span className="text-grey pt-1">장소</span>
+                            <span className="text-grey pt-1 text-xs">장소</span>
                         </button>
                     </div>
                 </div>

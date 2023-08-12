@@ -28,7 +28,7 @@ export default function SelectCountry () {
                     </div>
                 </div>
             </div>
-            <div className="flex justify-between py-2">
+            <div className="flex justify-between py-2 mb-2">
                 <div className="w-1/6 h-12 bg-brightgrey rounded-lg flex items-center justify-center">
                     <span className="text-grey">
                         국가명
