@@ -9,6 +9,7 @@ import FriendReq from '@/components/mypagefriend/friendReq';
 import MyFriends from '@/components/mypagefriend/myFriends';
 import { StringLiteral } from 'typescript';
 import { getMyInformation } from '@/apis/user/friend';
+import { IUser } from '@/types/user';
 
 export default function Mypage() {
     const [activeMenu, setActiveMenu] = useState<string>('정보');

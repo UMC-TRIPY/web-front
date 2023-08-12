@@ -80,3 +80,8 @@ export const getFriendList = async () => {
     const result = await Server.get<FriendReturnType>(`mypage/${uid}/friends`);
     return result.data.data;
 };
+
+export const getSearchUserList = async (keyword: string) => {
+    const result = await Server.get(`mypage/users/search?keyword=${keyword}`);
+    return result.data.data;
+};

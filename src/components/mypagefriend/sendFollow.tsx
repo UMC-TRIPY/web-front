@@ -2,35 +2,42 @@ import { BiSearch } from 'react-icons/bi';
 import RoundBtn from '../layout/roundBtn';
 import React, { useEffect, useState } from 'react';
 import FriendTwoBtn from './friendTwoBtn';
-import { getFriendList } from '@/apis/user/friend';
+import { getFriendList, getSearchUserList } from '@/apis/user/friend';
 import { Friend } from '@/types/user';
 
 function SendFollow() {
-    const [friendList, setFriendList] = useState<Friend[]>([]);
+    const [friendSearchList, setFriendSearchList] = useState<Friend[]>([]);
 
-    useEffect(() => {
-        getFriendList().then((data) => {
-            setFriendList(data);
+    const [searchText, setSearchText] = useState<string>('');
+
+    const handleSearchForm = (e: any) => {
+        e.preventDefault();
+        getSearchUserList(searchText).then((data) => {
+            setFriendSearchList(data);
         });
-    }, []);
+    };
 
     return (
         <div className='h-[704px] bg-brightgrey p-7 m-2.5 rounded-lg'>
             <div>
                 <div className='text-3xl font-bold'>친구 요청 보내기</div>
-                <div className='flex flex-col justify-center mt-12'>
+                <form
+                    className='flex flex-col justify-center mt-12'
+                    onSubmit={handleSearchForm}
+                >
                     <input
                         className='border border-lightgrey rounded-lg h-12 p-4'
                         type='text'
                         placeholder='친구가 되고 싶은 닉네임, 전화번호를 입력하세요'
+                        value={searchText}
+                        onChange={(e) => setSearchText(e.target.value)}
                     />
-                    <BiSearch
-                        size={24}
-                        className='absolute self-end mr-5 hover:cursor-pointer'
-                    />
-                </div>
+                    <button className='absolute self-end mr-5 hover:cursor-pointer'>
+                        <BiSearch size={24} />
+                    </button>
+                </form>
                 <div className='mt-6 h-[480px] overflow-y-auto'>
-                    {friendList.map((friend, index) => (
+                    {friendSearchList.map((friend, index) => (
                         <FriendTwoBtn
                             key={index}
                             name={friend.nickname}
