@@ -23,6 +23,7 @@ module.exports = {
                 morelightgrey: 'rgba(229, 229, 229, 0.5)',
                 grey: '#A3A3A3',
                 darkgrey: '#666666',
+                alertred: '#EB5757',
                 'kakao-color': '#FAE100',
                 'dark-black': '#262626',
                 blur: 'rgba(232, 232, 232, 1)',
