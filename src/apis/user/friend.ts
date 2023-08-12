@@ -1,5 +1,14 @@
 import { Server } from '../setting';
-import { FriendType } from './types';
+import { FriendReturnType, InformationReturnType } from './types';
+
+export const getMyInformation = async () => {
+    // const uid = localStorage.getItem('uid');
+    const uid = 1;
+    const result = await Server.get<InformationReturnType>(
+        `mypage/user/${uid}`
+    );
+    return result.data[0];
+};
 
 export const sendFriendRequest = async (friend_index: number | null) => {
     // TODO: 로그인 성공 시 uid 발급
@@ -29,7 +38,7 @@ export const getSendFriendRequestList = async () => {
     // TODO: 로그인 성공 시 uid 발급
     // const uid = localStorage.getItem('uid');
     const uid = 1;
-    const result = await Server.get<FriendType>(
+    const result = await Server.get<FriendReturnType>(
         `mypage/friends/${uid}/request`
     );
     return result.data.data;
@@ -39,7 +48,7 @@ export const getRecieveFriendRequestList = async () => {
     // TODO: 로그인 성공 시 uid 발급
     // const uid = localStorage.getItem('uid');
     const uid = 1;
-    const result = await Server.get<FriendType>(
+    const result = await Server.get<FriendReturnType>(
         `mypage/friends/${uid}/receive`
     );
     return result.data.data;
@@ -68,6 +77,6 @@ export const rejectFriendRequest = async (friend_index: number) => {
 export const getFriendList = async () => {
     // const uid = localStorage.getItem('uid');
     const uid = 1;
-    const result = await Server.get<FriendType>(`mypage/${uid}/friends`);
+    const result = await Server.get<FriendReturnType>(`mypage/${uid}/friends`);
     return result.data.data;
 };
