@@ -29,8 +29,10 @@ export const getSendFriendRequestList = async () => {
     // TODO: 로그인 성공 시 uid 발급
     // const uid = localStorage.getItem('uid');
     const uid = 1;
-    const result = await Server.get(`mypage/friends/${uid}/request`);
-    console.log(result);
+    const result = await Server.get<FriendType>(
+        `mypage/friends/${uid}/request`
+    );
+    return result.data.data;
 };
 
 export const getRecieveFriendRequestList = async () => {
