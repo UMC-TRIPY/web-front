@@ -1,13 +1,17 @@
 import { Server } from '../setting';
 
-export const sendFriendRequest = async (friend_index: number) => {
+export const sendFriendRequest = async (friend_index: number | null) => {
     // TODO: 로그인 성공 시 uid 발급
     // const uid = localStorage.getItem('uid');
     const uid = 1;
-    const result = await Server.post(`mypage/friends/${uid}/request`, {
-        friend_index
-    });
-    console.log(result);
+    try {
+        const result = await Server.post(`mypage/friends/${uid}/request`, {
+            friend_index
+        });
+        console.log(result);
+    } catch (error) {
+        console.log('uid가 존재하지 않습니다 :', error);
+    }
 };
 
 export const cancelFriendRequest = async (friend_index: number) => {
@@ -54,4 +58,11 @@ export const rejectFriendRequest = async (friend_index: number) => {
         friend_index
     });
     console.log(result);
+};
+
+export const getFriendList = async () => {
+    // const uid = localStorage.getItem('uid');
+    const uid = 1;
+    const result = await Server.get(`mypage/${uid}/friends`);
+    return result.data.data;
 };

@@ -1,10 +1,11 @@
 import { BiSearch } from 'react-icons/bi';
 import RoundBtn from '../layout/roundBtn';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FriendTwoBtn from './friendTwoBtn';
+import { getFriendList } from '@/apis/user/friend';
 
 function SendFollow() {
-    const [friends, setFriends] = useState([
+    const [friendList, setFriendList] = useState([
         {
             user_index: 0,
             nickname: '미리',
@@ -47,6 +48,11 @@ function SendFollow() {
         }
     ]);
 
+    useEffect(() => {
+        getFriendList().then((data) => {
+            setFriendList(data);
+        });
+    }, []);
     return (
         <div className='h-[704px] bg-brightgrey p-7 m-2.5 rounded-lg'>
             <div>
@@ -63,7 +69,7 @@ function SendFollow() {
                     />
                 </div>
                 <div className='mt-6 h-[480px] overflow-y-auto'>
-                    {friends.map((friend, index) => (
+                    {friendList.map((friend, index) => (
                         <FriendTwoBtn
                             key={index}
                             name={friend.nickname}

@@ -9,7 +9,8 @@ export const getKakaoAccessToken = async () => {
         const result = await Server.post<TokenReturnType>('/auth/kakao', {
             code
         });
-        console.log('kakao API: ', result.data.access_token);
+        console.log('kakao accessToken 발급 성공: ', result.data.access_token);
+        localStorage.setItem('uid', result.data.uid.toString());
         localStorage.setItem('access', result.data.access_token);
         localStorage.setItem('refresh', result.data.refresh_token);
     } catch (error: any) {
