@@ -1,35 +1,40 @@
-import RoundBtn from "../layout/roundBtn";
-import React, { useState } from "react";
-import FriendTwoBtn from "./friendTwoBtn";
+import RoundBtn from '../layout/roundBtn';
+import React, { useEffect, useState } from 'react';
+import FriendTwoBtn from './friendTwoBtn';
+import { Friend } from '@/types/user';
+import { getRecieveFriendRequestList } from '@/apis/user/friend';
 
-function Follower () {
-    const [friends, setFriends] = useState([
-        '미리',
-        '메이',
-        '규',
-        '루카',
-        '레니',
-        '시미',
-        '초이',
-        '폴',
-        '에그먼',
-    ]);
+function Follower() {
+    const [friendReceiveList, setFriendReceiveList] = useState<Friend[]>([]);
+
+    useEffect(() => {
+        getRecieveFriendRequestList().then((data) => {
+            setFriendReceiveList(data);
+        });
+    }, []);
 
     return (
-        <div className="h-[342px] bg-brightgrey p-7 m-2.5 mt-5 rounded-lg">
-            <div className="flex justify-between">
-                <div className="text-3xl font-bold">
-                    친구 요청
-                </div>
-                <RoundBtn label={`${friends.length}개`} color="bg-primary" />
+        <div className='h-[342px] bg-brightgrey p-7 m-2.5 mt-5 rounded-lg'>
+            <div className='flex justify-between'>
+                <div className='text-3xl font-bold'>친구 요청</div>
+                <RoundBtn
+                    label={`${friendReceiveList.length}개`}
+                    color='bg-primary'
+                />
             </div>
-            <div className="mt-8 h-[220px] overflow-y-auto">
-                {friends.map((friend, index) => (
-                    <FriendTwoBtn key={index} name={friend} label1="수락" label2="거절" px={6}/>
+            <div className='mt-8 h-[220px] overflow-y-auto'>
+                {friendReceiveList.map((friend, index) => (
+                    <FriendTwoBtn
+                        key={index}
+                        name={friend.nickname}
+                        label1='수락'
+                        label2='거절'
+                        px={6}
+                    />
                 ))}
             </div>
         </div>
-    )
+    );
 }
 
 export default Follower;

@@ -1,6 +1,6 @@
 'use client';
 
-import { getGoogleAccessToken } from '@/apis/user';
+import { getGoogleAccessToken } from '@/apis/user/login';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
