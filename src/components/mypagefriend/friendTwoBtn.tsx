@@ -1,5 +1,6 @@
-import RoundBtn from "../layout/roundBtn";
-import React from "react";
+import RoundBtn from '../layout/roundBtn';
+import React from 'react';
+import Image from 'next/image';
 
 interface FriendProps {
     name: string;
@@ -8,20 +9,34 @@ interface FriendProps {
     px?: number;
 }
 
-function FriendTwoBtn (props: FriendProps) { 
+function FriendTwoBtn(props: FriendProps) {
     // 친구 프사 + 닉네임 + 버튼
     return (
-        <div className="flex my-4 justify-between mr-2">
-            <div className="flex items-center">
-                <img className="mr-5" src="/images/user.svg" alt="친구 프로필사진" />
+        <div className='flex my-4 justify-between mr-2'>
+            <div className='flex items-center'>
+                <Image
+                    className='mr-5'
+                    src='/images/user.svg'
+                    alt='친구 프로필사진'
+                    width={30}
+                    height={30}
+                />
                 {props.name}
             </div>
-            <div className="flex">
-                <RoundBtn label={`${props.label1}`} color="bg-lightgrey" px={props.px} />
-                <RoundBtn label={`${props.label2}`} color="bg-lightgrey" px={props.px} />
+            <div className='flex'>
+                <RoundBtn
+                    label={`${props.label1}`}
+                    color='bg-lightgrey'
+                    px={props.px}
+                />
+                <RoundBtn
+                    label={`${props.label2}`}
+                    color='bg-lightgrey'
+                    px={props.px}
+                />
             </div>
         </div>
-    )
+    );
 }
 
 export default FriendTwoBtn;
