@@ -7,6 +7,8 @@ interface FriendProps {
     label1: string;
     label2?: string;
     px?: number;
+    onClick1?: any;
+    onClick2?: any;
 }
 
 function FriendTwoBtn(props: FriendProps) {
@@ -28,11 +30,13 @@ function FriendTwoBtn(props: FriendProps) {
                     label={`${props.label1}`}
                     color='bg-lightgrey'
                     px={props.px}
+                    onClick={props.onClick1}
                 />
                 <RoundBtn
                     label={`${props.label2}`}
                     color='bg-lightgrey'
                     px={props.px}
+                    onClick={props.onClick2}
                 />
             </div>
         </div>

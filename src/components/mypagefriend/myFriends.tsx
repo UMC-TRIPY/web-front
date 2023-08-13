@@ -1,7 +1,7 @@
 import FriendTwoBtn from './friendTwoBtn';
 import React, { useEffect, useState } from 'react';
 import { Friend } from '@/types/user';
-import { getFriendList } from '@/apis/user/friend';
+import { deleteFriend, getFriendList } from '@/apis/user/friend';
 import Pagination from '../maincommunity/Pagination';
 
 function MyFriends() {
@@ -10,6 +10,13 @@ function MyFriends() {
     const totalPages = Math.ceil(friendList.length / 4);
     const [current, setCurrent] = useState<number>(1);
     const [currentData, setCurrentData] = useState<Friend[]>([]);
+
+    const handleDeleteFriend = async (user_index: number) => {
+        await deleteFriend(user_index);
+        setFriendList(
+            friendList.filter((friend) => friend.user_index !== user_index)
+        );
+    };
 
     useEffect(() => {
         getFriendList().then((data) => {
@@ -33,6 +40,7 @@ function MyFriends() {
                         label1='초대하기'
                         label2='친구끊기'
                         px={6}
+                        onClick2={() => handleDeleteFriend(friend.user_index)}
                     />
                 ))}
             </div>
