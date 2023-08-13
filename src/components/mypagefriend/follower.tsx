@@ -2,10 +2,42 @@ import RoundBtn from '../layout/roundBtn';
 import React, { useEffect, useState } from 'react';
 import FriendTwoBtn from './friendTwoBtn';
 import { Friend } from '@/types/user';
-import { getRecieveFriendRequestList } from '@/apis/user/friend';
+import {
+    acceptFriendRequest,
+    getRecieveFriendRequestList,
+    rejectFriendRequest
+} from '@/apis/user/friend';
 
-function Follower() {
+interface IFollowerProps {
+    handleFriendList: (result: Friend[]) => void;
+}
+
+function Follower({ handleFriendList }: IFollowerProps) {
     const [friendReceiveList, setFriendReceiveList] = useState<Friend[]>([]);
+
+    const handleClickAccept = async (user_index: number) => {
+        await acceptFriendRequest(user_index);
+
+        const result = friendReceiveList.filter(
+            (friend) => friend.user_index === user_index
+        );
+        console.log('filter data:', result);
+        handleFriendList(result);
+
+        const rest = friendReceiveList.filter(
+            (friend) => friend.user_index !== user_index
+        );
+        setFriendReceiveList(rest);
+    };
+
+    const handleClickReject = async (user_index: number) => {
+        await rejectFriendRequest(user_index);
+        setFriendReceiveList(
+            friendReceiveList.filter(
+                (friend) => friend.user_index !== user_index
+            )
+        );
+    };
 
     useEffect(() => {
         getRecieveFriendRequestList().then((data) => {
@@ -29,6 +61,8 @@ function Follower() {
                         name={friend.nickname}
                         label1='수락'
                         label2='거절'
+                        onClick1={() => handleClickAccept(friend.user_index)}
+                        onClick2={() => handleClickReject(friend.user_index)}
                         px={6}
                     />
                 ))}

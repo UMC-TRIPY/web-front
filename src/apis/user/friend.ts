@@ -77,22 +77,22 @@ export const getRecieveFriendRequestList = async () => {
     return result.data.data;
 };
 
-export const acceptFriendRequest = async (friend_index: number) => {
+export const acceptFriendRequest = async (friend_idx: number) => {
     // TODO: 로그인 성공 시 uid 발급
     // const uid = localStorage.getItem('uid');
     const uid = 1;
     const result = await Server.post(`mypage/friends/${uid}/accept`, {
-        friend_index
+        friend_idx
     });
     console.log(result);
 };
 
-export const rejectFriendRequest = async (friend_index: number) => {
+export const rejectFriendRequest = async (friend_idx: number) => {
     // TODO: 로그인 성공 시 uid 발급
     // const uid = localStorage.getItem('uid');
     const uid = 1;
     const result = await Server.post(`mypage/friends/${uid}/reject`, {
-        friend_index
+        friend_idx
     });
     console.log(result);
 };

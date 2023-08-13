@@ -4,7 +4,11 @@ import Follower from './follower';
 import Following from './following';
 import SendFollow from './sendFollow';
 
-function FriendReq() {
+interface IFriendReqProps {
+    handleFriendList: (result: Friend[]) => void;
+}
+
+function FriendReq({ handleFriendList }: IFriendReqProps) {
     const [friendRequestList, setFriendRequestList] = useState<Friend[]>([]);
 
     const handleFriendRequest = (result: Friend[]) => {
@@ -24,7 +28,7 @@ function FriendReq() {
                     setFriendRequestList={setFriendRequestList}
                 />
                 {/* 친구 요청 */}
-                <Follower />
+                <Follower handleFriendList={handleFriendList} />
             </div>
         </div>
     );
