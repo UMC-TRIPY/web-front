@@ -1,14 +1,12 @@
 'use client';
 import SignUpDoneModal from '@/components/modal/SignUpDoneModal';
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function Page() {
     const [email, setEmail] = useState<string>('');
     const [nickname, setNickname] = useState<string>('');
     const [isModal, setIsModal] = useState<boolean>(false);
-    const router = useRouter();
 
     const onClick = () => {
         setIsModal(true);
@@ -56,14 +54,7 @@ export default function Page() {
                 가입완료
             </button>
             {isModal && (
-                <SignUpDoneModal
-                    setModalState={setIsModal}
-                    onClickCompleteButton={() => {
-                        setIsModal(false);
-                        router.push('/');
-                    }}
-                    completeText='확인'
-                >
+                <SignUpDoneModal>
                     <div className='flex flex-col items-center justify-between text-center h-full py-9 text-xl'>
                         <Image
                             src='/images/logo1.svg'

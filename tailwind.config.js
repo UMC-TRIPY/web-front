@@ -27,6 +27,7 @@ module.exports = {
                 'dark-black': '#262626',
                 blur: 'rgba(232, 232, 232, 1)',
                 'blur-end': 'rgba(232, 232, 232, 0)',
+                'modal-bg': 'rgba(107,114, 128,0.5)',
                 approve: '#27AE60',
                 warning: '#EB5757'
             },
