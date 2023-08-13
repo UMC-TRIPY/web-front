@@ -36,6 +36,11 @@ export default function MainEditor({ cityEmpty }: MainEditorProps) {
         setContents(contents + '\n' + imgTags);
     };
 
+    const handleFileUpload = (files: File[]) => {
+        let fileTags = files.map((file) => `[${file.name}](URL.createObjectURL(file))`).join('\n');
+        setContents(contents + '\n' + fileTags);
+    };
+
     return (
         <div className="mx-4">
             <div className={`h-[800px] border ${!contents && cityEmpty ? 'border-alertred' : 'border-lightgrey'} rounded-lg`}>
@@ -92,6 +97,7 @@ export default function MainEditor({ cityEmpty }: MainEditorProps) {
                                 type = {modal.type}
                                 setIsModal = {() => handleModalClose()}
                                 onImageUpload = {handleImageUpload}
+                                onFileUpload = {handleFileUpload}
                             />
                         </div>
                     )}
