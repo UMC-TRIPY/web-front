@@ -7,7 +7,7 @@ export const getMyInformation = async () => {
     const result = await Server.get<InformationReturnType>(
         `mypage/user/${uid}`
     );
-    return result.data[0];
+    return result.data;
 };
 
 export const sendFriendRequest = async (friend_index: number | null) => {
@@ -18,7 +18,7 @@ export const sendFriendRequest = async (friend_index: number | null) => {
         const result = await Server.post(`mypage/friends/${uid}/request`, {
             friend_index
         });
-        console.log(result);
+        console.log('sendFriendRequest:', result);
     } catch (error) {
         console.log('uid가 존재하지 않습니다 :', error);
     }

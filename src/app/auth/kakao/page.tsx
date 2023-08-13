@@ -18,7 +18,7 @@ const KakaoOAuth = () => {
             getKakaoAccessToken().then(() => {
                 console.log('code: ', code);
                 setIsLoggedIn(true);
-                router.push('/');
+                router.push(`${process.env.NEXT_PUBLIC_HOME_URL}/`);
             });
     }, [code, router, setIsLoggedIn]);
     return <div></div>;

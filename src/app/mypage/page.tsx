@@ -14,7 +14,10 @@ import { IUser } from '@/types/user';
 export default function Mypage() {
     const [activeMenu, setActiveMenu] = useState<string>('정보');
 
-    const [userData, setUserData] = useState<IUser>({} as IUser);
+    const [userData, setUserData] = useState<IUser>({
+        email: '로딩중...',
+        nickname: '로딩중...'
+    } as IUser);
     const handleMenuClick = (menu: string) => {
         setActiveMenu(menu);
     };

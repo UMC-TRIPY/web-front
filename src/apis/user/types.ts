@@ -7,10 +7,8 @@ export interface FriendReturnType {
 }
 
 export interface InformationReturnType {
-    [index: number]: {
-        nickname: string;
-        email: string;
-        nationality: string;
-        profileImg: string;
-    };
+    nickname: string;
+    email: string;
+    nationality: string;
+    profileImg: string;
 }
