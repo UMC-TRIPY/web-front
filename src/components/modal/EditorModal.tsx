@@ -6,6 +6,8 @@ import upload from "public/images/upload.svg"
 import folder from "public/images/folder.svg"
 import { BiX } from "react-icons/bi";
 import ConfirmBtn from "../layout/confirmBtn";
+import MyTravel from "../schedulemain/myTravel";
+import search from "public/images/search.svg"
 
 interface EditorModalProps {
     setIsModal: any,
@@ -139,14 +141,44 @@ const EditorModal = ({ setIsModal, type, onImageUpload, onFileUpload }: EditorMo
                 );        
             case "일정":
                 return (
-                    <div>
-                        
+                    <div className="flex-col">
+                        <MyTravel status="modal" />
+                        <div className="flex justify-end">
+                            <ConfirmBtn label="취소하기" color="bg-lightgrey" onClick={() => setIsModal(false)}/>
+                            <ConfirmBtn label="공유하기" color="bg-primary" onClick={() => {setIsModal(false)}}/>
+                        </div>
                     </div>
                 );
             case "장소":
                 return (
-                    <div>
-                        
+                    <div className="flex-col">
+                        <div className="h-12 flex items-center px-2 mb-3 border border-lightgrey bg-white rounded-lg">
+                            <button className="px-3">
+                                <Image src={search} alt="검색" width={24}/>
+                            </button>
+                            <input 
+                                type="text" 
+                                placeholder="원하는 장소를 검색해보세요."
+                                className="w-full"
+                            />
+                        </div>
+                        <div className="h-80 flex border border-lightgrey rounded-xl">
+                            <div className="flex flex-col flex-grow">
+                                <div className="h-3/4 border-b border-lightgrey">
+                                    검색한 여행지
+                                </div>
+                                <div>
+                                    추가한 여행지
+                                </div>
+                            </div>
+                            <div className="w-3/5 border border-black rounded-r-lg">
+                                구글맵
+                            </div>
+                        </div>
+                        <div className="flex justify-end mt-2">
+                            <ConfirmBtn label="취소하기" color="bg-lightgrey" onClick={() => setIsModal(false)}/>
+                            <ConfirmBtn label="저장하기" color="bg-primary" onClick={() => {setIsModal(false)}}/>
+                        </div>
                     </div>
                 );
             default:

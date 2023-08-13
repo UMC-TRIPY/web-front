@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import RoundBtn from "../layout/roundBtn";
 
-function MyTravel () {
+interface IMyTravelProps {
+    status: 'page' | 'modal';
+}
+
+function MyTravel ({ status }: IMyTravelProps) {
     const [currentPage, setCurrentPage] = useState(1);
     const [travelsPerPage] = useState(8);
     const [travels, setTravels] = useState<{id: number, dates: string, places: string}[]>([
@@ -30,45 +34,78 @@ function MyTravel () {
     const indexOfFirstTravel = indexOfLastTravel - travelsPerPage;
     const currentTravels = travels.slice(indexOfFirstTravel, indexOfLastTravel) as { id: number; dates: string; places: string }[];
     return (
-        <div className="mx-4 mt-16">
-            <div className="text-3xl font-bold mb-5">
-                내 여행 목록
-            </div>
-            <div className="rounded-md bg-brightgrey">
-                <div className="border-b border-b-lightgrey py-5">
-                    <div className="flex justify-between">
-                        <div className="w-1/3 text-center"><p>일정</p></div>
-                        <div className="w-1/3 text-center"><p>장소</p></div>
-                        <div className="w-1/3 text-center"><p>관리하기</p></div>
-                    </div>    
-                </div>
-                <div className="py-5">
-                    {currentTravels.map((travel) => (
-                    <div key={travel.id} className="flex items-center justify-between py-[16.5px]">
-                        <div className="w-1/3 text-center">
-                            {travel.dates}
-                        </div>
-                        <div className="w-1/3 text-center">
-                            {travel.places}
-                        </div>
-                        <div className="flex w-1/3 justify-center">
-                            <RoundBtn label="상세보기" color="bg-lightgrey" />
-                            <RoundBtn label="수정하기" color="bg-lightgrey" />
-                        </div>
+        <>
+        {status === 'modal' ? (
+            <div>
+                <span className="font-bold">내 여행 목록</span>
+                <div className="h-[427px] rounded-md bg-brightgrey overflow-y-auto mt-2 mb-4">
+                    <div className="border-b border-b-lightgrey py-5">
+                        <div className="flex justify-between ml-10">
+                            <div className="w-1/3 text-center"><p>일정</p></div>
+                            <div className="w-1/3 text-center"><p>장소</p></div>
+                            <div className="w-1/3 text-center"><p>상세보기</p></div>
+                        </div>    
                     </div>
-                    ))}
+                    <div className="py-5">
+                        {travels.map((travel) => (
+                        <div key={travel.id} className="flex items-center justify-between py-[16.5px]">
+                            <input type="checkbox" className="ml-10 mr-5"></input>
+                            <div className="w-1/3 text-center">
+                                {travel.dates}
+                            </div>
+                            <div className="w-1/3 text-center">
+                                {travel.places}
+                            </div>
+                            <div className="flex w-1/3 justify-center">
+                                <RoundBtn label="상세보기" color="bg-lightgrey" />
+                            </div>
+                        </div>
+                        ))}
+                    </div>
                 </div>
             </div>
-            <div className="flex justify-center m-8 text-grey">
-                <button className="mx-4 px-2" onClick={handlePrevClick} disabled={currentPage === 1}>
-                    &lt;
-                </button>
-                {currentPage}
-                <button className="mx-4 px-2" onClick={handleNextClick} disabled={indexOfLastTravel >= travels.length}>
-                    &gt;
-                </button>
+        ) : (
+            <div className="mx-4 mt-16">
+                <div className="text-3xl font-bold mb-5">
+                    내 여행 목록
+                </div>
+                <div className="rounded-md bg-brightgrey">
+                    <div className="border-b border-b-lightgrey py-5">
+                        <div className="flex justify-between">
+                            <div className="w-1/3 text-center"><p>일정</p></div>
+                            <div className="w-1/3 text-center"><p>장소</p></div>
+                            <div className="w-1/3 text-center"><p>관리하기</p></div>
+                        </div>    
+                    </div>
+                    <div className="py-5">
+                        {currentTravels.map((travel) => (
+                        <div key={travel.id} className="flex items-center justify-between py-[16.5px]">
+                            <div className="w-1/3 text-center">
+                                {travel.dates}
+                            </div>
+                            <div className="w-1/3 text-center">
+                                {travel.places}
+                            </div>
+                            <div className="flex w-1/3 justify-center">
+                                <RoundBtn label="상세보기" color="bg-lightgrey" />
+                                <RoundBtn label="수정하기" color="bg-lightgrey" />
+                            </div>
+                        </div>
+                        ))}
+                    </div>
+                </div>
+                <div className="flex justify-center m-8 text-grey">
+                    <button className="mx-4 px-2" onClick={handlePrevClick} disabled={currentPage === 1}>
+                        &lt;
+                    </button>
+                    {currentPage}
+                    <button className="mx-4 px-2" onClick={handleNextClick} disabled={indexOfLastTravel >= travels.length}>
+                        &gt;
+                    </button>
+                </div>
             </div>
-        </div>
+        )}
+        </>
     )
 }
 
