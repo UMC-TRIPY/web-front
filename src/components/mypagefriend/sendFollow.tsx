@@ -32,6 +32,11 @@ function SendFollow({ handleFriendRequest }: ISendFollowProps) {
             (friend) => friend.user_index === user_index
         );
         handleFriendRequest(result);
+
+        const rest = friendSearchList.filter(
+            (friend) => friend.user_index !== user_index
+        );
+        setFriendSearchList(rest);
     };
 
     const handleClickBlockFriend = async (user_index: number) => {
