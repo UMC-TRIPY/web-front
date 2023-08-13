@@ -22,8 +22,16 @@ let count = 0;
 export default function Header() {
     // 로그인, 로그아웃 상태구현
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(isLoggedInState);
-    const [isModal, setIsModal] = useState(false);
+    const [isModal, setIsModal] = useState<boolean>(false);
+    const [isLogin, setIsLogin] = useState<boolean>(false);
+    const [isSignUp, setIsSignUp] = useState<boolean>(false);
     const router = useRouter();
+    useEffect(() => {
+        if (!isModal) {
+            setIsLogin(false);
+            setIsSignUp(false);
+        }
+    }, [isModal]);
 
     // 일정 추가 모달 테스트용. 스케줄 페이지로 이동 필요.
     const [isScheduleAddModal, setIsScheduleAddModal] = useState(false);
@@ -43,7 +51,13 @@ export default function Header() {
     const handleLogin = () => {
         // 마이페이지 API 테스트용.
         setIsModal(true);
+        setIsLogin(true);
         // setIsLoggedIn(true);
+    };
+
+    const handleSignUp = () => {
+        setIsModal(true);
+        setIsSignUp(true);
     };
 
     const handleLogout = () => {
@@ -146,17 +160,21 @@ export default function Header() {
                             >
                                 로그인
                             </button>
-                            <Link href='/' onClick={addSchedule}>
+                            {/* <Link href='/' onClick={addSchedule}>
                                 회원가입
-                            </Link>
+                            </Link> */}
+                            <button onClick={handleSignUp}>회원가입</button>
                         </>
                     )}
                 </div>
             </div>
-            {isModal && (
+            {isModal && (isLogin || isSignUp) && (
                 <LoginModal
                     setIsModal={setIsModal}
+                    setIsLogin={setIsLogin}
+                    setIsSignUp={setIsSignUp}
                     setIsLoggedIn={setIsLoggedIn}
+                    title={isLogin ? '로그인' : '회원가입'}
                 />
             )}
             {/* {isScheduleAddModal && (
