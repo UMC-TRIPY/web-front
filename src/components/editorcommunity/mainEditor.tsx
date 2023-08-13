@@ -5,10 +5,17 @@ import folderPlus from "public/images/folderPlus.svg"
 import calenderAdd from "public/images/calendar.svg"
 import mapPin from "public/images/mapPin.svg"
 
-export default function MainEditor() {
+interface MainEditorProps {
+    cityEmpty: boolean;
+    onCityEmptyError: () => void;
+}
+
+export default function MainEditor({ cityEmpty, onCityEmptyError }: MainEditorProps) {
+    const [contents, setContents] = useState('');
+
     return (
         <div className="mx-4">
-            <div className="h-[800px] border border-lightgrey rounded-lg">
+            <div className={`h-[800px] border ${!contents && cityEmpty ? 'border-alertred' : 'border-lightgrey'} rounded-lg`}>
                 <div className="h-[90px] border-b border-lightgrey">
                     <div className="flex p-5">
                         <button className="mx-3">
@@ -50,6 +57,8 @@ export default function MainEditor() {
                         spellCheck="false" 
                         className="flex-grow outline-none" 
                         placeholder="내용을 입력해주세요." 
+                        value={contents}
+                        onChange={(e) => setContents(e.target.value)} 
                     />
                 </div>
             </div>

@@ -22,7 +22,10 @@ export default function EditorCommunity() {
                 cityEmpty={cityEmpty}
                 onCityEmptyError={handleCityEmptyError}
             />
-            <MainEditor />
+            <MainEditor 
+                cityEmpty={cityEmpty}
+                onCityEmptyError={handleCityEmptyError}
+            />
             <TagEditor 
                 onCityEmptyError={handleCityEmptyError}
             />
