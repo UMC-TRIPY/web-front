@@ -1,15 +1,29 @@
 import FriendTwoBtn from './friendTwoBtn';
 import React, { useEffect, useState } from 'react';
 import { Friend } from '@/types/user';
-import { getFriendList } from '@/apis/user/friend';
+import { deleteFriend, getFriendList } from '@/apis/user/friend';
 import Pagination from '../maincommunity/Pagination';
 
-function MyFriends() {
-    const [friendList, setFriendList] = useState<Friend[]>([]);
+interface MyFriendsProps {
+    friendList: Friend[];
+    setFriendList: React.Dispatch<React.SetStateAction<Friend[]>>;
+}
+
+function MyFriends({ friendList, setFriendList }: MyFriendsProps) {
+    // const [friendList, setFriendList] = useState<Friend[]>([]);
 
     const totalPages = Math.ceil(friendList.length / 4);
     const [current, setCurrent] = useState<number>(1);
     const [currentData, setCurrentData] = useState<Friend[]>([]);
+
+    const handleDeleteFriend = async (user_index: number) => {
+        await deleteFriend(user_index);
+        const result = friendList.filter(
+            (friend) => friend.user_index !== user_index
+        );
+        console.log('handle delete: ', result);
+        setFriendList(result);
+    };
 
     useEffect(() => {
         getFriendList().then((data) => {
@@ -20,7 +34,7 @@ function MyFriends() {
 
     useEffect(() => {
         setCurrentData(friendList.slice((current - 1) * 4, current * 4));
-    }, [current]);
+    }, [friendList, current]);
 
     return (
         <div>
@@ -33,6 +47,7 @@ function MyFriends() {
                         label1='초대하기'
                         label2='친구끊기'
                         px={6}
+                        onClick2={() => handleDeleteFriend(friend.user_index)}
                     />
                 ))}
             </div>

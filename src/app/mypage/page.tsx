@@ -7,16 +7,23 @@ import MypageMenus from '@/components/mypage/mypageMenus';
 import ProfilePic from '@/components/mypage/profilePic';
 import FriendReq from '@/components/mypagefriend/friendReq';
 import MyFriends from '@/components/mypagefriend/myFriends';
-import { StringLiteral } from 'typescript';
 import { getMyInformation } from '@/apis/user/friend';
-import { IUser } from '@/types/user';
+import { Friend, IUser } from '@/types/user';
 
 export default function Mypage() {
     const [activeMenu, setActiveMenu] = useState<string>('정보');
+    const [friendList, setFriendList] = useState<Friend[]>([]);
+    const [userData, setUserData] = useState<IUser>({
+        email: '로딩중...',
+        nickname: '로딩중...'
+    } as IUser);
 
-    const [userData, setUserData] = useState<IUser>({} as IUser);
     const handleMenuClick = (menu: string) => {
         setActiveMenu(menu);
+    };
+
+    const handleFriendList = (result: Friend[]) => {
+        setFriendList([...friendList, ...result]);
     };
 
     let content;
@@ -39,9 +46,12 @@ export default function Mypage() {
         content = (
             <>
                 {/* 나의 친구 */}
-                <MyFriends />
+                <MyFriends
+                    friendList={friendList}
+                    setFriendList={setFriendList}
+                />
                 {/* 친구 요청 */}
-                <FriendReq />
+                <FriendReq handleFriendList={handleFriendList} />
             </>
         );
     }
@@ -51,6 +61,7 @@ export default function Mypage() {
             setUserData(data);
         });
     }, []);
+
     return (
         <div>
             {/* 상단 탭바 */}

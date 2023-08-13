@@ -2,10 +2,19 @@ import { BiSearch } from 'react-icons/bi';
 import RoundBtn from '../layout/roundBtn';
 import React, { useEffect, useState } from 'react';
 import FriendTwoBtn from './friendTwoBtn';
-import { getFriendList, getSearchUserList } from '@/apis/user/friend';
+import {
+    blockFriend,
+    getFriendList,
+    getSearchUserList,
+    sendFriendRequest
+} from '@/apis/user/friend';
 import { Friend } from '@/types/user';
 
-function SendFollow() {
+interface ISendFollowProps {
+    handleFriendRequest: (result: Friend[]) => void;
+}
+
+function SendFollow({ handleFriendRequest }: ISendFollowProps) {
     const [friendSearchList, setFriendSearchList] = useState<Friend[]>([]);
 
     const [searchText, setSearchText] = useState<string>('');
@@ -15,6 +24,23 @@ function SendFollow() {
         getSearchUserList(searchText).then((data) => {
             setFriendSearchList(data);
         });
+    };
+
+    const handleClickRequestFriend = async (user_index: number) => {
+        await sendFriendRequest(user_index);
+        const result = friendSearchList.filter(
+            (friend) => friend.user_index === user_index
+        );
+        handleFriendRequest(result);
+
+        const rest = friendSearchList.filter(
+            (friend) => friend.user_index !== user_index
+        );
+        setFriendSearchList(rest);
+    };
+
+    const handleClickBlockFriend = async (user_index: number) => {
+        await blockFriend(user_index);
     };
 
     return (
@@ -44,6 +70,12 @@ function SendFollow() {
                             label1='요청'
                             label2='차단'
                             px={6}
+                            onClick1={() =>
+                                handleClickRequestFriend(friend.user_index)
+                            }
+                            onClick2={() =>
+                                handleClickBlockFriend(friend.user_index)
+                            }
                         />
                     ))}
                 </div>

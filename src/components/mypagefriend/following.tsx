@@ -1,11 +1,29 @@
 import RoundBtn from '../layout/roundBtn';
 import React, { useEffect, useState } from 'react';
 import FriendOneBtn from './friendOneBtn';
-import { getSendFriendRequestList } from '@/apis/user/friend';
+import {
+    cancelFriendRequest,
+    getSendFriendRequestList
+} from '@/apis/user/friend';
 import { Friend } from '@/types/user';
 
-function Following() {
-    const [friendRequestList, setFriendRequestList] = useState<Friend[]>([]);
+interface IFollwingProps {
+    friendRequestList: Friend[];
+    setFriendRequestList: React.Dispatch<React.SetStateAction<Friend[]>>;
+}
+
+function Following({
+    friendRequestList,
+    setFriendRequestList
+}: IFollwingProps) {
+    const handleClickCancel = async (user_index: number) => {
+        await cancelFriendRequest(user_index);
+        setFriendRequestList(
+            friendRequestList.filter(
+                (friend) => friend.user_index !== user_index
+            )
+        );
+    };
 
     useEffect(() => {
         getSendFriendRequestList().then((data) => {
@@ -29,6 +47,7 @@ function Following() {
                         name={friend.nickname}
                         label1='요청취소'
                         px={6}
+                        onClick={() => handleClickCancel(friend.user_index)}
                     />
                 ))}
             </div>

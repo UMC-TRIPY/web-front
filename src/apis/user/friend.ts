@@ -7,31 +7,54 @@ export const getMyInformation = async () => {
     const result = await Server.get<InformationReturnType>(
         `mypage/user/${uid}`
     );
-    return result.data[0];
+    return result.data;
 };
 
-export const sendFriendRequest = async (friend_index: number | null) => {
+export const deleteFriend = async (friend_idx: number) => {
+    // const uid = localStorage.getItem('uid');
+    const uid = 1;
+    const result = await Server.delete<InformationReturnType>(
+        `mypage/friends/${uid}`,
+        { data: { friend_idx } }
+    );
+    console.log('deleteFriend: ', result);
+    return result.data;
+};
+
+export const blockFriend = async (friend_idx: number) => {
+    // const uid = localStorage.getItem('uid');
+    const uid = 1;
+    const result = await Server.post<InformationReturnType>(
+        `mypage/friends/${uid}/break`,
+        { friend_idx }
+    );
+    console.log('blockFriend: ', result);
+
+    return result.data;
+};
+
+export const sendFriendRequest = async (friend_idx: number | null) => {
     // TODO: 로그인 성공 시 uid 발급
     // const uid = localStorage.getItem('uid');
     const uid = 1;
     try {
         const result = await Server.post(`mypage/friends/${uid}/request`, {
-            friend_index
+            friend_idx
         });
-        console.log(result);
+        console.log('sendFriendRequest:', result);
     } catch (error) {
         console.log('uid가 존재하지 않습니다 :', error);
     }
 };
 
-export const cancelFriendRequest = async (friend_index: number) => {
+export const cancelFriendRequest = async (friend_idx: number) => {
     // TODO: 로그인 성공 시 uid 발급
     // const uid = localStorage.getItem('uid');
     const uid = 1;
     const result = await Server.post(`mypage/friends/${uid}/cancel`, {
-        friend_index
+        friend_idx
     });
-    console.log(result);
+    console.log('cancelFriendRequest:', result);
 };
 
 export const getSendFriendRequestList = async () => {
@@ -54,22 +77,22 @@ export const getRecieveFriendRequestList = async () => {
     return result.data.data;
 };
 
-export const acceptFriendRequest = async (friend_index: number) => {
+export const acceptFriendRequest = async (friend_idx: number) => {
     // TODO: 로그인 성공 시 uid 발급
     // const uid = localStorage.getItem('uid');
     const uid = 1;
     const result = await Server.post(`mypage/friends/${uid}/accept`, {
-        friend_index
+        friend_idx
     });
     console.log(result);
 };
 
-export const rejectFriendRequest = async (friend_index: number) => {
+export const rejectFriendRequest = async (friend_idx: number) => {
     // TODO: 로그인 성공 시 uid 발급
     // const uid = localStorage.getItem('uid');
     const uid = 1;
     const result = await Server.post(`mypage/friends/${uid}/reject`, {
-        friend_index
+        friend_idx
     });
     console.log(result);
 };
