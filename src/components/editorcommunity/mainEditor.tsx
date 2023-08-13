@@ -1,3 +1,4 @@
+import React, { useState } from "react"
 import Image from "next/image"
 import imageAdd from "public/images/imageAdd.svg"
 import folderPlus from "public/images/folderPlus.svg"
@@ -45,7 +46,11 @@ export default function MainEditor() {
                     </div>
                 </div>
                 <div className="p-5 flex h-[710px]">
-                    <textarea spellCheck="false" className="flex-grow outline-none" placeholder="내용을 입력해주세요." />
+                    <textarea 
+                        spellCheck="false" 
+                        className="flex-grow outline-none" 
+                        placeholder="내용을 입력해주세요." 
+                    />
                 </div>
             </div>
         </div>

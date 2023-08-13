@@ -1,6 +1,13 @@
 import React, { useState } from "react"
 
-export default function SelectCountry () {
+interface SelectCountryProps {
+    selectedCity: string;
+    setSelectedCity: (city: string) => void;
+    cityEmpty: boolean;
+    onCityEmptyError: () => void;
+}
+
+export default function SelectCountry ({ selectedCity, setSelectedCity, cityEmpty, onCityEmptyError }: SelectCountryProps) {
     const locations = {
         "아시아": {
             "일본": ["도쿄", "오사카", "후쿠오카", "오키나와", "교토", "홋카이도", "일본 기타"],
@@ -22,10 +29,7 @@ export default function SelectCountry () {
     const FranceCities = locations["유럽"]["프랑스"];
     const ItalyCities = locations["유럽"]["이탈리아"];
     const SpainCities = locations["유럽"]["스페인"];
-
-    // selectedCity에 선택한 여행지 저장 -> 게시판 필터링시 전달필요
-    const [selectedCity, setSelectedCity] = useState<string>('');
-
+    
     type CityButtonsProps = {
         cities: string[];
     };
@@ -34,21 +38,26 @@ export default function SelectCountry () {
         return (
           <div className="flex">
             {cities.map((city, index) => (
-              <button
-                key={index}
-                className={`mr-10 ${
-                  city === selectedCity ? 
-                  'text-primary font-bold border-b-[3px] border-b-primary' 
-                  : 'border-b-[3px] border-brightgrey' // 밑줄 생길때 위아래 밀림 방지
-                }`}
-                onClick={() => setSelectedCity(city)}
-              >
-                {city}
-              </button>
+                <button
+                    key={index}
+                    className={`mr-10 ${
+                    city === selectedCity ? 
+                    'text-primary font-bold border-b-[3px] border-b-primary' 
+                    : 'border-b-[3px] border-brightgrey' // 밑줄 생길때 위아래 밀림 방지
+                    }`}
+                    onClick={() => {
+                        setSelectedCity(city); 
+                        onCityEmptyError();
+                    }}
+                >
+                    {city}
+                </button>
             ))}
           </div>
         );
     };
+
+    const [title, setTitle] = useState('');
 
     return (
         <div className="mx-4">
@@ -87,16 +96,18 @@ export default function SelectCountry () {
                 </div>
             </div>
             <div className="flex justify-between py-2 mb-2">
-                <div className="w-1/6 h-12 bg-brightgrey rounded-lg flex items-center justify-center">
+                <div className={`w-1/6 h-12 bg-brightgrey ${cityEmpty ? 'border border-alertred' : ''} rounded-lg flex items-center justify-center`}>
                     {selectedCity ? (
                         <span className="font-bold">{selectedCity}</span>
                     ) : (
-                        <span className="text-grey">국가명</span>
+                        <span className={`${cityEmpty ? 'text-alertred' : 'text-grey'}`}>국가명</span>
                     )}
                 </div>
                 <input 
-                    className="w-5/6 ml-5 pl-4 border border-lightgrey rounded-lg"
+                    className={`w-5/6 ml-5 pl-4 border ${!title && cityEmpty ? 'border-alertred' : 'border-lightgrey'} rounded-lg`}
                     placeholder="제목을 입력해주세요." 
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)} 
                 />
             </div>
         </div>

@@ -1,17 +1,11 @@
 'use client';
 
-import MainEditor from "@/components/editorcommunity/mainEditor";
-import SelectCountry from "@/components/editorcommunity/selectCountry";
-import TagEditor from "@/components/editorcommunity/tagEditor";
-import CommonHeader from "@/components/maincommunity/CommonHeader";
+import EditorCommunity from "@/components/editorcommunity/editorCommunity";
 
 export default function Page() {
     return (
         <div>
-            <CommonHeader />
-            <SelectCountry />
-            <MainEditor />
-            <TagEditor />
+            <EditorCommunity />
         </div>
     )
 }

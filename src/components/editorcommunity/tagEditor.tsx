@@ -4,7 +4,11 @@ import alertCircle from "public/images/alertCircle.svg"
 import alertCircleRed from "public/images/alertCircleRed.svg"
 import ConfirmBtn from "../layout/confirmBtn";
 
-export default function TagEditor() {
+interface TagEditorProps {
+    onCityEmptyError: () => void;
+}
+
+export default function TagEditor({onCityEmptyError}: TagEditorProps) {
     const [tagItem, setTagItem] = useState<string>('');
     const [tagList, setTagList] = useState<string[]>([]);
     const [tagEmpty, setTagEmpty] = useState<boolean>(false);
@@ -34,7 +38,7 @@ export default function TagEditor() {
         console.log(tagList)
     }
 
-    function handleEmptyError() { // 태그란이 비었을 때 경고메시지 출력
+    function handleTagEmptyError() { // 태그란이 비었을 때 경고메시지 출력
         if (tagList.length === 0){
             setTagEmpty(true);
         }
@@ -80,7 +84,7 @@ export default function TagEditor() {
             </div>
             <div className="flex justify-center">
                 <ConfirmBtn label="임시저장" color="bg-lightgrey"/>
-                <ConfirmBtn label="등록하기" color="bg-primary" onClick={handleEmptyError}/>
+                <ConfirmBtn label="등록하기" color="bg-primary" onClick={() => { onCityEmptyError(); handleTagEmptyError(); }}/>
             </div>
         </div>
     )
