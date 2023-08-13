@@ -10,7 +10,11 @@ import {
 } from '@/apis/user/friend';
 import { Friend } from '@/types/user';
 
-function SendFollow() {
+interface ISendFollowProps {
+    handleFriendRequest: (result: Friend[]) => void;
+}
+
+function SendFollow({ handleFriendRequest }: ISendFollowProps) {
     const [friendSearchList, setFriendSearchList] = useState<Friend[]>([]);
 
     const [searchText, setSearchText] = useState<string>('');
@@ -24,6 +28,10 @@ function SendFollow() {
 
     const handleClickRequestFriend = async (user_index: number) => {
         await sendFriendRequest(user_index);
+        const result = friendSearchList.filter(
+            (friend) => friend.user_index === user_index
+        );
+        handleFriendRequest(result);
     };
 
     const handleClickBlockFriend = async (user_index: number) => {

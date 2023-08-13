@@ -7,9 +7,15 @@ import {
 } from '@/apis/user/friend';
 import { Friend } from '@/types/user';
 
-function Following() {
-    const [friendRequestList, setFriendRequestList] = useState<Friend[]>([]);
+interface IFollwingProps {
+    friendRequestList: Friend[];
+    setFriendRequestList: React.Dispatch<React.SetStateAction<Friend[]>>;
+}
 
+function Following({
+    friendRequestList,
+    setFriendRequestList
+}: IFollwingProps) {
     const handleClickCancel = async (user_index: number) => {
         await cancelFriendRequest(user_index);
         setFriendRequestList(
