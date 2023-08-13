@@ -7,7 +7,6 @@ import MypageMenus from '@/components/mypage/mypageMenus';
 import ProfilePic from '@/components/mypage/profilePic';
 import FriendReq from '@/components/mypagefriend/friendReq';
 import MyFriends from '@/components/mypagefriend/myFriends';
-import { StringLiteral } from 'typescript';
 import { getMyInformation } from '@/apis/user/friend';
 import { Friend, IUser } from '@/types/user';
 
@@ -62,6 +61,7 @@ export default function Mypage() {
             setUserData(data);
         });
     }, []);
+
     return (
         <div>
             {/* 상단 탭바 */}
