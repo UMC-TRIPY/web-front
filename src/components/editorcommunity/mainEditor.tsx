@@ -31,6 +31,11 @@ export default function MainEditor({ cityEmpty }: MainEditorProps) {
         });
     };
 
+    const handleImageUpload = (images: File[]) => {
+        let imgTags = images.map((image) => `![${image.name}](URL.createObjectURL(image))`).join('\n');
+        setContents(contents + '\n' + imgTags);
+    };
+
     return (
         <div className="mx-4">
             <div className={`h-[800px] border ${!contents && cityEmpty ? 'border-alertred' : 'border-lightgrey'} rounded-lg`}>
@@ -86,6 +91,7 @@ export default function MainEditor({ cityEmpty }: MainEditorProps) {
                             <EditorModal
                                 type = {modal.type}
                                 setIsModal = {() => handleModalClose()}
+                                onImageUpload = {handleImageUpload}
                             />
                         </div>
                     )}

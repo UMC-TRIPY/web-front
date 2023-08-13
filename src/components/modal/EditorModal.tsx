@@ -9,9 +9,10 @@ import ConfirmBtn from "../layout/confirmBtn";
 interface EditorModalProps {
     setIsModal: any,
     type: string,
+    onImageUpload: (images: File[]) => void,
 }
 
-const EditorModal = ({ setIsModal, type }: EditorModalProps) => {
+const EditorModal = ({ setIsModal, type, onImageUpload }: EditorModalProps) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
 
@@ -74,8 +75,8 @@ const EditorModal = ({ setIsModal, type }: EditorModalProps) => {
                             ))}
                         </div>
                         <div className="flex justify-end">
-                            <ConfirmBtn label="취소하기" color="bg-lightgrey" onClick={() => setIsModal()}/>
-                            <ConfirmBtn label="업로드" color="bg-primary"/>
+                            <ConfirmBtn label="취소하기" color="bg-lightgrey" onClick={() => setIsModal(false)}/>
+                            <ConfirmBtn label="업로드" color="bg-primary" onClick={() => {onImageUpload(selectedImages), setIsModal(false)}}/>
                         </div>
                     </div>
                 );
