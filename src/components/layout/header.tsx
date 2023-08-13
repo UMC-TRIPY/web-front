@@ -1,5 +1,6 @@
 'use client';
 
+import { logout } from '@/apis/user/login';
 import { isLoggedInState } from '@/states/user';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
@@ -61,7 +62,11 @@ export default function Header() {
     };
 
     const handleLogout = () => {
-        setIsLoggedIn(false);
+        logout().then(() => {
+            alert('로그아웃 되었습니다.');
+            router.push('/');
+            setIsLoggedIn(false);
+        });
     };
 
     // 메뉴바 선택항목 상태구현

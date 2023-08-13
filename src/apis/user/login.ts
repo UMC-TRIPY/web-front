@@ -56,7 +56,25 @@ export const getRefresh = async () => {
 
 export const logout = async () => {
     const refreshToken = localStorage.getItem('refresh');
-    return await Server.post<LogoutReturnType>('/auth/logout', {
-        refresh_token: refreshToken
-    });
+    try {
+        localStorage.clear();
+        return await Server.post<LogoutReturnType>('/auth/logout', {
+            refresh_token: refreshToken
+        });
+    } catch (error) {
+        console.log('로그아웃 에러:', error);
+    }
+};
+
+export const deleteAccount = async () => {
+    try {
+        localStorage.clear();
+        // const uid = localStorage.getItem('uid');
+        const uid = 1;
+        return await Server.delete(`/mypage/user/delete/${uid}`, {
+            data: { uid }
+        });
+    } catch (error) {
+        console.log('회원탈퇴 에러:', error);
+    }
 };
