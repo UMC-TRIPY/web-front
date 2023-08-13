@@ -56,7 +56,12 @@ export const getRefresh = async () => {
 
 export const logout = async () => {
     const refreshToken = localStorage.getItem('refresh');
-    return await Server.post<LogoutReturnType>('/auth/logout', {
-        refresh_token: refreshToken
-    });
+    try {
+        localStorage.clear();
+        return await Server.post<LogoutReturnType>('/auth/logout', {
+            refresh_token: refreshToken
+        });
+    } catch (error) {
+        console.log('로그아웃 에러:', error);
+    }
 };
