@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
 interface MenuProps {
     menu: string;
@@ -12,13 +12,15 @@ interface MypageMenusProps {
     onMenuClick: (menu: string) => void;
 }
 
-export default function MypageMenus ({ activeMenu, onMenuClick }: MypageMenusProps) {
+export default function MypageMenus({
+    activeMenu,
+    onMenuClick
+}: MypageMenusProps) {
     const [menus, setMenus] = useState<[string, boolean][]>([
         ['정보', true],
         ['여행일정', false],
         ['내가방', false],
-        ['저장한 정보', false],
-        ['친구관리', false],
+        ['친구관리', false]
     ]);
 
     const Menu = ({ menu, select, index, onClick }: MenuProps) => {
@@ -56,11 +58,11 @@ export default function MypageMenus ({ activeMenu, onMenuClick }: MypageMenusPro
 
     return (
         <div>
-            <div className="text-5xl font-bold mx-4 mt-20 mb-12">
+            <div className='text-5xl font-bold mx-4 mt-20 mb-12'>
                 마이페이지
             </div>
-            <div className="flex justify-between">
-                <nav className="flex items-end">
+            <div className='flex justify-between'>
+                <nav className='flex items-end'>
                     {menus.map((menu, index) => (
                         <Menu
                             key={`menu${index}`}
@@ -73,5 +75,5 @@ export default function MypageMenus ({ activeMenu, onMenuClick }: MypageMenusPro
                 </nav>
             </div>
         </div>
-    )
+    );
 }

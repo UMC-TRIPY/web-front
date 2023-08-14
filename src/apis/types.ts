@@ -7,11 +7,13 @@ export interface TokenReturnType {
     success: boolean;
     uid: number;
     access_token: string;
+    refresh_token: string;
 }
 
 export interface RefreshReturnType {
     success: boolean;
     access_token: string;
+    refresh_token: string;
 }
 
 export interface LogoutReturnType {

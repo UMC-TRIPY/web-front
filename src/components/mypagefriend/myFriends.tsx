@@ -1,51 +1,63 @@
-import FriendTwoBtn from "./friendTwoBtn";
-import React, { useState } from "react";
+import FriendTwoBtn from './friendTwoBtn';
+import React, { useEffect, useState } from 'react';
+import { Friend } from '@/types/user';
+import { deleteFriend, getFriendList } from '@/apis/user/friend';
+import Pagination from '../maincommunity/Pagination';
 
-function MyFriends () {
-    const [currentPage, setCurrentPage] = useState(1);
-    const [friendsPerPage] = useState(4);
-    const [friends, setFriends] = useState([
-        '미리',
-        '메이',
-        '규',
-        '루카',
-        '레니',
-        '시미',
-        '초이',
-        '폴',
-        '에그먼',
-    ]);
+interface MyFriendsProps {
+    friendList: Friend[];
+    setFriendList: React.Dispatch<React.SetStateAction<Friend[]>>;
+}
 
-    const handlePrevClick = () => {
-        setCurrentPage((prevPage) => prevPage - 1)
+function MyFriends({ friendList, setFriendList }: MyFriendsProps) {
+    // const [friendList, setFriendList] = useState<Friend[]>([]);
+
+    const totalPages = Math.ceil(friendList.length / 4);
+    const [current, setCurrent] = useState<number>(1);
+    const [currentData, setCurrentData] = useState<Friend[]>([]);
+
+    const handleDeleteFriend = async (user_index: number) => {
+        await deleteFriend(user_index);
+        const result = friendList.filter(
+            (friend) => friend.user_index !== user_index
+        );
+        console.log('handle delete: ', result);
+        setFriendList(result);
     };
-    const handleNextClick = () => {
-        setCurrentPage((prevPage) => prevPage + 1)
-    };
 
-    const indexOfLastFriend = currentPage * friendsPerPage;
-    const indexOfFirstFriend = indexOfLastFriend - friendsPerPage;
-    const currentFriends = friends.slice(indexOfFirstFriend, indexOfLastFriend);
+    useEffect(() => {
+        getFriendList().then((data) => {
+            setFriendList(data);
+            setCurrentData(data.slice(0, 4));
+        });
+    }, []);
+
+    useEffect(() => {
+        setCurrentData(friendList.slice((current - 1) * 4, current * 4));
+    }, [friendList, current]);
 
     return (
         <div>
-            <div className="text-3xl font-bold mx-4 mt-20">나의 친구</div>
-            <div className="mx-4 py-4">
-                {currentFriends.map((friend, index) => (
-                    <FriendTwoBtn key={index} name={friend} label1="초대하기" label2="친구끊기" px={6} />
+            <div className='text-3xl font-bold mx-4 mt-20'>나의 친구</div>
+            <div className='mx-4 py-4'>
+                {currentData.map((friend: Friend, index: number) => (
+                    <FriendTwoBtn
+                        key={index}
+                        name={friend.nickname}
+                        label1='초대하기'
+                        label2='친구끊기'
+                        px={6}
+                        onClick2={() => handleDeleteFriend(friend.user_index)}
+                    />
                 ))}
             </div>
-            <div className="flex justify-center">
-                <button className="mx-4 px-2" onClick={handlePrevClick} disabled={currentPage === 1}>
-                    &lt;
-                </button>
-                {currentPage}
-                <button className="mx-4 px-2" onClick={handleNextClick} disabled={indexOfLastFriend >= friends.length}>
-                    &gt;
-                </button>
-            </div>
+            <Pagination
+                totalPages={totalPages}
+                current={current}
+                setCurrent={setCurrent}
+            />
         </div>
-    )
+    );
 }
 
 export default MyFriends;
