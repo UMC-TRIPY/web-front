@@ -7,15 +7,22 @@ import mapPin from "public/images/mapPin.svg"
 import EditorModal from "../modal/EditorModal"
 
 interface MainEditorProps {
-    cityEmpty: boolean;
+    contentsEmpty: boolean;
+    onContentsEmptyError: () => void;
+    contents: string;
+    setContents: (value: string) => void;
 }
 
-export default function MainEditor({ cityEmpty }: MainEditorProps) {
-    const [contents, setContents] = useState('');
+export default function MainEditor({ contentsEmpty, onContentsEmptyError, contents, setContents }: MainEditorProps) {
     const [modal, setModal] = useState({
         isOpen: false,
         type: '',
     });
+
+    const handleContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setContents(e.target.value);
+        onContentsEmptyError();
+    };
 
     const handleModalOpen = (modalType: string) => {
         setModal({
@@ -43,7 +50,7 @@ export default function MainEditor({ cityEmpty }: MainEditorProps) {
 
     return (
         <div className="mx-4">
-            <div className={`h-[800px] border ${!contents && cityEmpty ? 'border-alertred' : 'border-lightgrey'} rounded-lg`}>
+            <div className={`h-[800px] border ${!contents && contentsEmpty ? 'border-alertred' : 'border-lightgrey'} rounded-lg`}>
                 <div className="h-[90px] border-b border-lightgrey">
                     <div className="flex p-5">
                         <button 
@@ -108,7 +115,7 @@ export default function MainEditor({ cityEmpty }: MainEditorProps) {
                         className="flex-grow outline-none" 
                         placeholder="내용을 입력해주세요." 
                         value={contents}
-                        onChange={(e) => setContents(e.target.value)} 
+                        onChange={(e) => {setContents(e.target.value), handleContents(e)}} 
                     />
                 </div>
             </div>

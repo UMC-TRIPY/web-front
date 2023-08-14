@@ -10,7 +10,20 @@ export default function EditorCommunity() {
     // selectedCity에 선택한 여행지 저장 -> 게시판 필터링시 전달필요
 
     function handleCityEmptyError() {
-        setCityEmpty(!selectedCity);
+        setCityEmpty(!selectedCity); 
+        // selectedCity가 비었을때 setCityEmpty를 true로
+    }
+
+    const [title, setTitle] = useState(''); // 제목
+    const [titleEmpty, setTitleEmpty] = useState<boolean>(false);
+    function handleTitleEmptyError() {
+        setTitleEmpty(!title);
+    }
+ 
+    const [contents, setContents] = useState(''); // 내용
+    const [contentsEmpty, setContentsEmpty] = useState<boolean>(false);
+    function handleContentsEmptyError() {
+        setContentsEmpty(!contents);
     }
     
     return (
@@ -21,13 +34,21 @@ export default function EditorCommunity() {
                 setSelectedCity={setSelectedCity}
                 cityEmpty={cityEmpty}
                 onCityEmptyError={handleCityEmptyError}
+                title={title}
+                setTitle={setTitle}
+                titleEmpty={titleEmpty}
+                onTitleEmptyError={handleTitleEmptyError}
             />
             <MainEditor 
-                cityEmpty={cityEmpty}
-                onCityEmptyError={handleCityEmptyError}
+                contentsEmpty={contentsEmpty}
+                onContentsEmptyError={handleContentsEmptyError}
+                contents={contents}
+                setContents={setContents}
             />
             <TagEditor 
                 onCityEmptyError={handleCityEmptyError}
+                onTitleEmptyError={handleTitleEmptyError}
+                onContentsEmptyError={handleContentsEmptyError}
             />
         </div>
     )

@@ -6,9 +6,11 @@ import ConfirmBtn from "../layout/confirmBtn";
 
 interface TagEditorProps {
     onCityEmptyError: () => void;
+    onTitleEmptyError: () => void;
+    onContentsEmptyError: () => void;
 }
 
-export default function TagEditor({onCityEmptyError}: TagEditorProps) {
+export default function TagEditor({onCityEmptyError, onTitleEmptyError, onContentsEmptyError}: TagEditorProps) {
     const [tagItem, setTagItem] = useState<string>('');
     const [tagList, setTagList] = useState<string[]>([]);
     const [tagEmpty, setTagEmpty] = useState<boolean>(false);
@@ -25,7 +27,6 @@ export default function TagEditor({onCityEmptyError}: TagEditorProps) {
             updateTagList.push(tagItem);
             setTagList(updateTagList);
             setTagItem('');
-            console.log(tagList)
         }
         if (tagList.length === 0){
             setTagEmpty(false);
@@ -84,7 +85,16 @@ export default function TagEditor({onCityEmptyError}: TagEditorProps) {
             </div>
             <div className="flex justify-center">
                 <ConfirmBtn label="임시저장" color="bg-lightgrey"/>
-                <ConfirmBtn label="등록하기" color="bg-primary" onClick={() => { onCityEmptyError(); handleTagEmptyError(); }}/>
+                <ConfirmBtn 
+                    label="등록하기" 
+                    color="bg-primary" 
+                    onClick={() => { 
+                        onCityEmptyError(); // 도시 게시판 선택했는지
+                        onTitleEmptyError(); // 타이틀이 비었는지
+                        onContentsEmptyError(); // 내용이 비었는지
+                        handleTagEmptyError(); // 태그가 비었는지
+                    }}
+                />
             </div>
         </div>
     )

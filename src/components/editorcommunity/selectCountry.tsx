@@ -1,13 +1,17 @@
-import React, { useState } from "react"
+import React from "react"
 
 interface SelectCountryProps {
     selectedCity: string;
     setSelectedCity: (city: string) => void;
     cityEmpty: boolean;
     onCityEmptyError: () => void;
+    title: string;
+    setTitle: (value: string) => void;
+    titleEmpty: boolean;
+    onTitleEmptyError: () => void;
 }
 
-export default function SelectCountry ({ selectedCity, setSelectedCity, cityEmpty, onCityEmptyError }: SelectCountryProps) {
+export default function SelectCountry ({ selectedCity, setSelectedCity, cityEmpty, onCityEmptyError, title, setTitle, titleEmpty, onTitleEmptyError }: SelectCountryProps) {
     const locations = {
         "아시아": {
             "일본": ["도쿄", "오사카", "후쿠오카", "오키나와", "교토", "홋카이도", "일본 기타"],
@@ -57,7 +61,10 @@ export default function SelectCountry ({ selectedCity, setSelectedCity, cityEmpt
         );
     };
 
-    const [title, setTitle] = useState('');
+    const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setTitle(e.target.value);
+        onTitleEmptyError();
+    };
 
     return (
         <div className="mx-4">
@@ -96,7 +103,7 @@ export default function SelectCountry ({ selectedCity, setSelectedCity, cityEmpt
                 </div>
             </div>
             <div className="flex justify-between py-2 mb-2">
-                <div className={`w-1/6 h-12 bg-brightgrey ${cityEmpty ? 'border border-alertred' : ''} rounded-lg flex items-center justify-center`}>
+                <div className={`w-1/6 h-12 bg-brightgrey ${!selectedCity && cityEmpty ? 'border border-alertred' : ''} rounded-lg flex items-center justify-center`}>
                     {selectedCity ? (
                         <span className="font-bold">{selectedCity}</span>
                     ) : (
@@ -104,10 +111,10 @@ export default function SelectCountry ({ selectedCity, setSelectedCity, cityEmpt
                     )}
                 </div>
                 <input 
-                    className={`w-5/6 ml-5 pl-4 border ${!title && cityEmpty ? 'border-alertred' : 'border-lightgrey'} rounded-lg`}
+                    className={`w-5/6 ml-5 pl-4 border ${!title && titleEmpty ? 'border-alertred' : 'border-lightgrey'} rounded-lg`}
                     placeholder="제목을 입력해주세요." 
                     value={title}
-                    onChange={(e) => setTitle(e.target.value)} 
+                    onChange={(e) => {setTitle(e.target.value), handleTitle(e)}} 
                 />
             </div>
         </div>
