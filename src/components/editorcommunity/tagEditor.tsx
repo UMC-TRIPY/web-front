@@ -15,13 +15,15 @@ export default function TagEditor({onCityEmptyError, onTitleEmptyError, onConten
     const [tagList, setTagList] = useState<string[]>([]);
     const [tagEmpty, setTagEmpty] = useState<boolean>(false);
 
-    function onKeyPress(e: React.KeyboardEvent<HTMLInputElement>) { // enter 누르면 submitTagItem 함수 불러옴
+    /** enter 누르면 submitTagItem 함수 불러옴 */
+    function onKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.currentTarget.value.length !== 0 && e.key === 'Enter') {
             submitTagItem()
         }
     }
 
-    function submitTagItem() { // 태그 추가
+    /** 태그 추가 */
+    function submitTagItem() {
         if (!tagList.includes(tagItem)){ // 중복 태그 추가 안함
             let updateTagList = [...tagList];
             updateTagList.push(tagItem);
@@ -33,13 +35,15 @@ export default function TagEditor({onCityEmptyError, onTitleEmptyError, onConten
         }
     }
 
-    function deleteTagItem(tag: string) { // 선택한 태그 삭제
+    /** 선택한 태그 삭제 */
+    function deleteTagItem(tag: string) {
         const deletedTagList = tagList.filter((tagItem) => tagItem !== tag)
         setTagList(deletedTagList)
         console.log(tagList)
     }
 
-    function handleTagEmptyError() { // 태그란이 비었을 때 경고메시지 출력
+    /** 태그란이 비었을 때 경고메시지 출력 */
+    function handleTagEmptyError() {
         if (tagList.length === 0){
             setTagEmpty(true);
         }
@@ -88,7 +92,7 @@ export default function TagEditor({onCityEmptyError, onTitleEmptyError, onConten
                 <ConfirmBtn 
                     label="등록하기" 
                     color="bg-primary" 
-                    onClick={() => { 
+                    onClick={() => { // 눌렀을 때
                         onCityEmptyError(); // 도시 게시판 선택했는지
                         onTitleEmptyError(); // 타이틀이 비었는지
                         onContentsEmptyError(); // 내용이 비었는지

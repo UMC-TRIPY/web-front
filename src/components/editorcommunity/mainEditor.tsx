@@ -19,11 +19,13 @@ export default function MainEditor({ contentsEmpty, onContentsEmptyError, conten
         type: '',
     });
 
+    /** textarea 입력 handle 함수 */
     const handleContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
         setContents(e.target.value);
         onContentsEmptyError();
     };
 
+    /** 각 type에 맞는 모달창 열기 */
     const handleModalOpen = (modalType: string) => {
         setModal({
             isOpen: true,
@@ -38,14 +40,18 @@ export default function MainEditor({ contentsEmpty, onContentsEmptyError, conten
         });
     };
 
+    /** 이미지 URL을 textarea에 */
     const handleImageUpload = (images: File[]) => {
         let imgTags = images.map((image) => `![${image.name}](URL.createObjectURL(image))`).join('\n');
         setContents(contents + '\n' + imgTags);
+        // contents에 img URL 추가
     };
 
+    /** 파일 URL을 textarea에 */
     const handleFileUpload = (files: File[]) => {
         let fileTags = files.map((file) => `[${file.name}](URL.createObjectURL(file))`).join('\n');
         setContents(contents + '\n' + fileTags);
+        // contents에 file URL 추가
     };
 
     return (
@@ -115,7 +121,7 @@ export default function MainEditor({ contentsEmpty, onContentsEmptyError, conten
                         className="flex-grow outline-none" 
                         placeholder="내용을 입력해주세요." 
                         value={contents}
-                        onChange={(e) => {setContents(e.target.value), handleContents(e)}} 
+                        onChange={(e) => handleContents(e)} 
                     />
                 </div>
             </div>

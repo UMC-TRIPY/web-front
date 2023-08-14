@@ -61,6 +61,7 @@ export default function SelectCountry ({ selectedCity, setSelectedCity, cityEmpt
         );
     };
 
+    // title input 관리 함수
     const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
         setTitle(e.target.value);
         onTitleEmptyError();
@@ -114,7 +115,7 @@ export default function SelectCountry ({ selectedCity, setSelectedCity, cityEmpt
                     className={`w-5/6 ml-5 pl-4 border ${!title && titleEmpty ? 'border-alertred' : 'border-lightgrey'} rounded-lg`}
                     placeholder="제목을 입력해주세요." 
                     value={title}
-                    onChange={(e) => {setTitle(e.target.value), handleTitle(e)}} 
+                    onChange={(e) => handleTitle(e)} 
                 />
             </div>
         </div>
