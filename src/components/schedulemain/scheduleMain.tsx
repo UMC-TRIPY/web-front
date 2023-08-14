@@ -25,7 +25,7 @@ function ScheduleMain() {
                 setScheduleCreated={setScheduleCreated}
             />     
             {/* 내 여행 목록 */}
-            <MyTravel />
+            <MyTravel status='page' />
         </div>
     );
 }

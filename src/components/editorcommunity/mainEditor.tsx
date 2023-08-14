@@ -54,6 +54,13 @@ export default function MainEditor({ contentsEmpty, onContentsEmptyError, conten
         // contents에 file URL 추가
     };
 
+    /** 선택된 장소 id를 textarea에 */
+    const handlePlaceUpload = () => {
+        setContents(contents + '\n' + checkedItems)
+    };
+
+    const [checkedItems, setCheckedItems] = useState<Array<number>>([]);
+
     return (
         <div className="mx-4">
             <div className={`h-[800px] border ${!contents && contentsEmpty ? 'border-alertred' : 'border-lightgrey'} rounded-lg`}>
@@ -111,6 +118,9 @@ export default function MainEditor({ contentsEmpty, onContentsEmptyError, conten
                                 setIsModal = {() => handleModalClose()}
                                 onImageUpload = {handleImageUpload}
                                 onFileUpload = {handleFileUpload}
+                                onPlaceUpload = {handlePlaceUpload}
+                                checkedItems={checkedItems} 
+                                setCheckedItems={setCheckedItems}
                             />
                         </div>
                     )}

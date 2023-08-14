@@ -14,9 +14,12 @@ interface EditorModalProps {
     type: string,
     onImageUpload: (images: File[]) => void,
     onFileUpload: (files: File[]) => void,
+    onPlaceUpload: () => void,
+    checkedItems?: Array<number>;
+    setCheckedItems?: (items: Array<number>) => void;
 }
 
-const EditorModal = ({ setIsModal, type, onImageUpload, onFileUpload }: EditorModalProps) => {
+const EditorModal = ({ setIsModal, type, onImageUpload, onFileUpload, onPlaceUpload, checkedItems, setCheckedItems }: EditorModalProps) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -44,6 +47,8 @@ const EditorModal = ({ setIsModal, type, onImageUpload, onFileUpload }: EditorMo
     const handleRemoveUploadedFile = (index: number) => {
         setUploadedFiles(uploadedFiles.filter((_, i) => i !== index));
     };
+
+    
 
     const renderContent = () => {
         switch (type) {
@@ -142,10 +147,18 @@ const EditorModal = ({ setIsModal, type, onImageUpload, onFileUpload }: EditorMo
             case "일정":
                 return (
                     <div className="flex-col">
-                        <MyTravel status="modal" />
+                        <MyTravel 
+                            status="modal" 
+                            checkedItems={checkedItems} 
+                            setCheckedItems={setCheckedItems}
+                         />
                         <div className="flex justify-end">
                             <ConfirmBtn label="취소하기" color="bg-lightgrey" onClick={() => setIsModal(false)}/>
-                            <ConfirmBtn label="공유하기" color="bg-primary" onClick={() => {setIsModal(false)}}/>
+                            <ConfirmBtn 
+                                label="공유하기" 
+                                color="bg-primary" 
+                                onClick={() => {setIsModal(false), onPlaceUpload()}}
+                            />
                         </div>
                     </div>
                 );
@@ -159,7 +172,7 @@ const EditorModal = ({ setIsModal, type, onImageUpload, onFileUpload }: EditorMo
                             <input 
                                 type="text" 
                                 placeholder="원하는 장소를 검색해보세요."
-                                className="w-full"
+                                className="w-full outline-none"
                             />
                         </div>
                         <div className="h-80 flex border border-lightgrey rounded-xl">
