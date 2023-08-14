@@ -143,7 +143,7 @@ export default function Updateschedule() {
                             top: `calc(1.75rem * ${j})`,
                             left: `calc(22rem * ${i})`
                         }}
-                        onDragEnter={(e) => dragFunction(e, 'enter')}
+                        onDragEnter={(e) => handleBlockEnter(i, j)}
                         onDragOver={(e) => {
                             return dragFunction(e, 'over');
                         }}
@@ -178,20 +178,43 @@ export default function Updateschedule() {
         console.log('drop');
         console.log(column, row);
         console.log(currentDraggingBlockId);
-        // const selectedObject = schedule.find(
-        //     (obj) => obj.id === currentDraggingBlockId
-        // );
 
-        // console.log(selectedObject);
         setSchedule((prev) => {
             const newSchedule = [...prev];
             const selectedObject = newSchedule.find(
                 (obj) => obj.id === currentDraggingBlockId
             );
-            selectedObject!.column = column;
-            selectedObject!.startTime = row;
+            if (row + selectedObject?.halfHour <= 34) {
+                selectedObject!.column = column;
+                selectedObject!.startTime = row;
+            }
             return newSchedule;
         });
+    };
+
+    const handleBlockEnter = (column: number, row: number) => {
+        // 블록이 들어가는곳을 미리 보기로 알려줌
+        // console.log('enter');
+        // console.log(column, row);
+        // console.log(currentDraggingBlockId);
+        // const selectedObject = schedule.find(
+        //     (obj) => obj.id === currentDraggingBlockId
+        // );
+        // console.log(selectedObject);
+        // setSchedule((prev) => {
+        //     const newSchedule = [...prev];
+        //     const selectedObject = newSchedule.find(
+        //         (obj) => obj.id === currentDraggingBlockId
+        //     );
+        //     const newObject = {
+        //         ...selectedObject
+        //     };
+        //     // 아이디 하나 임의로 만들어놓고 기억해서 드랍했을때 그거 지우기
+        //     newObject.column = column;
+        //     newObject.startTime = row;
+        //     newSchedule.push(newObject);
+        //     return newSchedule;
+        // });
     };
 
     return (
