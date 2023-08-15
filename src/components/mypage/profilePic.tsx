@@ -12,9 +12,12 @@ export default function ProfilePic({
     handleProfileImage
 }: IProfilePicProps) {
     const fileRef = useRef<HTMLInputElement | null>(null);
-    const [imageSrc, setImageSrc] = useState<any>(
-        userData.profileImg || '/images/profilePicLg.svg'
-    );
+
+    // TODO: 이미지를 불러올 때 링크가 public 이미지거나 http 로 시작해야 한다
+    // const [imageSrc, setImageSrc] = useState<any>(
+    //     userData.profileImg || '/images/profilePicLg.svg'
+    // );
+    const [imageSrc, setImageSrc] = useState<any>('/images/profilePicLg.svg');
 
     const handleClickProfile = () => {
         if (fileRef.current) fileRef.current.click();
