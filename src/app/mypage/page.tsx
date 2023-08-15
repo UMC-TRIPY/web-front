@@ -30,12 +30,19 @@ export default function Mypage() {
         setUserData({ ...userData, nationality });
     };
 
+    const handleProfileImage = (profileImg: string) => {
+        setUserData({ ...userData, profileImg });
+    };
+
     let content;
     if (activeMenu === '정보') {
         content = (
             <>
                 {/* 프로필 사진 */}
-                <ProfilePic />
+                <ProfilePic
+                    userData={userData}
+                    handleProfileImage={handleProfileImage}
+                />
                 {/* 기본정보 */}
                 <MyInfo
                     userData={userData}

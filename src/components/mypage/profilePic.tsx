@@ -1,9 +1,20 @@
+import { IUser } from '@/types/user';
 import Image from 'next/image';
 import { useRef, useState } from 'react';
 
-export default function ProfilePic() {
+interface IProfilePicProps {
+    userData: IUser;
+    handleProfileImage: (profileImg: string) => void;
+}
+
+export default function ProfilePic({
+    userData,
+    handleProfileImage
+}: IProfilePicProps) {
     const fileRef = useRef<HTMLInputElement | null>(null);
-    const [imageSrc, setImageSrc]: any = useState('/images/profilePicLg.svg');
+    const [imageSrc, setImageSrc] = useState<any>(
+        userData.profileImg || '/images/profilePicLg.svg'
+    );
 
     const handleClickProfile = () => {
         if (fileRef.current) fileRef.current.click();
@@ -11,6 +22,7 @@ export default function ProfilePic() {
 
     const handleChangeFile = (e: any) => {
         const file = e.target.files[0];
+        handleProfileImage(file.name);
         const reader = new FileReader();
         reader.readAsDataURL(file);
 
