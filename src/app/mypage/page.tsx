@@ -26,6 +26,10 @@ export default function Mypage() {
         setFriendList([...friendList, ...result]);
     };
 
+    const handleSetNationality = (nationality: string) => {
+        setUserData({ ...userData, nationality });
+    };
+
     let content;
     if (activeMenu === '정보') {
         content = (
@@ -33,7 +37,10 @@ export default function Mypage() {
                 {/* 프로필 사진 */}
                 <ProfilePic />
                 {/* 기본정보 */}
-                <MyInfo userData={userData} />
+                <MyInfo
+                    userData={userData}
+                    handleSetNationality={handleSetNationality}
+                />
                 {/* 탈퇴/수정 버튼 */}
                 <ConfirmBtns />
             </>
