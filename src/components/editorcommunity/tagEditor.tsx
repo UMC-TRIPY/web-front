@@ -24,15 +24,19 @@ export default function TagEditor({onCityEmptyError, onTitleEmptyError, onConten
 
     /** 태그 추가 */
     function submitTagItem() {
-        if (!tagList.includes(tagItem)){ // 중복 태그 추가 안함
-            let updateTagList = [...tagList];
-            updateTagList.push(tagItem);
-            setTagList(updateTagList);
-            setTagItem('');
-        }
-        if (tagList.length === 0){
-            setTagEmpty(false);
-        }
+        const hashTag = '#' + tagItem.trim();
+        
+        if (hashTag !== '#'){
+            if (!tagList.includes(hashTag)){ // 중복 태그 추가 안함
+                let updateTagList = [...tagList];
+                updateTagList.push(hashTag);
+                setTagList(updateTagList);
+                setTagItem('');
+            }
+            if (tagList.length === 0){
+                setTagEmpty(false);
+            }
+        } 
     }
 
     /** 선택한 태그 삭제 */
