@@ -78,3 +78,18 @@ export const deleteAccount = async () => {
         console.log('회원탈퇴 에러:', error);
     }
 };
+
+export const editInformation = async (
+    profileImg: string,
+    nationality: string
+) => {
+    try {
+        // const uid = localStorage.getItem('uid');
+        const uid = 1;
+        return await Server.put(`/user/info/${uid}`, {
+            data: { profileImg, nationality }
+        });
+    } catch (error) {
+        console.log('회원탈퇴 에러:', error);
+    }
+};
