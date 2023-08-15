@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { useRef, useState } from 'react';
 
 export default function ProfilePic() {
@@ -30,16 +31,21 @@ export default function ProfilePic() {
                 style={{ display: 'none' }}
                 onChange={handleChangeFile}
             />
-            <img
+            <Image
                 src={imageSrc}
                 alt='프로필 사진'
-                width={'20%'}
+                width={200}
+                height={200}
                 onClick={handleClickProfile}
+                priority
             />
-            <img
+            <Image
                 src='/images/changePic.svg'
                 alt='프로필 사진 변경'
+                width={40}
+                height={40}
                 className='relative top-8 right-8 z-10'
+                priority
             />
         </div>
     );
