@@ -1,4 +1,4 @@
-import { deleteAccount } from '@/apis/user/login';
+import { deleteAccount, editInformation } from '@/apis/user/login';
 import { isLoggedInState } from '@/states/user';
 import { useRouter } from 'next/navigation';
 import { useSetRecoilState } from 'recoil';
@@ -16,6 +16,13 @@ export default function ConfirmBtns() {
         });
     };
 
+    const handleEditUserInfo = async (
+        nationality: string,
+        profileImg: string
+    ) => {
+        await editInformation(nationality, profileImg);
+    };
+
     return (
         <div className='flex justify-center mt-14 mb-48'>
             <ConfirmBtn
@@ -23,7 +30,11 @@ export default function ConfirmBtns() {
                 color='bg-lightgrey'
                 onClick={handleDeleteUser}
             />
-            <ConfirmBtn label='수정하기' color='bg-primary' />
+            <ConfirmBtn
+                label='수정하기'
+                color='bg-primary'
+                onClick={handleEditUserInfo}
+            />
         </div>
     );
 }
