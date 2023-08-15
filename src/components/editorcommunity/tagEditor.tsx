@@ -24,12 +24,13 @@ export default function TagEditor({onCityEmptyError, onTitleEmptyError, onConten
 
     /** 태그 추가 */
     function submitTagItem() {
-        const hashTag = '#' + tagItem.trim();
-        
-        if (hashTag !== '#'){
-            if (!tagList.includes(hashTag)){ // 중복 태그 추가 안함
+        // "#안녕" "안녕" 입력시 모두 동일하게 "#안녕"으로 출력
+        const hashTag = tagItem.startsWith('#') ? tagItem.trim() : '#' + tagItem.trim();
+        const noBlankHashTag = hashTag.replace(/\s+/g, ''); // 공백 제거
+        if (noBlankHashTag !== '#'){
+            if (!tagList.includes(noBlankHashTag)){ // 중복 태그 추가 안함
                 let updateTagList = [...tagList];
-                updateTagList.push(hashTag);
+                updateTagList.push(noBlankHashTag);
                 setTagList(updateTagList);
                 setTagItem('');
             }
