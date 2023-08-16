@@ -5,7 +5,7 @@ import OtherSchedule from '../../components/detailschedule/OtherSchedule';
 import CommonHeader from '../../components/detailschedule/CommonHeader';
 import IScheduleItem from '@/models/interface/IScheduleItem';
 import ScheduleBlock from '@/components/scheduleblock/ScheduleBlock';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { dateTotable } from '@/utils/dateUtil';
 
 /**
@@ -66,6 +66,10 @@ export default function Updateschedule() {
     >(null);
     // id값으로 찾아서 변경
     // drag and drop
+
+    // 0: 빈 공간, 1: 들어갈 공간, 2: 들어갈 수 없는 공간
+    const [emptyBlockList, setEmptyBlockList] = useState<number[][]>([]);
+
     const dragFunction = (event: any, type: any) => {
         event.preventDefault();
         console.log(type);
@@ -134,11 +138,17 @@ export default function Updateschedule() {
     const renderEmptyBlock = () => {
         const blocks = [];
         // column
-        for (let i = 0; i < 5; i += 1) {
-            for (let j = 0; j < 34; j++) {
+        for (let i = 0; i < emptyBlockList.length; i += 1) {
+            for (let j = 0; j < emptyBlockList[i].length; j++) {
                 blocks.push(
                     <div
-                        className='absolute w-[22rem] h-7'
+                        className={
+                            emptyBlockList[i][j] == 1
+                                ? 'absolute w-[22rem] h-7 bg-gray-300'
+                                : emptyBlockList[i][j] == 2
+                                ? 'absolute w-[22rem] h-7 bg-red-300'
+                                : 'absolute w-[22rem] h-7'
+                        }
                         style={{
                             top: `calc(1.75rem * ${j})`,
                             left: `calc(22rem * ${i})`
@@ -163,6 +173,7 @@ export default function Updateschedule() {
                 <ScheduleBlock
                     item={schedule}
                     handleDragBlock={handleDragBlock}
+                    resetEmptyBlockList={resetEmptyBlockList}
                 />
             );
         },
@@ -178,6 +189,7 @@ export default function Updateschedule() {
         console.log('drop');
         console.log(column, row);
         console.log(currentDraggingBlockId);
+        resetEmptyBlockList();
 
         setSchedule((prev) => {
             const newSchedule = [...prev];
@@ -194,28 +206,38 @@ export default function Updateschedule() {
 
     const handleBlockEnter = (column: number, row: number) => {
         // 블록이 들어가는곳을 미리 보기로 알려줌
-        // console.log('enter');
-        // console.log(column, row);
-        // console.log(currentDraggingBlockId);
-        // const selectedObject = schedule.find(
-        //     (obj) => obj.id === currentDraggingBlockId
-        // );
-        // console.log(selectedObject);
-        // setSchedule((prev) => {
-        //     const newSchedule = [...prev];
-        //     const selectedObject = newSchedule.find(
-        //         (obj) => obj.id === currentDraggingBlockId
-        //     );
-        //     const newObject = {
-        //         ...selectedObject
-        //     };
-        //     // 아이디 하나 임의로 만들어놓고 기억해서 드랍했을때 그거 지우기
-        //     newObject.column = column;
-        //     newObject.startTime = row;
-        //     newSchedule.push(newObject);
-        //     return newSchedule;
-        // });
+        resetEmptyBlockList();
+        setEmptyBlockList((prev) => {
+            const newEmptyBlockList = [...prev];
+            const selectedObject = schedule.find(
+                (obj) => obj.id === currentDraggingBlockId
+            );
+            for (let i = 0; i < selectedObject?.halfHour; i++) {
+                if (row + i >= 34) {
+                    newEmptyBlockList[column][row + i] = 2;
+                } else {
+                    newEmptyBlockList[column][row + i] = 1;
+                }
+            }
+            return newEmptyBlockList;
+        });
     };
+
+    const resetEmptyBlockList = () => {
+        const emptyBlockList = [];
+        for (let i = 0; i < 5; i++) {
+            const emptyBlocks = [];
+            for (let j = 0; j < 34; j++) {
+                emptyBlocks.push(0);
+            }
+            emptyBlockList.push(emptyBlocks);
+        }
+        setEmptyBlockList(emptyBlockList);
+    };
+
+    useEffect(() => {
+        resetEmptyBlockList();
+    }, []);
 
     return (
         <div className='mt-20 p-20'>
@@ -226,7 +248,7 @@ export default function Updateschedule() {
             {/* 친구 목록 */}
             <FriendList />
             {/* 여행 일정 */}
-            <div className='relative flex flex-row'>
+            <div className='relative flex flex-row overflow-scroll'>
                 <div>
                     {/* Default */}
                     {renderTimeTable()}
