@@ -2,18 +2,7 @@ import { LiaExchangeAltSolid } from 'react-icons/lia';
 import { FiEdit } from 'react-icons/fi';
 import HelpBot from '../mybag/HelpBot';
 
-export default function FriendList() {
-    const friends = [
-        '미리',
-        '메이',
-        '루카',
-        '규',
-        '레니',
-        '시미',
-        '초이',
-        '폴',
-        '에그먼'
-    ];
+export default function FriendList({ friends }: { friends: string[] }) {
     const onClick = (friend: string) => {
         alert(`${friend} 삭제 완료!`);
     };
@@ -23,7 +12,9 @@ export default function FriendList() {
             <div className='text-xs h-8 rounded-xl bg-brightgrey py-1.5 px-2.5  mr-3 flex items-center'>
                 <span className='text-darkgrey mr-2.5'>{friend}</span>
                 <span
-                    className='text-darkgrey hover:cursor-pointer'
+                    className={`text-darkgrey hover:cursor-pointer ${
+                        friends.length === 0 ? 'hidden' : 'blcok'
+                    }`}
                     onClick={() => onClick(friend)}
                 >
                     X
@@ -39,14 +30,18 @@ export default function FriendList() {
                     <div>
                         <div className='pb-2'>일정 공유 중인 친구</div>
                         <div className='flex items-center'>
-                            {friends.map((friend, index) => {
-                                return (
-                                    <SharingFriend
-                                        friend={friend}
-                                        key={`sharing${index}`}
-                                    />
-                                );
-                            })}
+                            {friends.length === 0 ? (
+                                <SharingFriend friend='여행을 함께할 친구를 추가해보세요' />
+                            ) : (
+                                friends.map((friend, index) => {
+                                    return (
+                                        <SharingFriend
+                                            friend={friend}
+                                            key={`sharing${index}`}
+                                        />
+                                    );
+                                })
+                            )}
                             <div className='ml-1 h-7 w-7 bg-primary flex items-center justify-center rounded-full font-medium text-2xl hover:cursor-pointer'>
                                 +
                             </div>

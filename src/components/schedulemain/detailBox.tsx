@@ -7,6 +7,7 @@ import HotSearch from './hotSearch';
 
 import { useRouter } from 'next/navigation';
 import SelectedPlaces from './SelectedPlaces';
+import { differenceInDays } from 'date-fns';
 
 interface MenuProps {
     menu: string;
@@ -52,11 +53,11 @@ interface DetailBoxProps {
     setScheduleCreated: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-function DetailBox({ 
-    selectedCities, 
+function DetailBox({
+    selectedCities,
     setSelectedCities,
     scheduleCreated,
-    setScheduleCreated,
+    setScheduleCreated
 }: DetailBoxProps) {
     const [menus, setMenus] = useState<[string, boolean][]>([
         ['해외', true],
@@ -120,10 +121,20 @@ function DetailBox({
                 }}
                 className='flex items-center justify-between w-[558px] text-grey border border-lightgrey rounded-md p-5 mx-1.5 my-4 hover:cursor-pointer'
             >
-                {value === null ? title : format(value, 'yyyy-MM-dd')}
+                {value === null ? title : format(value, 'yyyy.MM.dd')}
                 <AiOutlineCalendar size={24} />
             </div>
         );
+    };
+
+    const register = () => {
+        if (startDate === null || endDate === null) return;
+        const start = format(startDate, 'yyyy.MM.dd');
+        const end = format(endDate, 'yyyy.MM.dd');
+        const difference = differenceInDays(endDate, startDate) + 1;
+        const dates = `${start}~${end} (${difference - 1}박 ${difference}일)`;
+        sessionStorage.setItem('date', dates);
+        sessionStorage.setItem('place', '');
     };
 
     return (
@@ -163,7 +174,14 @@ function DetailBox({
                 <RoundBtn
                     color='primary'
                     label='등록'
-                    onClick={() => router.push('/info/tokyo')}
+                    onClick={() => {
+                        if (startDate === null || endDate === null) {
+                            alert('날짜를 선택해주세요.');
+                            return;
+                        }
+                        register();
+                        router.push('/newschedule');
+                    }}
                 />
             </div>
             <Calendar

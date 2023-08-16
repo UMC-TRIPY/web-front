@@ -120,14 +120,14 @@ export default function Header() {
         setMenus(updatedMenus);
     };
 
-    useEffect(() => {
-        const token = localStorage.getItem('access');
-        if (token) setIsLoggedIn(true);
-        else {
-            setIsLoggedIn(false);
-            router.push('/');
-        }
-    });
+    // useEffect(() => {
+    //     const token = localStorage.getItem('access');
+    //     if (token) setIsLoggedIn(true);
+    //     else {
+    //         setIsLoggedIn(false);
+    //         router.push('/');
+    //     }
+    // });
 
     return (
         <header className='x-0 top-0 z-50 left-0 w-full bg-white border-b border-gray-300'>
