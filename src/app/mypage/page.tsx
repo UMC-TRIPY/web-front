@@ -26,14 +26,28 @@ export default function Mypage() {
         setFriendList([...friendList, ...result]);
     };
 
+    const handleSetNationality = (nationality: string) => {
+        setUserData({ ...userData, nationality });
+    };
+
+    const handleProfileImage = (profileImg: string) => {
+        setUserData({ ...userData, profileImg });
+    };
+
     let content;
     if (activeMenu === '정보') {
         content = (
             <>
                 {/* 프로필 사진 */}
-                <ProfilePic />
+                <ProfilePic
+                    userData={userData}
+                    handleProfileImage={handleProfileImage}
+                />
                 {/* 기본정보 */}
-                <MyInfo userData={userData} />
+                <MyInfo
+                    userData={userData}
+                    handleSetNationality={handleSetNationality}
+                />
                 {/* 탈퇴/수정 버튼 */}
                 <ConfirmBtns />
             </>

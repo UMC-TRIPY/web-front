@@ -2,6 +2,7 @@
 
 import { logout } from '@/apis/user/login';
 import { isLoggedInState } from '@/states/user';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
@@ -83,10 +84,13 @@ export default function Header() {
         return (
             <div className='relative flex flex-col items-center'>
                 {select && (
-                    <img
+                    <Image
                         className='absolute top-0 transform -translate-y-full'
                         src='/images/selected.png'
+                        width={10}
+                        height={10}
                         alt='none'
+                        priority
                     />
                 )}
                 <span

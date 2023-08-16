@@ -1,17 +1,26 @@
+import { IUser } from '@/types/user';
 import React, { useState, ChangeEvent, KeyboardEvent } from 'react';
 
 interface InfoInputProps {
     label: string;
     placeholder?: string;
+    userData: IUser;
+    handleSetNationality: (nationality: string) => void;
 }
 
-export default function InfoInput({ label, placeholder }: InfoInputProps) {
+export default function InfoInput({
+    label,
+    placeholder,
+    userData,
+    handleSetNationality
+}: InfoInputProps) {
     const [text, setText] = useState('');
 
     const handleChange = (
         event: ChangeEvent<HTMLSelectElement> | ChangeEvent<HTMLTextAreaElement>
     ) => {
         setText(event.target.value);
+        handleSetNationality(event.target.value);
     };
 
     const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
@@ -30,7 +39,9 @@ export default function InfoInput({ label, placeholder }: InfoInputProps) {
                     value={text}
                     onChange={handleChange}
                 >
-                    <option value=''>국적과 지역</option>
+                    <option value='' hidden>
+                        {userData.nationality}
+                    </option>
                     <option value='대한민국, 서울'>대한민국, 서울</option>
                     <option value='대한민국, 인천'>대한민국, 인천</option>
                     <option value='대한민국, 경기도'>대한민국, 경기도</option>
