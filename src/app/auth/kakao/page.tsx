@@ -1,7 +1,7 @@
 'use client';
 
 import { getKakaoAccessToken } from '@/apis/user/login';
-import { isLoggedInState } from '@/states/user';
+import { emailState, isLoggedInState } from '@/states/user';
 import { splitAuthCode } from '@/utils/oauth';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -12,13 +12,20 @@ const KakaoOAuth = () => {
     const params = useSearchParams();
     const code = params.get('code');
     const setIsLoggedIn = useSetRecoilState(isLoggedInState);
+    const setEmail = useSetRecoilState(emailState);
 
     useEffect(() => {
         if (code)
-            getKakaoAccessToken().then(() => {
-                console.log('code: ', code);
-                setIsLoggedIn(true);
-                router.push(`${process.env.NEXT_PUBLIC_HOME_URL}/`);
+            getKakaoAccessToken().then((res) => {
+                if (res !== undefined) {
+                    setEmail(res.email);
+                    if (res.newUser) {
+                        router.push('/signup');
+                    } else {
+                        setIsLoggedIn(true);
+                        router.push('/');
+                    }
+                }
             });
     }, [code, router, setIsLoggedIn]);
     return <div></div>;
