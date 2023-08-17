@@ -5,6 +5,7 @@ import folderPlus from "public/images/folderPlus.svg"
 import calenderAdd from "public/images/calendar.svg"
 import mapPin from "public/images/mapPin.svg"
 import EditorModal from "../modal/EditorModal"
+import { ReactMarkdown } from "react-markdown/lib/react-markdown"
 
 interface MainEditorProps {
     contentsEmpty: boolean;
@@ -40,11 +41,15 @@ export default function MainEditor({ contentsEmpty, onContentsEmptyError, conten
         });
     };
 
+    const [imagePreviews, setImagePreviews] = useState<string[]>([]);
     /** 이미지 URL을 textarea에 */
     const handleImageUpload = (images: File[]) => {
         let imgTags = images.map((image) => `![${image.name}](URL.createObjectURL(image))`).join('\n');
         setContents(contents + '\n' + imgTags);
         // contents에 img URL 추가
+        let newImagePreviews = images.map((image) => URL.createObjectURL(image));
+        setImagePreviews([...imagePreviews, ...newImagePreviews]);
+        setContents(contents + newImagePreviews)
     };
 
     /** 파일 URL을 textarea에 */
@@ -128,7 +133,7 @@ export default function MainEditor({ contentsEmpty, onContentsEmptyError, conten
                 <div className="p-5 flex h-[710px]">
                     <textarea 
                         spellCheck="false" 
-                        className="flex-grow outline-none" 
+                        className="flex-grow w-1/2 outline-none" 
                         placeholder="내용을 입력해주세요." 
                         value={contents}
                         onChange={(e) => handleContents(e)} 
