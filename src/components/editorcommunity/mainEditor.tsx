@@ -4,8 +4,10 @@ import imageAdd from "public/images/imageAdd.svg"
 import folderPlus from "public/images/folderPlus.svg"
 import calenderAdd from "public/images/calendar.svg"
 import mapPin from "public/images/mapPin.svg"
+import folder from "public/images/folder.svg"
 import EditorModal from "../modal/EditorModal"
 import { ReactMarkdown } from "react-markdown/lib/react-markdown"
+import { BiX } from "react-icons/bi"
 
 interface MainEditorProps {
     contentsEmpty: boolean;
@@ -41,22 +43,26 @@ export default function MainEditor({ contentsEmpty, onContentsEmptyError, conten
         });
     };
 
-    const [imagePreviews, setImagePreviews] = useState<string[]>([]);
     /** 이미지 URL을 textarea에 */
     const handleImageUpload = (images: File[]) => {
-        let imgTags = images.map((image) => `![${image.name}](URL.createObjectURL(image))`).join('\n');
+        let imgTags = images.map((image) => `![${image.name}](${URL.createObjectURL(image)})`).join('\n');
         setContents(contents + '\n' + imgTags);
         // contents에 img URL 추가
-        let newImagePreviews = images.map((image) => URL.createObjectURL(image));
-        setImagePreviews([...imagePreviews, ...newImagePreviews]);
-        setContents(contents + newImagePreviews)
+
     };
 
+    const [filePreviews, setFilePreviews] = useState<File[]>([]);
     /** 파일 URL을 textarea에 */
-    const handleFileUpload = (files: File[]) => {
-        let fileTags = files.map((file) => `[${file.name}](URL.createObjectURL(file))`).join('\n');
-        setContents(contents + '\n' + fileTags);
+    const handleFileUpload = (files: File[]) => { // uploadedFiles 배열을 받아온다?
+        // let fileTags = files.map((file) => `![${file.name}](${URL.createObjectURL(file)})`).join('\n');
+        // setContents(contents + '\n' + fileTags);
         // contents에 file URL 추가
+        setFilePreviews([...filePreviews, ...files]);
+        // filePreviews에 uploadedFiles 추가
+    };
+
+    const handleRemoveUploadedFile = (index: number) => {
+        setFilePreviews(filePreviews.filter((_, i) => i !== index));
     };
 
     /** 선택된 장소 id를 textarea에 */
@@ -68,6 +74,24 @@ export default function MainEditor({ contentsEmpty, onContentsEmptyError, conten
 
     return (
         <div className="mx-4">
+            {filePreviews && (
+                <>
+                {filePreviews.map((file, index) => (
+                    <div className="flex items-center mb-5" key={index}>
+                    <span>파일</span>
+                    <div className="flex items-center justify-between ml-5 px-4 py-3 h-12 flex-grow border border-lightgrey rounded-lg">
+                        <div className="flex">
+                        <Image src={folder} alt="파일 아이콘" sizes="24" className="mr-4" />
+                        <span>{file.name}</span>
+                        </div>
+                        <button onClick={() => handleRemoveUploadedFile(index)}>
+                            <BiX size={24} />
+                        </button>
+                    </div>
+                </div>
+                ))}
+                </>
+            )}
             <div className={`h-[800px] border ${!contents && contentsEmpty ? 'border-alertred' : 'border-lightgrey'} rounded-lg`}>
                 <div className="h-[90px] border-b border-lightgrey">
                     <div className="flex p-5">
@@ -138,6 +162,7 @@ export default function MainEditor({ contentsEmpty, onContentsEmptyError, conten
                         value={contents}
                         onChange={(e) => handleContents(e)} 
                     />
+                    <ReactMarkdown className="w-1/2 pl-5 border-l border-lightgrey">{contents}</ReactMarkdown>
                 </div>
             </div>
         </div>

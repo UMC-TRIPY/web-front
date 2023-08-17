@@ -17,9 +17,20 @@ interface EditorModalProps {
     onPlaceUpload: () => void,
     checkedItems?: Array<number>;
     setCheckedItems?: (items: Array<number>) => void;
+    uploadedFiles?: Array<File>;
+    setUploadedFiles?: (files: Array<File>) => void;
 }
 
-const EditorModal = ({ setIsModal, type, onImageUpload, onFileUpload, onPlaceUpload, checkedItems, setCheckedItems }: EditorModalProps) => {
+const EditorModal = ({ 
+    setIsModal, 
+    type, 
+    onImageUpload, 
+    onFileUpload, 
+    onPlaceUpload, 
+    checkedItems, 
+    setCheckedItems,
+
+}: EditorModalProps) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
@@ -47,8 +58,6 @@ const EditorModal = ({ setIsModal, type, onImageUpload, onFileUpload, onPlaceUpl
     const handleRemoveUploadedFile = (index: number) => {
         setUploadedFiles(uploadedFiles.filter((_, i) => i !== index));
     };
-
-    
 
     const renderContent = () => {
         switch (type) {
@@ -140,7 +149,14 @@ const EditorModal = ({ setIsModal, type, onImageUpload, onFileUpload, onPlaceUpl
                         </div>
                         <div className="flex justify-end">
                             <ConfirmBtn label="취소하기" color="bg-lightgrey" onClick={() => setIsModal(false)}/>
-                            <ConfirmBtn label="업로드" color="bg-primary" onClick={() => {onFileUpload(uploadedFiles), setIsModal(false)}}/>
+                            <ConfirmBtn 
+                                label="업로드" 
+                                color="bg-primary" 
+                                onClick={() => {
+                                    onFileUpload(uploadedFiles), 
+                                    setIsModal(false)
+                                }}
+                                />
                         </div>
                     </div>
                 );        
