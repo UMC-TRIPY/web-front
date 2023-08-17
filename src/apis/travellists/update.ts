@@ -7,12 +7,9 @@ interface Props {
 }
 
 export const updateLists = async (list: Props) => {
-    try {
-        const result = await Server.post<Props>(`/travel-plans/user/1`, {
-            list
-        });
-        console.log(result);
-    } catch (err: any) {
-        console.log(err);
-    }
+    await Server.post<Props>(`travel-plans/user/1`, {
+        list
+    })
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
 };

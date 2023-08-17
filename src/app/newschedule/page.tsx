@@ -12,7 +12,6 @@ const friends: string[] = [];
 
 export default function Page() {
     const [start, setStart] = useState<any>();
-    const [end, setEnd] = useState<any>();
     const [differ, setDiffer] = useState<any>();
     const week = ['일', '월', '화', '수', '목', '금', '토'];
     const days: null | string[] = [];
@@ -30,7 +29,6 @@ export default function Page() {
         const s = date[0];
         const e = date[1].split(' ')[0];
         setStart(new Date(s));
-        setEnd(new Date(e));
         setDiffer(differenceInDays(new Date(e), new Date(s)) + 1);
     }, []);
 
@@ -46,16 +44,16 @@ export default function Page() {
         //     // endTime: new Date('2023-07-25 12:00:00'),
         //     title: '자차로 이동'
         // },
-        // {
-        //     id: 2,
-        //     column: 0,
-        //     lineColor: '#78CAFA',
-        //     color: '#EEFAFF',
-        //     startTime: 10,
-        //     halfHour: 10,
-        //     // endTime: new Date('2023-07-25 19:00:00'),
-        //     title: '자고싶다'
-        // },
+        {
+            id: 2,
+            column: 0,
+            lineColor: '#78CAFA',
+            color: '#EEFAFF',
+            startTime: 10,
+            halfHour: 10,
+            // endTime: new Date('2023-07-25 19:00:00'),
+            title: '자고싶다'
+        }
         // {
         //     id: 3,
         //     column: 0,

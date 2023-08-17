@@ -1,11 +1,15 @@
 import { LiaExchangeAltSolid } from 'react-icons/lia';
 import { FiEdit } from 'react-icons/fi';
 import HelpBot from '../mybag/HelpBot';
+import { useRecoilState } from 'recoil';
+import { scheduleState } from '@/states/schedule';
 
 export default function FriendList({ friends }: { friends: string[] }) {
     const onClick = (friend: string) => {
         alert(`${friend} 삭제 완료!`);
     };
+
+    const [changeMode, setChangeMode] = useRecoilState(scheduleState);
 
     const SharingFriend = ({ friend }: { friend: string }) => {
         return (
@@ -51,6 +55,7 @@ export default function FriendList({ friends }: { friends: string[] }) {
                         <LiaExchangeAltSolid
                             className='hover:cursor-pointer mr-8 ml-7'
                             size={40}
+                            onClick={() => setChangeMode(!changeMode)}
                         />
                         <FiEdit className='hover:cursor-pointer' size={40} />
                     </div>
