@@ -113,7 +113,7 @@ export default function Header() {
             index === selectedIndex
         ]);
         if (selectedIndex === 0) router.push('/info');
-        if (selectedIndex === 1) router.push('/schedule');
+        if (selectedIndex === 1) router.push('/schedulemain');
         if (selectedIndex === 2) router.push('/mybag');
         if (selectedIndex === 3) router.push('/community');
         if (selectedIndex === 4) router.push('/summary');

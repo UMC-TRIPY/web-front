@@ -5,10 +5,15 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { useRecoilState } from 'recoil';
 
-export default function OtherSchedule({ href }: { href: string }) {
+export default function OtherSchedule({
+    href,
+    register
+}: {
+    href: string;
+    register: boolean;
+}) {
     const [date, setDates] = useState<string>('');
     const [place, setPlace] = useState<string>('');
-    const [readOnly, setReadOnly] = useState<boolean>(true);
     const [schedules, setSchedules] = useRecoilState(travleState);
     const [start, setStart] = useState<any>();
     const [end, setEnd] = useState<any>();
@@ -21,9 +26,8 @@ export default function OtherSchedule({ href }: { href: string }) {
         const e: any = d?.split('~')[1].split(' ')[0];
         setStart(new Date(s));
         setEnd(new Date(e));
-        setDates(d === null ? '' : d);
+        setDates(!d ? '' : d);
         setPlace(!p ? '' : p);
-        setReadOnly(p === '' ? false : true);
     }, []);
     const router = useRouter();
 
@@ -33,14 +37,14 @@ export default function OtherSchedule({ href }: { href: string }) {
             alert('여행 지역을 입력해주세요.');
             return;
         }
-        if (!readOnly) {
+        if (!register) {
             const old = [...schedules];
             const id = schedules.length + 1;
             old.push({ id: id, dates: date, places: place });
             const datas = {
-                arrivalDate: format(end, 'yyyy-MM-dd'),
+                cityId: 1,
                 departureDate: format(start, 'yyyy-MM-dd'),
-                cityId: 0
+                arrivalDate: format(end, 'yyyy-MM-dd')
             };
             updateLists(datas);
             setSchedules(old);
@@ -54,21 +58,14 @@ export default function OtherSchedule({ href }: { href: string }) {
                 <span>{date}</span>
             </div>
             <div className='border border-lightgrey w-[31%] py-5 px-5 rounded-lg text-xl flex'>
-                <div className='text-grey mr-7'>여행 지역</div>
-                <input
-                    value={place}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setPlace(e.target.value)
-                    }
-                    className='outline-none w-3/5'
-                    readOnly={readOnly}
-                />
+                <span className='text-grey mr-7'>여행 지역</span>
+                <span>{place}</span>
             </div>
             <button
                 className='w-[16%] rounded-lg text-xl bg-primary border-primary'
                 onClick={onClick}
             >
-                {!readOnly ? '변경사항 저장' : '다른 일정 선택'}
+                {!register ? '변경사항 저장' : '다른 일정 선택'}
             </button>
         </div>
     );

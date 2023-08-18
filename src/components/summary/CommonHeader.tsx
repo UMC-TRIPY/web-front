@@ -5,7 +5,7 @@ export default function CommonHeader({ path }: { path: string }) {
     return (
         <>
             <Menu path={path} />
-            <OtherSchedule href='schedulemain' />
+            <OtherSchedule href='schedulemain' register={false} />
         </>
     );
 }

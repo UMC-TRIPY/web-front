@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import format from 'date-fns/format';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -47,18 +47,11 @@ function RoundBtn(props: RoundBtnProps) {
 }
 
 interface DetailBoxProps {
-    selectedCities: string[];
-    setSelectedCities: React.Dispatch<React.SetStateAction<string[]>>;
-    scheduleCreated: boolean;
-    setScheduleCreated: React.Dispatch<React.SetStateAction<boolean>>;
+    selectedCities: string;
+    setSelectedCities: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function DetailBox({
-    selectedCities,
-    setSelectedCities,
-    scheduleCreated,
-    setScheduleCreated
-}: DetailBoxProps) {
+function DetailBox({ selectedCities, setSelectedCities }: DetailBoxProps) {
     const [menus, setMenus] = useState<[string, boolean][]>([
         ['해외', true],
         ['국내', false]
@@ -134,9 +127,7 @@ function DetailBox({
         const difference = differenceInDays(endDate, startDate) + 1;
         const dates = `${start}~${end} (${difference - 1}박 ${difference}일)`;
         sessionStorage.setItem('date', dates);
-        sessionStorage.setItem('place', '');
     };
-
     return (
         <div className='mt-12'>
             {/* 해외, 국내 탭바 */}
@@ -159,7 +150,7 @@ function DetailBox({
                 <RoundBtn color='lightgrey' label='검색' />
             </div>
             {/* 인기 검색어 */}
-            {scheduleCreated && selectedCities.length > 0 ? (
+            {!!selectedCities ? (
                 <SelectedPlaces
                     selectedCities={selectedCities}
                     setSelectedCities={setSelectedCities}
@@ -177,6 +168,10 @@ function DetailBox({
                     onClick={() => {
                         if (startDate === null || endDate === null) {
                             alert('날짜를 선택해주세요.');
+                            return;
+                        }
+                        if (!selectedCities) {
+                            alert('여행 지역을 선택해 주세요.');
                             return;
                         }
                         register();
