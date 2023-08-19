@@ -86,9 +86,9 @@ export const logout = async () => {
 
 export const deleteAccount = async () => {
     try {
-        localStorage.clear();
         const uid = localStorage.getItem('uid');
         await Server.delete(`/mypage/user/delete/${uid}`);
+        localStorage.clear();
     } catch (error) {
         console.log('회원탈퇴 에러:', error);
     }
@@ -99,13 +99,26 @@ export const editInformation = async (
     nationality: string
 ) => {
     try {
-        // const uid = localStorage.getItem('uid');
-        const uid = 1;
+        const uid = localStorage.getItem('uid');
+        // const uid = 1;
         await Server.put(`/user/info/${uid}`, {
             data: { profileImg, nationality }
         }).then(() => alert('수정이 완료되었습니다.'));
     } catch (error: any) {
         console.log('회원정보 수정 에러:', error);
         alert('네트연결에 실패하였습니다.');
+    }
+};
+
+export const completeSignup = async (nickname: string) => {
+    try {
+        const user_index = localStorage.getItem('uid');
+        const result = await Server.post('/auth/nickname', {
+            user_index,
+            nickname
+        });
+        return result.data;
+    } catch (error) {
+        console.log('회원가입 실패: ', error);
     }
 };

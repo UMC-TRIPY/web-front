@@ -17,7 +17,6 @@ const GoogleOAuth = () => {
         if (code)
             getGoogleAccessToken().then((res) => {
                 if (res !== undefined) {
-                    setEmail(res.email);
                     if (res.newUser) {
                         router.push('/signup');
                     } else {

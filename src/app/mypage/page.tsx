@@ -18,7 +18,8 @@ export default function Mypage() {
     const [friendList, setFriendList] = useState<Friend[]>([]);
     const [userData, setUserData] = useState<IUser>({
         email: '로딩중...',
-        nickname: '로딩중...'
+        nickname: '로딩중...',
+        nationality: '한국'
     } as IUser);
 
     const handleMenuClick = (menu: string) => {

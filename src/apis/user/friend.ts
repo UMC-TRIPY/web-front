@@ -2,8 +2,7 @@ import { Server } from '../setting';
 import { FriendReturnType, InformationReturnType } from './types';
 
 export const getMyInformation = async () => {
-    // const uid = localStorage.getItem('uid');
-    const uid = 1;
+    const uid = localStorage.getItem('uid');
     const result = await Server.get<InformationReturnType>(
         `mypage/user/${uid}`
     );
@@ -11,8 +10,7 @@ export const getMyInformation = async () => {
 };
 
 export const deleteFriend = async (friend_idx: number) => {
-    // const uid = localStorage.getItem('uid');
-    const uid = 1;
+    const uid = localStorage.getItem('uid');
     const result = await Server.delete<InformationReturnType>(
         `mypage/friends/${uid}`,
         { data: { friend_idx } }
@@ -22,8 +20,8 @@ export const deleteFriend = async (friend_idx: number) => {
 };
 
 export const blockFriend = async (friend_idx: number) => {
-    // const uid = localStorage.getItem('uid');
-    const uid = 1;
+    const uid = localStorage.getItem('uid');
+    // const uid = 1;
     const result = await Server.post<InformationReturnType>(
         `mypage/friends/${uid}/break`,
         { friend_idx }
@@ -35,8 +33,8 @@ export const blockFriend = async (friend_idx: number) => {
 
 export const sendFriendRequest = async (friend_idx: number | null) => {
     // TODO: 로그인 성공 시 uid 발급
-    // const uid = localStorage.getItem('uid');
-    const uid = 1;
+    const uid = localStorage.getItem('uid');
+    // const uid = 1;
     try {
         const result = await Server.post(`mypage/friends/${uid}/request`, {
             friend_idx
@@ -49,8 +47,8 @@ export const sendFriendRequest = async (friend_idx: number | null) => {
 
 export const cancelFriendRequest = async (friend_idx: number) => {
     // TODO: 로그인 성공 시 uid 발급
-    // const uid = localStorage.getItem('uid');
-    const uid = 1;
+    const uid = localStorage.getItem('uid');
+    // const uid = 1;
     const result = await Server.post(`mypage/friends/${uid}/cancel`, {
         friend_idx
     });
@@ -59,8 +57,8 @@ export const cancelFriendRequest = async (friend_idx: number) => {
 
 export const getSendFriendRequestList = async () => {
     // TODO: 로그인 성공 시 uid 발급
-    // const uid = localStorage.getItem('uid');
-    const uid = 1;
+    const uid = localStorage.getItem('uid');
+    // const uid = 1;
     const result = await Server.get<FriendReturnType>(
         `mypage/friends/${uid}/request`
     );
@@ -69,8 +67,8 @@ export const getSendFriendRequestList = async () => {
 
 export const getRecieveFriendRequestList = async () => {
     // TODO: 로그인 성공 시 uid 발급
-    // const uid = localStorage.getItem('uid');
-    const uid = 1;
+    const uid = localStorage.getItem('uid');
+    // const uid = 1;
     const result = await Server.get<FriendReturnType>(
         `mypage/friends/${uid}/receive`
     );
@@ -79,8 +77,8 @@ export const getRecieveFriendRequestList = async () => {
 
 export const acceptFriendRequest = async (friend_idx: number) => {
     // TODO: 로그인 성공 시 uid 발급
-    // const uid = localStorage.getItem('uid');
-    const uid = 1;
+    const uid = localStorage.getItem('uid');
+    // const uid = 1;
     const result = await Server.post(`mypage/friends/${uid}/accept`, {
         friend_idx
     });
@@ -89,8 +87,8 @@ export const acceptFriendRequest = async (friend_idx: number) => {
 
 export const rejectFriendRequest = async (friend_idx: number) => {
     // TODO: 로그인 성공 시 uid 발급
-    // const uid = localStorage.getItem('uid');
-    const uid = 1;
+    const uid = localStorage.getItem('uid');
+    // const uid = 1;
     const result = await Server.post(`mypage/friends/${uid}/reject`, {
         friend_idx
     });
@@ -98,8 +96,8 @@ export const rejectFriendRequest = async (friend_idx: number) => {
 };
 
 export const getFriendList = async () => {
-    // const uid = localStorage.getItem('uid');
-    const uid = 1;
+    const uid = localStorage.getItem('uid');
+    // const uid = 1;
     const result = await Server.get<FriendReturnType>(`mypage/${uid}/friends`);
     return result.data.data;
 };

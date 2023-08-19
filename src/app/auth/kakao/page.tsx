@@ -12,13 +12,11 @@ const KakaoOAuth = () => {
     const params = useSearchParams();
     const code = params.get('code');
     const setIsLoggedIn = useSetRecoilState(isLoggedInState);
-    const setEmail = useSetRecoilState(emailState);
 
     useEffect(() => {
         if (code)
             getKakaoAccessToken().then((res) => {
                 if (res !== undefined) {
-                    setEmail(res.email);
                     if (res.newUser) {
                         router.push('/signup');
                     } else {
