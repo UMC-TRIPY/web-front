@@ -9,6 +9,9 @@ import FriendReq from '@/components/mypagefriend/friendReq';
 import MyFriends from '@/components/mypagefriend/myFriends';
 import { getMyInformation } from '@/apis/user/friend';
 import { Friend, IUser } from '@/types/user';
+import MyTravelList from '@/components/mypage/MyTravelList';
+import MakeSchedule from '@/components/mypage/MakeSchedule';
+import MyBagList from '@/components/mypage/MyBagList';
 
 export default function Mypage() {
     const [activeMenu, setActiveMenu] = useState<string>('정보');
@@ -53,9 +56,18 @@ export default function Mypage() {
             </>
         );
     } else if (activeMenu === '여행일정') {
-        content = <div>여행일정 페이지</div>;
+        content = (
+            <div className='pt-4'>
+                <MyTravelList option='수정하기' />
+                <MakeSchedule />
+            </div>
+        );
     } else if (activeMenu === '내가방') {
-        content = <div>내가방 페이지</div>;
+        content = (
+            <div className='pt-4'>
+                <MyBagList />
+            </div>
+        );
     } else if (activeMenu === '친구관리') {
         content = (
             <>

@@ -58,6 +58,30 @@ body {
     }
 }
 
+.react-datepicker__aria-live,
+.react-datepicker__time-list-item--disabled,
+.react-datepicker-time__header {
+    display: none;
+}
+
+.react-datepicker__time-container {
+    overflow-y: scroll;
+    height: 100px;
+    cursor: pointer;
+}
+.react-datepicker__input-container > input,
+.react-datepicker__time-container {
+    width: 80px;
+    background-color: #f9f9f9;
+    outline: none;
+    text-align: center;
+    overflow-x: hidden;
+}
+.react-datepicker__time-list-item--selected {
+    background-color: #fff2b4 !important;
+    color: black !important;
+}
+
 /* 해당 스타일은 Chrome, Safari, Opera 등에서 작동 */
 /* 스크롤바 전체 스타일 */
 ::-webkit-scrollbar {

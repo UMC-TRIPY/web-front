@@ -6,7 +6,7 @@ export default function Page() {
     return (
         <div>
             <MyTravel />
-            <HelpBot width='w-[1380px]' />
+            {/* <HelpBot width='w-[1380px]' /> */}
         </div>
     );
 }

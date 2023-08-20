@@ -34,13 +34,13 @@ export default function Page() {
     };
     return (
         <div className='pt-28'>
-            <OtherSchedule />
+            <OtherSchedule href='summary' register={false} />
             <div className='flex'>
                 {lists.map((list, idx) => (
                     <List key={`lists${idx}`} link={list[0]} name={list[1]} />
                 ))}
             </div>
-            <HelpBot width='w-[1380px]' />
+            {/* <HelpBot width='w-[1380px]' /> */}
         </div>
     );
 }
