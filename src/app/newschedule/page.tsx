@@ -7,10 +7,12 @@ import CommonHeader from '@/components/detailschedule/CommonHeader';
 import FriendList from '@/components/detailschedule/FriendList';
 import OtherSchedule from '@/components/detailschedule/OtherSchedule';
 import { add, differenceInDays } from 'date-fns';
+import ScheduleAddInnerModal from '@/components/modal/ScheduleAddInnerModal';
 
 const friends: string[] = [];
 
 export default function Page() {
+    const [modal, setModal] = useState<boolean>(false);
     const [start, setStart] = useState<any>();
     const [differ, setDiffer] = useState<any>();
     const week = ['일', '월', '화', '수', '목', '금', '토'];
@@ -44,37 +46,6 @@ export default function Page() {
         //     // endTime: new Date('2023-07-25 12:00:00'),
         //     title: '자차로 이동'
         // },
-        {
-            id: 2,
-            column: 0,
-            lineColor: '#78CAFA',
-            color: '#EEFAFF',
-            startTime: 10,
-            halfHour: 10,
-            // endTime: new Date('2023-07-25 19:00:00'),
-            title: '자고싶다'
-        }
-        // {
-        //     id: 3,
-        //     column: 0,
-        //     lineColor: '#FFE457',
-        //     color: '#FFFBE7',
-        //     startTime: dateTotable(new Date('2023-07-25 20:00:00')),
-        //     halfHour: 5,
-        //     // endTime: new Date('2023-07-25 21:00:00'),
-        //     title: '변경사항 왜 적용안돼'
-        // },
-        // {
-        //     id: 4,
-        //     column: 1,
-        //     lineColor: '#FF7F57',
-        //     color: '#FFF3EF',
-        //     startTime: dateTotable(new Date('2023-07-25 10:00:00')),
-        //     halfHour: 10,
-        //     // endTime: new Date('2023-07-25 21:00:00'),
-        //     title: '변경사항 왜 적용안돼',
-        //     location: '서울시 강남구'
-        // }
     ]);
     const [currentDraggingBlockId, setCurrentDraggingBlockId] = useState<
         number | null
@@ -215,7 +186,10 @@ export default function Page() {
             {/* 친구 목록 */}
             <FriendList friends={friends} />
             {/* 여행 일정 */}
-            <div className='relative flex'>
+            <div
+                className='relative flex overflow-x-scroll'
+                onClick={() => setModal(true)}
+            >
                 <div>
                     {/* Default */}
                     {renderTimeTable()}
@@ -242,6 +216,13 @@ export default function Page() {
                     )}
                 </div>
             </div>
+            {modal && (
+                <ScheduleAddInnerModal
+                    setIsModal={setModal}
+                    departureDate={start}
+                    difference={differ}
+                />
+            )}
         </div>
     );
 }

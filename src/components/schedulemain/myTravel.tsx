@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import RoundBtn from '../layout/roundBtn';
 import Pagination from '../maincommunity/Pagination';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useRecoilValue } from 'recoil';
 import { travleState } from '@/states/travleLists';
+import { checkLists } from '@/apis/travellists/check';
+import { differenceInDays, format } from 'date-fns';
 
 interface Props {
     id: number;
@@ -17,7 +19,34 @@ interface MyTravelProps {
 }
 
 function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
-    const contents = useRecoilState(travleState)[0];
+    const [contents, setContents] = useState<any>([]);
+    useEffect(() => {
+        checkLists().then((res) => {
+            let tmp: any[] = [];
+            res.slice(0, 18).map((d: any, idx: number) => {
+                const departureDate =
+                    d.departureDate === '0000-00-00'
+                        ? new Date()
+                        : new Date(d.departureDate.slice(0, 10));
+                const arrivalDate = new Date(d.arrivalDate.slice(0, 10));
+                const difference = differenceInDays(arrivalDate, departureDate);
+                tmp.push({
+                    id: idx + 1,
+                    dates: `${format(departureDate, 'yyyy.MM.dd')} ~ ${format(
+                        arrivalDate,
+                        'yyyy.MM.dd'
+                    )} (${
+                        difference === 0
+                            ? '당일치기'
+                            : `${difference}박 ${difference + 1}일`
+                    })`,
+                    places: d.city_name === null ? '미정' : d.city_name
+                });
+            });
+            setContents(tmp);
+            setDatas(tmp.slice(0, 8));
+        });
+    }, []);
     /** 모달창에서 체크된 일정들을 checkedItems에 담음 */
     const handleCheckChange = (id: number) => {
         if (status === 'modal' && checkedItems && setCheckedItems) {
@@ -35,6 +64,7 @@ function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
     useEffect(() => {
         setDatas(contents.slice((current - 1) * 8, current * 8));
     }, [current]);
+
     return (
         <>
             {status === 'modal' ? (
@@ -55,7 +85,7 @@ function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
                             </div>
                         </div>
                         <div className='py-5'>
-                            {contents.map((travel) => (
+                            {contents.map((travel: any) => (
                                 <div
                                     key={travel.id}
                                     className='flex items-center justify-between py-[16.5px]'
@@ -105,29 +135,35 @@ function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
                                 </div>
                             </div>
                             <div className='py-5'>
-                                {datas.map((data: Props) => (
-                                    <div
-                                        key={data.id}
-                                        className='flex items-center justify-between py-[16.5px]'
-                                    >
-                                        <div className='w-1/3 text-center'>
-                                            {data.dates}
+                                {datas.length === 0 ? (
+                                    <span className='flex justify-center'>
+                                        Loading...
+                                    </span>
+                                ) : (
+                                    datas.map((data: Props) => (
+                                        <div
+                                            key={data.id}
+                                            className='flex items-center justify-between py-[16.5px]'
+                                        >
+                                            <div className='w-1/3 text-center'>
+                                                {data.dates}
+                                            </div>
+                                            <div className='w-1/3 text-center'>
+                                                {data.places}
+                                            </div>
+                                            <div className='flex w-1/3 justify-center'>
+                                                <RoundBtn
+                                                    label='상세보기'
+                                                    color='bg-lightgrey'
+                                                />
+                                                <RoundBtn
+                                                    label='수정하기'
+                                                    color='bg-lightgrey'
+                                                />
+                                            </div>
                                         </div>
-                                        <div className='w-1/3 text-center'>
-                                            {data.places}
-                                        </div>
-                                        <div className='flex w-1/3 justify-center'>
-                                            <RoundBtn
-                                                label='상세보기'
-                                                color='bg-lightgrey'
-                                            />
-                                            <RoundBtn
-                                                label='수정하기'
-                                                color='bg-lightgrey'
-                                            />
-                                        </div>
-                                    </div>
-                                ))}
+                                    ))
+                                )}
                             </div>
                         </div>
                         <Pagination

@@ -8,7 +8,7 @@ import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import LoginModal from '../modal/LoginModal';
-import ScheduleAddModal from '../modal/ScheduleAddModal';
+import ScheduleAddModal from '../modal/ScheduleAddInnerModal';
 import ScheduleDeleteModal from '../modal/ScheduleDeleteModal';
 import ScheduleDetailModal from '../modal/ScheduleDetailModal';
 
