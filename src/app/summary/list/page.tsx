@@ -40,7 +40,7 @@ export default function Page() {
                     <List key={`lists${idx}`} link={list[0]} name={list[1]} />
                 ))}
             </div>
-            <HelpBot width='w-[1380px]' />
+            {/* <HelpBot width='w-[1380px]' /> */}
         </div>
     );
 }

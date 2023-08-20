@@ -4,6 +4,7 @@ import Pagination from '../maincommunity/Pagination';
 import { checkLists } from '@/apis/travellists/check';
 import { differenceInDays, format } from 'date-fns';
 import { useRouter } from 'next/navigation';
+import MyTravelList from '../mypage/MyTravelList';
 
 interface Props {
     id: number;
@@ -115,77 +116,7 @@ function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
                     </div>
                 </div>
             ) : (
-                <div>
-                    <div className='mx-4 mt-16'>
-                        <div className='text-3xl font-bold mb-5'>
-                            내 여행 목록
-                        </div>
-                        <div className='rounded-md bg-brightgrey'>
-                            <div className='border-b border-b-lightgrey py-5'>
-                                <div className='flex justify-between'>
-                                    <div className='w-1/3 text-center'>
-                                        <p>일정</p>
-                                    </div>
-                                    <div className='w-1/3 text-center'>
-                                        <p>장소</p>
-                                    </div>
-                                    <div className='w-1/3 text-center'>
-                                        <p>관리하기</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className='py-5'>
-                                {datas.length === 0 ? (
-                                    <span className='flex justify-center'>
-                                        Loading...
-                                    </span>
-                                ) : (
-                                    datas.map((data: Props) => (
-                                        <div
-                                            key={data.id}
-                                            className='flex items-center justify-between py-[16.5px]'
-                                        >
-                                            <div className='w-1/3 text-center'>
-                                                {data.dates}
-                                            </div>
-                                            <div className='w-1/3 text-center'>
-                                                {data.places}
-                                            </div>
-                                            <div className='flex w-1/3 justify-center'>
-                                                <RoundBtn
-                                                    label='상세보기'
-                                                    color='bg-lightgrey'
-                                                />
-                                                <RoundBtn
-                                                    label='수정하기'
-                                                    color='bg-lightgrey'
-                                                    onClick={() => {
-                                                        sessionStorage.setItem(
-                                                            'place',
-                                                            data.places
-                                                        );
-                                                        sessionStorage.setItem(
-                                                            'date',
-                                                            data.dates
-                                                        );
-                                                        router.push(
-                                                            '/updateschedule'
-                                                        );
-                                                    }}
-                                                />
-                                            </div>
-                                        </div>
-                                    ))
-                                )}
-                            </div>
-                        </div>
-                        <Pagination
-                            totalPages={totalPages}
-                            current={current}
-                            setCurrent={setCurrent}
-                        />
-                    </div>
-                </div>
+                <MyTravelList option='수정하기' />
             )}
         </>
     );

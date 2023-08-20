@@ -78,7 +78,7 @@ export default function FriendList({
                     </div>
                 </div>
             </div>
-            <HelpBot width='w-[1380px]' />
+            {/* <HelpBot width='w-[1380px]' /> */}
         </div>
     );
 }

@@ -17,6 +17,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { getKakaoAccessToken } from '@/apis/user/login';
 import { useSetRecoilState } from 'recoil';
 import { isLoggedInState } from '@/states/user';
+import MakeSchedule from '@/components/mypage/MakeSchedule';
 
 const dummyItem = <div>abc</div>;
 
@@ -238,20 +239,7 @@ export default function Home() {
                         검색
                     </button>
                 </div>
-                <div className='flex flex-col my-20 p-12 bg-gray-50'>
-                    <span className='text-xl'>트리피와 함께</span>
-                    <span className='text-2xl font-bold'>여행일정 만들기</span>
-                    <button className='w-20 my-3 border border-gray-500 rounded-lg'>
-                        <span className='text-xs'>바로가기</span>
-                    </button>
-                    <Image
-                        src='/images/carrier.svg'
-                        className='absolute left-3/4'
-                        alt=''
-                        width={300}
-                        height={300}
-                    />
-                </div>
+                <MakeSchedule />
                 <div className='w-full my-44'>
                     <CardCarousel
                         mode={0}
