@@ -23,7 +23,7 @@ function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
     useEffect(() => {
         checkLists().then((res) => {
             let tmp: any[] = [];
-            res.slice(0, 18).map((d: any, idx: number) => {
+            res.map((d: any, idx: number) => {
                 const departureDate =
                     d.departureDate === '0000-00-00'
                         ? new Date()

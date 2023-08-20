@@ -3,7 +3,7 @@ import { Server } from '../setting';
 interface Props {
     arrivalDate: string;
     departureDate: string;
-    cityId: number;
+    cityname: string;
 }
 
 export const updateLists = async (list: Props) => {

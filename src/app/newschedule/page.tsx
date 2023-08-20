@@ -15,6 +15,7 @@ export default function Page() {
     const [modal, setModal] = useState<boolean>(false);
     const [start, setStart] = useState<any>();
     const [differ, setDiffer] = useState<any>();
+    const [scheduleId, setScheduleId] = useState<number>(1);
     const week = ['일', '월', '화', '수', '목', '금', '토'];
     const days: null | string[] = [];
     if (differ !== null) {
@@ -160,6 +161,7 @@ export default function Page() {
         },
         []
     );
+    console.log(schedule);
 
     // drag
     const handleDragBlock = (id: number) => {
@@ -187,7 +189,7 @@ export default function Page() {
             <FriendList friends={friends} />
             {/* 여행 일정 */}
             <div
-                className='relative flex overflow-x-scroll'
+                className='relative flex overflow-x-scroll cursor-pointer'
                 onClick={() => setModal(true)}
             >
                 <div>
@@ -221,6 +223,10 @@ export default function Page() {
                     setIsModal={setModal}
                     departureDate={start}
                     difference={differ}
+                    schedule={schedule}
+                    setSchedule={setSchedule}
+                    scheduleId={scheduleId}
+                    setScheduleId={setScheduleId}
                 />
             )}
         </div>

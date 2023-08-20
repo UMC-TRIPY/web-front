@@ -7,15 +7,23 @@ import {
     AiOutlineFolderAdd
 } from 'react-icons/ai';
 import DatePicker from 'react-datepicker';
-import { setHours, setMinutes, addDays } from 'date-fns';
+import { setHours, setMinutes, addDays, differenceInDays } from 'date-fns';
 import ScheduleAddModal from './ScheduleAddModal';
 import ko from 'date-fns/locale/ko';
+import { dateTotable } from '@/utils/dateUtil';
 
 const ScheduleAddInnerModal = ({
     setIsModal,
     departureDate,
-    difference
+    difference,
+    schedule,
+    setSchedule,
+    scheduleId,
+    setScheduleId
 }: any) => {
+    const color = ['#FFE457', '#57CDFF', '#FF7F57'];
+    const lightColor = ['#FFFBE7', '#EEFAFF', '#FFF3EF'];
+    const [colorNum, setCNum] = useState<number>(0);
     const [openList, setOpenList] = useState<boolean>(false);
     const [startHour, setStartHour] = useState<any>(
         new Date(setHours(setMinutes(new Date(), 0), 6))
@@ -23,24 +31,39 @@ const ScheduleAddInnerModal = ({
     const [endHour, setEndHour] = useState<any>(
         new Date(setHours(setMinutes(new Date(), 0), 6))
     );
-    const [depart, setDepart] = useState<any>(departureDate);
-    const [color, setColor] = useState<string>('#FFE457');
+    const [date, setDate] = useState<any>(departureDate);
     const [title, setTitle] = useState<string>('');
     const [place, setPlace] = useState<string>('');
     const [budget, setBudget] = useState<string>('');
     const [memo, setMemo] = useState<string>('');
-
+    const startToMinute = startHour.getHours() * 60 + startHour.getMinutes();
+    const endToMinute = endHour.getHours() * 60 + endHour.getMinutes();
+    const datas = {
+        id: scheduleId,
+        column: differenceInDays(date, departureDate),
+        lineColor: color[colorNum],
+        color: lightColor[colorNum],
+        startTime: dateTotable(startHour),
+        halfHour: (endToMinute - startToMinute) / 30,
+        endTime: endHour,
+        title: title,
+        location: place
+    };
     return (
         <ScheduleAddModal
             setModalState={setIsModal}
-            onClickCompleteButton={() => setIsModal(false)}
+            onClickCompleteButton={() => {
+                setSchedule([...schedule, datas]);
+                setScheduleId((n: number) => n + 1);
+                setIsModal(false);
+            }}
         >
             <div className='flex flex-col gap-2 h-full p-4 bg-white'>
                 <div className='flex basis-[10%] justify-between items-center'>
                     <div className='flex items-center'>
                         <div
                             className='w-8 h-8 cursor-pointer rounded-lg mr-2'
-                            style={{ backgroundColor: color }}
+                            style={{ backgroundColor: color[colorNum] }}
                             onClick={() => setOpenList(true)}
                         />
                         <MdOutlineKeyboardArrowDown />
@@ -50,21 +73,21 @@ const ScheduleAddInnerModal = ({
                                     className='w-8 h-8 cursor-pointer rounded-lg mb-2 bg-[#FFE457] z-10'
                                     onClick={() => {
                                         setOpenList(false);
-                                        setColor('#FFE457');
+                                        setCNum(0);
                                     }}
                                 />
                                 <div
                                     className='w-8 h-8 cursor-pointer rounded-lg mb-2 bg-[#57CDFF] z-10'
                                     onClick={() => {
                                         setOpenList(false);
-                                        setColor('#57CDFF');
+                                        setCNum(1);
                                     }}
                                 />
                                 <div
                                     className='w-8 h-8 cursor-pointer rounded-lg mb-2 bg-[#FF7F57] z-10'
                                     onClick={() => {
                                         setOpenList(false);
-                                        setColor('#FF7F57');
+                                        setCNum(2);
                                     }}
                                 />
                             </div>
@@ -87,11 +110,11 @@ const ScheduleAddInnerModal = ({
                             className='cursor-pointer'
                             dateFormatCalendar='yyyy년 MM월'
                             dateFormat='MM월 dd일'
-                            selected={depart}
+                            selected={date}
                             minDate={departureDate}
-                            maxDate={addDays(departureDate, difference)}
+                            maxDate={addDays(departureDate, difference - 1)}
                             onChange={(date) => {
-                                setDepart(date);
+                                setDate(date);
                             }}
                             locale={ko}
                         />
@@ -118,7 +141,7 @@ const ScheduleAddInnerModal = ({
                             timeIntervals={30}
                             dateFormat='h:mm aa'
                             minTime={setHours(setMinutes(new Date(), 0), 6)}
-                            maxTime={setHours(setMinutes(new Date(), 0), 23)}
+                            maxTime={setHours(setMinutes(new Date(), 30), 22)}
                         />
                     </div>
                     <div className='flex justify-center items-center w-[5%] h-10'>

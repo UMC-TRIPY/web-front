@@ -42,7 +42,7 @@ export default function OtherSchedule({
             const id = schedules.length + 1;
             old.push({ id: id, dates: date, places: place });
             const datas = {
-                cityId: 1,
+                cityname: place,
                 departureDate: format(start, 'yyyy-MM-dd'),
                 arrivalDate: format(end, 'yyyy-MM-dd')
             };
