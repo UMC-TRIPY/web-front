@@ -1,9 +1,7 @@
 import { updateLists } from '@/apis/travellists/update';
-import { travleState } from '@/states/travleLists';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
-import { useRecoilState } from 'recoil';
 
 export default function OtherSchedule({
     href,
@@ -14,14 +12,12 @@ export default function OtherSchedule({
 }) {
     const [date, setDates] = useState<string>('');
     const [place, setPlace] = useState<string>('');
-    const [schedules, setSchedules] = useRecoilState(travleState);
     const [start, setStart] = useState<any>();
     const [end, setEnd] = useState<any>();
     useEffect(() => {
         const d = sessionStorage.getItem('date');
         const p = sessionStorage.getItem('place');
 
-        // const date: any = sessionStorage.getItem('date')?.split('~');
         const s: any = d?.split('~')[0];
         const e: any = d?.split('~')[1].split(' ')[0];
         setStart(new Date(s));
@@ -38,16 +34,12 @@ export default function OtherSchedule({
             return;
         }
         if (!register) {
-            const old = [...schedules];
-            const id = schedules.length + 1;
-            old.push({ id: id, dates: date, places: place });
             const datas = {
                 cityname: place,
                 departureDate: format(start, 'yyyy-MM-dd'),
                 arrivalDate: format(end, 'yyyy-MM-dd')
             };
             updateLists(datas);
-            setSchedules(old);
         }
         router.push(`/${href}`);
     };
