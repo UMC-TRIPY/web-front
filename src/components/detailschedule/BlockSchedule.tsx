@@ -22,13 +22,12 @@ export default function BlockSchedule() {
     useEffect(() => {
         const date: any = sessionStorage.getItem('date')?.split('~');
         const s = date[0];
-        const e = date[1].split(' ')[0];
+        const e = date[1].split(' ')[1];
         setStart(new Date(s));
         setDiffer(differenceInDays(new Date(e), new Date(s)) + 1);
     }, []);
 
     const schedule = useRecoilState(BlockScheduleListState)[0];
-    console.log(schedule);
 
     const renderTimeTable = () => {
         const times: React.ReactNode[] = [
@@ -101,7 +100,7 @@ export default function BlockSchedule() {
 
     // drag
     return (
-        <div className='relative flex'>
+        <div className='relative flex overflow-x-scroll'>
             <div>
                 {/* Default */}
                 {renderTimeTable()}

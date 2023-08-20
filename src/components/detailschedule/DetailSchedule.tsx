@@ -3,7 +3,7 @@ import FriendList from './FriendList';
 import OtherSchedule from './OtherSchedule';
 import CommonHeader from './CommonHeader';
 import { scheduleState } from '@/states/schedule';
-import { useRecoilState } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import BlockSchedule from './BlockSchedule';
 
 const friends: string[] = [
@@ -19,7 +19,7 @@ const friends: string[] = [
 ];
 
 export default function DetailSchedule() {
-    const mode = useRecoilState(scheduleState);
+    const mode = useRecoilValue(scheduleState);
     return (
         <div className='mt-20'>
             {/* 공통 머리글 */}
@@ -27,9 +27,9 @@ export default function DetailSchedule() {
             {/* 다른 일정 선택 */}
             <OtherSchedule href='schedulemain' register={true} />
             {/* 친구 목록 */}
-            <FriendList friends={friends} />
+            <FriendList friends={friends} edit={false} />
             {/* 여행 일정 */}
-            {mode[0] ? <BlockSchedule /> : <LabelSchedules status='page' />}
+            {mode ? <BlockSchedule /> : <LabelSchedules status='page' />}
         </div>
     );
 }

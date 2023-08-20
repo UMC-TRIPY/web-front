@@ -35,19 +35,7 @@ export default function Page() {
         setDiffer(differenceInDays(new Date(e), new Date(s)) + 1);
     }, []);
 
-    const [schedule, setSchedule] = useState<IScheduleItem[]>([
-        // 몇번째 칸인지도 넣기?
-        // {
-        //     id: 1,
-        //     column: 0,
-        //     lineColor: '#57CDFF',
-        //     color: '#EEFAFF',
-        //     startTime: dateTotable(new Date('2023-07-25 10:00:00')),
-        //     halfHour: 4,
-        //     // endTime: new Date('2023-07-25 12:00:00'),
-        //     title: '자차로 이동'
-        // },
-    ]);
+    const [schedule, setSchedule] = useState<IScheduleItem[]>([]);
     const [currentDraggingBlockId, setCurrentDraggingBlockId] = useState<
         number | null
     >(null);
@@ -186,7 +174,7 @@ export default function Page() {
             {/* 다른 일정 선택 */}
             <OtherSchedule href='schedulemain' register={false} />
             {/* 친구 목록 */}
-            <FriendList friends={friends} />
+            <FriendList friends={friends} edit={true} />
             {/* 여행 일정 */}
             <div
                 className='relative flex overflow-x-scroll cursor-pointer'

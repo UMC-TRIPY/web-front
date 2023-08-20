@@ -3,14 +3,21 @@ import { FiEdit } from 'react-icons/fi';
 import HelpBot from '../mybag/HelpBot';
 import { useRecoilState } from 'recoil';
 import { scheduleState } from '@/states/schedule';
+import { useRouter } from 'next/navigation';
 
-export default function FriendList({ friends }: { friends: string[] }) {
+export default function FriendList({
+    friends,
+    edit
+}: {
+    friends: string[];
+    edit: boolean;
+}) {
     const onClick = (friend: string) => {
         alert(`${friend} 삭제 완료!`);
     };
 
     const [changeMode, setChangeMode] = useRecoilState(scheduleState);
-
+    const router = useRouter();
     const SharingFriend = ({ friend }: { friend: string }) => {
         return (
             <div className='text-xs h-8 rounded-xl bg-brightgrey py-1.5 px-2.5  mr-3 flex items-center'>
@@ -52,12 +59,22 @@ export default function FriendList({ friends }: { friends: string[] }) {
                         </div>
                     </div>
                     <div className='flex items-center'>
-                        <LiaExchangeAltSolid
-                            className='hover:cursor-pointer mr-8 ml-7'
-                            size={40}
-                            onClick={() => setChangeMode(!changeMode)}
-                        />
-                        <FiEdit className='hover:cursor-pointer' size={40} />
+                        {!edit && (
+                            <>
+                                <LiaExchangeAltSolid
+                                    className='cursor-pointer mr-8 ml-7'
+                                    size={40}
+                                    onClick={() => setChangeMode(!changeMode)}
+                                />
+                                <FiEdit
+                                    className='cursor-pointer'
+                                    size={40}
+                                    onClick={() =>
+                                        router.push('/updateschedule')
+                                    }
+                                />
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

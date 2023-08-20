@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import RoundBtn from '../layout/roundBtn';
 import Pagination from '../maincommunity/Pagination';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { travleState } from '@/states/travleLists';
 import { checkLists } from '@/apis/travellists/check';
 import { differenceInDays, format } from 'date-fns';
+import { useRouter } from 'next/navigation';
 
 interface Props {
     id: number;
@@ -20,6 +19,7 @@ interface MyTravelProps {
 
 function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
     const [contents, setContents] = useState<any>([]);
+    const router = useRouter();
     useEffect(() => {
         checkLists().then((res) => {
             let tmp: any[] = [];
@@ -159,6 +159,19 @@ function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
                                                 <RoundBtn
                                                     label='수정하기'
                                                     color='bg-lightgrey'
+                                                    onClick={() => {
+                                                        sessionStorage.setItem(
+                                                            'place',
+                                                            data.places
+                                                        );
+                                                        sessionStorage.setItem(
+                                                            'date',
+                                                            data.dates
+                                                        );
+                                                        router.push(
+                                                            '/updateschedule'
+                                                        );
+                                                    }}
                                                 />
                                             </div>
                                         </div>
