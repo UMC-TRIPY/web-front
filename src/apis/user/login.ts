@@ -9,10 +9,14 @@ export const getKakaoAccessToken = async () => {
         const result = await Server.post<TokenReturnType>('/auth/kakao', {
             code
         });
+
+        console.log('kakao', result.data.user);
+
         console.log('kakao accessToken 발급 성공: ', result.data.access_token);
-        localStorage.setItem('uid', String(result.data.uid));
+        localStorage.setItem('uid', String(result.data.user.user_index));
         localStorage.setItem('access', result.data.access_token);
         localStorage.setItem('refresh', result.data.refresh_token);
+        return result.data.user;
     } catch (error: any) {
         console.log('getKakaoAccessToken 에러: ', error);
         if (error.response.status === 401) {
@@ -20,21 +24,35 @@ export const getKakaoAccessToken = async () => {
             console.log('에러시 재발급: ', result);
             if (result) {
                 error.config.headers.Authorization = result.data.access_token;
-                return await Server.post(error.config.url, error.config);
+                await Server.post(error.config.url, error.config);
             }
         }
     }
 };
 
 export const getGoogleAccessToken = async () => {
-    const authCode: string = splitAuthCode();
-    console.log('google authCode: ', authCode);
-    const result = await Server.post<TokenReturnType>('/auth/google', {
-        code: authCode
-    });
-    console.log('google API: ', result);
-    // localStorage.set('access', result.data.access_token);
-    // localStorage.set('refresh', result.data.refresh_token);
+    const code = splitAuthCode();
+    console.log('google authCode: ', code);
+    try {
+        const result = await Server.post<TokenReturnType>('/auth/google', {
+            code
+        });
+        console.log('google accessToken 발급 성공: ', result.data);
+        localStorage.setItem('uid', String(result.data.user.user_index));
+        localStorage.setItem('access', result.data.access_token);
+        localStorage.setItem('refresh', result.data.refresh_token);
+        return result.data.user;
+    } catch (error: any) {
+        console.log('getGoogleAccessToken 에러: ', error);
+        if (error.response.status === 401) {
+            const result = await getRefresh();
+            console.log('에러시 재발급: ', result);
+            if (result) {
+                error.config.headers.Authorization = result.data.access_token;
+                await Server.post(error.config.url, error.config);
+            }
+        }
+    }
 };
 
 // 만료된 액세스 토큰 갱신
@@ -68,10 +86,9 @@ export const logout = async () => {
 
 export const deleteAccount = async () => {
     try {
-        localStorage.clear();
-        // const uid = localStorage.getItem('uid');
-        const uid = 1;
+        const uid = localStorage.getItem('uid');
         await Server.delete(`/mypage/user/delete/${uid}`);
+        localStorage.clear();
     } catch (error) {
         console.log('회원탈퇴 에러:', error);
     }
@@ -82,13 +99,26 @@ export const editInformation = async (
     nationality: string
 ) => {
     try {
-        // const uid = localStorage.getItem('uid');
-        const uid = 1;
+        const uid = localStorage.getItem('uid');
+        // const uid = 1;
         await Server.put(`/user/info/${uid}`, {
             data: { profileImg, nationality }
         }).then(() => alert('수정이 완료되었습니다.'));
     } catch (error: any) {
         console.log('회원정보 수정 에러:', error);
         alert('네트연결에 실패하였습니다.');
+    }
+};
+
+export const completeSignup = async (nickname: string) => {
+    try {
+        const user_index = localStorage.getItem('uid');
+        const result = await Server.post('/auth/nickname', {
+            user_index,
+            nickname
+        });
+        return result.data;
+    } catch (error) {
+        console.log('회원가입 실패: ', error);
     }
 };

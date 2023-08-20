@@ -39,8 +39,8 @@ export default function InfoInput({
                     value={text}
                     onChange={handleChange}
                 >
-                    <option value='' hidden>
-                        {userData.nationality}
+                    <option value='한국' hidden>
+                        {userData.nationality ? userData.nationality : '한국'}
                     </option>
                     <option value='대한민국, 서울'>대한민국, 서울</option>
                     <option value='대한민국, 인천'>대한민국, 인천</option>

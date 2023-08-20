@@ -1,21 +1,32 @@
 'use client';
 
 import { getGoogleAccessToken } from '@/apis/user/login';
-import { useRouter } from 'next/navigation';
+import { emailState, isLoggedInState } from '@/states/user';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 
 const GoogleOAuth = () => {
     const router = useRouter();
+    const params = useSearchParams();
+    const code = params.get('code');
+    const setIsLoggedIn = useSetRecoilState(isLoggedInState);
+    const setEmail = useSetRecoilState(emailState);
 
     useEffect(() => {
-        // TODO: authCode를 서버에 넘겨준 다음 200 받으면 메인 페이지로 이동
-        getGoogleAccessToken().then(() => router.push('/'));
-    }, [router]);
-    return (
-        <div>
-            <div>구글 리다이렉트 페이지</div>
-        </div>
-    );
+        if (code)
+            getGoogleAccessToken().then((res) => {
+                if (res !== undefined) {
+                    if (res.newUser) {
+                        router.push('/signup');
+                    } else {
+                        setIsLoggedIn(true);
+                        router.push('/');
+                    }
+                }
+            });
+    }, [code, router, setIsLoggedIn]);
+    return <div></div>;
 };
 
 export default GoogleOAuth;
