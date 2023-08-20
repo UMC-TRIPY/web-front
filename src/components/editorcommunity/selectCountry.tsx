@@ -9,9 +9,22 @@ interface SelectCountryProps {
     setTitle: (value: string) => void;
     titleEmpty: boolean;
     onTitleEmptyError: () => void;
+    postData: any;
+    setPostData: (data: any) => void;
 }
 
-export default function SelectCountry ({ selectedCity, setSelectedCity, cityEmpty, onCityEmptyError, title, setTitle, titleEmpty, onTitleEmptyError }: SelectCountryProps) {
+export default function SelectCountry ({ 
+    selectedCity, 
+    setSelectedCity, 
+    cityEmpty, 
+    onCityEmptyError, 
+    title, 
+    setTitle, 
+    titleEmpty, 
+    onTitleEmptyError,
+    postData,
+    setPostData,
+}: SelectCountryProps) {
     const locations = {
         "아시아": {
             "일본": ["도쿄", "오사카", "후쿠오카", "오키나와", "교토", "홋카이도", "일본 기타"],
@@ -63,7 +76,12 @@ export default function SelectCountry ({ selectedCity, setSelectedCity, cityEmpt
 
     // title input 관리 함수
     const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setTitle(e.target.value);
+        const newTitle = e.target.value;
+        setTitle(newTitle);
+        setPostData({
+            ...postData,
+            post_title: newTitle,
+        });
         onTitleEmptyError();
     };
 

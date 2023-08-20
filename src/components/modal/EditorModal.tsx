@@ -19,6 +19,8 @@ interface EditorModalProps {
     setCheckedItems?: (items: Array<number>) => void;
     uploadedFiles?: Array<File>;
     setUploadedFiles?: (files: Array<File>) => void;
+    selectedCities?: Array<number>;
+    setSelectedCities?: (items: Array<number>) => void;
 }
 
 const EditorModal = ({ 
@@ -29,11 +31,13 @@ const EditorModal = ({
     onPlaceUpload, 
     checkedItems, 
     setCheckedItems,
-
+    selectedCities,
+    setSelectedCities,
 }: EditorModalProps) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+    const [selectedCity, setSelectedCity] = useState([]);
 
     /** 이미지를 selectedImages 배열에 저장 */
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +62,10 @@ const EditorModal = ({
     const handleRemoveUploadedFile = (index: number) => {
         setUploadedFiles(uploadedFiles.filter((_, i) => i !== index));
     };
+
+    function handleSearch() {
+
+    }
 
     const renderContent = () => {
         switch (type) {
@@ -189,19 +197,17 @@ const EditorModal = ({
                                 type="text" 
                                 placeholder="원하는 장소를 검색해보세요."
                                 className="w-full outline-none"
+                                onChange={handleSearch}
                             />
                         </div>
                         <div className="h-80 flex border border-lightgrey rounded-xl">
                             <div className="flex flex-col flex-grow">
-                                <div className="h-3/4 border-b border-lightgrey">
-                                    검색한 여행지
-                                </div>
-                                <div>
-                                    추가한 여행지
+                                <div className="h-full p-5">
+                                    
                                 </div>
                             </div>
                             <div className="w-3/5 border border-black rounded-r-lg">
-                                구글맵
+
                             </div>
                         </div>
                         <div className="flex justify-end mt-2">

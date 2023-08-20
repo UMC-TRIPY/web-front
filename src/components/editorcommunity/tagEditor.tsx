@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Image from "next/image";
 import alertCircle from "public/images/alertCircle.svg" 
 import alertCircleRed from "public/images/alertCircleRed.svg"
@@ -8,12 +8,28 @@ interface TagEditorProps {
     onCityEmptyError: () => void;
     onTitleEmptyError: () => void;
     onContentsEmptyError: () => void;
+    postData: any;
+    setPostData: (data: any) => void;
 }
 
-export default function TagEditor({onCityEmptyError, onTitleEmptyError, onContentsEmptyError}: TagEditorProps) {
+export default function TagEditor({
+    onCityEmptyError, 
+    onTitleEmptyError, 
+    onContentsEmptyError,
+    postData,
+    setPostData,
+}: TagEditorProps) {
     const [tagItem, setTagItem] = useState<string>('');
     const [tagList, setTagList] = useState<string[]>([]);
     const [tagEmpty, setTagEmpty] = useState<boolean>(false);
+
+    useEffect(() => {
+        // tagList가 변경될 때마다 postData의 tags를 업데이트
+        setPostData({
+            ...postData,
+            tags: tagList,
+        });
+    }, [tagList]);
 
     /** enter 누르면 submitTagItem 함수 불러옴 */
     function onKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {

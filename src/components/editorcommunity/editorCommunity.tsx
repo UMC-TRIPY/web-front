@@ -13,6 +13,18 @@ export default function EditorCommunity() {
     const [contents, setContents] = useState(''); // 내용
     const [contentsEmpty, setContentsEmpty] = useState<boolean>(false);
 
+    /** API 데이터 저장 변수 */
+    const [postData, setPostData] = useState({
+        user_index: 0,
+        post_title: "",
+        post_content: "",
+        city_index: 0,
+        tags: [],
+        post_image: "",
+        post_file: "",
+        plan_index: 0,
+    });
+
     // tagEditor의 버튼 눌렀을 때 호출되는 함수들
     /** selectedCity가 비었을때 setCityEmpty를 true로 */
     function handleCityEmptyError() {
@@ -26,7 +38,8 @@ export default function EditorCommunity() {
     function handleContentsEmptyError() {
         setContentsEmpty(!contents);
     }
-    
+    console.log("postData:", postData);
+
     return (
         <div>
             <CommonHeader />
@@ -40,6 +53,8 @@ export default function EditorCommunity() {
                 setTitle={setTitle}
                 titleEmpty={titleEmpty}
                 onTitleEmptyError={handleTitleEmptyError}
+                postData={postData}
+                setPostData={setPostData}
             />
             {/** 첨부파일 모달, 내용 입력 컴포넌트 */}
             <MainEditor 
@@ -47,13 +62,18 @@ export default function EditorCommunity() {
                 onContentsEmptyError={handleContentsEmptyError}
                 contents={contents}
                 setContents={setContents}
+                postData={postData}
+                setPostData={setPostData}
             />
             {/** 태그 입력 컴포넌트 */}
             <TagEditor 
                 onCityEmptyError={handleCityEmptyError}
                 onTitleEmptyError={handleTitleEmptyError}
                 onContentsEmptyError={handleContentsEmptyError}
+                postData={postData}
+                setPostData={setPostData}
             />
+            
         </div>
     )
 }

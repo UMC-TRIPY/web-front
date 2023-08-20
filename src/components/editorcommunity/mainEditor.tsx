@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useCallback } from "react"
 import Image from "next/image"
 import imageAdd from "public/images/imageAdd.svg"
 import folderPlus from "public/images/folderPlus.svg"
@@ -6,7 +6,6 @@ import calenderAdd from "public/images/calendar.svg"
 import mapPin from "public/images/mapPin.svg"
 import folder from "public/images/folder.svg"
 import EditorModal from "../modal/EditorModal"
-import { ReactMarkdown } from "react-markdown/lib/react-markdown"
 import { BiX } from "react-icons/bi"
 
 interface MainEditorProps {
@@ -14,9 +13,18 @@ interface MainEditorProps {
     onContentsEmptyError: () => void;
     contents: string;
     setContents: (value: string) => void;
+    postData: any;
+    setPostData: (data: any) => void;
 }
 
-export default function MainEditor({ contentsEmpty, onContentsEmptyError, contents, setContents }: MainEditorProps) {
+export default function MainEditor({ 
+    contentsEmpty, 
+    onContentsEmptyError, 
+    contents, 
+    setContents,
+    postData,
+    setPostData,
+}: MainEditorProps) {
     const [modal, setModal] = useState({
         isOpen: false,
         type: '',
@@ -24,9 +32,15 @@ export default function MainEditor({ contentsEmpty, onContentsEmptyError, conten
 
     /** textarea 입력 handle 함수 */
     const handleContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-        setContents(e.target.value);
+        const newContent = e.target.value;
+        setContents(newContent);
+        setPostData({
+          ...postData,
+          post_content: newContent,
+        });
         onContentsEmptyError();
     };
+      
 
     /** 각 type에 맞는 모달창 열기 */
     const handleModalOpen = (modalType: string) => {
@@ -45,18 +59,24 @@ export default function MainEditor({ contentsEmpty, onContentsEmptyError, conten
 
     /** 이미지 URL을 textarea에 */
     const handleImageUpload = (images: File[]) => {
-        let imgTags = images.map((image) => `![${image.name}](${URL.createObjectURL(image)})`).join('\n');
-        setContents(contents + '\n' + imgTags);
-        // contents에 img URL 추가
+        // 이미지 URL로 postData 업데이트
+        let imageUrls = images.map((image) => URL.createObjectURL(image));
+        setPostData({
+            ...postData,
+            post_image: imageUrls.join(","),
+        });
 
     };
 
     const [filePreviews, setFilePreviews] = useState<File[]>([]);
     /** 파일 URL을 textarea에 */
-    const handleFileUpload = (files: File[]) => { // uploadedFiles 배열을 받아온다?
-        // let fileTags = files.map((file) => `![${file.name}](${URL.createObjectURL(file)})`).join('\n');
-        // setContents(contents + '\n' + fileTags);
-        // contents에 file URL 추가
+    const handleFileUpload = (files: File[]) => { // uploadedFiles 배열
+        // 파일 URL로 postData 업데이트
+        const fileUrls = files.map((file) => URL.createObjectURL(file));
+        setPostData({
+            ...postData,
+            post_file: fileUrls.join(","),
+        });
         setFilePreviews([...filePreviews, ...files]);
         // filePreviews에 uploadedFiles 추가
     };
@@ -67,10 +87,15 @@ export default function MainEditor({ contentsEmpty, onContentsEmptyError, conten
 
     /** 선택된 장소 id를 textarea에 */
     const handlePlaceUpload = () => {
-        setContents(contents + '\n' + checkedItems)
+        // 선택한 항목으로 postData 업데이트
+        setPostData({
+            ...postData,
+            plan_index: checkedItems,
+        });
     };
 
     const [checkedItems, setCheckedItems] = useState<Array<number>>([]);
+
 
     return (
         <div className="mx-4">
@@ -155,14 +180,13 @@ export default function MainEditor({ contentsEmpty, onContentsEmptyError, conten
                     )}
                 </div>
                 <div className="p-5 flex h-[710px]">
-                    <textarea 
-                        spellCheck="false" 
-                        className="flex-grow w-1/2 outline-none" 
-                        placeholder="내용을 입력해주세요." 
-                        value={contents}
-                        onChange={(e) => handleContents(e)} 
-                    />
-                    <ReactMarkdown className="w-1/2 pl-5 border-l border-lightgrey">{contents}</ReactMarkdown>
+                <textarea 
+                    spellCheck="false" 
+                    className="flex-grow outline-none" 
+                    placeholder="내용을 입력해주세요." 
+                    value={postData.post_content}
+                    onChange={(e) => handleContents(e)} 
+                />
                 </div>
             </div>
         </div>
