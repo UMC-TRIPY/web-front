@@ -2,12 +2,15 @@ import { useState, useCallback, useEffect } from 'react';
 import IScheduleItem from '@/models/interface/IScheduleItem';
 import { add, differenceInDays } from 'date-fns';
 import StaticScheduleBlock from './StaticScheduleBlock';
-import { useRecoilState } from 'recoil';
-import { BlockScheduleListState } from '@/states/schedule';
+import { checkSchedules } from '@/apis/travellists/check';
 
 export default function BlockSchedule() {
+    const color = ['#FFE457', '#57CDFF', '#FF7F57'];
+    const lightColor = ['#FFFBE7', '#EEFAFF', '#FFF3EF'];
     const [start, setStart] = useState<any>();
     const [differ, setDiffer] = useState<any>();
+    const [schedules, setSchedules] = useState<any>();
+    const [totalSchedules, setTotalSchedules] = useState<any>();
     const week = ['일', '월', '화', '수', '목', '금', '토'];
     const days: null | string[] = [];
     if (differ !== null) {
@@ -19,16 +22,66 @@ export default function BlockSchedule() {
             days.push(`${month}/${date} (${week[weekNum]})`);
         }
     }
+    console.log(totalSchedules);
     useEffect(() => {
+        let tmp: any[] = [];
+        let totalTmp: any[] = [];
         const date: any = sessionStorage.getItem('date')?.split('~');
         const s = date[0];
         const e = date[1].split(' ')[1];
         setStart(new Date(s));
         setDiffer(differenceInDays(new Date(e), new Date(s)) + 1);
+        checkSchedules()
+            .then((res) => {
+                console.log(res);
+                res.map((r: any, idx: number) => {
+                    tmp.push({
+                        id: idx + 1,
+                        column: differenceInDays(
+                            new Date(r.plan_date.slice(0, 10)),
+                            new Date(s)
+                        ),
+                        lineColor: color[Number(r.plan_lineColor) - 1],
+                        color: lightColor[Number(r.plan_color) - 1],
+                        startTime: Number(r.start_time.slice(6)),
+                        halfHour: r.plan_halfHour,
+                        title: r.plan_title
+                    });
+                    // 상세 일정 보기 모달에 사용할 데이터들
+                    totalTmp.push({
+                        plan_date: r.plan_date === undefined ? '' : r.plan_date,
+                        plan_color:
+                            r.plan_color === undefined ? '' : r.plan_color,
+                        plan_lineColor:
+                            r.plan_lineColor === undefined
+                                ? ''
+                                : r.plan_lineColor,
+                        plan_title:
+                            r.plan_title === undefined ? '' : r.plan_title,
+                        plan_column:
+                            r.plan_column === undefined ? '' : r.plan_column,
+                        start_time:
+                            r.start_time === undefined ? '' : r.start_time,
+                        plan_halfHour:
+                            r.plan_halfHour === undefined
+                                ? ''
+                                : r.plan_halfHour,
+                        plan_place:
+                            r.plan_place === undefined ? '' : r.plan_place,
+                        plan_budget:
+                            r.plan_budget === undefined ? '' : r.plan_budget,
+                        plan_memo: r.plan_memo === undefined ? '' : r.plan_memo,
+                        plan_image:
+                            r.plan_image === undefined ? '' : r.plan_image,
+                        plan_file: r.plan_file === undefined ? '' : r.plan_file
+                    });
+                });
+                setSchedules(tmp);
+                setTotalSchedules(totalTmp);
+            })
+            .catch((err) => console.log(err));
     }, []);
-
-    const schedule = useRecoilState(BlockScheduleListState)[0];
-
+    console.log(schedules);
     const renderTimeTable = () => {
         const times: React.ReactNode[] = [
             <div
@@ -121,9 +174,11 @@ export default function BlockSchedule() {
                     height: 'calc(100% - 1.75rem)'
                 }}
             >
-                {schedule.map((item: any, idx: number) =>
-                    renderScheduleBlock(item, idx)
-                )}
+                {schedules === undefined
+                    ? ''
+                    : schedules.map((item: any, idx: number) =>
+                          renderScheduleBlock(item, idx)
+                      )}
             </div>
         </div>
     );
