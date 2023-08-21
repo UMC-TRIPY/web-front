@@ -51,6 +51,7 @@ function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
             setDatas(tmp.slice(0, 8));
         });
     }, []);
+    
     /** 모달창에서 체크된 일정들을 checkedItems에 담음 */
     const handleCheckChange = (id: number) => {
         if (status === 'modal' && checkedItems && setCheckedItems) {
@@ -100,6 +101,7 @@ function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
                                         onChange={() =>
                                             handleCheckChange(travel.id)
                                         }
+                                        checked={checkedItems?.includes(travel.id)}
                                     />
                                     <div className='w-1/3 text-center'>
                                         {travel.dates}

@@ -7,6 +7,8 @@ import mapPin from "public/images/mapPin.svg"
 import folder from "public/images/folder.svg"
 import EditorModal from "../modal/EditorModal"
 import { BiX } from "react-icons/bi"
+import BlockSchedule from "../detailschedule/BlockSchedule"
+import SchedulePreviews from "./schedulePreviews"
 
 interface MainEditorProps {
     contentsEmpty: boolean;
@@ -57,37 +59,70 @@ export default function MainEditor({
         });
     };
 
-    /** 이미지 URL을 textarea에 */
+    const [imagePreviews, setImagePreviews] = useState<File[]>([]);
+    /** 이미지 URL을 postData에 */
     const handleImageUpload = (images: File[]) => {
-        // 이미지 URL로 postData 업데이트
         let imageUrls = images.map((image) => URL.createObjectURL(image));
+        
+        // 기존 파일 목록에 합침
+        const updatedPostImage = [postData.post_image, ...imageUrls].join(",");
+
         setPostData({
             ...postData,
-            post_image: imageUrls.join(","),
+            post_image: updatedPostImage,
         });
+        // imagePreviews에 uploadedImage 추가
+        setImagePreviews([...imagePreviews, ...images]);
+    };
 
+    const handleRemoveUploadedImage = (index: number) => {
+        const updatedImagePreviews = [...imagePreviews];
+        updatedImagePreviews.splice(index, 1); // 파일 미리보기에서 해당 인덱스의 파일 제거
+    
+        const updatedImageUrls = updatedImagePreviews.map((image) => URL.createObjectURL(image));
+    
+        setImagePreviews(updatedImagePreviews);
+    
+        // postData 업데이트
+        setPostData({
+            ...postData,
+            post_image: updatedImageUrls.join(","),
+        });
     };
 
     const [filePreviews, setFilePreviews] = useState<File[]>([]);
-    /** 파일 URL을 textarea에 */
-    const handleFileUpload = (files: File[]) => { // uploadedFiles 배열
-        // 파일 URL로 postData 업데이트
+    /** 파일 URL을 postData에 */
+    const handleFileUpload = (files: File[]) => {
         const fileUrls = files.map((file) => URL.createObjectURL(file));
+        
+        // 기존 파일 목록에 합침
+        const updatedPostFile = [postData.post_file, ...fileUrls].join(",");
+        
         setPostData({
             ...postData,
-            post_file: fileUrls.join(","),
+            post_file: updatedPostFile,
         });
-        setFilePreviews([...filePreviews, ...files]);
         // filePreviews에 uploadedFiles 추가
+        setFilePreviews([...filePreviews, ...files]);
     };
 
     const handleRemoveUploadedFile = (index: number) => {
-        setFilePreviews(filePreviews.filter((_, i) => i !== index));
+        const updatedFilePreviews = [...filePreviews];
+        updatedFilePreviews.splice(index, 1); // 파일 미리보기에서 해당 인덱스의 파일 제거
+    
+        const updatedFileUrls = updatedFilePreviews.map((file) => URL.createObjectURL(file));
+    
+        setFilePreviews(updatedFilePreviews);
+    
+        // postData 업데이트
+        setPostData({
+            ...postData,
+            post_file: updatedFileUrls.join(","),
+        });
     };
 
-    /** 선택된 장소 id를 textarea에 */
-    const handlePlaceUpload = () => {
-        // 선택한 항목으로 postData 업데이트
+    /** 선택된 일정 id를 postData에 */
+    const handlePlanUpload = () => {
         setPostData({
             ...postData,
             plan_index: checkedItems,
@@ -96,10 +131,10 @@ export default function MainEditor({
 
     const [checkedItems, setCheckedItems] = useState<Array<number>>([]);
 
-
     return (
         <div className="mx-4">
-            {filePreviews && (
+            {/** post_file 갯수만큼 파일 컴포넌트 */}
+            {postData.post_file && (
                 <>
                 {filePreviews.map((file, index) => (
                     <div className="flex items-center mb-5" key={index}>
@@ -117,7 +152,15 @@ export default function MainEditor({
                 ))}
                 </>
             )}
-            <div className={`h-[800px] border ${!contents && contentsEmpty ? 'border-alertred' : 'border-lightgrey'} rounded-lg`}>
+            {/** plan_index의 갯수만큼 일정 block 생성 */}
+            {postData.plan_index.length > 0 && (
+                checkedItems.map((plan, index) => (
+                    <div key={index} className="flex h-96 border border-lightgrey rounded-lg mb-5">
+                        <SchedulePreviews  />
+                    </div>
+                ))
+            )}
+            <div className={`h-[800px] border ${!contents && contentsEmpty ? 'border-alertred' : 'border-lightgrey'} rounded-lg mb-5`}>
                 <div className="h-[90px] border-b border-lightgrey">
                     <div className="flex p-5">
                         <button 
@@ -172,7 +215,7 @@ export default function MainEditor({
                                 setIsModal = {() => handleModalClose()}
                                 onImageUpload = {handleImageUpload}
                                 onFileUpload = {handleFileUpload}
-                                onPlaceUpload = {handlePlaceUpload}
+                                onPlanUpload = {handlePlanUpload}
                                 checkedItems={checkedItems} 
                                 setCheckedItems={setCheckedItems}
                             />
@@ -189,6 +232,27 @@ export default function MainEditor({
                 />
                 </div>
             </div>
+            {postData.post_image && (
+                <div className="flex flex-row mb-5 overflow-x-auto">
+                {imagePreviews.map((image, index) => (
+                    <div key={index} className="relative">
+                        <div className="flex justify-center items-center relative h-40 w-40 border border-lightgrey rounded-lg mr-5">
+                            <button 
+                                className="absolute top-0 right-0"
+                                onClick={() => handleRemoveUploadedImage(index)}>
+                                <BiX size={24} className="z-2"/>
+                                <div className="z-0 bg-white opacity-50 absolute inset-0"></div>
+                            </button>
+                            <img
+                                src={URL.createObjectURL(image)}
+                                alt="thumbnail"
+                                className="h-40 p-2"
+                            />
+                        </div>
+                    </div>
+                ))}
+                </div>
+            )}
         </div>
     )
 }

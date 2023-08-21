@@ -14,7 +14,7 @@ interface EditorModalProps {
     type: string,
     onImageUpload: (images: File[]) => void,
     onFileUpload: (files: File[]) => void,
-    onPlaceUpload: () => void,
+    onPlanUpload: () => void,
     checkedItems?: Array<number>;
     setCheckedItems?: (items: Array<number>) => void;
     uploadedFiles?: Array<File>;
@@ -28,7 +28,7 @@ const EditorModal = ({
     type, 
     onImageUpload, 
     onFileUpload, 
-    onPlaceUpload, 
+    onPlanUpload, 
     checkedItems, 
     setCheckedItems,
     selectedCities,
@@ -39,27 +39,31 @@ const EditorModal = ({
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
     const [selectedCity, setSelectedCity] = useState([]);
 
-    /** 이미지를 selectedImages 배열(모달창 내)에 저장 */
+    /** 이미지를 selectedImages 배열에 저장 */
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
           setSelectedImages([...selectedImages, ...Array.from(e.target.files)]);
         }
+        console.log(selectedImages)
     };
 
     const handleRemoveImage = (index: number) => {
         setSelectedImages(selectedImages.filter((_, i) => i !== index));
     };
 
-    /** 파일을 uploadedFiles 배열(모달창 내)에 저장 */
+    /** 파일을 uploadedFiles 배열에 저장 */
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
         setUploadedFiles([...uploadedFiles, ...Array.from(e.target.files)]);
         }
+        console.log(uploadedFiles)
     };
 
     const handleRemoveUploadedFile = (index: number) => {
         setUploadedFiles(uploadedFiles.filter((_, i) => i !== index));
     };
+
+
 
     function handleSearch() {
 
@@ -179,7 +183,7 @@ const EditorModal = ({
                             <ConfirmBtn 
                                 label="공유하기" 
                                 color="bg-primary" 
-                                onClick={() => {setIsModal(false), onPlaceUpload()}}
+                                onClick={() => {setIsModal(false), onPlanUpload()}}
                             />
                         </div>
                     </div>
