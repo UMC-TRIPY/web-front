@@ -8,6 +8,7 @@ import HotSearch from './hotSearch';
 import { useRouter } from 'next/navigation';
 import SelectedPlaces from './SelectedPlaces';
 import { differenceInDays } from 'date-fns';
+import { updateLists } from '@/apis/travellists/update';
 
 interface MenuProps {
     menu: string;
@@ -122,11 +123,18 @@ function DetailBox({ selectedCities, setSelectedCities }: DetailBoxProps) {
 
     const register = () => {
         if (startDate === null || endDate === null) return;
-        const start = format(startDate, 'yyyy.MM.dd');
-        const end = format(endDate, 'yyyy.MM.dd');
-        const difference = differenceInDays(endDate, startDate) + 1;
-        const dates = `${start} ~ ${end} (${difference - 1}박 ${difference}일)`;
+        const start: string = format(startDate, 'yyyy.MM.dd');
+        const end: string = format(endDate, 'yyyy.MM.dd');
+        const difference: number = differenceInDays(endDate, startDate) + 1;
+        const dates: string = `${start} ~ ${end} (${
+            difference - 1
+        }박 ${difference}일)`;
         sessionStorage.setItem('date', dates);
+        updateLists({
+            cityname: selectedCities,
+            departureDate: format(startDate, 'yyyy-MM-dd'),
+            arrivalDate: format(endDate, 'yyyy-MM-dd')
+        });
     };
     return (
         <div className='mt-12'>

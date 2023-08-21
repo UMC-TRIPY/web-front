@@ -16,6 +16,7 @@ export default function Page() {
     const [start, setStart] = useState<any>();
     const [differ, setDiffer] = useState<any>();
     const [scheduleId, setScheduleId] = useState<number>(1);
+    const planId: number | undefined = Number(sessionStorage.getItem('pid'));
     const week = ['일', '월', '화', '수', '목', '금', '토'];
     const days: null | string[] = [];
     if (differ !== null) {
@@ -168,7 +169,7 @@ export default function Page() {
         });
     };
     return (
-        <div className='mt-20 p-20'>
+        <div className='mt-20 py-20'>
             {/* 공통 머리글 */}
             <CommonHeader />
             {/* 다른 일정 선택 */}
@@ -219,6 +220,7 @@ export default function Page() {
                     setSchedule={setSchedule}
                     scheduleId={scheduleId}
                     setScheduleId={setScheduleId}
+                    pid={planId}
                 />
             )}
         </div>

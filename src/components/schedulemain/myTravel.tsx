@@ -29,7 +29,10 @@ function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
                     d.departureDate === '0000-00-00'
                         ? new Date()
                         : new Date(d.departureDate.slice(0, 10));
-                const arrivalDate = new Date(d.arrivalDate.slice(0, 10));
+                const arrivalDate =
+                    d.departureDate === '0000-00-00'
+                        ? new Date()
+                        : new Date(d.arrivalDate.slice(0, 10));
                 const difference = differenceInDays(arrivalDate, departureDate);
                 tmp.push({
                     id: idx + 1,
