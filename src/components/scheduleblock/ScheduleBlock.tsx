@@ -11,6 +11,7 @@ import Image from 'next/image';
 type Props = {
     item: IScheduleItem;
     handleDragBlock: (id: number) => void;
+    resetEmptyBlockList: Function;
 };
 
 const ScheduleBlock = (props: Props) => {
@@ -25,7 +26,6 @@ const ScheduleBlock = (props: Props) => {
         title,
         location
     } = props.item;
-    // const minutes = compareDate(startTime, endTime);
 
     const dragFunction = (event: any, type: any) => {
         event.preventDefault();
@@ -49,8 +49,8 @@ const ScheduleBlock = (props: Props) => {
                 setIsDragging(true);
             }}
             onDragEnd={() => setIsDragging(false)}
-            onDragEnter={(event) => dragFunction(event, 'enter')}
-            onDragLeave={(event) => dragFunction(event, 'leave')}
+            onDragEnter={(event) => props.resetEmptyBlockList()}
+            onDragLeave={(event) => props.resetEmptyBlockList()}
         >
             <span className='text-xs'>
                 {formatAMPM(tableToDate(startTime))} ~{' '}
