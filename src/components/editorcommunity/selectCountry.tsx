@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useEffect } from "react"
 
 interface SelectCountryProps {
     selectedCity: string;
@@ -25,54 +25,164 @@ export default function SelectCountry ({
     postData,
     setPostData,
 }: SelectCountryProps) {
-    const locations = {
-        "아시아": {
-            "일본": ["도쿄", "오사카", "후쿠오카", "오키나와", "교토", "홋카이도", "일본 기타"],
+    const continents = [
+        {
+        continent_index: 1,
+        name: "아시아",
+        countries: [
+            {
+            country_index: 1,
+            name: "일본",
+            cities: [
+                {
+                city_index: 1,
+                name: "오사카",
+                },
+                {
+                city_index: 2,
+                name: "도쿄",
+                },
+                {
+                city_index: 3,
+                name: "후쿠오카",
+                },
+                {
+                city_index: 4,
+                name: "오키나와",
+                },
+                {
+                city_index: 5,
+                name: "교토",
+                },
+                {
+                city_index: 6,
+                name: "홋카이도",
+                },
+            ],
+            },
+        ],
         },
-        "유럽": {
-            "영국": ["런던", "리버풀", "맨체스터", "영국 기타"],
-            "프랑스": ["파리", "마르세유", "프랑스 기타"],
-            "이탈리아": ["로마", "피렌체", "밀라노", "베네치아", "이탈리아 기타"],
-            "스페인": ["마드리드", "바르셀로나", "톨레도", "세비야", "그라나다", "스페인 기타"]
+        {
+        continent_index: 2,
+        name: "유럽",
+        countries: [
+            {
+            country_index: 9,
+            name: "영국",
+            cities: [
+                {
+                city_index: 7,
+                name: "런던",
+                },
+            ],
+            },
+            {
+                country_index: 10,
+                name: "스페인",
+                cities: [
+                {
+                    city_index: 8,
+                    name: "마드리드",
+                },
+                {
+                    city_index: 9,
+                    name: "바르셀로나",
+                },
+                {
+                    city_index: 10,
+                    name: "톨레도",
+                },
+                {
+                    city_index: 11,
+                    name: "세비야",
+                },
+                {
+                    city_index: 12,
+                    name: "그라나다",
+                },
+                ],
+            },
+            {
+            country_index: 12,
+            name: "이탈리아",
+            cities: [
+                {
+                city_index: 13,
+                name: "로마",
+                },
+                {
+                city_index: 14,
+                name: "피렌체",
+                },
+                {
+                city_index: 15,
+                name: "밀라노",
+                },
+                {
+                city_index: 16,
+                name: "베네치아",
+                },
+            ],
+            },
+            {
+                country_index: 6,
+                name: "프랑스",
+                cities: [
+                {
+                    city_index: 17,
+                    name: "파리",
+                },
+                ],
+            },
+            // 다른 유럽 국가들
+        ],
         },
-        "기타": { "기타": "기타" }
-    };
+        // 다른 대륙들
+    ];      
 
-    const AsiaCountries = Object.keys(locations["아시아"]);
-    const EuropeCountries = Object.keys(locations["유럽"]);
-
-    const JapanCities = locations["아시아"]["일본"];
-    const UKCities = locations["유럽"]["영국"];
-    const FranceCities = locations["유럽"]["프랑스"];
-    const ItalyCities = locations["유럽"]["이탈리아"];
-    const SpainCities = locations["유럽"]["스페인"];
+    const AsiaCountries = continents.find(continent => continent.continent_index === 1);
+    const EuropeCountries = continents.find(continent => continent.continent_index === 2);
     
+    const JapanCities = AsiaCountries?.countries.find(country => country.country_index === 1)?.cities;
+    const UKCities = EuropeCountries?.countries.find(country => country.country_index === 9)?.cities;
+    const SpainCities = EuropeCountries?.countries.find(country => country.country_index === 10)?.cities;
+    const ItalyCities = EuropeCountries?.countries.find(country => country.country_index === 12)?.cities;
+    const FranceCities = EuropeCountries?.countries.find(country => country.country_index === 6)?.cities;
+
     type CityButtonsProps = {
-        cities: string[];
+        cities: {
+            city_index: number;
+            name: string;
+        }[] | undefined;
     };
 
     const CityButtons: React.FC<CityButtonsProps> = ({ cities }) => {
         return (
-          <div className="flex">
-            {cities.map((city, index) => (
-                <button
-                    key={index}
-                    className={`mr-10 ${
-                    city === selectedCity ? 
-                    'text-primary font-bold border-b-[3px] border-b-primary' 
-                    : 'border-b-[3px] border-brightgrey' // 밑줄 생길때 위아래 밀림 방지
-                    }`}
-                    onClick={() => {
-                        setSelectedCity(city); 
-                        onCityEmptyError();
-                    }}
-                >
-                    {city}
-                </button>
-            ))}
-          </div>
+            <div className="flex">
+                {cities?.map((city, index) => (
+                    <button
+                        key={index}
+                        className={`mr-10 ${
+                            city.name === selectedCity ?
+                            'text-primary font-bold border-b-[3px] border-b-primary' :
+                            'border-b-[3px] border-brightgrey'
+                        }`}
+                        onClick={() => {
+                            setSelectedCity(city.name); // 도시 이름을 선택
+                            onCityEmptyError();
+                            setPostData({
+                                ...postData,
+                                city_index: city.city_index, // 도시의 city_index를 설정
+                            });
+                        }}
+                    >
+                        {city.name}
+                    </button>
+                ))}
+            </div>
         );
     };
+    
 
     // title input 관리 함수
     const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,24 +202,25 @@ export default function SelectCountry ({
             <div className="bg-brightgrey rounded-lg my-2">
                 <div className="flex">
                     <div className="h-[336px] flex flex-col justify-between w-1/6 py-4 pl-6 border-r border-lightgrey">
-                        {Object.keys(locations).map((continent, index) => {
+                        {continents.map((continent) => {
                             return (
-                                <span key={index} className="font-bold text-grey">{continent}</span>
+                                <span key={continent.continent_index} className="font-bold text-grey">{continent.name}</span>
                             )
                         })}
+                        <span className="font-bold text-grey">기타</span>
                     </div>
                     <div className="flex flex-col justify-between w-1/6 py-4 pl-6 border-r border-lightgrey">
-                        {AsiaCountries.map((country, index) => {
+                        {AsiaCountries && AsiaCountries.countries.map((country) => {
                             return (
-                                <span key={index} className="font-bold">{country}</span>
+                                <span key={country.country_index} className="font-bold">{country.name}</span>
                             )
                         })}
-                        {EuropeCountries.map((country, index) => {
+                        {EuropeCountries && EuropeCountries.countries.map((country) => {
                             return (
-                                <span key={index} className="font-bold">{country}</span>
+                                <span key={country.country_index} className="font-bold">{country.name}</span>
                             )
                         })}
-                        <span className="font-bold">{Object.keys(locations["기타"])}</span>
+                        <span className="font-bold">기타</span>
                     </div>
                     <div className="flex flex-col justify-between  w-2/3 py-4 pl-6">
                         <CityButtons cities={JapanCities}/>
@@ -117,7 +228,7 @@ export default function SelectCountry ({
                         <CityButtons cities={FranceCities}/>
                         <CityButtons cities={ItalyCities}/>
                         <CityButtons cities={SpainCities}/>
-                        <CityButtons cities={[locations["기타"]["기타"]]} />
+                        <span>기타</span>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,6 @@ import TagEditor from "@/components/editorcommunity/tagEditor";
 import CommonHeader from "@/components/maincommunity/CommonHeader";
 
 export default function EditorCommunity() {
-    // selectedCity에 선택한 도시 카테고리가 저장 -> 게시판 필터링시 전달필요
     const [selectedCity, setSelectedCity] = useState<string>("");
     const [cityEmpty, setCityEmpty] = useState<boolean>(false);
     const [title, setTitle] = useState(''); // 제목
@@ -13,7 +12,7 @@ export default function EditorCommunity() {
     const [contents, setContents] = useState(''); // 내용
     const [contentsEmpty, setContentsEmpty] = useState<boolean>(false);
 
-    /** API 데이터 저장 변수 */
+    /** API 데이터 임시 저장 변수 */
     const [postData, setPostData] = useState({
         user_index: 0,
         post_title: "",
