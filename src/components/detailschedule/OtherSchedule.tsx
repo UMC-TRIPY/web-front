@@ -5,6 +5,19 @@ import { useEffect, useState } from 'react';
 import differenceInDays from 'date-fns/differenceInDays';
 import SelectScheduleModal from '../modal/SelectScheduleModal';
 
+interface TravelListProps {
+    city_name: string;
+    departureDate: string;
+    arrivalDate: string;
+    plan_index: number;
+}
+
+interface ScheduleProps {
+    pid: number;
+    dates: string;
+    places: string;
+}
+
 export default function OtherSchedule({
     href,
     register,
@@ -16,26 +29,19 @@ export default function OtherSchedule({
 }) {
     const [date, setDate] = useState<string>('');
     const [place, setPlace] = useState<string>('');
-    const [start, setStart] = useState<any>();
-    const [end, setEnd] = useState<any>();
-    const [schedules, setSchedules] = useState<any>();
+    const [schedules, setSchedules] = useState<ScheduleProps[] | undefined>();
     const [modal, setModal] = useState<boolean>(false);
 
     useEffect(() => {
         const d = sessionStorage.getItem('date');
         const p = sessionStorage.getItem('place');
 
-        const s: any = d?.split('~')[0];
-        const e: any = d?.split('~')[1].split(' ')[1];
-
-        setStart(new Date(s));
-        setEnd(new Date(e));
         setDate(!d ? '' : d);
         setPlace(!p ? '' : p);
         checkLists()
             .then((res) => {
-                let tmp: any[] = [];
-                res.map((d: any, idx: number) => {
+                let tmp: ScheduleProps[] = [];
+                res.map((d: TravelListProps, idx: number) => {
                     const departureDate =
                         d.departureDate === '0000-00-00'
                             ? new Date()
@@ -49,7 +55,7 @@ export default function OtherSchedule({
                         departureDate
                     );
                     tmp.push({
-                        id: d.plan_index,
+                        pid: d.plan_index,
                         dates: `${format(
                             departureDate,
                             'yyyy.MM.dd'
