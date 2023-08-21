@@ -39,24 +39,22 @@ const EditorModal = ({
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
     const [selectedCity, setSelectedCity] = useState([]);
 
-    /** 이미지를 selectedImages 배열에 저장 */
+    /** 이미지를 selectedImages 배열(모달창 내)에 저장 */
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
           setSelectedImages([...selectedImages, ...Array.from(e.target.files)]);
         }
-        console.log(selectedImages)
     };
 
     const handleRemoveImage = (index: number) => {
         setSelectedImages(selectedImages.filter((_, i) => i !== index));
     };
 
-    /** 파일을 uploadedFiles 배열에 저장 */
+    /** 파일을 uploadedFiles 배열(모달창 내)에 저장 */
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (e.target.files) {
         setUploadedFiles([...uploadedFiles, ...Array.from(e.target.files)]);
         }
-        console.log(uploadedFiles)
     };
 
     const handleRemoveUploadedFile = (index: number) => {

@@ -2,6 +2,7 @@ import ContentList from '../community/ContentList';
 import { useEffect, useState } from 'react';
 import Pagination from './Pagination';
 import { BiSearch } from 'react-icons/bi';
+import Link from 'next/link';
 
 interface IContent {
     imageSrc: string;
@@ -263,7 +264,9 @@ export default function AllPosts() {
                     setCurrent={setCurrent}
                 />
                 <button className='absolute self-end bg-lightgrey py-3 px-11 mt-10'>
-                    글쓰기
+                    <Link href="/community/write">
+                        글쓰기
+                    </Link>
                 </button>
             </div>
         </div>
