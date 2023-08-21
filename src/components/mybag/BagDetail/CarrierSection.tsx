@@ -1,5 +1,6 @@
 'use client';
 
+import { addMaterial } from '@/apis/bag';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -41,9 +42,11 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
         setIsAdd((prev) => !prev);
     };
 
-    const handleClickEndAdd = () => {
+    const handleClickEndAdd = async () => {
         const id = materials.length;
         setIsAdd(false);
+        // addMaterial(bid, addText)
+        await addMaterial(16, addText);
         if (addText.length > 0)
             setMaterials([
                 {
