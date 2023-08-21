@@ -16,6 +16,7 @@ export default function Page() {
     const [start, setStart] = useState<any>();
     const [differ, setDiffer] = useState<any>();
     const [scheduleId, setScheduleId] = useState<number>(1);
+    const [emptyBlockList, setEmptyBlockList] = useState<number[][]>([]);
     const week = ['일', '월', '화', '수', '목', '금', '토'];
     const days: null | string[] = [];
     if (differ !== null) {
@@ -144,6 +145,7 @@ export default function Page() {
                 <ScheduleBlock
                     item={schedule}
                     handleDragBlock={handleDragBlock}
+                    resetEmptyBlockList={resetEmptyBlockList}
                 />
             );
         },
@@ -157,6 +159,7 @@ export default function Page() {
     };
 
     const handleBlockDrop = (column: number, row: number) => {
+        resetEmptyBlockList();
         setSchedule((prev) => {
             const newSchedule = [...prev];
             const selectedObject = newSchedule.find(
@@ -167,6 +170,40 @@ export default function Page() {
             return newSchedule;
         });
     };
+    const handleBlockEnter = (column: number, row: number) => {
+        // 블록이 들어가는곳을 미리 보기로 알려줌
+        resetEmptyBlockList();
+        setEmptyBlockList((prev) => {
+            const newEmptyBlockList = [...prev];
+            const selectedObject = schedule.find(
+                (obj) => obj.id === currentDraggingBlockId
+            );
+            for (let i = 0; i < selectedObject!.halfHour; i++) {
+                if (row + i >= 34) {
+                    newEmptyBlockList[column][row + i] = 2;
+                } else {
+                    newEmptyBlockList[column][row + i] = 1;
+                }
+            }
+            return newEmptyBlockList;
+        });
+    };
+
+    const resetEmptyBlockList = () => {
+        const emptyBlockList = [];
+        for (let i = 0; i < 5; i++) {
+            const emptyBlocks = [];
+            for (let j = 0; j < 34; j++) {
+                emptyBlocks.push(0);
+            }
+            emptyBlockList.push(emptyBlocks);
+        }
+        setEmptyBlockList(emptyBlockList);
+    };
+
+    useEffect(() => {
+        resetEmptyBlockList();
+    }, []);
     return (
         <div className='mt-20 p-20'>
             {/* 공통 머리글 */}

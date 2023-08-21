@@ -5,6 +5,7 @@ import ScheduleHeader from './scheduleHeader';
 
 function ScheduleMain() {
     const [selectedCities, setSelectedCities] = useState<string>('');
+    console.log(selectedCities);
     return (
         <div>
             {/* 상단 검색창 */}

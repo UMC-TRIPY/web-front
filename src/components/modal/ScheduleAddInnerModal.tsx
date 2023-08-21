@@ -11,6 +11,8 @@ import { setHours, setMinutes, addDays, differenceInDays } from 'date-fns';
 import ScheduleAddModal from './ScheduleAddModal';
 import ko from 'date-fns/locale/ko';
 import { dateTotable } from '@/utils/dateUtil';
+import format from 'date-fns/format';
+import { updateSchedule } from '@/apis/travellists/update';
 
 const ScheduleAddInnerModal = ({
     setIsModal,
@@ -19,7 +21,8 @@ const ScheduleAddInnerModal = ({
     schedule,
     setSchedule,
     scheduleId,
-    setScheduleId
+    setScheduleId,
+    pid
 }: any) => {
     const color = ['#FFE457', '#57CDFF', '#FF7F57'];
     const lightColor = ['#FFFBE7', '#EEFAFF', '#FFF3EF'];
@@ -36,8 +39,26 @@ const ScheduleAddInnerModal = ({
     const [place, setPlace] = useState<string>('');
     const [budget, setBudget] = useState<string>('');
     const [memo, setMemo] = useState<string>('');
+    const [image, setImage] = useState<string>('');
+    const [file, setFile] = useState<string>('');
     const startToMinute = startHour.getHours() * 60 + startHour.getMinutes();
     const endToMinute = endHour.getHours() * 60 + endHour.getMinutes();
+
+    const sendDatas = {
+        plan_date: format(date, 'yyyy-MM-dd'),
+        plan_color: (colorNum + 1).toString(),
+        plan_lineColor: (colorNum + 1).toString(),
+        plan_title: title,
+        plan_column: differenceInDays(date, departureDate),
+        start_time: startHour.getHours().toString(),
+        plan_halfHour: (endToMinute - startToMinute) / 30,
+        plan_place: place,
+        plan_budget: budget,
+        plan_memo: memo,
+        plan_image: image,
+        plan_file: file
+    };
+
     const datas = {
         id: scheduleId,
         column: differenceInDays(date, departureDate),
@@ -53,6 +74,7 @@ const ScheduleAddInnerModal = ({
         <ScheduleAddModal
             setModalState={setIsModal}
             onClickCompleteButton={() => {
+                updateSchedule(sendDatas, pid);
                 setSchedule([...schedule, datas]);
                 setScheduleId((n: number) => n + 1);
                 setIsModal(false);

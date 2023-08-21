@@ -7,6 +7,8 @@ import Conversation from '@/components/conversation/Conversation';
 import HotPlace from '@/components/hotplace/HotPlace';
 import CardCarousel from '@/components/main/CardCarousel';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
+import Places from '@/components/hotplace/Places';
 
 interface CityProps {
     country: string;
@@ -109,14 +111,7 @@ const Page = () => {
                     <InfoCity city={cityName} />
                     {/* 인기 여행지 */}
                     <HotPlace city={cityName.location} zoom={cityName.zoom} />
-                    <div className='my-16'>
-                        <CardCarousel
-                            mode={0}
-                            title=''
-                            size={4}
-                            items={dummyCity}
-                        />
-                    </div>
+                    <Places cities={cityName.location} />
                     {/* 추천 준비물 */}
                     {/* <RecoPrep /> */}
                     <div className='my-16'>
