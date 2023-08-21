@@ -25,22 +25,18 @@ const NewBag = () => {
             ...bagList,
             {
                 bag_name,
-                departureDate: '2023-08-15',
-                arrivalDate: '2023-08-20',
-                stay_duration: '3박 4일'
+                departureDate: '',
+                arrivalDate: '',
+                stay_duration: ''
             }
         ]);
-        // await makeNewTravelBag(pid, bag_name);
-        await makeNewTravelBag(2, bag_name);
+        await makeNewTravelBag(planID, bag_name);
 
         setIsNewBagModal(false);
     };
 
     useEffect(() => {
         getScheduleTravelBagList(planID).then((data) => {
-            console.log('getScheduleTravelBagList:', data);
-            console.log('planID:', planID);
-
             setBagList(data);
         });
     }, [planID]);
