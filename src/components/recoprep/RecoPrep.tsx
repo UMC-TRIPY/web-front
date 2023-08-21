@@ -1,43 +1,11 @@
 import { use, useEffect, useState } from 'react';
 
-export default function RecoPrep() {
-    const items = [
-        [
-            ['110V 멀티어댑터', '일본은 110V를 사용해요.', '/images/prep1.png'],
-            [
-                '동전지갑',
-                '현금과 동전을 많이 쓰기 때문에 동전지갑이 편해요.',
-                '/images/prep2.png'
-            ],
-            [
-                '도쿄 서브웨이 티켓',
-                '도쿄에서 시간별로 나눠 지하철 13개 노선의 250여 개 정류장을 사용해요.',
-                '/images/prep3.png'
-            ]
-        ],
-        [
-            ['유니버셜 티켓', '재밌게 놀아봐용.', '/images/prep3.png'],
-            ['도톤보리', '거리 이쁨.', '/images/prep1.png'],
-            ['아사이', '맥주 존맛.', '/images/prep2.png']
-        ],
-        [
-            ['삿포로', '눈이 예뻐여.', '/images/prep2.png'],
-            ['오키나와', '오키! 나와.', '/images/prep3.png'],
-            ['나고야', '사슴 공원.', '/images/prep1.png']
-        ]
-    ];
-    const itemLen = items.length;
+export default function RecoPrep({ materials }: { materials: any }) {
     const [add, setAdd] = useState<string[]>([]);
     const [num, setNum] = useState<number>(0);
-    let views = items[num];
-
-    useEffect(() => {
-        console.log(add);
-    }, [add]);
-
-    useEffect(() => {
-        console.log(num);
-    }, [num]);
+    const [slideItems, setSlideItems] = useState<any>();
+    const [maxSlide, setMaxSlide] = useState<number>(0);
+    const [offset, setOffset] = useState<any>();
 
     const onClick = (prep: string) => {
         const adding = [...add, prep];
@@ -45,39 +13,28 @@ export default function RecoPrep() {
         alert(`${prep} 가방에 담기 성공!`);
     };
     const decrease = () => {
-        setNum((num) => (num === 0 ? itemLen - 1 : num - 1));
+        setNum((num) => (num === 0 ? 0 : num - 1));
     };
     const increase = () => {
-        setNum((num) => (num === itemLen - 1 ? 0 : num + 1));
+        setNum((num) => (num === maxSlide - 1 ? maxSlide - 1 : num + 1));
     };
-    const Preparation = ({
-        prep,
-        usage,
-        src
-    }: {
-        prep: string;
-        usage: string;
-        src: string;
-    }) => {
-        return (
-            <div className='flex mr-5'>
-                <div className='p-4 bg-brightgrey w-box-width h-box-height rounded-lg'>
-                    <p className='text-2xl font-bold mb-2'>{prep}</p>
-                    <p>{usage}</p>
-                    <div className='flex justify-center mt-4'>
-                        <img src={src} alt='none' />
-                    </div>
-                </div>
-                <button
-                    className='self-end absolute bg-lightgrey py-2 px-4 rounded-3xl ml-72 mb-4'
-                    type='button'
-                    onClick={() => onClick(prep)}
-                >
-                    가방에 담기
-                </button>
-            </div>
-        );
-    };
+    useEffect(() => {
+        let tmp: any[] = [];
+        let img = document.querySelectorAll('.images-container');
+        setSlideItems(img);
+        let len = img.length;
+        len = len % 3 === 0 ? len / 3 - 1 : Math.floor(len / 3);
+        setMaxSlide(len + 1);
+        for (let i = 0; i <= len; i++) {
+            tmp.push(1302 * i);
+        }
+        setOffset(tmp);
+    }, []);
+    if (slideItems !== undefined) {
+        slideItems.forEach((i: any) => {
+            i.style.left = `${-offset[num]}px`;
+        });
+    }
     return (
         <div className='my-16'>
             <div className='flex justify-between'>
@@ -98,16 +55,53 @@ export default function RecoPrep() {
                 </div>
             </div>
             <div className='mt-8 flex overflow-x-hidden'>
-                {views.map((item: string[], index: number) => {
-                    return (
-                        <Preparation
-                            key={`prep${index}`}
-                            prep={item[0]}
-                            usage={item[1]}
-                            src={item[2]}
-                        />
-                    );
-                })}
+                {materials === undefined
+                    ? ''
+                    : materials.map((material: any, index: number) => {
+                          return (
+                              <div
+                                  key={`contatiner${index}`}
+                                  className='flex mr-5 relative images-container'
+                                  style={{
+                                      left: '0px',
+                                      transition: 'left 0.3s'
+                                  }}
+                              >
+                                  <div
+                                      key={`wrap${index}`}
+                                      className='p-4 bg-brightgrey w-box-width h-box-height rounded-lg'
+                                  >
+                                      <p
+                                          key={`${material.name}${index}`}
+                                          className='text-2xl font-bold mb-2'
+                                      >
+                                          {material.name}
+                                      </p>
+                                      <p key={`${material.desc}${index}`}>
+                                          {material.desc}
+                                      </p>
+                                      <div
+                                          key={`imgwrap${index}`}
+                                          className='flex justify-center mt-4'
+                                      >
+                                          <img
+                                              key={`img${index}`}
+                                              src='/images/prep2.png'
+                                              alt='none'
+                                          />
+                                      </div>
+                                  </div>
+                                  <button
+                                      key={`${material.name}btn${index}`}
+                                      className='self-end absolute bg-lightgrey py-2 px-4 rounded-3xl ml-72 mb-4'
+                                      type='button'
+                                      onClick={() => onClick(material.name)}
+                                  >
+                                      가방에 담기
+                                  </button>
+                              </div>
+                          );
+                      })}
             </div>
         </div>
     );

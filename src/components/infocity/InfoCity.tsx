@@ -6,7 +6,7 @@ import format from 'date-fns/format';
 import Calendar from './Calendar';
 import Image from 'next/image';
 
-export default function InfoCity({ city }: any) {
+export default function InfoCity({ city }: { city: any }) {
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
