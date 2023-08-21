@@ -84,13 +84,6 @@ export default function InfoMenus({
 
     useEffect(() => {}, []);
 
-    const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
-        console.log(e);
-        if (e.key === 'Enter' && place !== '' && results.length === 1) {
-            router.push(`/info/${results.map((result) => result[1])}`);
-        }
-    };
-
     return (
         <div
             className={`flex justify-between py-6 sticky top-0 bg-white ${
@@ -119,7 +112,6 @@ export default function InfoMenus({
                             setPlace(e.target.value)
                         }
                         onClick={() => setIsModal(true)}
-                        onKeyDown={onKeyDown}
                     />
                     <Link
                         onClick={() => {
