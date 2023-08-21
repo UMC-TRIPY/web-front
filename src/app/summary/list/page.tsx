@@ -34,7 +34,7 @@ export default function Page() {
     };
     return (
         <div className='pt-28'>
-            <OtherSchedule href='summary' register={false} />
+            <OtherSchedule href='summary' register={false} top='top-[290px]' />
             <div className='flex'>
                 {lists.map((list, idx) => (
                     <List key={`lists${idx}`} link={list[0]} name={list[1]} />

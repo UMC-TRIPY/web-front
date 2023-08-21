@@ -61,7 +61,7 @@ const NewBag = () => {
             <div className='flex items-end h-36 gap-4 text-grey mb-4'>
                 <TopTab tabs={tabs} handleClickTab={handleClickTab} />
             </div>
-            <OtherSchedule href='mybag' register={false} />
+            <OtherSchedule href='mybag' register={false} top='top-[340px]' />
             <div className='h-96'>
                 <div className='flex h-full'>
                     {lastClicedTab.current ? (

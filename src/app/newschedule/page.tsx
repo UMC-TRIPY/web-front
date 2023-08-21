@@ -30,7 +30,7 @@ export default function Page() {
     useEffect(() => {
         const date: any = sessionStorage.getItem('date')?.split('~');
         const s = date[0];
-        const e = date[1].split(' ')[0];
+        const e = date[1].split(' ')[1];
         setStart(new Date(s));
         setDiffer(differenceInDays(new Date(e), new Date(s)) + 1);
     }, []);
@@ -172,7 +172,11 @@ export default function Page() {
             {/* 공통 머리글 */}
             <CommonHeader />
             {/* 다른 일정 선택 */}
-            <OtherSchedule href='schedulemain' register={false} />
+            <OtherSchedule
+                href='schedulemain'
+                register={true}
+                top='top-[0px]'
+            />
             {/* 친구 목록 */}
             <FriendList friends={friends} edit={true} />
             {/* 여행 일정 */}

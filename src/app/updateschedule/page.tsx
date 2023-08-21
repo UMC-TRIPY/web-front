@@ -194,11 +194,15 @@ export default function Updateschedule() {
     };
 
     return (
-        <div className='mt-20 p-20'>
+        <div className='mt-20 py-20'>
             {/* 공통 머리글 */}
             <CommonHeader />
             {/* 다른 일정 선택 */}
-            <OtherSchedule href='schedulemain' register={true} />
+            <OtherSchedule
+                href='schedulemain'
+                register={false}
+                top='top-[545px]'
+            />
             {/* 친구 목록 */}
             <FriendList friends={[]} edit={true} />
             {/* 여행 일정 */}

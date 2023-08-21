@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { BiSearch } from 'react-icons/bi';
 import { useState } from 'react';
-import SearchModal from '@/components/modal/SearchCityModal';
+import SearchCityModal from '@/components/modal/SearchCityModal';
 import Link from 'next/link';
 import { RxCross1 } from 'react-icons/rx';
 import { useRouter } from 'next/navigation';
@@ -109,7 +109,7 @@ const Page = () => {
                 </Link>
             </div>
             {modal && (
-                <SearchModal setModalState={setIsModal} results={results} />
+                <SearchCityModal setModalState={setIsModal} results={results} />
             )}
             <div className='flex self-center w-1/2 items-center mb-16'>
                 <span className='mr-2'>최근 검색어</span>

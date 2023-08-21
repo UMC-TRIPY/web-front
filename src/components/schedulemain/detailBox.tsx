@@ -125,7 +125,7 @@ function DetailBox({ selectedCities, setSelectedCities }: DetailBoxProps) {
         const start = format(startDate, 'yyyy.MM.dd');
         const end = format(endDate, 'yyyy.MM.dd');
         const difference = differenceInDays(endDate, startDate) + 1;
-        const dates = `${start}~${end} (${difference - 1}박 ${difference}일)`;
+        const dates = `${start} ~ ${end} (${difference - 1}박 ${difference}일)`;
         sessionStorage.setItem('date', dates);
     };
     return (
