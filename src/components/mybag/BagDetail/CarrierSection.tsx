@@ -1,6 +1,11 @@
 'use client';
 
-import { addMaterial, deleteMaterial, editMaterialName } from '@/apis/bag';
+import {
+    addMaterial,
+    changeCheckMaterial,
+    deleteMaterial,
+    editMaterialName
+} from '@/apis/bag';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -29,8 +34,10 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
 
     const [clickedMaterial, setClickedMaterial] = useState<number>(-1);
 
-    const handleCheckbox = (e: any) => {
+    const handleCheckbox = async (e: any) => {
         const id = parseInt(e.target.id);
+        // await changeCheckMaterial(bid, id)
+        await changeCheckMaterial(16, id);
         setMaterials(
             materials.map((material) =>
                 material.materials_index === id
@@ -131,7 +138,7 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
             </div>
             <div
                 id='carrier-body'
-                className='flex flex-col gap-8 p-4 bg-brightgrey '
+                className='flex flex-col gap-8 p-4 bg-brightgrey h-full overflow-scroll border-0'
             >
                 <div className='flex justify-end gap-2'>
                     {(isAdd || isEdit) && (
