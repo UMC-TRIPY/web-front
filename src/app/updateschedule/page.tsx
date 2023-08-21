@@ -26,7 +26,6 @@ export default function Updateschedule() {
             color: '#EEFAFF',
             startTime: dateTotable(new Date('2023-07-25 10:00:00')),
             halfHour: 4,
-            // endTime: new Date('2023-07-25 12:00:00'),
             title: '자차로 이동'
         },
         {
@@ -36,7 +35,6 @@ export default function Updateschedule() {
             color: '#EEFAFF',
             startTime: 10,
             halfHour: 10,
-            // endTime: new Date('2023-07-25 19:00:00'),
             title: '자고싶다'
         },
         {
@@ -46,7 +44,6 @@ export default function Updateschedule() {
             color: '#FFFBE7',
             startTime: dateTotable(new Date('2023-07-25 20:00:00')),
             halfHour: 5,
-            // endTime: new Date('2023-07-25 21:00:00'),
             title: '변경사항 왜 적용안돼'
         },
         {
@@ -56,7 +53,6 @@ export default function Updateschedule() {
             color: '#FFF3EF',
             startTime: dateTotable(new Date('2023-07-25 10:00:00')),
             halfHour: 10,
-            // endTime: new Date('2023-07-25 21:00:00'),
             title: '변경사항 왜 적용안돼',
             location: '서울시 강남구'
         }
@@ -196,7 +192,7 @@ export default function Updateschedule() {
             const selectedObject = newSchedule.find(
                 (obj) => obj.id === currentDraggingBlockId
             );
-            if (row + selectedObject?.halfHour <= 34) {
+            if (row + selectedObject!.halfHour <= 34) {
                 selectedObject!.column = column;
                 selectedObject!.startTime = row;
             }
@@ -212,7 +208,7 @@ export default function Updateschedule() {
             const selectedObject = schedule.find(
                 (obj) => obj.id === currentDraggingBlockId
             );
-            for (let i = 0; i < selectedObject?.halfHour; i++) {
+            for (let i = 0; i < selectedObject!.halfHour; i++) {
                 if (row + i >= 34) {
                     newEmptyBlockList[column][row + i] = 2;
                 } else {
