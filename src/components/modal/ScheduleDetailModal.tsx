@@ -3,10 +3,11 @@ import LabelSchedules from '../detailschedule/LabelSchedules';
 import Modal from './Modal';
 
 const ScheduleDetailModal = ({ setIsModal }: any) => {
+    const place = sessionStorage.getItem('place');
     return (
         <Modal
             modalMode={0}
-            title='일정 상세보기'
+            title={`${place} 일정 상세보기`}
             setModalState={setIsModal}
             onClickCompleteButton={() => setIsModal(false)}
             completeText=''

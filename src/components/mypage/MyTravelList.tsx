@@ -5,6 +5,7 @@ import RoundBtn from '../layout/roundBtn';
 import differenceInDays from 'date-fns/differenceInDays';
 import format from 'date-fns/format';
 import Pagination from '../maincommunity/Pagination';
+import ScheduleDetailModal from '../modal/ScheduleDetailModal';
 
 interface Props {
     id: number;
@@ -14,6 +15,7 @@ interface Props {
 
 export default function MyTravelList({ option }: { option: string }) {
     const [contents, setContents] = useState<any>([]);
+    const [modal, setModal] = useState<boolean>(false);
     const router = useRouter();
     useEffect(() => {
         checkLists().then((res) => {
@@ -85,6 +87,17 @@ export default function MyTravelList({ option }: { option: string }) {
                                     <RoundBtn
                                         label='상세보기'
                                         color='bg-lightgrey'
+                                        onClick={() => {
+                                            sessionStorage.setItem(
+                                                'place',
+                                                data.places
+                                            );
+                                            sessionStorage.setItem(
+                                                'date',
+                                                data.dates
+                                            );
+                                            setModal(true);
+                                        }}
                                     />
                                     <RoundBtn
                                         label={option}
@@ -116,6 +129,7 @@ export default function MyTravelList({ option }: { option: string }) {
                 current={current}
                 setCurrent={setCurrent}
             />
+            {modal && <ScheduleDetailModal setIsModal={setModal} />}
         </div>
     );
 }

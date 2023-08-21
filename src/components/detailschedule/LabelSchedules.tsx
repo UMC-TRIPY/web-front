@@ -113,9 +113,13 @@ export default function LabelSchedules({ status }: ILabelScheduleProps) {
                             {schedule.todos.map((todo, idx) => (
                                 <div
                                     key={idx}
-                                    className={`flex items-center justify-between border border-lightgrey border-l-8 rounded-lg p-2 pl-7 mb-2 ${
-                                        todo.color
-                                    } ${todo.checked ? 'bg-lightgrey' : ''}`}
+                                    className='flex items-center justify-between border border-lightgrey border-l-8 rounded-lg p-2 pl-7 mb-2'
+                                    style={{
+                                        borderLeftColor: todo.color,
+                                        backgroundColor: todo.checked
+                                            ? '#E5E5E5'
+                                            : ''
+                                    }}
                                 >
                                     <div>
                                         <div className='text-xs text-grey pb-2'>

@@ -5,6 +5,7 @@ import RoundBtn from '../layout/roundBtn';
 import differenceInDays from 'date-fns/differenceInDays';
 import format from 'date-fns/format';
 import Pagination from '../maincommunity/Pagination';
+import ScheduleDetailModal from '../modal/ScheduleDetailModal';
 
 interface Props {
     id: number;
@@ -15,6 +16,7 @@ interface Props {
 export default function MyBagList() {
     const [contents, setContents] = useState<any>([]);
     const router = useRouter();
+    const [modal, setModal] = useState<boolean>(false);
     useEffect(() => {
         checkLists().then((res) => {
             let tmp: any[] = [];
@@ -85,6 +87,17 @@ export default function MyBagList() {
                                     <RoundBtn
                                         label='상세보기'
                                         color='bg-lightgrey'
+                                        onClick={() => {
+                                            sessionStorage.setItem(
+                                                'place',
+                                                data.places
+                                            );
+                                            sessionStorage.setItem(
+                                                'date',
+                                                data.dates
+                                            );
+                                            setModal(true);
+                                        }}
                                     />
                                     <RoundBtn
                                         label='삭제하기'
@@ -101,6 +114,7 @@ export default function MyBagList() {
                 current={current}
                 setCurrent={setCurrent}
             />
+            {modal && <ScheduleDetailModal setIsModal={setModal} />}
         </div>
     );
 }
