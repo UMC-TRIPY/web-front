@@ -25,7 +25,11 @@ export default function DetailSchedule() {
             {/* 공통 머리글 */}
             <CommonHeader />
             {/* 다른 일정 선택 */}
-            <OtherSchedule href='schedulemain' register={true} />
+            <OtherSchedule
+                href='schedulemain'
+                register={false}
+                top='top-[460px]'
+            />
             {/* 친구 목록 */}
             <FriendList friends={friends} edit={false} />
             {/* 여행 일정 */}
