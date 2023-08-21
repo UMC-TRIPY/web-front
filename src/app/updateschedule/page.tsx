@@ -1,5 +1,4 @@
 'use client';
-import LabelSchedules from '../../components/detailschedule/LabelSchedules';
 import FriendList from '../../components/detailschedule/FriendList';
 import OtherSchedule from '../../components/detailschedule/OtherSchedule';
 import CommonHeader from '../../components/detailschedule/CommonHeader';
@@ -7,6 +6,7 @@ import IScheduleItem from '@/models/interface/IScheduleItem';
 import ScheduleBlock from '@/components/scheduleblock/ScheduleBlock';
 import { useCallback, useEffect, useState } from 'react';
 import { dateTotable } from '@/utils/dateUtil';
+import { useRouter } from 'next/navigation';
 
 /**
  * Todo
@@ -17,6 +17,7 @@ import { dateTotable } from '@/utils/dateUtil';
  */
 
 export default function Updateschedule() {
+    const router = useRouter();
     const [schedule, setSchedule] = useState<IScheduleItem[]>([
         // 몇번째 칸인지도 넣기?
         {
@@ -154,9 +155,7 @@ export default function Updateschedule() {
                             return dragFunction(e, 'over');
                         }}
                         onDrop={() => handleBlockDrop(i, j)}
-                    >
-                        {j}
-                    </div>
+                    ></div>
                 );
             }
         }
@@ -236,15 +235,19 @@ export default function Updateschedule() {
     }, []);
 
     return (
-        <div className='mt-20 p-20'>
+        <div className='mt-20 py-20'>
             {/* 공통 머리글 */}
             <CommonHeader />
             {/* 다른 일정 선택 */}
-            <OtherSchedule />
+            <OtherSchedule
+                href='schedulemain'
+                register={false}
+                top='top-[545px]'
+            />
             {/* 친구 목록 */}
-            <FriendList />
+            <FriendList friends={[]} edit={true} />
             {/* 여행 일정 */}
-            <div className='relative flex flex-row overflow-scroll'>
+            <div className='relative flex flex-row  overflow-x-scroll'>
                 <div>
                     {/* Default */}
                     {renderTimeTable()}
@@ -282,6 +285,14 @@ export default function Updateschedule() {
                         renderScheduleBlock(item, idx)
                     )}
                 </div>
+            </div>
+            <div className='flex justify-center'>
+                <button
+                    className='mt-24 py-3 px-11 bg-primary rounded'
+                    onClick={() => router.push('/schedule')}
+                >
+                    변경사항 저장
+                </button>
             </div>
         </div>
     );

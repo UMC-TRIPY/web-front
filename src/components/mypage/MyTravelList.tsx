@@ -13,7 +13,7 @@ interface Props {
     places: string;
 }
 
-export default function MyTravel() {
+export default function MyTravelList({ option }: { option: string }) {
     const [contents, setContents] = useState<any>([]);
     const [modal, setModal] = useState<boolean>(false);
     const router = useRouter();
@@ -28,7 +28,7 @@ export default function MyTravel() {
                 const arrivalDate = new Date(d.arrivalDate.slice(0, 10));
                 const difference = differenceInDays(arrivalDate, departureDate);
                 tmp.push({
-                    id: d.plan_index,
+                    id: idx + 1,
                     dates: `${format(departureDate, 'yyyy.MM.dd')} ~ ${format(
                         arrivalDate,
                         'yyyy.MM.dd'
@@ -100,7 +100,7 @@ export default function MyTravel() {
                                         }}
                                     />
                                     <RoundBtn
-                                        label='모아보기'
+                                        label={option}
                                         color='bg-lightgrey'
                                         onClick={() => {
                                             sessionStorage.setItem(
@@ -111,7 +111,11 @@ export default function MyTravel() {
                                                 'date',
                                                 data.dates
                                             );
-                                            router.push('/summary/list');
+                                            router.push(
+                                                option === '수정하기'
+                                                    ? '/updateschedule'
+                                                    : '/mybag/new'
+                                            );
                                         }}
                                     />
                                 </div>

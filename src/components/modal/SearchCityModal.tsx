@@ -7,7 +7,7 @@ type Props = {
     results: [string, string][];
 };
 
-export default function SearchModal({ setModalState, results }: Props) {
+export default function SearchCityModal({ setModalState, results }: Props) {
     useEffect(() => {
         document.body.style.overflowX = 'hidden';
     });

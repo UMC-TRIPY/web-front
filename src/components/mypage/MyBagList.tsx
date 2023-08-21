@@ -13,10 +13,10 @@ interface Props {
     places: string;
 }
 
-export default function MyTravel() {
+export default function MyBagList() {
     const [contents, setContents] = useState<any>([]);
-    const [modal, setModal] = useState<boolean>(false);
     const router = useRouter();
+    const [modal, setModal] = useState<boolean>(false);
     useEffect(() => {
         checkLists().then((res) => {
             let tmp: any[] = [];
@@ -28,7 +28,7 @@ export default function MyTravel() {
                 const arrivalDate = new Date(d.arrivalDate.slice(0, 10));
                 const difference = differenceInDays(arrivalDate, departureDate);
                 tmp.push({
-                    id: d.plan_index,
+                    id: idx + 1,
                     dates: `${format(departureDate, 'yyyy.MM.dd')} ~ ${format(
                         arrivalDate,
                         'yyyy.MM.dd'
@@ -53,7 +53,7 @@ export default function MyTravel() {
     }, [current]);
     return (
         <div className='mx-4 mt-16'>
-            <div className='text-3xl font-bold mb-5'>내 여행 목록</div>
+            <div className='text-3xl font-bold mb-5'>내 가방 목록</div>
             <div className='rounded-md bg-brightgrey'>
                 <div className='border-b border-b-lightgrey py-5'>
                     <div className='flex justify-between'>
@@ -100,19 +100,8 @@ export default function MyTravel() {
                                         }}
                                     />
                                     <RoundBtn
-                                        label='모아보기'
+                                        label='삭제하기'
                                         color='bg-lightgrey'
-                                        onClick={() => {
-                                            sessionStorage.setItem(
-                                                'place',
-                                                data.places
-                                            );
-                                            sessionStorage.setItem(
-                                                'date',
-                                                data.dates
-                                            );
-                                            router.push('/summary/list');
-                                        }}
                                     />
                                 </div>
                             </div>

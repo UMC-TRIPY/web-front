@@ -8,7 +8,7 @@ import { useParams, useRouter } from 'next/navigation';
 import React, { useEffect, useRef, useState } from 'react';
 import { useRecoilState } from 'recoil';
 import LoginModal from '../modal/LoginModal';
-import ScheduleAddModal from '../modal/ScheduleAddModal';
+import ScheduleAddModal from '../modal/ScheduleAddInnerModal';
 import ScheduleDeleteModal from '../modal/ScheduleDeleteModal';
 import ScheduleDetailModal from '../modal/ScheduleDetailModal';
 
@@ -113,21 +113,21 @@ export default function Header() {
             index === selectedIndex
         ]);
         if (selectedIndex === 0) router.push('/info');
-        if (selectedIndex === 1) router.push('/schedule');
+        if (selectedIndex === 1) router.push('/schedulemain');
         if (selectedIndex === 2) router.push('/mybag');
         if (selectedIndex === 3) router.push('/community');
         if (selectedIndex === 4) router.push('/summary');
         setMenus(updatedMenus);
     };
 
-    useEffect(() => {
-        const token = localStorage.getItem('access');
-        if (token) setIsLoggedIn(true);
-        else {
-            setIsLoggedIn(false);
-            router.push('/');
-        }
-    });
+    // useEffect(() => {
+    //     const token = localStorage.getItem('access');
+    //     if (token) setIsLoggedIn(true);
+    //     else {
+    //         setIsLoggedIn(false);
+    //         router.push('/');
+    //     }
+    // });
 
     return (
         <header className='x-0 top-0 z-50 left-0 w-full bg-white border-b border-gray-300'>

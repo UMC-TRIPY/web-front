@@ -1,45 +1,63 @@
 'use client';
+import { getMyInformation } from '@/apis/user/friend';
+import { completeSignup } from '@/apis/user/login';
 import SignUpDoneModal from '@/components/modal/SignUpDoneModal';
+import { emailState, isLoggedInState } from '@/states/user';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 export default function Page() {
-    const [email, setEmail] = useState<string>('');
-    const [nickname, setNickname] = useState<string>('');
     const [isModal, setIsModal] = useState<boolean>(false);
+    const [nicknameInput, setNicknameInput] = useState<string>('');
+    const router = useRouter();
+    const setIsLoggedIn = useSetRecoilState(isLoggedInState);
+
+    const [userData, setUserData] = useState({
+        email: '로딩중...',
+        nickname: '로딩중...',
+        nationality: '한국',
+        profileImg: ''
+    });
 
     const onClick = () => {
         setIsModal(true);
+        completeSignup(nicknameInput).then((res) => {
+            console.log('complete:', res);
+            if (res.success) setIsLoggedIn(true);
+            else {
+                alert('회원가입에 실패하였습니다. 다시 시도해주세요.');
+                router.push('/');
+            }
+        });
     };
 
+    useEffect(() => {
+        getMyInformation().then((data) => {
+            setUserData(data);
+        });
+    }, []);
     return (
         <div className='flex flex-col h-full mt-40'>
             <div className='text-3xl font-bold mb-12'>회원가입하기</div>
             <div className='text-xl mb-7'>이메일</div>
-            <input
-                type='text'
-                value={email}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setEmail(e.target.value)
-                }
-                placeholder='이메일을 입력해주세요'
-                className='border border-lightgrey rounded px-4 py-[14px] mb-9 outline-none'
-            />
+            <div className='border-2 p-3 my-4 text-grey'>{userData.email}</div>
             <div className='text-xl mb-7'>닉네임</div>
             <input
                 type='text'
-                value={nickname}
+                value={nicknameInput}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                    setNickname(e.target.value)
+                    setNicknameInput(e.target.value)
                 }
                 placeholder='닉네임을 입력해주세요'
                 className={`border rounded px-4 py-[14px] mb-3 outline-none ${
-                    !nickname ? 'border-lightgrey' : 'border-approve'
+                    !nicknameInput ? 'border-lightgrey' : 'border-approve'
                 } `}
             />
             <div
                 className={`text-xs text-approve mb-3 ${
-                    !nickname ? 'hidden' : ''
+                    !nicknameInput ? 'hidden' : ''
                 }`}
             >
                 사용 가능한 닉네임입니다.

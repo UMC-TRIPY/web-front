@@ -4,26 +4,19 @@ import MyTravel from './myTravel';
 import ScheduleHeader from './scheduleHeader';
 
 function ScheduleMain() {
-    const [selectedCities, setSelectedCities] = useState<string[]>([]);
-    const [scheduleCreated, setScheduleCreated] = useState(false);
-    
+    const [selectedCities, setSelectedCities] = useState<string>('');
     return (
         <div>
             {/* 상단 검색창 */}
-            <ScheduleHeader 
-                selectedCities={selectedCities} 
-                setSelectedCities={setSelectedCities} 
-                onCreateSchedule={() => {setScheduleCreated(true)}}
-                scheduleCreated={scheduleCreated}
-                setScheduleCreated={setScheduleCreated}
+            <ScheduleHeader
+                selectedCities={selectedCities}
+                setSelectedCities={setSelectedCities}
             />
             {/* 하단 검색창 */}
-            <DetailBox 
-                selectedCities={selectedCities} 
+            <DetailBox
+                selectedCities={selectedCities}
                 setSelectedCities={setSelectedCities}
-                scheduleCreated={scheduleCreated}
-                setScheduleCreated={setScheduleCreated}
-            />     
+            />
             {/* 내 여행 목록 */}
             <MyTravel status='page' />
         </div>

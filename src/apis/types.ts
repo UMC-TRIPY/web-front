@@ -5,7 +5,13 @@ export interface MaterialReturnType {
 
 export interface TokenReturnType {
     success: boolean;
-    uid: number;
+    user: {
+        user_index: number;
+        newUser: boolean;
+        email: string;
+        nickname: string;
+        profileImg: string;
+    };
     access_token: string;
     refresh_token: string;
 }
