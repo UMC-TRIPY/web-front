@@ -1,5 +1,4 @@
 import { checkLists } from '@/apis/travellists/check';
-import { updateLists } from '@/apis/travellists/update';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
@@ -41,7 +40,10 @@ export default function OtherSchedule({
                         d.departureDate === '0000-00-00'
                             ? new Date()
                             : new Date(d.departureDate.slice(0, 10));
-                    const arrivalDate = new Date(d.arrivalDate.slice(0, 10));
+                    const arrivalDate =
+                        d.departureDate === '0000-00-00'
+                            ? new Date()
+                            : new Date(d.arrivalDate.slice(0, 10));
                     const difference = differenceInDays(
                         arrivalDate,
                         departureDate
@@ -65,21 +67,10 @@ export default function OtherSchedule({
     }, []);
     const router = useRouter();
 
-    // useEffect(() => {
-    //     console.log('dd');
-    // }, []);
     const onClick = () => {
         if (!place) {
             alert('여행 지역을 입력해주세요.');
             return;
-        }
-        if (register) {
-            const datas = {
-                cityname: place,
-                departureDate: format(start, 'yyyy-MM-dd'),
-                arrivalDate: format(end, 'yyyy-MM-dd')
-            };
-            updateLists(datas);
         }
         router.push(`/${href}`);
     };

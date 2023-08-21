@@ -53,14 +53,6 @@ const Page = () => {
     const results = travels
         .filter((t: any) => t[0][0].includes(place[0]))
         .filter((t: any) => t[0].includes(place.replace(/ /g, '')));
-    const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
-        console.log(e);
-        if (e.key === 'Enter' && place !== '' && results.length === 1) {
-            router.push(
-                `/info/${results.map((result: [string, string]) => result[1])}`
-            );
-        }
-    };
     const onClick = (city: string) => {
         const move = travels.filter(
             (travel: [string, string]) => travel[0] === city
@@ -82,7 +74,6 @@ const Page = () => {
                         setPlace(e.target.value)
                     }
                     onClick={() => setIsModal(true)}
-                    onKeyDown={onKeyDown}
                 />
                 <Link
                     onClick={() => {

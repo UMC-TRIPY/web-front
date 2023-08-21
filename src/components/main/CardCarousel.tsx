@@ -61,13 +61,11 @@ const CardCarousel = ({ mode, title, items, size }: Props) => {
                                 flexBasis: `${100 / size}%`
                             }}
                         >
-                            <div className='flex flex-col h-1/6 p-5 justify-start'>
-                                <span className='flex font-bold text-2xl'>
+                            <div className='flex flex-col h-1/6 p-5 text-start'>
+                                <span className='font-bold text-2xl'>
                                     {item.title}
                                 </span>
-                                <span className='flex text-sm'>
-                                    {item.desc}
-                                </span>
+                                <span className='text-sm'>{item.desc}</span>
                             </div>
                             <img
                                 className='w-full h-4/6 p-5'
