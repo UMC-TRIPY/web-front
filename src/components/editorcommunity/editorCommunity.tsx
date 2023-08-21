@@ -3,6 +3,7 @@ import MainEditor from "@/components/editorcommunity/mainEditor";
 import SelectCountry from "@/components/editorcommunity/selectCountry";
 import TagEditor from "@/components/editorcommunity/tagEditor";
 import CommonHeader from "@/components/maincommunity/CommonHeader";
+import { updatePosts } from "@/apis/community/update";
 
 export default function EditorCommunity() {
     const [selectedCity, setSelectedCity] = useState<string>("");
@@ -38,6 +39,20 @@ export default function EditorCommunity() {
         setContentsEmpty(!contents);
     }
     console.log("postData:", postData);
+
+    const register = () => {
+        updatePosts({
+            user_index: postData.user_index,
+            post_title: postData.post_title,
+            post_content: postData.post_content,
+            city_index: postData.city_index,
+            tags: postData.tags,
+            post_image: postData.post_image,
+            post_file: postData.post_file,
+            plan_index: postData.plan_index,
+        });
+    };
+
 
     return (
         <div>
