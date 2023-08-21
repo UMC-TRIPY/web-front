@@ -92,3 +92,15 @@ export const getTravelPlanList = async () => {
     const result = await Server.get(`travel-plans/user/plans/${uid}`);
     return result.data;
 };
+
+/**
+ * pid로 일정에 해당하는 가방 모두 불러오기
+ * @param {number} pid
+ */
+export const getScheduleTravelBagList = async (pid: number) => {
+    // const uid = localStorage.getItem('uid');
+    const result = await Server.get<IBagReturnType[]>(
+        `travel-bag/user/plan/bag/${pid}`
+    );
+    return result.data;
+};

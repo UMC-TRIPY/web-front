@@ -1,6 +1,7 @@
 'use client';
 
 import {
+    getScheduleTravelBagList,
     getTravelBagList,
     getTravelPlanList,
     makeNewTravelBag
@@ -35,18 +36,14 @@ const NewBag = () => {
         setIsNewBagModal(false);
     };
 
-    // useEffect(() => {
-    //     getTravelPlanList().then((res) => {
-    //         console.log('getTravelPlanList:', res);
-    //     });
-    // }, []);
-
     useEffect(() => {
-        getTravelBagList().then((data) => {
-            console.log('getTravelBagList:', data);
+        getScheduleTravelBagList(planID).then((data) => {
+            console.log('getScheduleTravelBagList:', data);
+            console.log('planID:', planID);
+
             setBagList(data);
         });
-    }, []);
+    }, [planID]);
 
     return (
         <>
