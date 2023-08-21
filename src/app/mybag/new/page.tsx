@@ -9,12 +9,15 @@ import OtherSchedule from '@/components/detailschedule/OtherSchedule';
 import NewBagModal from '@/components/modal/NewBagModal';
 import BagList from '@/components/mybag/BagList';
 import EmptyBag from '@/components/mybag/EmptyBag';
+import { planIDState } from '@/states/schedule';
 import { IBag } from '@/types/bag';
 import React, { useEffect, useRef, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
 const NewBag = () => {
     const [bagList, setBagList] = useState<IBag[]>([]);
     const [isNewBagModal, setIsNewBagModal] = useState<boolean>(false);
+    const planID = useRecoilValue(planIDState);
 
     const handleAddNewBag = async (bag_name: string) => {
         setBagList([
