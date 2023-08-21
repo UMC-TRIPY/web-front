@@ -1,82 +1,67 @@
-import React from 'react';
-import Modal from './Modal';
-import { MdOutlineKeyboardArrowDown } from 'react-icons/md';
-import { FiMapPin } from 'react-icons/fi';
-import {
-    AiOutlinePicture,
-    AiOutlineLink,
-    AiOutlineFolderAdd
-} from 'react-icons/ai';
+import React, { useEffect } from 'react';
+import Portal from '@/components/modal/Portal';
 
-const ScheduleAddModal = ({ setIsModal }: any) => {
-    return (
-        <Modal
-            modalMode={1}
-            title='일정 등록'
-            setModalState={setIsModal}
-            onClickCompleteButton={() => setIsModal(false)}
-            completeText='저장'
-        >
-            <div className='flex flex-col gap-2 h-full p-4'>
-                <div className='flex basis-[10%] justify-between items-center'>
-                    <div className='w-[15%] flex justify-between items-center'>
-                        <div className='w-8 h-8 rounded-lg bg-[#57CDFF]'></div>
-                        <MdOutlineKeyboardArrowDown />
-                    </div>
-                    <input
-                        className='w-[80%] h-8 justify-center items-center rounded-xl border pl-2 align-middle'
-                        placeholder='일정을 등록하세요'
-                    ></input>
-                </div>
-                <div className='flex gap-2 basis-[10%] items-center'>
-                    <div className='flex items-center pl-2 w-[40%] h-10 bg-lightgrey rounded-lg'>
-                        6월 30일 (금요일)
-                    </div>
-                    <div className='flex items-center pl-2 w-[25%] h-10 bg-lightgrey rounded-lg'>
-                        8:00 AM
-                    </div>
-                    <div className='flex justify-center items-center w-[5%] h-10'>
-                        ~
-                    </div>
-                    <div className='flex items-center pl-2 w-[25%] h-10 bg-lightgrey rounded-lg'>
-                        9:00 AM
-                    </div>
-                </div>
-                <div className='flex basis-[15%] items-center border rounded-lg overflow-hidden'>
-                    <div className='flex justify-center items-center w-[10%] h-full bg-white border-r'>
-                        <FiMapPin />
-                    </div>
-                    <input
-                        className='w-[80%] h-8 justify-center items-center pl-2 align-middle'
-                        placeholder='장소를 추가해보세요'
-                    ></input>
-                </div>
-                <div className='flex basis-[15%] items-center border rounded-lg overflow-hidden'>
-                    <div className='flex justify-center items-center w-[10%] h-full bg-white border-r'>
-                        ₩
-                    </div>
-                    <input
-                        className='w-[80%] h-8 justify-center items-center pl-2 align-middle'
-                        placeholder='예산을 추가해보세요'
-                    ></input>
-                </div>
-                <div className='basis-[50%]'>
-                    <div className='flex items-center gap-2 p-2 bg-lightgrey'>
-                        <div>메모</div>
-                        <AiOutlineLink />
-                        <AiOutlinePicture />
-                        <AiOutlineFolderAdd />
-                    </div>
-                    <div>
-                        <textarea
-                            className='h-24 w-full bg-lightgrey pl-2'
-                            placeholder='메모를 입력하세요'
-                        ></textarea>
-                    </div>
-                </div>
-            </div>
-        </Modal>
-    );
+//mode
+// 끄기만 있는거, => 확인버튼이 아래
+// 취소, 완료 있는거 => 확인버튼이 완료
+
+type Props = {
+    setModalState: Function;
+    children: React.ReactNode;
+    onClickCompleteButton: Function;
 };
 
-export default ScheduleAddModal;
+export default function ScheduleAddModal({
+    setModalState,
+    children,
+    onClickCompleteButton
+}: Props) {
+    const Modal = () => (
+        <>
+            <div className='flex justify-between items-center px-5 rounded-t-lg border-b border-gray-200 bg-gray-50 p-4'>
+                <button
+                    onClick={() => {
+                        setModalState(false);
+                    }}
+                >
+                    <span className='text-xs'>취소</span>
+                </button>
+                <div className='font-bold text-xl'>일정 등록</div>
+                <button onClick={() => onClickCompleteButton()}>
+                    <span className='text-xs'>저장</span>
+                </button>
+            </div>
+        </>
+    );
+
+    useEffect(() => {
+        /* TODO: 스크롤이 내려가 있는 상태로 모달창 띄우는 방법도 고려 */
+        window.scrollTo(0, 0);
+        // const portal = document.getElementById('portal');
+        // if (portal) portal.classList.add(`top-[${window.scrollY}px]`);
+        document.body.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = 'unset';
+        };
+    }, []);
+
+    return (
+        <Portal selector='#body'>
+            <div className='flex justify-center items-center'>
+                <div
+                    className='absolute top-0 left-0 w-screen h-screen bg-gray-500 opacity-50 z-100'
+                    onClick={() => {
+                        setModalState(false);
+                    }}
+                ></div>
+                <div
+                    className='absolute flex flex-col top-1/3 left-1/3 w-1/3 rounded-lg bg-neutral-50 z-101'
+                    style={{ minHeight: '24rem' }}
+                >
+                    <Modal />
+                    <div className='basis-[85%]'>{children}</div>
+                </div>
+            </div>
+        </Portal>
+    );
+}

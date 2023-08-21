@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import format from 'date-fns/format';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -7,6 +7,7 @@ import HotSearch from './hotSearch';
 
 import { useRouter } from 'next/navigation';
 import SelectedPlaces from './SelectedPlaces';
+import { differenceInDays } from 'date-fns';
 
 interface MenuProps {
     menu: string;
@@ -46,18 +47,11 @@ function RoundBtn(props: RoundBtnProps) {
 }
 
 interface DetailBoxProps {
-    selectedCities: string[];
-    setSelectedCities: React.Dispatch<React.SetStateAction<string[]>>;
-    scheduleCreated: boolean;
-    setScheduleCreated: React.Dispatch<React.SetStateAction<boolean>>;
+    selectedCities: string;
+    setSelectedCities: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function DetailBox({ 
-    selectedCities, 
-    setSelectedCities,
-    scheduleCreated,
-    setScheduleCreated,
-}: DetailBoxProps) {
+function DetailBox({ selectedCities, setSelectedCities }: DetailBoxProps) {
     const [menus, setMenus] = useState<[string, boolean][]>([
         ['해외', true],
         ['국내', false]
@@ -120,12 +114,20 @@ function DetailBox({
                 }}
                 className='flex items-center justify-between w-[558px] text-grey border border-lightgrey rounded-md p-5 mx-1.5 my-4 hover:cursor-pointer'
             >
-                {value === null ? title : format(value, 'yyyy-MM-dd')}
+                {value === null ? title : format(value, 'yyyy.MM.dd')}
                 <AiOutlineCalendar size={24} />
             </div>
         );
     };
 
+    const register = () => {
+        if (startDate === null || endDate === null) return;
+        const start = format(startDate, 'yyyy.MM.dd');
+        const end = format(endDate, 'yyyy.MM.dd');
+        const difference = differenceInDays(endDate, startDate) + 1;
+        const dates = `${start} ~ ${end} (${difference - 1}박 ${difference}일)`;
+        sessionStorage.setItem('date', dates);
+    };
     return (
         <div className='mt-12'>
             {/* 해외, 국내 탭바 */}
@@ -148,7 +150,7 @@ function DetailBox({
                 <RoundBtn color='lightgrey' label='검색' />
             </div>
             {/* 인기 검색어 */}
-            {scheduleCreated && selectedCities.length > 0 ? (
+            {!!selectedCities ? (
                 <SelectedPlaces
                     selectedCities={selectedCities}
                     setSelectedCities={setSelectedCities}
@@ -163,7 +165,18 @@ function DetailBox({
                 <RoundBtn
                     color='primary'
                     label='등록'
-                    onClick={() => router.push('/info/tokyo')}
+                    onClick={() => {
+                        if (startDate === null || endDate === null) {
+                            alert('날짜를 선택해주세요.');
+                            return;
+                        }
+                        if (!selectedCities) {
+                            alert('여행 지역을 선택해 주세요.');
+                            return;
+                        }
+                        register();
+                        router.push('/newschedule');
+                    }}
                 />
             </div>
             <Calendar
