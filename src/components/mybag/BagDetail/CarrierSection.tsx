@@ -1,6 +1,6 @@
 'use client';
 
-import { addMaterial } from '@/apis/bag';
+import { addMaterial, deleteMaterial, editMaterialName } from '@/apis/bag';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
@@ -26,6 +26,8 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
     const [isEdit, setIsEdit] = useState<boolean>(false);
     const [addText, setAddText] = useState<string>('');
     const [editText, setEditText] = useState<string>('');
+
+    const [clickedMaterial, setClickedMaterial] = useState<number>(-1);
 
     const handleCheckbox = (e: any) => {
         const id = parseInt(e.target.id);
@@ -60,7 +62,8 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
         setAddText('');
     };
 
-    const handleClickDelete = (id: number) => {
+    const handleClickDelete = async (id: number) => {
+        await deleteMaterial(id);
         setMaterials(
             materials.filter((material) => material.materials_index !== id)
         );
@@ -68,6 +71,7 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
 
     const handleClickEdit = (id: number) => {
         setIsEdit(true);
+        setClickedMaterial(id);
         const selected = materials.filter(
             (material) => material.materials_index === id
         );
@@ -81,12 +85,13 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
         );
     };
 
-    const handleClickEndEdit = () => {
+    const handleClickEndEdit = async (mid: number) => {
         setIsEdit(false);
+        await editMaterialName(mid, editText);
         setMaterials(
             materials.map((material) =>
                 material.edited
-                    ? { ...material, name: editText, edited: false }
+                    ? { ...material, materials_name: editText, edited: false }
                     : material
             )
         );
@@ -133,7 +138,9 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                         <div
                             className='flex justify-center items-center w-fit h-8 p-4 bg-lightgrey rounded-full cursor-pointer'
                             onClick={
-                                isAdd ? handleClickEndAdd : handleClickEndEdit
+                                isAdd
+                                    ? handleClickEndAdd
+                                    : () => handleClickEndEdit(clickedMaterial)
                             }
                         >
                             입력완료

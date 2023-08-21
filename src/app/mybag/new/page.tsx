@@ -1,6 +1,10 @@
 'use client';
 
-import { getTravelBagList } from '@/apis/bag';
+import {
+    getTravelBagList,
+    getTravelPlanList,
+    makeNewTravelBag
+} from '@/apis/bag';
 import OtherSchedule from '@/components/detailschedule/OtherSchedule';
 import NewBagModal from '@/components/modal/NewBagModal';
 import BagList from '@/components/mybag/BagList';
@@ -12,7 +16,7 @@ const NewBag = () => {
     const [bagList, setBagList] = useState<IBag[]>([]);
     const [isNewBagModal, setIsNewBagModal] = useState<boolean>(false);
 
-    const handleAddNewBag = (bag_name: string) => {
+    const handleAddNewBag = async (bag_name: string) => {
         setBagList([
             ...bagList,
             {
@@ -22,8 +26,17 @@ const NewBag = () => {
                 stay_duration: '3박 4일'
             }
         ]);
+        // await makeNewTravelBag(pid, bag_name);
+        await makeNewTravelBag(2, bag_name);
+
         setIsNewBagModal(false);
     };
+
+    // useEffect(() => {
+    //     getTravelPlanList().then((res) => {
+    //         console.log('getTravelPlanList:', res);
+    //     });
+    // }, []);
 
     useEffect(() => {
         getTravelBagList().then((data) => {
