@@ -4,40 +4,30 @@
             "country": "일본",
             "cityKo": "오사카",
             "cityEn": "Osaka",
-            "currencyKo": "엔",
-            "currencyEn": "JPY",
             "mainPhoto": "/images/osakaPicc.jpg"
         },
         {
             "country": "일본",
             "cityKo": "도쿄",
             "cityEn": "Tokyo",
-            "currencyKo": "엔",
-            "currencyEn": "JPY",
             "mainPhoto": "/images/tokyoPic.jpg"
         },
         {
             "country": "영국",
             "cityKo": "런던",
             "cityEn": "London",
-            "currencyKo": "파운드",
-            "currencyEn": "GBP",
             "mainPhoto": "/images/londonPic.jpg"
         },
         {
             "country": "스페인",
             "cityKo": "바르셀로나",
             "cityEn": "Barcelona",
-            "currencyKo": "유로",
-            "currencyEn": "EUR",
             "mainPhoto": "/images/barcelonaPic.jpg"
         },
         {
             "country": "호주",
             "cityKo": "시드니",
             "cityEn": "Sydney",
-            "currencyKo": "달러",
-            "currencyEn": "AUD",
             "mainPhoto": "/images/sydneyPic.jpg"
         }
     ],

@@ -141,7 +141,7 @@ export default function MyTravelList({ option }: { option: string }) {
                                             );
                                             router.push(
                                                 option === '수정하기'
-                                                    ? '/updateschedule'
+                                                    ? '/schedule'
                                                     : '/mybag/new'
                                             );
                                         }}

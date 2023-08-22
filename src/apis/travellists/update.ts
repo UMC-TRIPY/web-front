@@ -31,6 +31,7 @@ export const updateLists = async (list: ListProps) => {
 };
 
 export const updateSchedule = async (schedule: ScheduleProps, pid: number) => {
+    console.log(schedule);
     await Server.post<any>(`/travel-plans/user/plans/detailed/${pid}`, schedule)
         .then((res: any) => console.log(res))
         .catch((err) => console.log(err));

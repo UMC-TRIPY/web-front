@@ -60,7 +60,10 @@ export default function ExchangeRate({
         setAfter(send);
     };
 
-    const len = currencyKo.length;
+    const len =
+        currencyKo.split(' ').length === 2
+            ? currencyKo.split(' ')[0].length + 1
+            : currencyKo.split(' ')[0].length;
     const pd = 25 + 16 * (len - 1);
     const mg = 310 - 16 * (len - 1);
 

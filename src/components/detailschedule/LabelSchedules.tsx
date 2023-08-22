@@ -58,23 +58,30 @@ export default function LabelSchedules({ status }: ILabelScheduleProps) {
                 todos: []
             });
         }
+        console.log(d);
         checkSchedules(Number(sessionStorage.getItem('pid')))
             .then((res) => {
                 res.map((r: any, idx: number) => {
+                    console.log(r);
                     const today = new Date(r.plan_date.slice(0, 10));
-                    tmp[differenceInDays(today, start)].todos.push({
-                        color: color[Number(r.plan_color) - 1],
-                        startTime: Number(r.start_time.slice(6)),
-                        halfHour: r.plan_halfHour,
-                        content: r.plan_title,
-                        additional:
-                            r.plan_memo === undefined ? '' : r.plan_memo,
-                        place:
-                            r.plan_place === undefined
-                                ? '장소 등록'
-                                : r.plan_place,
-                        checked: false
-                    });
+                    if (
+                        differenceInDays(today, start) <= d &&
+                        differenceInDays(today, start) >= 0
+                    ) {
+                        tmp[differenceInDays(today, start)].todos.push({
+                            color: color[Number(r.plan_color) - 1],
+                            startTime: Number(r.start_time.slice(6)),
+                            halfHour: r.plan_halfHour,
+                            content: r.plan_title,
+                            additional:
+                                r.plan_memo === undefined ? '' : r.plan_memo,
+                            place:
+                                r.plan_place === undefined
+                                    ? '장소 등록'
+                                    : r.plan_place,
+                            checked: false
+                        });
+                    }
                 });
                 setSchedules(tmp);
             })
