@@ -49,41 +49,45 @@ export default function SelectScheduleModal({
                     {schedules === undefined
                         ? ''
                         : schedules.map(
-                        (
-                            schedule: {
-                                id: number;
-                                dates: string;
-                                places: string;
-                            },
-                            idx: number
-                        ) => (
-                            <div
-                                key={`schedule${idx}`}
-                                className='flex py-4 px-8 border-y border-morelightgrey cursor-pointer'
-                                onClick={() => {
-                                    sessionStorage.setItem(
-                                        'date',
-                                        schedule.dates
-                                    );
-                                    sessionStorage.setItem(
-                                        'place',
-                                        schedule.places
-                                    );
-                                    sessionStorage.setItem(
-                                              'pid',
-                                              schedule.id.toString()
+                              (
+                                  schedule: {
+                                      pid: number;
+                                      dates: string;
+                                      places: string;
+                                  },
+                                  idx: number
+                              ) => (
+                                  <div
+                                      key={`schedule${idx}`}
+                                      className='flex py-4 px-8 border-y border-morelightgrey cursor-pointer'
+                                      onClick={() => {
+                                          sessionStorage.setItem(
+                                              'date',
+                                              schedule.dates
                                           );
-                                    setPlanID(schedule.id);
-                                    setDate(schedule.dates);
-                                    setPlace(schedule.places);
-                                    setModalState(false);
-                                }}
-                            >
-                                <div className='w-2/5'>{schedule.places}</div>
-                                <div className='w-full'>{schedule.dates}</div>
-                            </div>
-                        )
-                    )}
+                                          sessionStorage.setItem(
+                                              'place',
+                                              schedule.places
+                                          );
+                                          sessionStorage.setItem(
+                                              'pid',
+                                              schedule.pid.toString()
+                                          );
+                                          setPlanID(schedule.pid);
+                                          setDate(schedule.dates);
+                                          setPlace(schedule.places);
+                                          setModalState(false);
+                                      }}
+                                  >
+                                      <div className='w-2/5'>
+                                          {schedule.places}
+                                      </div>
+                                      <div className='w-full'>
+                                          {schedule.dates}
+                                      </div>
+                                  </div>
+                              )
+                          )}
                 </div>
             </div>
         </Portal>
