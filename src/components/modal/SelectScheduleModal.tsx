@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import Portal from '@/components/modal/Portal';
+import { useSetRecoilState } from 'recoil';
+import { planIDState } from '@/states/schedule';
 
 type Props = {
     setModalState: React.Dispatch<React.SetStateAction<boolean>>;
@@ -20,6 +22,7 @@ export default function SelectScheduleModal({
     setPlace,
     top
 }: Props) {
+    const setPlanID = useSetRecoilState(planIDState);
     useEffect(() => {
         document.body.style.overflowX = 'hidden';
     });
@@ -60,6 +63,7 @@ export default function SelectScheduleModal({
                                         'place',
                                         schedule.places
                                     );
+                                    setPlanID(schedule.id);
                                     setDate(schedule.dates);
                                     setPlace(schedule.places);
                                     setModalState(false);

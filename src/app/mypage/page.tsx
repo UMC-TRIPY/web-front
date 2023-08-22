@@ -12,6 +12,7 @@ import { Friend, IUser } from '@/types/user';
 import MyTravelList from '@/components/mypage/MyTravelList';
 import MakeSchedule from '@/components/mypage/MakeSchedule';
 import MyBagList from '@/components/mypage/MyBagList';
+import { editInformation } from '@/apis/user/login';
 
 export default function Mypage() {
     const [activeMenu, setActiveMenu] = useState<string>('정보');
@@ -38,6 +39,10 @@ export default function Mypage() {
         setUserData({ ...userData, profileImg });
     };
 
+    const handleEditUserInfo = async () => {
+        await editInformation(userData.profileImg, userData.nationality);
+    };
+
     let content;
     if (activeMenu === '정보') {
         content = (
@@ -53,7 +58,7 @@ export default function Mypage() {
                     handleSetNationality={handleSetNationality}
                 />
                 {/* 탈퇴/수정 버튼 */}
-                <ConfirmBtns />
+                <ConfirmBtns handleEditUserInfo={handleEditUserInfo} />
             </>
         );
     } else if (activeMenu === '여행일정') {
