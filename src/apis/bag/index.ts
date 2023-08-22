@@ -48,6 +48,13 @@ export const writeBagMemo = async (bid: number, memo: string) => {
     return result.data;
 };
 
+// 가방 내부 메모 조회
+export const getBagMemo = async (bid: number) => {
+    const result = await Server.post(`travel-bag/user/bag/memo/${bid}`);
+    console.log('메모조회:', result.data);
+    return result.data;
+};
+
 // 가방 내부에 준비물 추가
 export const addMaterial = async (bid: number, material: string) => {
     const result = await Server.post(`travel-bag/bag/material/${bid}`, {

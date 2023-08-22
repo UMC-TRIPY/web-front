@@ -1,14 +1,22 @@
-import { writeBagMemo } from '@/apis/bag';
+import { getBagMemo, writeBagMemo } from '@/apis/bag';
 import RoundBtn from '@/components/layout/roundBtn';
 import { useParams } from 'next/navigation';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const MemoSection = () => {
-    const params = useParams();
+    const { bid } = useParams();
     const [memoText, setMemoText] = useState<string>('');
     const handleClickSaveMemo = async () => {
-        await writeBagMemo(parseInt(params.bid), memoText);
+        await writeBagMemo(parseInt(bid), memoText);
     };
+
+    useEffect(() => {
+        if (bid !== undefined) {
+            getBagMemo(parseInt(bid)).then((data) => {
+                setMemoText(data);
+            });
+        }
+    }, [bid]);
 
     return (
         <div className='h-2/6 bg-brightgrey'>
