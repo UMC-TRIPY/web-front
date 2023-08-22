@@ -5,6 +5,7 @@ import TagEditor from "@/components/editorcommunity/tagEditor";
 import CommonHeader from "@/components/maincommunity/CommonHeader";
 import { updatePosts } from "@/apis/community/update";
 import ConfirmBtn from "../layout/confirmBtn";
+import { useRouter } from "next/navigation";
 
 export default function EditorCommunity() {
     const [selectedCity, setSelectedCity] = useState<string>("");
@@ -18,7 +19,7 @@ export default function EditorCommunity() {
 
     /** API 데이터 임시 저장 변수 */
     const [postData, setPostData] = useState({
-        user_index: 0,
+        user_index: 2,
         post_title: "",
         post_content: "",
         city_index: 0,
@@ -53,8 +54,8 @@ export default function EditorCommunity() {
 
     console.log("postData:", postData);
 
-    const register = () => {
-        updatePosts({
+    const register = async () => {
+        const response = await updatePosts({
             user_index: postData.user_index,
             post_title: postData.post_title,
             post_content: postData.post_content,
@@ -66,6 +67,33 @@ export default function EditorCommunity() {
         });
     };
 
+    // 모든 필드가 유효한지 확인하는 함수
+    const isFormValid = () => {
+        return (
+            selectedCity !== "" &&
+            title !== "" &&
+            contents !== "" &&
+            tagList.length > 0
+        );
+    };
+    
+    const router = useRouter();
+
+    const handleClick = async () => {
+        // 각 필드에 대한 에러 처리를 확인
+        handleCityEmptyError();
+        handleTitleEmptyError();
+        handleContentsEmptyError();
+        handleTagEmptyError();
+    
+        // 모든 필드 유효성 검사를 통과하면 register()를 호출
+        if (isFormValid()) {
+            await register();
+            router.push("/community/view/2");
+        } else {
+            console.log("에러!")
+        }
+    };
 
     return (
         <div>
@@ -106,13 +134,8 @@ export default function EditorCommunity() {
                 <ConfirmBtn 
                     label="등록하기" 
                     color="bg-primary" 
-                    onClick={() => { // 눌렀을 때
-                        handleCityEmptyError(); // 도시 게시판 선택했는지
-                        handleTitleEmptyError(); // 타이틀이 비었는지
-                        handleContentsEmptyError(); // 내용이 비었는지
-                        handleTagEmptyError(); // 태그가 비었는지
-                        // register(); // 제출
-                        // TODO: 제출시 오류처리
+                    onClick={() => { // 눌렀을 때 공백 에러 or 제출, 라우팅
+                        handleClick();
                     }}
                 />
             </div>
