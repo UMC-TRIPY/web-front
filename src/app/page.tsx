@@ -28,33 +28,28 @@ const dummyItem = <div>abc</div>;
 const dummyLocation: ILocation[] = [
     {
         title: '런던',
-        desc: '000개의 리뷰',
-        img: ''
+        desc: '999개의 리뷰',
+        img: '/images/londonPic.jpg'
     },
     {
         title: '도쿄',
-        desc: '000개의 리뷰',
-        img: '/images/tokyo.png'
+        desc: '999개의 리뷰',
+        img: '/images/tokyoPic.jpg'
     },
     {
-        title: '파리',
-        desc: '000개의 리뷰',
-        img: '/images/paris.png'
+        title: '바르셀로나',
+        desc: '999개의 리뷰',
+        img: '/images/barcelonaPic.jpg'
     },
     {
-        title: '뉴욕',
-        desc: '000개의 리뷰',
-        img: 'https://static01.nyt.com/images/2022/09/29/travel/36hours-nyc11/36hours-nyc11-mobileMasterAt3x-v2.jpg'
+        title: '오사카',
+        desc: '999개의 리뷰',
+        img: '/images/osakaPicc.jpg'
     },
     {
-        title: '방콕',
-        desc: '000개의 리뷰',
-        img: ''
-    },
-    {
-        title: '타이페이',
-        desc: '000개의 리뷰',
-        img: ''
+        title: '시드니',
+        desc: '999개의 리뷰',
+        img: '/images/sydneyPic.jpg'
     }
 ];
 
