@@ -1,13 +1,12 @@
 'use client';
-import FriendList from '../../components/detailschedule/FriendList';
-import OtherSchedule from '../../components/detailschedule/OtherSchedule';
-import CommonHeader from '../../components/detailschedule/CommonHeader';
+import FriendList from '../detailschedule/FriendList';
+import OtherSchedule from '../detailschedule/OtherSchedule';
+import CommonHeader from '../detailschedule/CommonHeader';
 import IScheduleItem from '@/models/interface/IScheduleItem';
 import ScheduleBlock from '@/components/scheduleblock/ScheduleBlock';
 import { useCallback, useEffect, useState } from 'react';
 import { dateTotable } from '@/utils/dateUtil';
 import { useRouter } from 'next/navigation';
-import ScheduleTable from '@/components/scheduleTable/ScheduleTable';
 
 /**
  * Todo
@@ -16,48 +15,13 @@ import ScheduleTable from '@/components/scheduleTable/ScheduleTable';
  * 4. 코드 리팩토링 필요
  */
 
-export default function Updateschedule() {
-    const router = useRouter();
-    const [schedule, setSchedule] = useState<IScheduleItem[]>([
-        // 몇번째 칸인지도 넣기?
-        {
-            id: 1,
-            column: 0,
-            lineColor: '#57CDFF',
-            color: '#EEFAFF',
-            startTime: dateTotable(new Date('2023-07-25 10:00:00')),
-            halfHour: 4,
-            title: '자차로 이동'
-        },
-        {
-            id: 2,
-            column: 0,
-            lineColor: '#78CAFA',
-            color: '#EEFAFF',
-            startTime: 10,
-            halfHour: 10,
-            title: '자고싶다'
-        },
-        {
-            id: 3,
-            column: 0,
-            lineColor: '#FFE457',
-            color: '#FFFBE7',
-            startTime: dateTotable(new Date('2023-07-25 20:00:00')),
-            halfHour: 5,
-            title: '변경사항 왜 적용안돼'
-        },
-        {
-            id: 4,
-            column: 1,
-            lineColor: '#FF7F57',
-            color: '#FFF3EF',
-            startTime: dateTotable(new Date('2023-07-25 10:00:00')),
-            halfHour: 10,
-            title: '변경사항 왜 적용안돼',
-            location: '서울시 강남구'
-        }
-    ]);
+type Props = {
+    schedule: IScheduleItem[];
+    setSchedule: Function;
+};
+
+export default function ScheduleTable(props: Props) {
+    const { schedule, setSchedule } = props;
     const [currentDraggingBlockId, setCurrentDraggingBlockId] = useState<
         number | null
     >(null);
@@ -186,7 +150,7 @@ export default function Updateschedule() {
         console.log(currentDraggingBlockId);
         resetEmptyBlockList();
 
-        setSchedule((prev) => {
+        setSchedule((prev: IScheduleItem[]) => {
             const newSchedule = [...prev];
             const selectedObject = newSchedule.find(
                 (obj) => obj.id === currentDraggingBlockId
@@ -235,26 +199,44 @@ export default function Updateschedule() {
     }, []);
 
     return (
-        <div className='mt-20 py-20'>
-            {/* 공통 머리글 */}
-            <CommonHeader />
-            {/* 다른 일정 선택 */}
-            <OtherSchedule
-                href='schedulemain'
-                register={false}
-                top='top-[545px]'
-            />
-            {/* 친구 목록 */}
-            <FriendList friends={[]} edit={true} />
+        <div className='relative flex flex-row  overflow-x-scroll'>
             {/* 여행 일정 */}
-            <ScheduleTable schedule={schedule} setSchedule={setSchedule} />
-            <div className='flex justify-center'>
-                <button
-                    className='mt-24 py-3 px-11 bg-primary rounded'
-                    onClick={() => router.push('/schedule')}
-                >
-                    변경사항 저장
-                </button>
+            <div>
+                {/* Default */}
+                {renderTimeTable()}
+            </div>
+            <div>
+                <div>{renderDateTable('6/30 (금)', schedule)}</div>
+            </div>
+            <div>
+                <div>{renderDateTable('7/1 (토)', schedule)}</div>
+            </div>
+            <div>
+                <div>{renderDateTable('7/2 (일)', schedule)}</div>
+            </div>
+            <div>
+                <div>{renderDateTable('7/2 (일)', schedule)}</div>
+            </div>
+            <div>
+                <div>{renderDateTable('7/2 (일)', schedule)}</div>
+            </div>
+            <div>
+                <div>{renderDateTable('7/2 (일)', schedule)}</div>
+            </div>
+            <div>
+                <div>{renderDateTable('7/2 (일)', schedule)}</div>
+            </div>
+            <div
+                className='absolute top-[1.75rem] left-[4.5rem] bottom-0 right-0'
+                style={{
+                    width: `calc((22rem * 7))`,
+                    height: 'calc(100% - 1.75rem)'
+                }}
+            >
+                {renderEmptyBlock()}
+                {schedule.map((item: IScheduleItem, idx: number) =>
+                    renderScheduleBlock(item, idx)
+                )}
             </div>
         </div>
     );
