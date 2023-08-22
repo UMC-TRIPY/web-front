@@ -1,10 +1,11 @@
 import { deleteAccount, editInformation } from '@/apis/user/login';
 import { isLoggedInState } from '@/states/user';
+import { IUser } from '@/types/user';
 import { useRouter } from 'next/navigation';
 import { useSetRecoilState } from 'recoil';
 import ConfirmBtn from '../layout/confirmBtn';
 
-export default function ConfirmBtns() {
+export default function ConfirmBtns({ handleEditUserInfo }: any) {
     const router = useRouter();
     const setIsLoggedIn = useSetRecoilState(isLoggedInState);
 
@@ -14,13 +15,6 @@ export default function ConfirmBtns() {
             setIsLoggedIn(false);
             router.push('/');
         });
-    };
-
-    const handleEditUserInfo = async (
-        nationality: string,
-        profileImg: string
-    ) => {
-        await editInformation(nationality, profileImg);
     };
 
     return (

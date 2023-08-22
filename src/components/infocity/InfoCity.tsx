@@ -6,7 +6,16 @@ import format from 'date-fns/format';
 import Calendar from './Calendar';
 import Image from 'next/image';
 
-export default function InfoCity({ city }: any) {
+interface CityProps {
+    country: string;
+    cityKo: string;
+    cityEn: string;
+    currencyKo: string;
+    currencyEn: string;
+    mainPhoto: string;
+}
+
+export default function InfoCity({ city }: { city: CityProps }) {
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -34,7 +43,7 @@ export default function InfoCity({ city }: any) {
     return (
         <div className='flex justify-between mt-28'>
             <Image
-                src={`/images/${city.mainPhoto}.png`}
+                src={city.mainPhoto}
                 alt='none'
                 width={522}
                 height={522}

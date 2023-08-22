@@ -1,77 +1,54 @@
 'use client';
 
+import {
+    getScheduleTravelBagList,
+    getTravelBagList,
+    getTravelPlanList,
+    makeNewTravelBag
+} from '@/apis/bag';
 import OtherSchedule from '@/components/detailschedule/OtherSchedule';
 import NewBagModal from '@/components/modal/NewBagModal';
 import BagList from '@/components/mybag/BagList';
-import DirectoryList from '@/components/mybag/DirectoryList';
 import EmptyBag from '@/components/mybag/EmptyBag';
-import TopTab from '@/components/mybag/TopTab';
-import Image from 'next/image';
-import React, { useRef, useState } from 'react';
+import { planIDState } from '@/states/schedule';
+import { IBag } from '@/types/bag';
+import React, { useEffect, useRef, useState } from 'react';
+import { useRecoilValue } from 'recoil';
 
 const NewBag = () => {
-    const [tabs, setTabs] = useState([
-        {
-            id: '0',
-            text: '내 가방 만들기',
-            clicked: true
-        },
-        {
-            id: '1',
-            text: '폴더보기',
-            clicked: false
-        }
-    ]);
-
-    const [bagList, setBagList] = useState([
-        {
-            id: '0',
-            name: '캐리어'
-        },
-        {
-            id: '1',
-            name: '크로스백'
-        }
-    ]);
-
+    const [bagList, setBagList] = useState<IBag[]>([]);
     const [isNewBagModal, setIsNewBagModal] = useState<boolean>(false);
-    const lastClicedTab = useRef<number>(0);
+    const planID = useRecoilValue(planIDState);
 
-    const handleClickTab = (e: any) => {
-        lastClicedTab.current = parseInt(e.target.id);
-        setTabs(
-            tabs.map((tab) =>
-                tab.id === e.target.id
-                    ? { ...tab, clicked: true }
-                    : { ...tab, clicked: false }
-            )
-        );
-    };
-
-    const handleAddNewBag = (bagName: string) => {
+    const handleAddNewBag = async (bag_name: string) => {
+        const bag_index = await makeNewTravelBag(planID, bag_name);
         setBagList([
             ...bagList,
-            { id: bagList.length.toString(), name: bagName }
+            {
+                bag_index,
+                bag_name,
+                user_index: -1
+            }
         ]);
+
         setIsNewBagModal(false);
     };
 
+    useEffect(() => {
+        getScheduleTravelBagList(planID).then((data) => {
+            setBagList(data);
+        });
+    }, [planID]);
+
     return (
         <>
-            <div className='flex items-end h-36 gap-4 text-grey mb-4'>
-                <TopTab tabs={tabs} handleClickTab={handleClickTab} />
-            </div>
+            <div className='flex items-end h-36 gap-4 text-grey mb-4'></div>
             <OtherSchedule href='mybag' register={false} top='top-[340px]' />
             <div className='h-96'>
                 <div className='flex h-full'>
-                    {lastClicedTab.current ? (
-                        <DirectoryList />
-                    ) : (
-                        <>
-                            <BagList bagList={bagList} />
-                            <EmptyBag setIsNewBagModal={setIsNewBagModal} />
-                        </>
-                    )}
+                    <BagList bagList={bagList} />
+                    <EmptyBag setIsNewBagModal={setIsNewBagModal} />
+
                     {isNewBagModal && (
                         <NewBagModal
                             setIsModal={setIsNewBagModal}

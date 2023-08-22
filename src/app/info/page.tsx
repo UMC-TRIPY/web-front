@@ -47,7 +47,7 @@ const Page = () => {
     const [place, setPlace] = useState<string>('');
     const [modal, setIsModal] = useState<boolean>(false);
     const router = useRouter();
-    const cities = ['런던', '제주도', '대만', '도쿄', '하와이'];
+    const popularKeyword = ['런던', '제주도', '대만', '도쿄', '하와이'];
     const datas = require('../../../public/data/dummy.json');
     const travels = datas.travels;
     const results = travels
@@ -193,7 +193,7 @@ const Page = () => {
             <div className='flex flex-col bg-brightgrey rounded-md px-8 py-2.5'>
                 <div className='py-2.5'>인기 검색어</div>
                 <div className='flex flex-col'>
-                    {cities.map((city, index) => (
+                    {popularKeyword.map((city, index) => (
                         <div key={index} className='flex items-start py-2.5'>
                             <span className='text-grey mr-4'>{index + 1}</span>
                             <button onClick={() => onClick(city)}>
