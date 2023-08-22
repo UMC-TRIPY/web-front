@@ -7,6 +7,10 @@ import ScheduleBlock from '@/components/scheduleblock/ScheduleBlock';
 import { useCallback, useEffect, useState } from 'react';
 import { dateTotable } from '@/utils/dateUtil';
 import { useRouter } from 'next/navigation';
+import { getFriendList, getInvitedFriendList } from '@/apis/user/friend';
+import { useRecoilValue } from 'recoil';
+import { planIDState } from '@/states/schedule';
+import { InvitedFriend, ISchedule } from '@/types/user';
 
 /**
  * Todo
@@ -234,6 +238,20 @@ export default function Updateschedule() {
         resetEmptyBlockList();
     }, []);
 
+    const planID = useRecoilValue(planIDState);
+    const [invitedFriendList, setInvitedFriendList] = useState<InvitedFriend[]>(
+        []
+    );
+
+    useEffect(() => {
+        if (planID !== -1) {
+            getInvitedFriendList(planID).then((data) => {
+                console.log('invitedFriendList:', data);
+                setInvitedFriendList(data);
+            });
+        }
+    }, [planID]);
+
     return (
         <div className='mt-20 py-20'>
             {/* 공통 머리글 */}
@@ -245,7 +263,7 @@ export default function Updateschedule() {
                 top='top-[545px]'
             />
             {/* 친구 목록 */}
-            <FriendList friends={[]} edit={true} />
+            <FriendList friends={invitedFriendList} edit={true} />
             {/* 여행 일정 */}
             <div className='relative flex flex-row  overflow-x-scroll'>
                 <div>

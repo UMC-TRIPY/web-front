@@ -22,7 +22,7 @@ export const makeNewTravelBag = async (pid: number, bagname: string) => {
         bagname
     });
     console.log('makeNewTravelBag:', result.data);
-    return result.data;
+    return result.data.bag_index;
 };
 
 // 특정 계획에 속한 가방 리스트와 준비물 불러오기
@@ -34,10 +34,11 @@ export const getBagAndMaterialList = async (pid: number) => {
 };
 
 // 여행지별 준비물 불러오기
-export const getCityMateriallList = async (cid: number) => {
+export const getCityMateriallList = async (cname: string) => {
     const result = await Server.get<ICityMaterialReturnType[]>(
-        `travel-bag/material/${cid}`
+        `travel-bag/materialname/${cname}`
     );
+
     return result.data;
 };
 
@@ -50,9 +51,9 @@ export const writeBagMemo = async (bid: number, memo: string) => {
 
 // 가방 내부 메모 조회
 export const getBagMemo = async (bid: number) => {
-    const result = await Server.post(`travel-bag/user/bag/memo/${bid}`);
+    const result = await Server.get(`travel-bag/user/bag/memo/${bid}`);
     console.log('메모조회:', result.data);
-    return result.data;
+    return result.data[0].bag_memo;
 };
 
 // 가방 내부에 준비물 추가
