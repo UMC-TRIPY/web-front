@@ -244,11 +244,13 @@ export default function Updateschedule() {
     );
 
     useEffect(() => {
-        getInvitedFriendList(planID).then((data) => {
-            console.log('invitedFriendList:', data);
-            setInvitedFriendList(data);
-        });
-    }, []);
+        if (planID !== -1) {
+            getInvitedFriendList(planID).then((data) => {
+                console.log('invitedFriendList:', data);
+                setInvitedFriendList(data);
+            });
+        }
+    }, [planID]);
 
     return (
         <div className='mt-20 py-20'>

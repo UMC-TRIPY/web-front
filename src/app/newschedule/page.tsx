@@ -216,11 +216,13 @@ export default function Page() {
 
     useEffect(() => {
         console.log('planID:', planID);
-        getInvitedFriendList(planID).then((data) => {
-            console.log('invitedFriendList:', data);
-            setInvitedFriendList(data);
-        });
-    }, []);
+        if (planID !== -1) {
+            getInvitedFriendList(planID).then((data) => {
+                console.log('invitedFriendList:', data);
+                setInvitedFriendList(data);
+            });
+        }
+    }, [planID]);
 
     return (
         <div className='mt-20 p-20'>

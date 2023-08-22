@@ -18,12 +18,14 @@ export default function DetailSchedule() {
     );
 
     useEffect(() => {
-        getInvitedFriendList(planID).then((data) => {
-            console.log('invitedFriendList planID:', planID);
-            console.log('invitedFriendList:', data);
-            setInvitedFriendList(data);
-        });
-    }, []);
+        if (planID !== -1) {
+            getInvitedFriendList(planID).then((data) => {
+                console.log('invitedFriendList planID:', planID);
+                console.log('invitedFriendList:', data);
+                setInvitedFriendList(data);
+            });
+        }
+    }, [planID]);
 
     return (
         <div className='mt-20'>
