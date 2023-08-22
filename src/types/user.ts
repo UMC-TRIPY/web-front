@@ -10,3 +10,10 @@ export interface IUser {
     nationality: string;
     profileImg: string;
 }
+
+export interface ISchedule {
+    city_name: string;
+    departureDate: string;
+    arrivalDate: string;
+    plan_index: number;
+}

@@ -1,5 +1,9 @@
 import { Server } from '../setting';
-import { FriendReturnType, InformationReturnType } from './types';
+import {
+    FriendReturnType,
+    InformationReturnType,
+    IScheduleReturnType
+} from './types';
 
 export const getMyInformation = async () => {
     const uid = localStorage.getItem('uid');
@@ -120,9 +124,13 @@ export const inviteFriend = async (pid: number, rid: number) => {
  * 내가 생성한 여행목록 조회
  *
  * */
+
 export const getCreatedScheduleList = async () => {
-    const uid = localStorage.getItem('uid');
-    const result = await Server.post(`travel-plans/user/made/plan/${uid}`);
+    // const uid = localStorage.getItem('uid');
+    const uid = 3;
+    const result = await Server.get<IScheduleReturnType[]>(
+        `travel-plans/user/made/plan/${uid}`
+    );
     console.log('getCreatedScheduleList: ', result.data);
     return result.data;
 };

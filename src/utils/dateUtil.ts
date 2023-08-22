@@ -36,3 +36,12 @@ export const formatAMPM = (date: Date) => {
     const strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
 };
+
+export const formatYYMMDD = (targetDate: string) => {
+    const date = new Date(targetDate);
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate();
+    // console.log(`${year}-${month}-${day}`);
+    return `${year}-${month}-${day}`;
+};

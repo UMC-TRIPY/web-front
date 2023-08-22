@@ -12,3 +12,10 @@ export interface InformationReturnType {
     nationality: string;
     profileImg: string;
 }
+
+export interface IScheduleReturnType {
+    city_name: string;
+    departureDate: string;
+    arrivalDate: string;
+    plan_index: number;
+}
