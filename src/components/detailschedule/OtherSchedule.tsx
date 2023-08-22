@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import differenceInDays from 'date-fns/differenceInDays';
 import SelectScheduleModal from '../modal/SelectScheduleModal';
+import { useSetRecoilState } from 'recoil';
+import { planIDState } from '@/states/schedule';
 
 interface TravelListProps {
     city_name: string;
@@ -32,6 +34,8 @@ export default function OtherSchedule({
     const [schedules, setSchedules] = useState<ScheduleProps[] | undefined>();
     const [modal, setModal] = useState<boolean>(false);
 
+    const setPlanID = useSetRecoilState(planIDState);
+
     useEffect(() => {
         const d = sessionStorage.getItem('date');
         const p = sessionStorage.getItem('place');
@@ -40,8 +44,9 @@ export default function OtherSchedule({
         setPlace(!p ? '' : p);
         checkLists()
             .then((res) => {
-                let tmp: ScheduleProps[] = [];
-                res.map((d: TravelListProps, idx: number) => {
+                let tmp: any[] = [];
+                setPlanID(res[0].plan_index);
+                res.map((d: any, idx: number) => {
                     const departureDate =
                         d.departureDate === '0000-00-00'
                             ? new Date()

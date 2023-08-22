@@ -1,40 +1,31 @@
 'use client';
 
+import { addMaterial, getTravelBagMaterialList } from '@/apis/bag';
 import { getMaterials } from '@/apis/material';
 import CarrierSection from '@/components/mybag/BagDetail/CarrierSection';
 import MaterialSection from '@/components/mybag/BagDetail/MaterialSection';
 import MemoSection from '@/components/mybag/BagDetail/MemoSection';
 import WeatherSection from '@/components/mybag/BagDetail/WeatherSection';
-import { useRouter } from 'next/navigation';
+import { bagIDState } from '@/states/schedule';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
+import { useRecoilState, useRecoilValue } from 'recoil';
 
 interface IMaterial {
     materials_index: number;
     materials_name: string;
+    check_box: boolean;
 }
 
 interface IMaterialProps extends IMaterial {
-    checked: boolean;
     edited: boolean;
 }
 
 const BagDetail = () => {
-    const route = useRouter();
-    // const [materials, setMaterials] = useState([
-    //     { id: '0', name: '비치웨어', checked: false, edited: false },
-    //     { id: '1', name: '자외선 차단제', checked: false, edited: false },
-    //     { id: '2', name: '양산', checked: false, edited: false },
-    //     { id: '3', name: '슬리퍼', checked: false, edited: false },
-    //     { id: '4', name: '여권', checked: false, edited: false },
-    //     { id: '5', name: '선글라스', checked: false, edited: false },
-    //     { id: '6', name: '미니 선풍기', checked: false, edited: false },
-    //     { id: '7', name: '우산', checked: false, edited: false },
-    //     { id: '8', name: '우비', checked: false, edited: false },
-    //     { id: '9', name: '부채', checked: false, edited: false },
-    //     { id: '10', name: '여행용 방수팩', checked: false, edited: false },
-    //     { id: '11', name: '수영 모자', checked: false, edited: false },
-    //     { id: '12', name: '모기약', checked: false, edited: false }
-    // ]);
+    const router = useRouter();
+    const { bid } = useParams();
+
+    const [bagID, setBagID] = useRecoilState(bagIDState);
     const [materials, setMaterials] = useState<IMaterialProps[]>([]);
 
     const [recommendMaterials, setRecommendMaterials] = useState([
@@ -54,16 +45,22 @@ const BagDetail = () => {
     ]);
 
     useEffect(() => {
-        getMaterials().then((res: IMaterial[]) => {
-            setMaterials(
-                res.map((data) => {
-                    return { ...data, checked: false, edited: false };
-                })
-            );
-        });
-    }, []);
+        console.log('bid:', bid);
+        if (bid !== undefined) {
+            console.log('bagID:', bid);
+            const id = parseInt(bid);
+            setBagID(id);
+            getTravelBagMaterialList(id).then((res: IMaterial[]) => {
+                setMaterials(
+                    res.map((data) => {
+                        return { ...data, edited: false };
+                    })
+                );
+            });
+        }
+    }, [bid, setBagID]);
 
-    const handleClickRecoMaterial = (id: string) => {
+    const handleClickRecoMaterial = async (id: string) => {
         const MATERIAL_LENGTH = materials.length;
         const restRecoMaterial = recommendMaterials.filter(
             (material) => material.id !== id
@@ -71,11 +68,11 @@ const BagDetail = () => {
         const clickedMaterial = recommendMaterials.filter(
             (material) => material.id === id
         );
-
+        await addMaterial(bagID, clickedMaterial[0].name);
         const newMaterial = {
-            materials_index: MATERIAL_LENGTH,
+            materials_index: -1,
             materials_name: clickedMaterial[0].name,
-            checked: false,
+            check_box: false,
             edited: false
         };
 
@@ -86,8 +83,8 @@ const BagDetail = () => {
     return (
         <div className='h-screen'>
             <div
-                className='flex items-center h-16 text-xl text-dark-black cursor-pointer'
-                onClick={() => route.push('/mybag/new')}
+                className='flex items-center h-16 text-xl text-dark-black cursor-pointer w-fit'
+                onClick={() => router.push('/mybag/new')}
             >
                 {'<'} 가방 목록 보기
             </div>

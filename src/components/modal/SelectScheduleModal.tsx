@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react';
 import Portal from '@/components/modal/Portal';
+import { useSetRecoilState } from 'recoil';
+import { planIDState } from '@/states/schedule';
 
 type Props = {
     setModalState: React.Dispatch<React.SetStateAction<boolean>>;
@@ -22,6 +24,7 @@ export default function SelectScheduleModal({
     setPlace,
     top
 }: Props) {
+    const setPlanID = useSetRecoilState(planIDState);
     useEffect(() => {
         document.body.style.overflowX = 'hidden';
     });
@@ -46,44 +49,41 @@ export default function SelectScheduleModal({
                     {schedules === undefined
                         ? ''
                         : schedules.map(
-                              (
-                                  schedule: {
-                                      pid: number;
-                                      dates: string;
-                                      places: string;
-                                  },
-                                  idx: number
-                              ) => (
-                                  <div
-                                      key={`schedule${idx}`}
-                                      className='flex py-4 px-8 border-y border-morelightgrey cursor-pointer'
-                                      onClick={() => {
-                                          sessionStorage.setItem(
-                                              'date',
-                                              schedule.dates
-                                          );
-                                          sessionStorage.setItem(
-                                              'place',
-                                              schedule.places
-                                          );
-                                          sessionStorage.setItem(
+                        (
+                            schedule: {
+                                id: number;
+                                dates: string;
+                                places: string;
+                            },
+                            idx: number
+                        ) => (
+                            <div
+                                key={`schedule${idx}`}
+                                className='flex py-4 px-8 border-y border-morelightgrey cursor-pointer'
+                                onClick={() => {
+                                    sessionStorage.setItem(
+                                        'date',
+                                        schedule.dates
+                                    );
+                                    sessionStorage.setItem(
+                                        'place',
+                                        schedule.places
+                                    );
+                                    sessionStorage.setItem(
                                               'pid',
-                                              schedule.pid.toString()
+                                              schedule.id.toString()
                                           );
-                                          setDate(schedule.dates);
-                                          setPlace(schedule.places);
-                                          setModalState(false);
-                                      }}
-                                  >
-                                      <div className='w-2/5'>
-                                          {schedule.places}
-                                      </div>
-                                      <div className='w-full'>
-                                          {schedule.dates}
-                                      </div>
-                                  </div>
-                              )
-                          )}
+                                    setPlanID(schedule.id);
+                                    setDate(schedule.dates);
+                                    setPlace(schedule.places);
+                                    setModalState(false);
+                                }}
+                            >
+                                <div className='w-2/5'>{schedule.places}</div>
+                                <div className='w-full'>{schedule.dates}</div>
+                            </div>
+                        )
+                    )}
                 </div>
             </div>
         </Portal>
