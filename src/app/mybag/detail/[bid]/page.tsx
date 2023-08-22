@@ -1,6 +1,6 @@
 'use client';
 
-import { getTravelBagMaterialList } from '@/apis/bag';
+import { addMaterial, getTravelBagMaterialList } from '@/apis/bag';
 import { getMaterials } from '@/apis/material';
 import CarrierSection from '@/components/mybag/BagDetail/CarrierSection';
 import MaterialSection from '@/components/mybag/BagDetail/MaterialSection';
@@ -58,7 +58,7 @@ const BagDetail = () => {
         });
     }, [bagID]);
 
-    const handleClickRecoMaterial = (id: string) => {
+    const handleClickRecoMaterial = async (id: string) => {
         const MATERIAL_LENGTH = materials.length;
         const restRecoMaterial = recommendMaterials.filter(
             (material) => material.id !== id
@@ -66,9 +66,9 @@ const BagDetail = () => {
         const clickedMaterial = recommendMaterials.filter(
             (material) => material.id === id
         );
-
+        await addMaterial(parseInt(params.bid), clickedMaterial[0].name);
         const newMaterial = {
-            materials_index: MATERIAL_LENGTH,
+            materials_index: -1,
             materials_name: clickedMaterial[0].name,
             check_box: false,
             edited: false
@@ -81,7 +81,7 @@ const BagDetail = () => {
     return (
         <div className='h-screen'>
             <div
-                className='flex items-center h-16 text-xl text-dark-black cursor-pointer'
+                className='flex items-center h-16 text-xl text-dark-black cursor-pointer w-fit'
                 onClick={() => router.push('/mybag/new')}
             >
                 {'<'} 가방 목록 보기
