@@ -263,11 +263,13 @@ export default function AllPosts() {
                     current={current}
                     setCurrent={setCurrent}
                 />
-                <button className='absolute self-end bg-lightgrey py-3 px-11 mt-10'>
-                    <Link href="/community/write">
+                <div className='absolute self-end'>
+                <Link href="/community/write">
+                    <button className='bg-lightgrey py-3 px-11 mt-10'>
                         글쓰기
-                    </Link>
-                </button>
+                    </button>
+                </Link>
+                </div>
             </div>
         </div>
     );
