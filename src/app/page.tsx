@@ -406,10 +406,12 @@ export default function Home() {
                         </tbody>
                     </table>
                 </div>
-                <div className='flex flex-col my-20 p-10 bg-[#E0E0E0]'>
-                    <span className='text-2xl font-bold'>프로모션 제목</span>
-                    <span className='text-xl'>프로모션 부가설명</span>
-                </div>
+                <Image
+                    src='/images/promotion.jpeg'
+                    alt='none'
+                    width={1280}
+                    height={200}
+                />
             </div>
         </main>
     );
