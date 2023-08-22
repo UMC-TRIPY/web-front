@@ -2,6 +2,7 @@ import { Server } from '../setting';
 import {
     FriendReturnType,
     InformationReturnType,
+    InvitedFriendReturnType,
     IScheduleReturnType
 } from './types';
 
@@ -128,11 +129,22 @@ export const inviteFriend = async (pid: number, uid2: number) => {
  * */
 
 export const getCreatedScheduleList = async () => {
-    // const uid = localStorage.getItem('uid');
-    const uid = 3;
+    const uid = localStorage.getItem('uid');
+    // const uid = 3;
     const result = await Server.get<IScheduleReturnType[]>(
         `travel-plans/user/made/plan/${uid}`
     );
     console.log('getCreatedScheduleList: ', result.data);
+    return result.data;
+};
+
+export const getInvitedFriendList = async (pid: number) => {
+    const uid = localStorage.getItem('uid');
+    // const uid = 2;
+    // pid = 6;
+    const result = await Server.get<InvitedFriendReturnType[]>(
+        `travel-plans/user/plans/friend/${uid}/${pid}`
+    );
+    console.log('getInvitedFriendList: ', result.data);
     return result.data;
 };

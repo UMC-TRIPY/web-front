@@ -8,8 +8,12 @@ import FriendList from '@/components/detailschedule/FriendList';
 import OtherSchedule from '@/components/detailschedule/OtherSchedule';
 import { add, differenceInDays } from 'date-fns';
 import ScheduleAddInnerModal from '@/components/modal/ScheduleAddInnerModal';
+import { useRecoilValue } from 'recoil';
+import { planIDState } from '@/states/schedule';
+import { InvitedFriend } from '@/types/user';
+import { getInvitedFriendList } from '@/apis/user/friend';
 
-const friends: string[] = [];
+// const friends: string[] = [];
 
 export default function Page() {
     const [modal, setModal] = useState<boolean>(false);
@@ -204,6 +208,20 @@ export default function Page() {
     useEffect(() => {
         resetEmptyBlockList();
     }, []);
+
+    const planID = useRecoilValue(planIDState);
+    const [invitedFriendList, setInvitedFriendList] = useState<InvitedFriend[]>(
+        []
+    );
+
+    useEffect(() => {
+        console.log('planID:', planID);
+        getInvitedFriendList(planID).then((data) => {
+            console.log('invitedFriendList:', data);
+            setInvitedFriendList(data);
+        });
+    }, []);
+
     return (
         <div className='mt-20 p-20'>
             {/* 공통 머리글 */}
@@ -215,7 +233,7 @@ export default function Page() {
                 top='top-[0px]'
             />
             {/* 친구 목록 */}
-            <FriendList friends={friends} edit={true} />
+            <FriendList friends={invitedFriendList} edit={true} />
             {/* 여행 일정 */}
             <div
                 className='relative flex overflow-x-scroll cursor-pointer'

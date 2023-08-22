@@ -19,3 +19,8 @@ export interface IScheduleReturnType {
     arrivalDate: string;
     plan_index: number;
 }
+
+export interface InvitedFriendReturnType {
+    user_index: number;
+    nickname: string;
+}

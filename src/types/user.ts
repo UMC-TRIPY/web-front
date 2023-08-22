@@ -17,3 +17,8 @@ export interface ISchedule {
     arrivalDate: string;
     plan_index: number;
 }
+
+export interface InvitedFriend {
+    user_index: number;
+    nickname: string;
+}
