@@ -40,15 +40,20 @@ export default function TagEditor({
 
     /** 태그 추가 */
     function submitTagItem() {
-        if (!tagList.includes(tagItem)){ // 중복 태그 추가 안함
-            let updateTagList = [...tagList];
-            updateTagList.push(tagItem);
-            setTagList(updateTagList);
-            setTagItem('');
-        }
-        if (tagList.length === 0){
-            setTagEmpty(false);
-        }
+        // "#안녕" "안녕" 입력시 모두 동일하게 "#안녕"으로 출력
+        const hashTag = tagItem.startsWith('#') ? tagItem.trim() : '#' + tagItem.trim();
+        const noBlankHashTag = hashTag.replace(/\s+/g, ''); // 공백 제거
+        if (noBlankHashTag !== '#'){
+            if (!tagList.includes(noBlankHashTag)){ // 중복 태그 추가 안함
+                let updateTagList = [...tagList];
+                updateTagList.push(noBlankHashTag);
+                setTagList(updateTagList);
+                setTagItem('');
+            }
+            if (tagList.length === 0){
+                setTagEmpty(false);
+            }
+        } 
     }
 
     /** 선택한 태그 삭제 */
