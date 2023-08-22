@@ -35,3 +35,7 @@ export const updateSchedule = async (schedule: ScheduleProps, pid: number) => {
         .then((res: any) => console.log(res))
         .catch((err) => console.log(err));
 };
+
+export const getScheduleData = async (pid: number) => {
+    return Server.get<any>(`/travel-plans/user/plans/all/${pid}`);
+};

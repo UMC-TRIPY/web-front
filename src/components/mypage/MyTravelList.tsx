@@ -8,6 +8,7 @@ import Pagination from '../maincommunity/Pagination';
 import ScheduleDetailModal from '../modal/ScheduleDetailModal';
 
 interface Props {
+    pid: number;
     id: number;
     dates: string;
     places: string;
@@ -31,6 +32,7 @@ export default function MyTravelList({ option }: { option: string }) {
                         : new Date(d.arrivalDate.slice(0, 10));
                 const difference = differenceInDays(arrivalDate, departureDate);
                 tmp.push({
+                    pid: d.plan_index,
                     id: idx + 1,
                     dates: `${format(departureDate, 'yyyy.MM.dd')} ~ ${format(
                         arrivalDate,
@@ -53,6 +55,7 @@ export default function MyTravelList({ option }: { option: string }) {
     const [datas, setDatas] = useState<Props[]>(contents.slice(0, 8));
     useEffect(() => {
         setDatas(contents.slice((current - 1) * 8, current * 8));
+        console.log(datas);
     }, [current]);
     return (
         <div className='mx-4 mt-16'>
@@ -114,11 +117,14 @@ export default function MyTravelList({ option }: { option: string }) {
                                                 'date',
                                                 data.dates
                                             );
-                                            router.push(
-                                                option === '수정하기'
-                                                    ? '/updateschedule'
-                                                    : '/mybag/new'
+                                            sessionStorage.setItem(
+                                                'pid',
+                                                data.pid.toString()
                                             );
+
+                                            router.push('/updateschedule');
+
+                                            // router.push('/mybag/new');
                                         }}
                                     />
                                 </div>
