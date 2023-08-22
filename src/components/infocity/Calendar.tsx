@@ -2,6 +2,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect } from 'react';
 import { ko } from 'date-fns/locale';
+import { subDays } from 'date-fns';
 
 interface Props {
     claName: string;
@@ -54,6 +55,7 @@ export default function Calendar({
                     inline
                     locale={ko}
                     onMonthChange={activeColor}
+                    minDate={new Date()}
                     renderCustomHeader={({
                         date,
                         decreaseMonth,

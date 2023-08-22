@@ -8,7 +8,7 @@ export const dateTotable = (date: Date): number => {
 
 export const tableToDate = (num: number): Date => {
     const date = new Date();
-    console.log(num);
+    // console.log(num);
     date.setHours(6 + Math.floor(num / 2));
     if (num % 2 === 1) {
         date.setMinutes(30);

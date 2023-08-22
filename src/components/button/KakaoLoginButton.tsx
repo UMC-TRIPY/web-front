@@ -1,7 +1,13 @@
 import { kakaoInit } from '@/utils/oauth';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 
-const KakaoLoginButton = ({ setIsModal, setIsLoggedIn }: any) => {
+interface Props {
+    setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
+    title: string;
+}
+
+const KakaoLoginButton = ({ setIsModal, setIsLoggedIn, title }: any) => {
     const kakaoLogin = async () => {
         // setIsModal(false);
         // setIsLoggedIn(true);
@@ -21,7 +27,9 @@ const KakaoLoginButton = ({ setIsModal, setIsLoggedIn }: any) => {
                     <RiKakaoTalkFill />
                 </div>
                 <div className='flex text-dark-black basis-10/12 justify-center items-center'>
-                    카카오로 로그인하기
+                    {`카카오로 ${
+                        title === '로그인' ? '로그인하기' : '가입하기'
+                    }`}
                 </div>
             </div>
         </>

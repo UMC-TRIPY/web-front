@@ -1,12 +1,12 @@
 'use client';
-import LabelSchedules from '../../components/detailschedule/LabelSchedules';
 import FriendList from '../../components/detailschedule/FriendList';
 import OtherSchedule from '../../components/detailschedule/OtherSchedule';
 import CommonHeader from '../../components/detailschedule/CommonHeader';
 import IScheduleItem from '@/models/interface/IScheduleItem';
 import ScheduleBlock from '@/components/scheduleblock/ScheduleBlock';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { dateTotable } from '@/utils/dateUtil';
+import { useRouter } from 'next/navigation';
 
 /**
  * Todo
@@ -17,6 +17,7 @@ import { dateTotable } from '@/utils/dateUtil';
  */
 
 export default function Updateschedule() {
+    const router = useRouter();
     const [schedule, setSchedule] = useState<IScheduleItem[]>([
         // 몇번째 칸인지도 넣기?
         {
@@ -26,7 +27,6 @@ export default function Updateschedule() {
             color: '#EEFAFF',
             startTime: dateTotable(new Date('2023-07-25 10:00:00')),
             halfHour: 4,
-            // endTime: new Date('2023-07-25 12:00:00'),
             title: '자차로 이동'
         },
         {
@@ -36,7 +36,6 @@ export default function Updateschedule() {
             color: '#EEFAFF',
             startTime: 10,
             halfHour: 10,
-            // endTime: new Date('2023-07-25 19:00:00'),
             title: '자고싶다'
         },
         {
@@ -46,7 +45,6 @@ export default function Updateschedule() {
             color: '#FFFBE7',
             startTime: dateTotable(new Date('2023-07-25 20:00:00')),
             halfHour: 5,
-            // endTime: new Date('2023-07-25 21:00:00'),
             title: '변경사항 왜 적용안돼'
         },
         {
@@ -56,7 +54,6 @@ export default function Updateschedule() {
             color: '#FFF3EF',
             startTime: dateTotable(new Date('2023-07-25 10:00:00')),
             halfHour: 10,
-            // endTime: new Date('2023-07-25 21:00:00'),
             title: '변경사항 왜 적용안돼',
             location: '서울시 강남구'
         }
@@ -66,6 +63,10 @@ export default function Updateschedule() {
     >(null);
     // id값으로 찾아서 변경
     // drag and drop
+
+    // 0: 빈 공간, 1: 들어갈 공간, 2: 들어갈 수 없는 공간
+    const [emptyBlockList, setEmptyBlockList] = useState<number[][]>([]);
+
     const dragFunction = (event: any, type: any) => {
         event.preventDefault();
         console.log(type);
@@ -134,23 +135,27 @@ export default function Updateschedule() {
     const renderEmptyBlock = () => {
         const blocks = [];
         // column
-        for (let i = 0; i < 5; i += 1) {
-            for (let j = 0; j < 34; j++) {
+        for (let i = 0; i < emptyBlockList.length; i += 1) {
+            for (let j = 0; j < emptyBlockList[i].length; j++) {
                 blocks.push(
                     <div
-                        className='absolute w-[22rem] h-7'
+                        className={
+                            emptyBlockList[i][j] == 1
+                                ? 'absolute w-[22rem] h-7 bg-gray-300'
+                                : emptyBlockList[i][j] == 2
+                                ? 'absolute w-[22rem] h-7 bg-red-300'
+                                : 'absolute w-[22rem] h-7'
+                        }
                         style={{
                             top: `calc(1.75rem * ${j})`,
                             left: `calc(22rem * ${i})`
                         }}
-                        onDragEnter={(e) => dragFunction(e, 'enter')}
+                        onDragEnter={(e) => handleBlockEnter(i, j)}
                         onDragOver={(e) => {
                             return dragFunction(e, 'over');
                         }}
                         onDrop={() => handleBlockDrop(i, j)}
-                    >
-                        {j}
-                    </div>
+                    ></div>
                 );
             }
         }
@@ -163,6 +168,7 @@ export default function Updateschedule() {
                 <ScheduleBlock
                     item={schedule}
                     handleDragBlock={handleDragBlock}
+                    resetEmptyBlockList={resetEmptyBlockList}
                 />
             );
         },
@@ -178,32 +184,70 @@ export default function Updateschedule() {
         console.log('drop');
         console.log(column, row);
         console.log(currentDraggingBlockId);
-        // const selectedObject = schedule.find(
-        //     (obj) => obj.id === currentDraggingBlockId
-        // );
+        resetEmptyBlockList();
 
-        // console.log(selectedObject);
         setSchedule((prev) => {
             const newSchedule = [...prev];
             const selectedObject = newSchedule.find(
                 (obj) => obj.id === currentDraggingBlockId
             );
-            selectedObject!.column = column;
-            selectedObject!.startTime = row;
+            if (row + selectedObject!.halfHour <= 34) {
+                selectedObject!.column = column;
+                selectedObject!.startTime = row;
+            }
             return newSchedule;
         });
     };
 
+    const handleBlockEnter = (column: number, row: number) => {
+        // 블록이 들어가는곳을 미리 보기로 알려줌
+        resetEmptyBlockList();
+        setEmptyBlockList((prev) => {
+            const newEmptyBlockList = [...prev];
+            const selectedObject = schedule.find(
+                (obj) => obj.id === currentDraggingBlockId
+            );
+            for (let i = 0; i < selectedObject!.halfHour; i++) {
+                if (row + i >= 34) {
+                    newEmptyBlockList[column][row + i] = 2;
+                } else {
+                    newEmptyBlockList[column][row + i] = 1;
+                }
+            }
+            return newEmptyBlockList;
+        });
+    };
+
+    const resetEmptyBlockList = () => {
+        const emptyBlockList = [];
+        for (let i = 0; i < 5; i++) {
+            const emptyBlocks = [];
+            for (let j = 0; j < 34; j++) {
+                emptyBlocks.push(0);
+            }
+            emptyBlockList.push(emptyBlocks);
+        }
+        setEmptyBlockList(emptyBlockList);
+    };
+
+    useEffect(() => {
+        resetEmptyBlockList();
+    }, []);
+
     return (
-        <div className='mt-20 p-20'>
+        <div className='mt-20 py-20'>
             {/* 공통 머리글 */}
             <CommonHeader />
             {/* 다른 일정 선택 */}
-            <OtherSchedule />
+            <OtherSchedule
+                href='schedulemain'
+                register={false}
+                top='top-[545px]'
+            />
             {/* 친구 목록 */}
-            <FriendList />
+            <FriendList friends={[]} edit={true} />
             {/* 여행 일정 */}
-            <div className='relative flex flex-row'>
+            <div className='relative flex flex-row  overflow-x-scroll'>
                 <div>
                     {/* Default */}
                     {renderTimeTable()}
@@ -241,6 +285,14 @@ export default function Updateschedule() {
                         renderScheduleBlock(item, idx)
                     )}
                 </div>
+            </div>
+            <div className='flex justify-center'>
+                <button
+                    className='mt-24 py-3 px-11 bg-primary rounded'
+                    onClick={() => router.push('/schedule')}
+                >
+                    변경사항 저장
+                </button>
             </div>
         </div>
     );

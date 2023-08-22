@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import Portal from './Portal';
 import Link from 'next/link';
 
-export default function Scompo({
+export default function FixedSearchCityModal({
     setIsModal,
     results
 }: {

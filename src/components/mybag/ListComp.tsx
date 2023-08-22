@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import RoundBtn from '../layout/roundBtn';
-import ScheduleDetailModal from '../modal/ScheduleDetailModal';
 import BagPackingModal from '../modal/BagpackingModal';
 import MyBagModal from '../modal/MyBagModal';
 import { useRouter } from 'next/navigation';
+import Pagination from '../maincommunity/Pagination';
 
 interface Props {
     travels: {
@@ -34,22 +34,16 @@ interface MyBagProps {
 export default function ListComp({ travels, name }: Props) {
     const [lists, setLists] =
         useState<{ id: number; dates: string; places: string }[]>(travels);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [travelsPerPage] = useState(8);
-    const [modal, setModal] = useState(false);
+    const totalPages = Math.ceil(travels.length / 8);
+    const [current, setCurrent] = useState<number>(1);
+    const [datas, setDatas] = useState<
+        { id: number; dates: string; places: string }[]
+    >(travels.slice(0, 8));
+    useEffect(() => {
+        setDatas(travels.slice((current - 1) * 8, current * 8));
+    }, [current]);
 
     const router = useRouter();
-
-    const handlePrevClick = () => {
-        setCurrentPage((prevPage) => prevPage - 1);
-    };
-    const handleNextClick = () => {
-        setCurrentPage((prevPage) => prevPage + 1);
-    };
-
-    const indexOfLastTravel = currentPage * travelsPerPage;
-    const indexOfFirstTravel = indexOfLastTravel - travelsPerPage;
-    const currentTravels = lists.slice(indexOfFirstTravel, indexOfLastTravel);
 
     const Content = ({ content }: { content: string }) => (
         <div className='w-1/3 text-center'>{content}</div>
@@ -163,7 +157,7 @@ export default function ListComp({ travels, name }: Props) {
         );
     };
     return (
-        <>
+        <div className='flex flex-col w-full mb-5'>
             <div className='text-3xl font-bold mb-5 self-start'>
                 내 {name} 목록
             </div>
@@ -176,39 +170,35 @@ export default function ListComp({ travels, name }: Props) {
                     </div>
                 </div>
                 <div className='py-5'>
-                    {currentTravels.map((travel, index) =>
-                        name === '여행' ? (
-                            <TravelList
-                                key={`travelList${index}`}
-                                travel={travel}
-                            />
-                        ) : (
-                            <MyBagList
-                                key={`MyBagList${index}`}
-                                travel={travel}
-                                index={index}
-                            />
-                        )
+                    {datas.map(
+                        (
+                            data: {
+                                id: number;
+                                dates: string;
+                                places: string;
+                            },
+                            index: number
+                        ) =>
+                            name === '여행' ? (
+                                <TravelList
+                                    key={`travelList${index}`}
+                                    travel={data}
+                                />
+                            ) : (
+                                <MyBagList
+                                    key={`MyBagList${index}`}
+                                    travel={data}
+                                    index={index}
+                                />
+                            )
                     )}
                 </div>
             </div>
-            <div className='flex justify-center m-8 text-grey mb-24'>
-                <button
-                    className='mx-4 px-2'
-                    onClick={handlePrevClick}
-                    disabled={currentPage === 1}
-                >
-                    &lt;
-                </button>
-                {currentPage}
-                <button
-                    className='mx-4 px-2'
-                    onClick={handleNextClick}
-                    disabled={indexOfLastTravel >= lists.length}
-                >
-                    &gt;
-                </button>
-            </div>
-        </>
+            <Pagination
+                totalPages={totalPages}
+                current={current}
+                setCurrent={setCurrent}
+            />
+        </div>
     );
 }

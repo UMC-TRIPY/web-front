@@ -7,6 +7,35 @@ import Conversation from '@/components/conversation/Conversation';
 import HotPlace from '@/components/hotplace/HotPlace';
 import CardCarousel from '@/components/main/CardCarousel';
 import { useParams } from 'next/navigation';
+import Image from 'next/image';
+import Places from '@/components/hotplace/Places';
+
+interface CityProps {
+    country: string;
+    cityKo: string;
+    cityEn: string;
+    currencyKo: string;
+    currencyEn: string;
+    mainPhoto: string;
+    zoom: number;
+    location: [
+        {
+            name: string;
+            reviews: string;
+            lat: string;
+            lng: string;
+            image: string;
+        }
+    ];
+}
+
+interface LocationProps {
+    name: string;
+    reviews: string;
+    lat: string;
+    lng: string;
+    image: string;
+}
 
 const items = [
     {
@@ -60,14 +89,14 @@ const Page = () => {
     const datas = require('../../../../public/data/dummy.json');
     const travels = datas.travels;
     const para = useParams();
-    const cityName: any = datas.datas.filter((data: any) => {
+    const cityName: CityProps = datas.datas.filter((data: CityProps) => {
         const cityName = data.cityEn;
         return cityName.toLowerCase().replace(/ /g, '') === para.city;
     })[0];
     const dummyCity =
         cityName === undefined
             ? undefined
-            : cityName.location.map((loc: any) => {
+            : cityName.location.map((loc: LocationProps) => {
                   return { title: loc.name, desc: loc.reviews, img: loc.image };
               });
     return (
@@ -82,14 +111,7 @@ const Page = () => {
                     <InfoCity city={cityName} />
                     {/* 인기 여행지 */}
                     <HotPlace city={cityName.location} zoom={cityName.zoom} />
-                    <div className='my-16'>
-                        <CardCarousel
-                            mode={0}
-                            title=''
-                            size={4}
-                            items={dummyCity}
-                        />
-                    </div>
+                    <Places cities={cityName.location} />
                     {/* 추천 준비물 */}
                     {/* <RecoPrep /> */}
                     <div className='my-16'>
@@ -100,7 +122,7 @@ const Page = () => {
                             items={items}
                         />
                     </div>
-                    <Community />
+                    <Community cityName={cityName.cityKo} />
                     <Conversation />
                 </>
             )}

@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ContentList from './ContentList';
 import Dropdown from './Dropdown';
 import InputBox from './InputBox';
-import Pagination from './Pagination';
 import TabList from './TabList';
+import Pagination from '../maincommunity/Pagination';
 
 interface ITab {
     id: number;
@@ -19,7 +19,63 @@ interface IContent {
     view: number;
 }
 
-const sampleContents: IContent[] = [
+const contents: IContent[] = [
+    {
+        imageSrc: '/images/user.svg',
+        nickName: '규규규규규규규규규규',
+        title: '내용을 몰라용',
+        like: 9999,
+        view: 9999
+    },
+    {
+        imageSrc: '/images/user.svg',
+        nickName: '루카',
+        title: '내용을 몰라용',
+        like: 9999,
+        view: 9999
+    },
+    {
+        imageSrc: '/images/user.svg',
+        nickName: '시미',
+        title: '내용을 몰라용',
+        like: 9999,
+        view: 9999
+    },
+    {
+        imageSrc: '/images/user.svg',
+        nickName: '레니',
+        title: '내용을 몰라용',
+        like: 9999,
+        view: 9999
+    },
+    {
+        imageSrc: '/images/user.svg',
+        nickName: '규규규규규규규규규규',
+        title: '내용을 몰라용',
+        like: 9999,
+        view: 9999
+    },
+    {
+        imageSrc: '/images/user.svg',
+        nickName: '루카',
+        title: '내용을 몰라용',
+        like: 9999,
+        view: 9999
+    },
+    {
+        imageSrc: '/images/user.svg',
+        nickName: '시미',
+        title: '내용을 몰라용',
+        like: 9999,
+        view: 9999
+    },
+    {
+        imageSrc: '/images/user.svg',
+        nickName: '레니',
+        title: '내용을 몰라용',
+        like: 9999,
+        view: 9999
+    },
     {
         imageSrc: '/images/user.svg',
         nickName: '규규규규규규규규규규',
@@ -50,10 +106,15 @@ const sampleContents: IContent[] = [
     }
 ];
 
-const Community = () => {
+const Community = ({ cityName }: { cityName: string }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [category, setCategory] = useState('전체');
-    const [contents, setContents] = useState(sampleContents);
+    const totalPages = Math.ceil(contents.length / 10);
+    const [current, setCurrent] = useState<number>(1);
+    const [datas, setDatas] = useState<IContent[]>(contents.slice(0, 10));
+    useEffect(() => {
+        setDatas(contents.slice((current - 1) * 10, current * 10));
+    }, [current]);
     const [tabs, setTabs] = useState([
         {
             id: 0,
@@ -120,7 +181,7 @@ const Community = () => {
     return (
         <div>
             <div className='flex justify-between'>
-                <div className='text-3xl font-bold'>도쿄 커뮤니티</div>
+                <div className='text-3xl font-bold'>{cityName} 커뮤니티</div>
                 <div className='flex gap-2 basis-1/2 justify-around item-center bg-white'>
                     <Dropdown
                         setCategory={setCategory}
@@ -132,8 +193,12 @@ const Community = () => {
                 </div>
             </div>
             <TabList tabs={tabs} handleClickTab={handleClickTab} />
-            <ContentList contents={contents} />
-            <Pagination />
+            <ContentList contents={datas} />
+            <Pagination
+                totalPages={totalPages}
+                current={current}
+                setCurrent={setCurrent}
+            />
         </div>
     );
 };

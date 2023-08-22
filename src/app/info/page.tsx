@@ -2,7 +2,7 @@
 import Image from 'next/image';
 import { BiSearch } from 'react-icons/bi';
 import { useState } from 'react';
-import SearchModal from '@/components/modal/SearchCityModal';
+import SearchCityModal from '@/components/modal/SearchCityModal';
 import Link from 'next/link';
 import { RxCross1 } from 'react-icons/rx';
 import { useRouter } from 'next/navigation';
@@ -53,14 +53,6 @@ const Page = () => {
     const results = travels
         .filter((t: any) => t[0][0].includes(place[0]))
         .filter((t: any) => t[0].includes(place.replace(/ /g, '')));
-    const onKeyDown = (e: React.KeyboardEvent<HTMLElement>) => {
-        console.log(e);
-        if (e.key === 'Enter' && place !== '' && results.length === 1) {
-            router.push(
-                `/info/${results.map((result: [string, string]) => result[1])}`
-            );
-        }
-    };
     const onClick = (city: string) => {
         const move = travels.filter(
             (travel: [string, string]) => travel[0] === city
@@ -82,7 +74,6 @@ const Page = () => {
                         setPlace(e.target.value)
                     }
                     onClick={() => setIsModal(true)}
-                    onKeyDown={onKeyDown}
                 />
                 <Link
                     onClick={() => {
@@ -109,7 +100,7 @@ const Page = () => {
                 </Link>
             </div>
             {modal && (
-                <SearchModal setModalState={setIsModal} results={results} />
+                <SearchCityModal setModalState={setIsModal} results={results} />
             )}
             <div className='flex self-center w-1/2 items-center mb-16'>
                 <span className='mr-2'>최근 검색어</span>

@@ -8,9 +8,14 @@ export default function Pagination({
     setCurrent: React.Dispatch<React.SetStateAction<number>>;
 }) {
     let pages = [];
+
     for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
     }
+    let slicingPages = pages.slice(
+        Math.floor((current - 1) / 5) * 5,
+        (Math.floor((current - 1) / 5) + 1) * 5
+    );
 
     const prevPage = () => {
         setCurrent((n) => n - 1);
@@ -30,11 +35,14 @@ export default function Pagination({
                 >
                     {'<'}
                 </button>
-                {pages.map((p, idx) => (
+                {slicingPages.map((p, idx) => (
                     <button
                         key={`pagenum${idx}`}
                         className={`mx-3 ${
-                            current - 1 === idx ? 'font-bold' : 'font-normal'
+                            current - 1 ===
+                            idx + Math.floor((current - 1) / 5) * 5
+                                ? 'font-bold'
+                                : 'font-normal'
                         }`}
                         onClick={() => setCurrent(p)}
                     >

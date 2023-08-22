@@ -1,22 +1,32 @@
 'use client';
 
-import { getKakaoAccessToken } from '@/apis/user';
+import { getKakaoAccessToken } from '@/apis/user/login';
+import { emailState, isLoggedInState } from '@/states/user';
 import { splitAuthCode } from '@/utils/oauth';
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
+import { useSetRecoilState } from 'recoil';
 
 const KakaoOAuth = () => {
     const router = useRouter();
+    const params = useSearchParams();
+    const code = params.get('code');
+    const setIsLoggedIn = useSetRecoilState(isLoggedInState);
 
     useEffect(() => {
-        // TODO: authCode를 서버에 넘겨준 다음 200 받으면 메인 페이지로 이동
-        getKakaoAccessToken().then(() => router.push('/'));
-    }, [router]);
-    return (
-        <div>
-            <div>카카오 리다이렉트 페이지</div>
-        </div>
-    );
+        if (code)
+            getKakaoAccessToken().then((res) => {
+                if (res !== undefined) {
+                    if (res.newUser) {
+                        router.push('/signup');
+                    } else {
+                        setIsLoggedIn(true);
+                        router.push('/');
+                    }
+                }
+            });
+    }, [code, router, setIsLoggedIn]);
+    return <div></div>;
 };
 
 export default KakaoOAuth;

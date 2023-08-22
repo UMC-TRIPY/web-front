@@ -14,8 +14,6 @@ module.exports = {
             },
             colors: {
                 'main-color': '#FFE91D',
-                'tag-blue': '#57CDFF',
-                'tag-red': '#FF7F57',
                 primary: '#FFE457',
                 infomenu: '#868686',
                 brightgrey: '#F9F9F9',
@@ -23,10 +21,14 @@ module.exports = {
                 morelightgrey: 'rgba(229, 229, 229, 0.5)',
                 grey: '#A3A3A3',
                 darkgrey: '#666666',
+                alertred: '#EB5757',
                 'kakao-color': '#FAE100',
                 'dark-black': '#262626',
                 blur: 'rgba(232, 232, 232, 1)',
-                'blur-end': 'rgba(232, 232, 232, 0)'
+                'blur-end': 'rgba(232, 232, 232, 0)',
+                'modal-bg': 'rgba(107,114, 128,0.5)',
+                approve: '#27AE60',
+                warning: '#EB5757'
             },
             width: {
                 'box-width': '412px'

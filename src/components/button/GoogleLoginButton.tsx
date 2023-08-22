@@ -4,7 +4,7 @@ const CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID;
 const SCOPE = process.env.NEXT_PUBLIC_GOOGLE_SCOPE;
 const REDIRECT_URI = process.env.NEXT_PUBLIC_GOOGLE_REDIRECT_URI;
 
-const GoogleLoginButton = () => {
+const GoogleLoginButton = ({ title }: { title: string }) => {
     const oauthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${CLIENT_ID}&response_type=code&redirect_uri=${REDIRECT_URI}&scope=${SCOPE}`;
     const handleGoogleLogin = async () => {
         window.location.assign(oauthUrl);
@@ -19,7 +19,7 @@ const GoogleLoginButton = () => {
                     <FcGoogle />
                 </div>
                 <div className='flex text-dark-black basis-10/12 justify-center items-center'>
-                    구글로 로그인하기
+                    {`구글로 ${title === '로그인' ? '로그인하기' : '가입하기'}`}
                 </div>
             </div>
         </>
