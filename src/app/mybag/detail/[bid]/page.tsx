@@ -23,7 +23,7 @@ interface IMaterialProps extends IMaterial {
 
 const BagDetail = () => {
     const router = useRouter();
-    const params = useParams();
+    const { bid } = useParams();
 
     const [bagID, setBagID] = useRecoilState(bagIDState);
     const [materials, setMaterials] = useState<IMaterialProps[]>([]);
@@ -45,18 +45,20 @@ const BagDetail = () => {
     ]);
 
     useEffect(() => {
-        if (params.bid) setBagID(parseInt(params.bid));
-    }, [setBagID, params]);
-
-    useEffect(() => {
-        getTravelBagMaterialList(bagID).then((res: IMaterial[]) => {
-            setMaterials(
-                res.map((data) => {
-                    return { ...data, edited: false };
-                })
-            );
-        });
-    }, [bagID]);
+        console.log('bid:', bid);
+        if (bid !== undefined) {
+            console.log('bagID:', bid);
+            const id = parseInt(bid);
+            setBagID(id);
+            getTravelBagMaterialList(id).then((res: IMaterial[]) => {
+                setMaterials(
+                    res.map((data) => {
+                        return { ...data, edited: false };
+                    })
+                );
+            });
+        }
+    }, [bid, setBagID]);
 
     const handleClickRecoMaterial = async (id: string) => {
         const MATERIAL_LENGTH = materials.length;
@@ -66,7 +68,7 @@ const BagDetail = () => {
         const clickedMaterial = recommendMaterials.filter(
             (material) => material.id === id
         );
-        await addMaterial(parseInt(params.bid), clickedMaterial[0].name);
+        await addMaterial(bagID, clickedMaterial[0].name);
         const newMaterial = {
             materials_index: -1,
             materials_name: clickedMaterial[0].name,
