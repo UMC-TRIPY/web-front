@@ -8,8 +8,7 @@ import {
 
 // 여행 가방 목록 불러오기
 export const getTravelBagList = async () => {
-    // const uid = localStorage.getItem('uid');
-    const uid = 2;
+    const uid = localStorage.getItem('uid');
     const result = await Server.get<IBagReturnType[]>(
         `travel-bag/user/bag/${uid}`
     );
@@ -18,8 +17,7 @@ export const getTravelBagList = async () => {
 
 // 여행가방 만들기
 export const makeNewTravelBag = async (pid: number, bagname: string) => {
-    // const uid = localStorage.getItem('uid');
-    const uid = 2;
+    const uid = localStorage.getItem('uid');
     const result = await Server.post(`travel-bag/user/bag/${uid}/${pid}`, {
         bagname
     });
@@ -52,7 +50,6 @@ export const writeBagMemo = async (bid: number, memo: string) => {
 
 // 가방 내부에 준비물 추가
 export const addMaterial = async (bid: number, material: string) => {
-    // const uid = localStorage.getItem('uid');
     const result = await Server.post(`travel-bag/bag/material/${bid}`, {
         material
     });
@@ -70,7 +67,6 @@ export const editMaterialName = async (mid: number, newName: string) => {
 
 // 가방 준비물 삭제
 export const deleteMaterial = async (bid: number, mid: number) => {
-    console.log('deleteMaterial:', bid, mid);
     const result = await Server.delete(`travel-bag/bag/material/${bid}/${mid}`);
     console.log('deleteMaterial:', result);
     return result.data;
@@ -91,8 +87,7 @@ export const getPlanBagList = async (pid: number) => {
 };
 
 export const getTravelPlanList = async () => {
-    // const uid = localStorage.getItem('uid');
-    const uid = 2;
+    const uid = localStorage.getItem('uid');
     const result = await Server.get(`travel-plans/user/plans/${uid}`);
     return result.data;
 };
@@ -102,7 +97,6 @@ export const getTravelPlanList = async () => {
  * @param {number} pid
  */
 export const getScheduleTravelBagList = async (pid: number) => {
-    // const uid = localStorage.getItem('uid');
     const result = await Server.get<IBagReturnType[]>(
         `travel-bag/user/plan/bag/${pid}`
     );

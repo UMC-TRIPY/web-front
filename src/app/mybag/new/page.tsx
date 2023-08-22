@@ -21,15 +21,15 @@ const NewBag = () => {
     const planID = useRecoilValue(planIDState);
 
     const handleAddNewBag = async (bag_name: string) => {
+        const bag_index = await makeNewTravelBag(planID, bag_name);
         setBagList([
             ...bagList,
             {
-                bag_index: -1,
+                bag_index,
                 bag_name,
                 user_index: -1
             }
         ]);
-        await makeNewTravelBag(planID, bag_name);
 
         setIsNewBagModal(false);
     };
