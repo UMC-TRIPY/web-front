@@ -6,8 +6,8 @@ export const checkLists = async () => {
     return result.data;
 };
 
-export const checkSchedules = async () => {
-    const result = await Server.get(`/travel-plans/user/plans/all/127`);
+export const checkSchedules = async (pid: number) => {
+    const result = await Server.get(`/travel-plans/user/plans/all/${pid}`);
 
     return result.data;
 };

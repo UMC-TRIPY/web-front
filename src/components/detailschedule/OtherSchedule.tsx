@@ -7,6 +7,19 @@ import SelectScheduleModal from '../modal/SelectScheduleModal';
 import { useSetRecoilState } from 'recoil';
 import { planIDState } from '@/states/schedule';
 
+interface TravelListProps {
+    city_name: string;
+    departureDate: string;
+    arrivalDate: string;
+    plan_index: number;
+}
+
+interface ScheduleProps {
+    pid: number;
+    dates: string;
+    places: string;
+}
+
 export default function OtherSchedule({
     href,
     register,
@@ -18,9 +31,7 @@ export default function OtherSchedule({
 }) {
     const [date, setDate] = useState<string>('');
     const [place, setPlace] = useState<string>('');
-    const [start, setStart] = useState<any>();
-    const [end, setEnd] = useState<any>();
-    const [schedules, setSchedules] = useState<any>();
+    const [schedules, setSchedules] = useState<ScheduleProps[] | undefined>();
     const [modal, setModal] = useState<boolean>(false);
 
     const setPlanID = useSetRecoilState(planIDState);
@@ -29,11 +40,6 @@ export default function OtherSchedule({
         const d = sessionStorage.getItem('date');
         const p = sessionStorage.getItem('place');
 
-        const s: any = d?.split('~')[0];
-        const e: any = d?.split('~')[1].split(' ')[1];
-
-        setStart(new Date(s));
-        setEnd(new Date(e));
         setDate(!d ? '' : d);
         setPlace(!p ? '' : p);
         checkLists()
@@ -54,7 +60,7 @@ export default function OtherSchedule({
                         departureDate
                     );
                     tmp.push({
-                        id: d.plan_index,
+                        pid: d.plan_index,
                         dates: `${format(
                             departureDate,
                             'yyyy.MM.dd'

@@ -5,13 +5,15 @@ import { planIDState } from '@/states/schedule';
 
 type Props = {
     setModalState: React.Dispatch<React.SetStateAction<boolean>>;
-    schedules: {
-        id: number;
-        dates: string;
-        places: string;
-    }[];
-    setDate: any;
-    setPlace: any;
+    schedules:
+        | {
+              pid: number;
+              dates: string;
+              places: string;
+          }[]
+        | undefined;
+    setDate: React.Dispatch<React.SetStateAction<string>>;
+    setPlace: React.Dispatch<React.SetStateAction<string>>;
     top: string;
 };
 
@@ -37,12 +39,16 @@ export default function SelectScheduleModal({
                 ></div>
                 <div
                     className={`absolute flex flex-col rounded-lg max-h-56 bg-white z-101 shadow-md max-w-[653px] min-w-[656px] ${top} ${
-                        schedules.length > 4
+                        schedules === undefined
+                            ? ''
+                            : schedules.length > 4
                             ? 'overflow-y-scroll'
                             : 'overflow-y-hidden'
                     }`}
                 >
-                    {schedules.map(
+                    {schedules === undefined
+                        ? ''
+                        : schedules.map(
                         (
                             schedule: {
                                 id: number;
@@ -63,6 +69,10 @@ export default function SelectScheduleModal({
                                         'place',
                                         schedule.places
                                     );
+                                    sessionStorage.setItem(
+                                              'pid',
+                                              schedule.id.toString()
+                                          );
                                     setPlanID(schedule.id);
                                     setDate(schedule.dates);
                                     setPlace(schedule.places);
