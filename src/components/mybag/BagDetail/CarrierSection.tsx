@@ -6,18 +6,21 @@ import {
     deleteMaterial,
     editMaterialName
 } from '@/apis/bag';
+import { bagIDState } from '@/states/schedule';
 import Image from 'next/image';
 import React, { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { FiEdit } from 'react-icons/fi';
+import { useRecoilValue } from 'recoil';
 
 interface IMaterial {
     materials_index: number;
     materials_name: string;
+    check_box: boolean;
 }
 
 interface IMaterialProps extends IMaterial {
-    checked: boolean;
+    // check_box: boolean;
     edited: boolean;
 }
 
@@ -32,16 +35,17 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
     const [addText, setAddText] = useState<string>('');
     const [editText, setEditText] = useState<string>('');
 
+    const bagID = useRecoilValue(bagIDState);
     const [clickedMaterial, setClickedMaterial] = useState<number>(-1);
 
     const handleCheckbox = async (e: any) => {
         const id = parseInt(e.target.id);
-        // await changeCheckMaterial(bid, id)
-        await changeCheckMaterial(16, id);
+        await changeCheckMaterial(bagID, id);
+        // await changeCheckMaterial(16, id);
         setMaterials(
             materials.map((material) =>
                 material.materials_index === id
-                    ? { ...material, checked: !material.checked }
+                    ? { ...material, check_box: !material.check_box }
                     : material
             )
         );
@@ -54,14 +58,14 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
     const handleClickEndAdd = async () => {
         const id = materials.length;
         setIsAdd(false);
-        // addMaterial(bid, addText)
-        await addMaterial(16, addText);
+        addMaterial(bagID, addText);
+        // await addMaterial(16, addText);
         if (addText.length > 0)
             setMaterials([
                 {
                     materials_index: id,
                     materials_name: addText,
-                    checked: false,
+                    check_box: false,
                     edited: false
                 },
                 ...materials
@@ -70,7 +74,7 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
     };
 
     const handleClickDelete = async (id: number) => {
-        await deleteMaterial(id);
+        await deleteMaterial(bagID, id);
         setMaterials(
             materials.filter((material) => material.materials_index !== id)
         );
@@ -201,14 +205,14 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                             <div
                                 className={
                                     'flex gap-4 px-4 py-2 rounded-full transition-all duration-500' +
-                                    (material.checked
+                                    (material.check_box
                                         ? ' bg-lightgrey text-xs text-grey'
                                         : '')
                                 }
                             >
                                 <input
                                     id={material.materials_index.toString()}
-                                    checked={material.checked}
+                                    checked={material.check_box}
                                     type='checkbox'
                                     className='flex justify-center items-center w-6 rounded-full appearance-none border-2 bg-white checked:after:content-["✓"] cursor-pointer'
                                     onChange={(e) => handleCheckbox(e)}

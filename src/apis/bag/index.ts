@@ -55,6 +55,7 @@ export const addMaterial = async (bid: number, material: string) => {
     const result = await Server.post(`travel-bag/bag/material/${bid}`, {
         material
     });
+    console.log('addMaterial:', result.data);
     return result.data;
 };
 
@@ -67,8 +68,10 @@ export const editMaterialName = async (mid: number, newName: string) => {
 };
 
 // 가방 준비물 삭제
-export const deleteMaterial = async (mid: number) => {
-    const result = await Server.delete(`travel-bag/bag/material/${mid}`);
+export const deleteMaterial = async (bid: number, mid: number) => {
+    console.log('deleteMaterial:', bid, mid);
+    const result = await Server.delete(`travel-bag/bag/material/${bid}/${mid}`);
+    console.log('deleteMaterial:', result);
     return result.data;
 };
 
@@ -102,5 +105,14 @@ export const getScheduleTravelBagList = async (pid: number) => {
     const result = await Server.get<IBagReturnType[]>(
         `travel-bag/user/plan/bag/${pid}`
     );
+    return result.data;
+};
+
+/**
+ * 가방에 해당하는 준비물 조회
+ * @param {number} bid
+ */
+export const getTravelBagMaterialList = async (bid: number) => {
+    const result = await Server.get(`travel-bag/user/bag/materials/${bid}`);
     return result.data;
 };

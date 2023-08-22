@@ -1,6 +1,5 @@
 export interface IBag {
+    bag_index: number;
     bag_name: string;
-    departureDate: string;
-    arrivalDate: string;
-    stay_duration: string;
+    user_index: number;
 }

@@ -24,10 +24,9 @@ const NewBag = () => {
         setBagList([
             ...bagList,
             {
+                bag_index: -1,
                 bag_name,
-                departureDate: '',
-                arrivalDate: '',
-                stay_duration: ''
+                user_index: -1
             }
         ]);
         await makeNewTravelBag(planID, bag_name);
