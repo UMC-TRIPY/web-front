@@ -22,6 +22,7 @@ import MakeSchedule from '@/components/mypage/MakeSchedule';
 import Link from 'next/link';
 import SearchCityModal from '@/components/modal/SearchCityModal';
 import SelectCityModal from '@/components/modal/SelectCityModal';
+import Promotion from '@/components/maincommunity/Promotion';
 
 const dummyItem = <div>abc</div>;
 
@@ -406,12 +407,7 @@ export default function Home() {
                         </tbody>
                     </table>
                 </div>
-                <Image
-                    src='/images/promotion.jpeg'
-                    alt='none'
-                    width={1280}
-                    height={200}
-                />
+                <Promotion />
             </div>
         </main>
     );
