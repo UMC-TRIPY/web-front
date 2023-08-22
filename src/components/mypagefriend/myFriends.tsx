@@ -4,7 +4,8 @@ import { Friend, ISchedule } from '@/types/user';
 import {
     deleteFriend,
     getCreatedScheduleList,
-    getFriendList
+    getFriendList,
+    inviteFriend
 } from '@/apis/user/friend';
 import Pagination from '../maincommunity/Pagination';
 import FriendOneBtn from './friendOneBtn';
@@ -25,8 +26,7 @@ function MyFriends({ friendList, setFriendList }: MyFriendsProps) {
 
     const [isModal, setIsModal] = useState<boolean>(false);
     const [scheduleList, setScheduleList] = useState<ISchedule[]>([]);
-
-    const handleClickInvite = () => {};
+    const [targetFriend, setTargetFriend] = useState<number>(-1);
 
     const handleDeleteFriend = async (user_index: number) => {
         await deleteFriend(user_index);
@@ -35,6 +35,16 @@ function MyFriends({ friendList, setFriendList }: MyFriendsProps) {
         );
         console.log('handle delete: ', result);
         setFriendList(result);
+    };
+
+    const handleClickInviteBtn = (uid2: number) => {
+        setTargetFriend(uid2);
+        setIsModal(true);
+    };
+
+    const handleInviteSchedule = async (pid: number) => {
+        await inviteFriend(pid, targetFriend);
+        setIsModal(false);
     };
 
     useEffect(() => {
@@ -65,7 +75,7 @@ function MyFriends({ friendList, setFriendList }: MyFriendsProps) {
                         label1='초대하기'
                         label2='친구끊기'
                         px={6}
-                        onClick1={() => setIsModal(true)}
+                        onClick1={() => handleClickInviteBtn(friend.user_index)}
                         onClick2={() => handleDeleteFriend(friend.user_index)}
                     />
                 ))}
@@ -74,6 +84,7 @@ function MyFriends({ friendList, setFriendList }: MyFriendsProps) {
                 <ScheduleListModal
                     setIsModal={setIsModal}
                     scheduleList={scheduleList}
+                    handleInviteSchedule={handleInviteSchedule}
                 />
             )}
             <Pagination

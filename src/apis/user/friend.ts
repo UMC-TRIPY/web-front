@@ -112,11 +112,13 @@ export const getSearchUserList = async (keyword: string) => {
 };
 
 // 일정에 친구 초대
-export const inviteFriend = async (pid: number, rid: number) => {
-    const result = await Server.post(`travel-plans/user/plans/friend/${pid}`, {
-        rid
-    });
-    console.log(result);
+export const inviteFriend = async (pid: number, uid2: number) => {
+    const uid = localStorage.getItem('uid');
+    const result = await Server.post(
+        `travel-plans/user/plans/friend/${uid}/${pid}`,
+        { uid2 }
+    );
+    console.log('친구초대:', result.data);
 };
 
 /**

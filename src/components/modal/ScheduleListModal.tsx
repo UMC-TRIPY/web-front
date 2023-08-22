@@ -1,4 +1,4 @@
-import { getCreatedScheduleList } from '@/apis/user/friend';
+import { getCreatedScheduleList, inviteFriend } from '@/apis/user/friend';
 import { ISchedule } from '@/types/user';
 import { formatYYMMDD } from '@/utils/dateUtil';
 import React, { useEffect } from 'react';
@@ -7,10 +7,12 @@ import Modal from './Modal';
 interface IScheduleListModalProps {
     setIsModal: React.Dispatch<React.SetStateAction<boolean>>;
     scheduleList: ISchedule[];
+    handleInviteSchedule: (pid: number) => void;
 }
 const ScheduleListModal = ({
     setIsModal,
-    scheduleList
+    scheduleList,
+    handleInviteSchedule
 }: IScheduleListModalProps) => {
     return (
         <Modal
@@ -28,6 +30,9 @@ const ScheduleListModal = ({
                         <div
                             key={idx}
                             className='border-2 p-4 px-8 hover:bg-main-color cursor-pointer'
+                            onClick={() =>
+                                handleInviteSchedule(schedule.plan_index)
+                            }
                         >
                             <div className='text-xl'>
                                 {schedule.city_name
