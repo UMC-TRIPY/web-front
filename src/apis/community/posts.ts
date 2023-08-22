@@ -1,5 +1,4 @@
 import { Server } from "../setting";
-import { InformationReturnType } from "../user/types";
 
 export interface PostsProps {
     user_index: number;
@@ -17,17 +16,17 @@ export const getUserNickname = async (userId: number) => {
     return result.data.nickname;
 };
 
-export const getUserIndex = async (postId: number) => {
+export const getUserIndex = async (postId: string) => {
     const result = await Server.get(`/posts/${postId}`);
     return result.data[0].user_index;
 };
 
-export const getPostTitle = async (postId: number) => {
+export const getPostTitle = async (postId: string) => {
     const result = await Server.get(`/posts/${postId}`);
     return result.data[0].post_title; 
 };
 
-export const getPostContent = async (postId: number) => {
+export const getPostContent = async (postId: string) => {
     const result = await Server.get(`/posts/${postId}`);
     return result.data[0].post_content; 
 };
@@ -37,17 +36,17 @@ export const getCityIndex = async (postId: number) => {
     return result.data[0].city_index;
 };
 
-export const getViews = async (postId: number) => {
+export const getViews = async (postId: string) => {
     const result = await Server.get(`/posts/${postId}`);
     return result.data[0].view;
 };
 
-export const getThumbs = async (postId: number) => {
+export const getThumbs = async (postId: string) => {
     const result = await Server.get(`/posts/${postId}`);
     return result.data[0].thumbs;
 };
 
-export const getCreatedAt = async (postId: number) => {
+export const getCreatedAt = async (postId: string) => {
     const result = await Server.get(`/posts/${postId}`);
     return result.data[0].created_at;
 };

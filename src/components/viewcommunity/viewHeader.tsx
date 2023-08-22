@@ -5,14 +5,17 @@ import thumbsUp from 'public/images/thumbs-up.svg';
 import eye from 'public/images/eye.svg';
 import ProfilePic from 'public/images/user.svg'
 
+interface ViewHeaderProps {
+    post_index: string
+}
 
-export default function ViewHeader() {
+export default function ViewHeader({post_index}: ViewHeaderProps) {
     const [postTitle, setPostTitle] = useState('');
     const [userIndex, setUserIndex] = useState(0);
     const [views, setViews] = useState(0);
     const [thumbs, setThumbs] = useState(0);
     const [created, setCreated] = useState('');
-    let post_index = 2;
+    const [nickname, setNickname] = useState('');
 
     useEffect(() => {
         getPostTitle(post_index).then((title) => {
@@ -35,13 +38,11 @@ export default function ViewHeader() {
     const dateObject = new Date(created);
     const formattedDate = dateObject.toLocaleDateString(); 
 
-    const [nickname, setNickname] = useState('');
-
     useEffect(() => {
         getUserNickname(userIndex).then((name) => {
             setNickname(name);
         })
-    }, [])
+    }, [userIndex])
 
     return (
         <div className='mx-4 mb-12 border-b border-lightgrey'>
