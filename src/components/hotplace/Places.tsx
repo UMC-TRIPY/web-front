@@ -1,26 +1,46 @@
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
-// interface Props {
-//     name: string;
-//     reviews: string;
-//     lat: string;
-//     lng: string;
-//     image: string;
-// }
+interface LocationProps {
+    name: string;
+    lat: string;
+    lng: string;
+}
 
-export default function Places({ city }: { city: any }) {
-    const City = ({ cty }: { cty: any }) => {
+interface ContentsProps {
+    city: LocationProps[];
+    hotPlaceImags: string[];
+}
+
+export default function Places({
+    city,
+    hotPlaceImgs
+}: {
+    city: LocationProps[] | undefined;
+    hotPlaceImgs: string[] | undefined;
+}) {
+    const [contents, setContents] = useState<any>();
+    // const contents = {
+    //     city,
+    //     hotPlaceImgs
+    // };
+    useEffect(() => {
+        let tmp: any[] = [];
+        if (city !== undefined && hotPlaceImgs !== undefined) {
+            for (let i = 0; i < 4; i++) {
+                tmp.push({ name: city[i].name, img: hotPlaceImgs[i] });
+            }
+        }
+        setContents(tmp);
+    }, []);
+    console.log(contents);
+    const City = ({ content }: { content: any }) => {
         return (
             <div className='flex min-w-[305px] h-[400px]'>
-                <Image
-                    src='/images/universalStudio.png'
-                    alt='none'
-                    width={305}
-                    height={400}
-                />
+                <Image src={content.img} alt='none' width={305} height={400} />
                 <div className='absolute flex flex-col justify-between h-[400px] px-8 py-7'>
                     <div>
-                        <div className='font-bold text-2xl'>{cty.name}</div>
+                        <div className='font-bold text-2xl'>{content.name}</div>
                         <div className='text-sm'>999개의 리뷰</div>
                     </div>
                     <button className='w-[104px] h-11 rounded-md opacity-75 bg-white hover:opacity-100'>
@@ -32,10 +52,10 @@ export default function Places({ city }: { city: any }) {
     };
     return (
         <div className='my-5 flex justify-between'>
-            {city === undefined
+            {contents === undefined
                 ? ''
-                : city.map((cty: any, idx: number) => (
-                      <City key={`cty${idx}`} cty={cty} />
+                : contents.map((content: any, idx: number) => (
+                      <City key={`content${idx}`} content={content} />
                   ))}
         </div>
     );

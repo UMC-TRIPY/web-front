@@ -19,26 +19,20 @@ interface CityProps {
     currencyKo: string;
     currencyEn: string;
     mainPhoto: string;
-    zoom: number;
-    location: [
-        {
-            name: string;
-            reviews: string;
-            lat: string;
-            lng: string;
-            image: string;
-        }
-    ];
 }
 
 interface LocationProps {
     name: string;
-    reviews: string;
     lat: string;
     lng: string;
-    image: string;
 }
-// DB에 있는 도시 오사카 1 , 도쿄 2, 런던 7, 바라ㅡ셀로나 9, 시드니 18
+
+interface MaterialProps {
+    name: string;
+    desc: string;
+}
+
+// DB에 있는 도시 오사카 1 , 도쿄 2, 런던 7, 바르셀로나 9, 시드니 18
 // 준비물 있는 나라  일본 3 - [1,2] , 영국 9 - [7], 스페인 10 - [9], 호주 11 - [18]
 
 const Page = () => {
@@ -46,12 +40,14 @@ const Page = () => {
     const travels = datas.travels;
     const para = useParams();
     const cityName: CityProps = datas.datas.filter((data: CityProps) => {
-        const cityName = data.cityEn;
-        return cityName.toLowerCase().replace(/ /g, '') === para.city;
+        const enName = data.cityEn;
+        return enName.toLowerCase().replace(/ /g, '') === para.city;
     })[0];
     const [exist, setExist] = useState<boolean>(false);
-    const [city, setCity] = useState<any>();
-    const [materials, setMaterials] = useState<any>();
+    const [city, setCity] = useState<LocationProps[] | undefined>();
+    const [materials, setMaterials] = useState<MaterialProps[] | undefined>();
+    const [hotPlaceImgs, setHotPlaceImgs] = useState<string[] | undefined>();
+    const [materialImgs, setMaterialImgs] = useState<string[] | undefined>();
     useEffect(() => {
         const cityIdx = datas.travels.filter(
             (t: [string, string, string]) => t[1] === para.city
@@ -59,17 +55,112 @@ const Page = () => {
         const countryIdx = datas.travels.filter(
             (t: [string, string, string]) => t[1] === para.city
         )[0][3];
+        console.log(cityIdx);
+
+        switch (cityIdx) {
+            case 1: {
+                setHotPlaceImgs([
+                    '/images/universalStudio.png',
+                    '/images/osakajo.jpg',
+                    '/images/dotonbori.jpg',
+                    '/images/universalStudio.png'
+                ]);
+                break;
+            }
+            case 2: {
+                setHotPlaceImgs([
+                    '/images/disneylandtokyo.jpg',
+                    '/images/sensoji.jpg',
+                    '/images/disneylandtokyo.jpg',
+                    '/images/sensoji.jpg'
+                ]);
+                break;
+            }
+            case 7: {
+                setHotPlaceImgs([
+                    '/images/londoneye.jpg',
+                    '/images/towerbridge.jpg',
+                    '/images/buckingham.jpg',
+                    '/images/bigben.jpg'
+                ]);
+                break;
+            }
+            case 9: {
+                setHotPlaceImgs([
+                    '/images/sagradafamilia.jpg',
+                    '/images/gaudi.jpg',
+                    '/images/sagradafamilia.jpg',
+                    '/images/gaudi.jpg'
+                ]);
+                break;
+            }
+            case 18: {
+                setHotPlaceImgs([
+                    '/images/operahouse.jpg',
+                    '/images/operahouse.jpg',
+                    '/images/darlinghabour.jpg',
+                    '/images/darlinghabour.jpg'
+                ]);
+                break;
+            }
+        }
+
+        switch (countryIdx) {
+            case 3: {
+                setMaterialImgs([
+                    '/images/prep1.png',
+                    '/images/prep2.png',
+                    '/images/prep3.png',
+                    '/images/prep3.png'
+                ]);
+                break;
+            }
+            case 9: {
+                setMaterialImgs([
+                    '/images/prep1.png',
+                    '/images/prep2.png',
+                    '/images/prep3.png'
+                ]);
+                break;
+            }
+            case 10: {
+                setMaterialImgs([
+                    '/images/prep1.png',
+                    '/images/prep2.png',
+                    '/images/prep3.png'
+                ]);
+                break;
+            }
+            case 11: {
+                setMaterialImgs([
+                    '/images/prep1.png',
+                    '/images/prep2.png',
+                    '/images/prep3.png',
+                    '/images/prep3.png'
+                ]);
+                break;
+            }
+        }
 
         checkCity(cityIdx)
             .then((res) => {
-                let tmp: any[] = [];
-                res.map((r: any, idx: number) => {
-                    tmp.push({
-                        lat: r.latitude,
-                        lng: r.longitude,
-                        name: r.landmark_name
-                    });
-                });
+                let tmp: LocationProps[] = [];
+                res.map(
+                    (
+                        r: {
+                            latitude: string;
+                            longitude: string;
+                            landmark_name: string;
+                        },
+                        idx: number
+                    ) => {
+                        tmp.push({
+                            lat: r.latitude,
+                            lng: r.longitude,
+                            name: r.landmark_name
+                        });
+                    }
+                );
                 if (tmp.length !== 0) {
                     setExist(true);
                 }
@@ -79,13 +170,21 @@ const Page = () => {
 
         checkMaeterial(countryIdx)
             .then((res) => {
-                let tmp: any[] = [];
-                res.data.map((r: any, idx: number) => {
-                    tmp.push({
-                        name: r.materials_name,
-                        desc: r.material_description
-                    });
-                });
+                let tmp: MaterialProps[] = [];
+                res.data.map(
+                    (
+                        r: {
+                            materials_name: string;
+                            material_description: string;
+                        },
+                        idx: number
+                    ) => {
+                        tmp.push({
+                            name: r.materials_name,
+                            desc: r.material_description
+                        });
+                    }
+                );
                 setMaterials(tmp);
             })
             .catch((err) => console.log(err));
@@ -102,7 +201,7 @@ const Page = () => {
                     <InfoCity city={cityName} />
                     {/* 인기 여행지, 연동 완료 */}
                     <HotPlace city={city} />
-                    <Places city={city} />
+                    <Places city={city} hotPlaceImgs={hotPlaceImgs} />
                     {/* 추천 준비물, 연동 완료 */}
                     <RecoPrep materials={materials} />
                     <Community cityName={cityName.cityKo} />
