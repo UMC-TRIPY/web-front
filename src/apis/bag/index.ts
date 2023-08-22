@@ -46,6 +46,7 @@ export const getCityMateriallList = async (cid: number) => {
 // 가방 내부에 메모 작성
 export const writeBagMemo = async (bid: number, memo: string) => {
     const result = await Server.post(`travel-bag/bag/memo/${bid}`, { memo });
+    console.log('메모작성:', result.data);
     return result.data;
 };
 
