@@ -5,23 +5,23 @@ import alertCircleRed from "public/images/alertCircleRed.svg"
 import ConfirmBtn from "../layout/confirmBtn";
 
 interface TagEditorProps {
-    onCityEmptyError: () => void;
-    onTitleEmptyError: () => void;
-    onContentsEmptyError: () => void;
     postData: any;
     setPostData: (data: any) => void;
+    tagList: string[];
+    setTagList: (data: string[]) => void;
+    tagEmpty: boolean;
+    setTagEmpty: (data: boolean) => void;
 }
 
 export default function TagEditor({
-    onCityEmptyError, 
-    onTitleEmptyError, 
-    onContentsEmptyError,
     postData,
     setPostData,
+    tagList,
+    setTagList,
+    tagEmpty,
+    setTagEmpty,
 }: TagEditorProps) {
     const [tagItem, setTagItem] = useState<string>('');
-    const [tagList, setTagList] = useState<string[]>([]);
-    const [tagEmpty, setTagEmpty] = useState<boolean>(false);
 
     useEffect(() => {
         // tagList가 변경될 때마다 postData의 tags를 업데이트
@@ -58,15 +58,7 @@ export default function TagEditor({
         console.log(tagList)
     }
 
-    /** 태그란이 비었을 때 경고메시지 출력 */
-    function handleTagEmptyError() {
-        if (tagList.length === 0){
-            setTagEmpty(true);
-        }
-        else {
-            setTagEmpty(false);
-        }
-    }
+
 
     return (
         <div className="mx-4">
@@ -102,19 +94,6 @@ export default function TagEditor({
                 <span className={`px-2 ${tagEmpty ? 'text-alertred' : 'text-dark-black'}`}>
                     최소 한 개 이상의 태그를 입력해주세요.
                 </span>
-            </div>
-            <div className="flex justify-center">
-                <ConfirmBtn label="임시저장" color="bg-lightgrey"/>
-                <ConfirmBtn 
-                    label="등록하기" 
-                    color="bg-primary" 
-                    onClick={() => { // 눌렀을 때
-                        onCityEmptyError(); // 도시 게시판 선택했는지
-                        onTitleEmptyError(); // 타이틀이 비었는지
-                        onContentsEmptyError(); // 내용이 비었는지
-                        handleTagEmptyError(); // 태그가 비었는지
-                    }}
-                />
             </div>
         </div>
     )

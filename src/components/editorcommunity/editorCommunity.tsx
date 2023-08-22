@@ -4,6 +4,7 @@ import SelectCountry from "@/components/editorcommunity/selectCountry";
 import TagEditor from "@/components/editorcommunity/tagEditor";
 import CommonHeader from "@/components/maincommunity/CommonHeader";
 import { updatePosts } from "@/apis/community/update";
+import ConfirmBtn from "../layout/confirmBtn";
 
 export default function EditorCommunity() {
     const [selectedCity, setSelectedCity] = useState<string>("");
@@ -12,6 +13,8 @@ export default function EditorCommunity() {
     const [titleEmpty, setTitleEmpty] = useState<boolean>(false);
     const [contents, setContents] = useState(''); // 내용
     const [contentsEmpty, setContentsEmpty] = useState<boolean>(false);
+    const [tagList, setTagList] = useState<string[]>([]);
+    const [tagEmpty, setTagEmpty] = useState<boolean>(false);
 
     /** API 데이터 임시 저장 변수 */
     const [postData, setPostData] = useState({
@@ -38,6 +41,16 @@ export default function EditorCommunity() {
     function handleContentsEmptyError() {
         setContentsEmpty(!contents);
     }
+    /** 태그란이 비었을 때 경고메시지 출력 */
+    function handleTagEmptyError() {
+        if (tagList.length === 0){
+            setTagEmpty(true);
+        }
+        else {
+            setTagEmpty(false);
+        }
+    }
+
     console.log("postData:", postData);
 
     const register = () => {
@@ -80,14 +93,29 @@ export default function EditorCommunity() {
                 setPostData={setPostData}
             />
             {/** 태그 입력 컴포넌트 */}
-            <TagEditor 
-                onCityEmptyError={handleCityEmptyError}
-                onTitleEmptyError={handleTitleEmptyError}
-                onContentsEmptyError={handleContentsEmptyError}
+            <TagEditor
                 postData={postData}
                 setPostData={setPostData}
+                tagList={tagList}
+                setTagList={setTagList}
+                tagEmpty={tagEmpty}
+                setTagEmpty={setTagEmpty}
             />
-            
+            <div className="flex justify-center">
+                <ConfirmBtn label="임시저장" color="bg-lightgrey"/>
+                <ConfirmBtn 
+                    label="등록하기" 
+                    color="bg-primary" 
+                    onClick={() => { // 눌렀을 때
+                        handleCityEmptyError(); // 도시 게시판 선택했는지
+                        handleTitleEmptyError(); // 타이틀이 비었는지
+                        handleContentsEmptyError(); // 내용이 비었는지
+                        handleTagEmptyError(); // 태그가 비었는지
+                        // register(); // 제출
+                        // TODO: 제출시 오류처리
+                    }}
+                />
+            </div>
         </div>
     )
 }
