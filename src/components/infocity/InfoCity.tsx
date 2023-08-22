@@ -33,7 +33,7 @@ export default function InfoCity({
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [isUser, setIsUser] = useState<boolean>(true);
+    const isUser = localStorage.getItem('uid') === null ? false : true;
     const [modal, setModal] = useState<boolean>(false);
     const SelectDates = ({
         title,
