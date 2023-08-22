@@ -1,15 +1,11 @@
+import { IRecoMaterial } from '@/types/bag';
 import React, { useState } from 'react';
-
-interface IMaterial {
-    id: string;
-    name: string;
-}
 
 const MaterialSection = ({
     recommendMaterials,
     handleClickRecoMaterial
 }: {
-    recommendMaterials: IMaterial[];
+    recommendMaterials: IRecoMaterial[];
     handleClickRecoMaterial: any;
 }) => {
     return (
@@ -22,9 +18,11 @@ const MaterialSection = ({
                     <div
                         key={idx}
                         className='flex justify-center items-center w-fit h-8 p-4 bg-lightgrey rounded-full hover:bg-main-color cursor-pointer'
-                        onClick={() => handleClickRecoMaterial(material.id)}
+                        onClick={() =>
+                            handleClickRecoMaterial(material.materials_index)
+                        }
                     >
-                        {material.name}
+                        {material.materials_name}
                     </div>
                 ))}
             </div>

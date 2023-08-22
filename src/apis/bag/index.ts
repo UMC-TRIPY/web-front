@@ -34,10 +34,11 @@ export const getBagAndMaterialList = async (pid: number) => {
 };
 
 // 여행지별 준비물 불러오기
-export const getCityMateriallList = async (cid: number) => {
+export const getCityMateriallList = async (cname: string) => {
     const result = await Server.get<ICityMaterialReturnType[]>(
-        `travel-bag/material/${cid}`
+        `travel-bag/materialname/${cname}`
     );
+
     return result.data;
 };
 

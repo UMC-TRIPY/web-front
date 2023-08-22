@@ -106,3 +106,23 @@ export const getSearchUserList = async (keyword: string) => {
     const result = await Server.get(`mypage/users/search?keyword=${keyword}`);
     return result.data.data;
 };
+
+// 일정에 친구 초대
+export const inviteFriend = async (pid: number, rid: number) => {
+    const result = await Server.post(`travel-plans/user/plans/friend/${pid}`, {
+        rid
+    });
+    console.log(result);
+};
+
+/**
+ *
+ * 내가 생성한 여행목록 조회
+ *
+ * */
+export const getCreatedScheduleList = async () => {
+    const uid = localStorage.getItem('uid');
+    const result = await Server.post(`travel-plans/user/made/plan/${uid}`);
+    console.log('getCreatedScheduleList: ', result.data);
+    return result.data;
+};

@@ -13,6 +13,7 @@ export interface IBagAndMaterialReturnType {
 }
 
 export interface ICityMaterialReturnType {
+    materials_index: number;
     materials_name: string;
 }
 
