@@ -5,21 +5,36 @@ import ExchangeRate from './ExchangeRate';
 import format from 'date-fns/format';
 import Calendar from './Calendar';
 import Image from 'next/image';
+import LoginModal from '../modal/LoginModal';
+import { useRouter } from 'next/navigation';
+import differenceInDays from 'date-fns/differenceInDays';
+import { updateLists } from '@/apis/travellists/update';
 
 interface CityProps {
     country: string;
     cityKo: string;
     cityEn: string;
-    currencyKo: string;
-    currencyEn: string;
     mainPhoto: string;
 }
 
-export default function InfoCity({ city }: { city: CityProps }) {
+interface CurrencyProps {
+    currencyKo: string;
+    currencyEn: string;
+}
+
+export default function InfoCity({
+    city,
+    currency
+}: {
+    city: CityProps;
+    currency: CurrencyProps | undefined;
+}) {
+    const router = useRouter();
     const [startDate, setStartDate] = useState<Date | null>(null);
     const [endDate, setEndDate] = useState<Date | null>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
-    const [isUser, setIsUser] = useState<boolean>(false);
+    const isUser = localStorage.getItem('uid') === null ? false : true;
+    const [modal, setModal] = useState<boolean>(false);
     const SelectDates = ({
         title,
         value
@@ -40,6 +55,32 @@ export default function InfoCity({ city }: { city: CityProps }) {
             </div>
         );
     };
+    const register = () => {
+        if (startDate === null || endDate === null) return;
+        const start: string = format(startDate, 'yyyy.MM.dd');
+        const end: string = format(endDate, 'yyyy.MM.dd');
+        const difference: number = differenceInDays(endDate, startDate) + 1;
+        const dates: string = `${start} ~ ${end} (${
+            difference - 1
+        }박 ${difference}일)`;
+        sessionStorage.setItem('date', dates);
+        sessionStorage.setItem('place', city.cityKo);
+
+        updateLists({
+            cityname: city.cityKo,
+            departureDate: format(startDate, 'yyyy-MM-dd'),
+            arrivalDate: format(endDate, 'yyyy-MM-dd')
+        });
+    };
+    const createSchedule = () => {
+        if (startDate === null || endDate === null) {
+            alert('날짜를 선택해주세요.');
+            return;
+        }
+        register();
+        router.push('/newschedule');
+    };
+
     return (
         <div className='flex justify-between mt-28'>
             <Image
@@ -71,8 +112,12 @@ export default function InfoCity({ city }: { city: CityProps }) {
                         </button>
                     </div>
                     <ExchangeRate
-                        currencyKo={city.currencyKo}
-                        currencyEn={city.currencyEn}
+                        currencyKo={
+                            currency === undefined ? '' : currency.currencyKo
+                        }
+                        currencyEn={
+                            currency === undefined ? '' : currency.currencyEn
+                        }
                         country={city.country}
                     />
                 </div>
@@ -84,7 +129,9 @@ export default function InfoCity({ city }: { city: CityProps }) {
                         <SelectDates title='도착일' value={endDate} />
                         <button
                             type='button'
-                            onClick={() => setIsUser(!isUser)}
+                            onClick={() =>
+                                !isUser ? setModal(true) : createSchedule()
+                            }
                             className={
                                 isUser
                                     ? 'w-2/12  bg-primary rounded-r px-4'
@@ -94,6 +141,15 @@ export default function InfoCity({ city }: { city: CityProps }) {
                             {isUser ? '등록하기' : '로그인하기'}
                         </button>
                     </div>
+                    {modal && (
+                        <LoginModal
+                            setIsModal={setModal}
+                            setIsLogin={() => {}}
+                            setIsSignUp={() => {}}
+                            setIsLoggedIn={() => {}}
+                            title={'로그인'}
+                        />
+                    )}
                 </div>
                 {/* Calendar 사용시 아래 7개 props 필수 */}
                 <Calendar

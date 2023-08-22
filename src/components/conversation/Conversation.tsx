@@ -10,7 +10,6 @@ const Conversation = () => {
                 <div className='text-[#A3A3A3]'>더보기 {'>'}</div>
             </div>
             <ConversationList />
-            <Translation />
         </div>
     );
 };

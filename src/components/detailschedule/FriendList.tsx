@@ -1,32 +1,59 @@
 import { LiaExchangeAltSolid } from 'react-icons/lia';
 import { FiEdit } from 'react-icons/fi';
 import HelpBot from '../mybag/HelpBot';
-import { useRecoilState } from 'recoil';
-import { scheduleState } from '@/states/schedule';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { planIDState, scheduleState } from '@/states/schedule';
 import { useRouter } from 'next/navigation';
+import { Friend, InvitedFriend } from '@/types/user';
+import { useEffect, useState } from 'react';
+import FriendListModal from '../modal/FriendListModal';
+import { getFriendList, inviteFriend } from '@/apis/user/friend';
+
+const emptyText = {
+    user_index: -1,
+    nickname: '여행을 함께할 친구를 추가해보세요'
+};
 
 export default function FriendList({
     friends,
     edit
 }: {
-    friends: string[];
+    friends: InvitedFriend[];
     edit: boolean;
 }) {
-    const onClick = (friend: string) => {
-        alert(`${friend} 삭제 완료!`);
-    };
-
+    const [friendList, setFriendList] = useState<Friend[]>([]);
+    const [isModal, setIsModal] = useState<boolean>(false);
+    const planID = useRecoilValue(planIDState);
     const [changeMode, setChangeMode] = useRecoilState(scheduleState);
     const router = useRouter();
-    const SharingFriend = ({ friend }: { friend: string }) => {
+
+    const onClick = (friend: number) => {
+        alert(`${friend} 삭제 완료!`);
+    };
+    const handleInviteSchedule = async (targetFriend: number) => {
+        await inviteFriend(planID, targetFriend);
+        setIsModal(false);
+    };
+
+    useEffect(() => {
+        getFriendList().then((data) => {
+            setFriendList(data);
+        });
+    }, []);
+
+    const SharingFriend = ({ friend }: { friend: InvitedFriend }) => {
         return (
             <div className='text-xs h-8 rounded-xl bg-brightgrey py-1.5 px-2.5  mr-3 flex items-center'>
-                <span className='text-darkgrey mr-2.5'>{friend}</span>
+                <span className='text-darkgrey mr-2.5'>
+                    {friends.length > 0
+                        ? friend.nickname
+                        : '여행을 함께할 친구를 추가해보세요'}
+                </span>
                 <span
                     className={`text-darkgrey hover:cursor-pointer ${
-                        friends.length === 0 ? 'hidden' : 'blcok'
+                        friends.length === 0 ? 'hidden' : 'block'
                     }`}
-                    onClick={() => onClick(friend)}
+                    onClick={() => onClick(friend.user_index)}
                 >
                     X
                 </span>
@@ -41,23 +68,32 @@ export default function FriendList({
                     <div>
                         <div className='pb-2'>일정 공유 중인 친구</div>
                         <div className='flex items-center'>
-                            {friends.length === 0 ? (
-                                <SharingFriend friend='여행을 함께할 친구를 추가해보세요' />
-                            ) : (
-                                friends.map((friend, index) => {
-                                    return (
-                                        <SharingFriend
-                                            friend={friend}
-                                            key={`sharing${index}`}
-                                        />
-                                    );
-                                })
+                            {friends.length === 0 && (
+                                <SharingFriend friend={emptyText} />
                             )}
-                            <div className='ml-1 h-7 w-7 bg-primary flex items-center justify-center rounded-full font-medium text-2xl hover:cursor-pointer'>
+                            {friends.map((friend, index) => {
+                                return (
+                                    <SharingFriend
+                                        friend={friend}
+                                        key={`sharing${index}`}
+                                    />
+                                );
+                            })}
+                            <div
+                                className='ml-1 h-7 w-7 bg-primary flex items-center justify-center rounded-full font-medium text-2xl hover:cursor-pointer'
+                                onClick={() => setIsModal(true)}
+                            >
                                 +
                             </div>
                         </div>
                     </div>
+                    {isModal && (
+                        <FriendListModal
+                            setIsModal={setIsModal}
+                            handleInviteSchedule={handleInviteSchedule}
+                            friendList={friendList}
+                        />
+                    )}
                     <div className='flex items-center'>
                         {!edit && (
                             <>

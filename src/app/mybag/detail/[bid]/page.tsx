@@ -1,12 +1,17 @@
 'use client';
 
-import { addMaterial, getTravelBagMaterialList } from '@/apis/bag';
+import {
+    addMaterial,
+    getCityMateriallList,
+    getTravelBagMaterialList
+} from '@/apis/bag';
 import { getMaterials } from '@/apis/material';
 import CarrierSection from '@/components/mybag/BagDetail/CarrierSection';
 import MaterialSection from '@/components/mybag/BagDetail/MaterialSection';
 import MemoSection from '@/components/mybag/BagDetail/MemoSection';
 import WeatherSection from '@/components/mybag/BagDetail/WeatherSection';
 import { bagIDState } from '@/states/schedule';
+import { IRecoMaterial } from '@/types/bag';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { useRecoilState, useRecoilValue } from 'recoil';
@@ -27,22 +32,18 @@ const BagDetail = () => {
 
     const [bagID, setBagID] = useRecoilState(bagIDState);
     const [materials, setMaterials] = useState<IMaterialProps[]>([]);
+    const [recommendMaterials, setRecommendMaterials] = useState<
+        IRecoMaterial[]
+    >([]);
 
-    const [recommendMaterials, setRecommendMaterials] = useState([
-        { id: '0', name: '비치웨어' },
-        { id: '1', name: '자외선 차단제' },
-        { id: '2', name: '양산' },
-        { id: '3', name: '슬리퍼' },
-        { id: '4', name: '여권' },
-        { id: '5', name: '선글라스' },
-        { id: '6', name: '미니 선풍기' },
-        { id: '7', name: '우산' },
-        { id: '8', name: '우비' },
-        { id: '9', name: '부채' },
-        { id: '10', name: '여행용 방수팩' },
-        { id: '11', name: '수영 모자' },
-        { id: '12', name: '모기약' }
-    ]);
+    useEffect(() => {
+        const place = sessionStorage.getItem('place');
+        if (place) {
+            getCityMateriallList(place).then((data) => {
+                setRecommendMaterials(data);
+            });
+        }
+    }, []);
 
     useEffect(() => {
         console.log('bid:', bid);
@@ -60,18 +61,18 @@ const BagDetail = () => {
         }
     }, [bid, setBagID]);
 
-    const handleClickRecoMaterial = async (id: string) => {
+    const handleClickRecoMaterial = async (id: number) => {
         const MATERIAL_LENGTH = materials.length;
         const restRecoMaterial = recommendMaterials.filter(
-            (material) => material.id !== id
+            (material) => material.materials_index !== id
         );
         const clickedMaterial = recommendMaterials.filter(
-            (material) => material.id === id
+            (material) => material.materials_index === id
         );
-        await addMaterial(bagID, clickedMaterial[0].name);
+        await addMaterial(bagID, clickedMaterial[0].materials_name);
         const newMaterial = {
             materials_index: -1,
-            materials_name: clickedMaterial[0].name,
+            materials_name: clickedMaterial[0].materials_name,
             check_box: false,
             edited: false
         };
