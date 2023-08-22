@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { getPostTitle, getUserIndex, getViews, getThumbs, getCreatedAt } from '@/apis/community/posts';
+import { getPostTitle, getUserIndex, getViews, getThumbs, getCreatedAt, getUserNickname } from '@/apis/community/posts';
 import Image from 'next/image';
 import thumbsUp from 'public/images/thumbs-up.svg';
 import eye from 'public/images/eye.svg';
+import ProfilePic from 'public/images/user.svg'
 
 
 export default function ViewHeader() {
@@ -31,23 +32,34 @@ export default function ViewHeader() {
         })
     }, []);
 
+    const dateObject = new Date(created);
+    const formattedDate = dateObject.toLocaleDateString(); 
+
+    const [nickname, setNickname] = useState('');
+
+    useEffect(() => {
+        getUserNickname(userIndex).then((name) => {
+            setNickname(name);
+        })
+    }, [])
+
     return (
         <div className='mx-4 mb-12 border-b border-lightgrey'>
             <div className='flex-col mb-12'>
                 <div className='text-3xl font-bold mb-5'>
                     {postTitle}
                 </div>
-                <div className='flex'>
-                    <div className='w-10 h-10 border border-grey mr-4'>
-                        {userIndex}프사
+                <div className='flex items-center'>
+                    <div className='w-10 h-10 mr-4'>
+                        <Image src={ProfilePic} alt="프로필 사진" width={40}/>
                     </div>
                     <div className='flex-col'>
                         <div>
-                            {userIndex}닉네임
+                            {nickname}
                         </div>
                         <div className='flex text-sm text-grey'>
                             <div className='flex mr-4'>
-                                {created}
+                                {formattedDate}
                             </div>
                             <div className='flex mr-4'>
                                 <Image src={thumbsUp} alt='추천수' className='mr-1' />

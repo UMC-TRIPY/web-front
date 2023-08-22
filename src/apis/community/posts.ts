@@ -1,4 +1,5 @@
 import { Server } from "../setting";
+import { InformationReturnType } from "../user/types";
 
 export interface PostsProps {
     user_index: number;
@@ -10,6 +11,11 @@ export interface PostsProps {
     post_file: string;
     plan_index: number;
 }
+
+export const getUserNickname = async (userId: number) => {
+    const result = await Server.get(`/mypage/user/${userId}`);
+    return result.data.nickname;
+};
 
 export const getUserIndex = async (postId: number) => {
     const result = await Server.get(`/posts/${postId}`);
