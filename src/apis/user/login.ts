@@ -100,9 +100,9 @@ export const editInformation = async (
 ) => {
     try {
         const uid = localStorage.getItem('uid');
-        // const uid = 1;
-        await Server.put(`/user/info/${uid}`, {
-            data: { profileImg, nationality }
+        await Server.put(`/mypage/user/info/${uid}`, {
+            profileImg,
+            nationality
         }).then(() => alert('수정이 완료되었습니다.'));
     } catch (error: any) {
         console.log('회원정보 수정 에러:', error);

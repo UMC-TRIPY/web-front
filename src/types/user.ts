@@ -8,5 +8,5 @@ export interface IUser {
     nickname: string;
     email: string;
     nationality: string;
-    profileImg: String;
+    profileImg: string;
 }
