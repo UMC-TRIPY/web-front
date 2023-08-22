@@ -9,15 +9,17 @@ import CardCarousel from '@/components/main/CardCarousel';
 import { useParams } from 'next/navigation';
 import Places from '@/components/hotplace/Places';
 import { useEffect, useState } from 'react';
-import { checkCity, checkMaeterial } from '@/apis/infocity/check';
+import {
+    checkCity,
+    checkCurrency,
+    checkMaeterial
+} from '@/apis/infocity/check';
 import RecoPrep from '@/components/recoprep/RecoPrep';
 
 interface CityProps {
     country: string;
     cityKo: string;
     cityEn: string;
-    currencyKo: string;
-    currencyEn: string;
     mainPhoto: string;
 }
 
@@ -32,6 +34,11 @@ interface MaterialProps {
     desc: string;
 }
 
+interface CurrencyProps {
+    currencyKo: string;
+    currencyEn: string;
+}
+
 // DB에 있는 도시 오사카 1 , 도쿄 2, 런던 7, 바르셀로나 9, 시드니 18
 // 준비물 있는 나라  일본 3 - [1,2] , 영국 9 - [7], 스페인 10 - [9], 호주 11 - [18]
 
@@ -44,6 +51,7 @@ const Page = () => {
         return enName.toLowerCase().replace(/ /g, '') === para.city;
     })[0];
     const [exist, setExist] = useState<boolean>(false);
+    const [currency, setCurrency] = useState<CurrencyProps | undefined>();
     const [city, setCity] = useState<LocationProps[] | undefined>();
     const [materials, setMaterials] = useState<MaterialProps[] | undefined>();
     const [hotPlaceImgs, setHotPlaceImgs] = useState<string[] | undefined>();
@@ -63,14 +71,14 @@ const Page = () => {
                     '/images/universalStudio.png',
                     '/images/osakajo.jpg',
                     '/images/dotonbori.jpg',
-                    '/images/universalStudio.png'
+                    '/images/aquariumkaiyukan.JPEG'
                 ]);
                 break;
             }
             case 2: {
                 setHotPlaceImgs([
-                    '/images/disneylandtokyo.jpg',
-                    '/images/sensoji.jpg',
+                    '/images/tokyoskytree.jpg',
+                    '/images/tokyotower.jpg',
                     '/images/disneylandtokyo.jpg',
                     '/images/sensoji.jpg'
                 ]);
@@ -87,19 +95,19 @@ const Page = () => {
             }
             case 9: {
                 setHotPlaceImgs([
-                    '/images/sagradafamilia.jpg',
+                    '/images/familia.jpg',
                     '/images/gaudi.jpg',
-                    '/images/sagradafamilia.jpg',
-                    '/images/gaudi.jpg'
+                    '/images/catalunyasquare.jpg',
+                    '/images/casabat.jpg'
                 ]);
                 break;
             }
             case 18: {
                 setHotPlaceImgs([
                     '/images/operahouse.jpg',
-                    '/images/operahouse.jpg',
+                    '/images/harbourbridge.jpg',
                     '/images/darlinghabour.jpg',
-                    '/images/darlinghabour.jpg'
+                    '/images/botanicgardens.jpg'
                 ]);
                 break;
             }
@@ -141,6 +149,10 @@ const Page = () => {
                 break;
             }
         }
+
+        checkCurrency(countryIdx)
+            .then((res) => setCurrency(res))
+            .catch((err) => console.log(err));
 
         checkCity(cityIdx)
             .then((res) => {
@@ -198,7 +210,7 @@ const Page = () => {
                     {/* 화면 위치 및 검색 기능 부분 */}
                     <InfoMenus travels={travels} />
                     {/* 여행 도시 관한 정보 부분 */}
-                    <InfoCity city={cityName} />
+                    <InfoCity city={cityName} currency={currency} />
                     {/* 인기 여행지, 연동 완료 */}
                     <HotPlace city={city} />
                     <Places city={city} hotPlaceImgs={hotPlaceImgs} />

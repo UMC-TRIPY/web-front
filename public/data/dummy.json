@@ -4,40 +4,30 @@
             "country": "일본",
             "cityKo": "오사카",
             "cityEn": "Osaka",
-            "currencyKo": "엔",
-            "currencyEn": "JPY",
             "mainPhoto": "/images/osakaPicc.jpg"
         },
         {
             "country": "일본",
             "cityKo": "도쿄",
             "cityEn": "Tokyo",
-            "currencyKo": "엔",
-            "currencyEn": "JPY",
             "mainPhoto": "/images/tokyoPic.jpg"
         },
         {
             "country": "영국",
             "cityKo": "런던",
             "cityEn": "London",
-            "currencyKo": "파운드",
-            "currencyEn": "GBP",
             "mainPhoto": "/images/londonPic.jpg"
         },
         {
             "country": "스페인",
             "cityKo": "바르셀로나",
             "cityEn": "Barcelona",
-            "currencyKo": "유로",
-            "currencyEn": "EUR",
             "mainPhoto": "/images/barcelonaPic.jpg"
         },
         {
             "country": "호주",
             "cityKo": "시드니",
             "cityEn": "Sydney",
-            "currencyKo": "캔버라",
-            "currencyEn": "AUD",
             "mainPhoto": "/images/sydneyPic.jpg"
         }
     ],
@@ -46,23 +36,7 @@
         ["도쿄", "tokyo", 2, 3],
         ["런던", "london", 7, 9],
         ["바르셀로나", "barcelona", 9, 10],
-        ["시드니", "sydney", 18, 11],
-        ["오키나와", "okinawa", 0, 1],
-        ["오스트리아", "austria", 0, 1],
-        ["오타쿠", "otaku", 0, 1],
-        ["오키키", "okay", 0, 1],
-        ["유나이티드", "united", 0, 1],
-        ["다낭", "danang", 0, 1],
-        ["싸이판", "saipan", 0, 1],
-        ["보라카이", "boracay", 0, 1],
-        ["부다페스트", "budapest", 0, 1],
-        ["파리", "paris", 0, 1],
-        ["나폴리", "neapolitan", 0, 1],
-        ["나트랑", "nhatrang", 0, 1],
-        ["뉴욕", "newyork", 0, 1],
-        ["제주도", "jeju", 0, 1],
-        ["대만", "taiwan", 0, 1],
-        ["하와이", "hawai", 0, 1]
+        ["시드니", "sydney", 18, 11]
     ],
     "not-using": [
         {

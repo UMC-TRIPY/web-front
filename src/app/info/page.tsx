@@ -100,7 +100,11 @@ const Page = () => {
                 </Link>
             </div>
             {modal && (
-                <SearchCityModal setModalState={setIsModal} results={results} />
+                <SearchCityModal
+                    top='top-[330px]'
+                    setModalState={setIsModal}
+                    results={results}
+                />
             )}
             <div className='flex self-center w-1/2 items-center mb-16'>
                 <span className='mr-2'>최근 검색어</span>
