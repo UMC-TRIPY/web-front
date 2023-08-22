@@ -22,7 +22,7 @@ export const makeNewTravelBag = async (pid: number, bagname: string) => {
         bagname
     });
     console.log('makeNewTravelBag:', result.data);
-    return result.data;
+    return result.data.bag_index;
 };
 
 // 특정 계획에 속한 가방 리스트와 준비물 불러오기
