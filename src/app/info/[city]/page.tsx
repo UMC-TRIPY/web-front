@@ -63,14 +63,14 @@ const Page = () => {
                     '/images/universalStudio.png',
                     '/images/osakajo.jpg',
                     '/images/dotonbori.jpg',
-                    '/images/universalStudio.png'
+                    '/images/aquariumkaiyukan.JPEG'
                 ]);
                 break;
             }
             case 2: {
                 setHotPlaceImgs([
-                    '/images/disneylandtokyo.jpg',
-                    '/images/sensoji.jpg',
+                    '/images/tokyoskytree.jpg',
+                    '/images/tokyotower.jpg',
                     '/images/disneylandtokyo.jpg',
                     '/images/sensoji.jpg'
                 ]);
@@ -87,19 +87,19 @@ const Page = () => {
             }
             case 9: {
                 setHotPlaceImgs([
-                    '/images/sagradafamilia.jpg',
+                    '/images/familia.jpg',
                     '/images/gaudi.jpg',
-                    '/images/sagradafamilia.jpg',
-                    '/images/gaudi.jpg'
+                    '/images/catalunyasquare.jpg',
+                    '/images/casabat.jpg'
                 ]);
                 break;
             }
             case 18: {
                 setHotPlaceImgs([
                     '/images/operahouse.jpg',
-                    '/images/operahouse.jpg',
+                    '/images/harbourbridge.jpg',
                     '/images/darlinghabour.jpg',
-                    '/images/darlinghabour.jpg'
+                    '/images/botanicgardens.jpg'
                 ]);
                 break;
             }

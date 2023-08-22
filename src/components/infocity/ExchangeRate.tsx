@@ -60,6 +60,10 @@ export default function ExchangeRate({
         setAfter(send);
     };
 
+    const len = currencyKo.length;
+    const pd = 25 + 16 * (len - 1);
+    const mg = 310 - 16 * (len - 1);
+
     return (
         <div className='flex justify-between items-center mt-3'>
             <div className='flex'>
@@ -70,9 +74,13 @@ export default function ExchangeRate({
                 <input
                     className={
                         before === ''
-                            ? 'flex flex-col justify-center text-right border border-lightgrey rounded-r w-60 px-3'
-                            : 'flex flex-col justify-center text-right border border-lightgrey rounded-r w-60 px-[25px]'
+                            ? 'flex flex-col justify-center text-right border border-lightgrey rounded-r w-60'
+                            : 'flex flex-col justify-center text-right border border-lightgrey rounded-r w-60'
                     }
+                    style={{
+                        paddingRight:
+                            before === '' ? '12px' : isWon ? '25px' : `${pd}px`
+                    }}
                     type='text'
                     placeholder='숫자를 입력해주세요.'
                     value={before}
@@ -81,10 +89,12 @@ export default function ExchangeRate({
                 />
                 <div
                     className={
-                        before === ''
-                            ? 'hidden'
-                            : 'self-center absolute ml-[310px]'
+                        before === '' ? 'hidden' : 'self-center absolute'
                     }
+                    style={{
+                        marginLeft:
+                            before === '' ? '0px' : isWon ? '310px' : `${mg}px`
+                    }}
                 >
                     {isWon ? '원' : currencyKo}
                 </div>
