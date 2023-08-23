@@ -1,23 +1,23 @@
 import Image from 'next/image';
 import Link from 'next/link';
 interface Props {
-    posts: [string, string, string, string][];
+    posts: [number, string, string, string, string][];
 }
 
 export default function PostLists({ posts }: Props) {
-    const Post = ({ post }: { post: [string, string, string, string] }) => {
+    const Post = ({ post }: { post: [number, string, string, string, string] }) => {
         // 공백을 '-'로 치환
-        const encodedTitle = encodeURIComponent(post[1].replaceAll(' ', '-'));
+        // const encodedTitle = encodeURIComponent(post[1].replaceAll(' ', '-'));
         
         return (
             <div className='flex justify-between items-center my-2'>
                 <div className='flex w-[84%] items-center'>
                     <div className='w-[10%] border border-grey rounded text-center mr-[60px] text-grey py-0.5'>
-                        {post[0]}
+                        {post[1]}
                     </div>
                     <div>
-                    <Link href={`/community/view/dummy/${encodedTitle}`}>
-                        {post[1]}
+                    <Link href={`/community/view/${post[0]}`}>
+                        {post[2]}
                     </Link>
                     </div>
                 </div>
@@ -29,7 +29,7 @@ export default function PostLists({ posts }: Props) {
                         height={20}
                         className='mr-4'
                     />
-                    <span className='mr-8'>{post[2]}</span>
+                    <span className='mr-8'>{post[3]}</span>
                     <Image
                         src='/images/view.svg'
                         alt=''
@@ -37,7 +37,7 @@ export default function PostLists({ posts }: Props) {
                         height={20}
                         className='mr-4'
                     />
-                    <span>{post[3]}</span>
+                    <span>{post[4]}</span>
                 </div>
             </div>
         );
