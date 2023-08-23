@@ -31,7 +31,7 @@ export const getPostContent = async (postId: string) => {
     return result.data[0].post_content; 
 };
 
-export const getCityIndex = async (postId: number) => {
+export const getCityIndex = async (postId: string) => {
     const result = await Server.get(`/posts/${postId}`);
     return result.data[0].city_index;
 };
