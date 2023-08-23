@@ -43,10 +43,10 @@ export default function LabelSchedules({ status }: ILabelScheduleProps) {
 
     useEffect(() => {
         let tmp: any[] = [];
-        const date: any =
-            typeof window! == 'undefined'
-                ? localStorage.getItem('date')?.split('~')
-                : null;
+        let date: any;
+        if (typeof window! == 'undefined') {
+            date = localStorage.getItem('date')?.split('~');
+        }
         const s = date[0];
         const e = date[1].split(' ')[1];
         const start = new Date(s);

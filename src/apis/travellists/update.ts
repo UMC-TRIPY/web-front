@@ -26,9 +26,9 @@ export const updateLists = async (list: ListProps) => {
     await Server.post<ListProps>(`/travel-plans/user/travel/2`, list)
         .then((res: any) => {
             console.log(res);
-            typeof window! == 'undefined'
-                ? localStorage.setItem('pid', res.data.plan_index)
-                : null;
+            if (typeof window! == 'undefined') {
+                localStorage.setItem('pid', res.data.plan_index);
+            }
         })
         .catch((err) => console.log(err));
 };

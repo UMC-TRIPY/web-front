@@ -3,8 +3,10 @@ import LabelSchedules from '../detailschedule/LabelSchedules';
 import Modal from './Modal';
 
 const ScheduleDetailModal = ({ setIsModal }: any) => {
-    const place =
-        typeof window! == 'undefined' ? localStorage.getItem('place') : null;
+    let place: any;
+    if (typeof window! == 'undefined') {
+        place = localStorage.getItem('place');
+    }
     return (
         <Modal
             modalMode={0}

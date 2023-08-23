@@ -25,14 +25,11 @@ import { InvitedFriend, ISchedule } from '@/types/user';
 export default function Updateschedule() {
     const color = ['#FFE457', '#57CDFF', '#FF7F57'];
     const lightColor = ['#FFFBE7', '#EEFAFF', '#FFF3EF'];
-    const pid =
-        typeof window !== 'undefined'
-            ? Number(
-                  typeof window !== 'undefined'
-                      ? localStorage.getItem('pid')
-                      : null
-              )
-            : null;
+    let pid: any;
+    // const pid =
+    if (typeof window !== 'undefined') {
+        pid = Number(localStorage.getItem('pid'));
+    }
     const router = useRouter();
     const [schedule, setSchedule] = useState<IScheduleItem[]>([
         // {
@@ -238,10 +235,10 @@ export default function Updateschedule() {
 
     useEffect(() => {
         const schedules: IScheduleItem[] = [];
-        const date: any =
-            typeof window !== 'undefined'
-                ? localStorage.getItem('date')?.split('~')
-                : null;
+        let date: any;
+        if (typeof window !== 'undefined') {
+            localStorage.getItem('date')?.split('~');
+        }
         const startDate = date[0];
         resetEmptyBlockList();
         getScheduleData(pid!).then((res) => {

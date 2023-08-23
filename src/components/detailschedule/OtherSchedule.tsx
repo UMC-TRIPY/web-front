@@ -37,12 +37,11 @@ export default function OtherSchedule({
     const setPlanID = useSetRecoilState(planIDState);
 
     useEffect(() => {
-        const d =
-            typeof window! == 'undefined' ? localStorage.getItem('date') : null;
-        const p =
-            typeof window! == 'undefined'
-                ? localStorage.getItem('place')
-                : null;
+        let d: any, p: any;
+        if (typeof window! == 'undefined') {
+            d = localStorage.getItem('date');
+            p = localStorage.getItem('place');
+        }
 
         setDate(!d ? '' : d);
         setPlace(!p ? '' : p);
