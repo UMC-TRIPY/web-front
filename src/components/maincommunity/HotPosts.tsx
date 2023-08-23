@@ -1,27 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import PostLists from './PostLists';
-import { getPostTitle, getUserIndex, getViews, getThumbs, getCreatedAt, getUserNickname } from '@/apis/community/posts';
 
-interface HotPostsProps {
-    post_index: string;
-}
-export default function HotPosts({post_index}: HotPostsProps) {
-    const [postTitle, setPostTitle] = useState('');
-    const [views, setViews] = useState(0);
-    const [thumbs, setThumbs] = useState(0);
-    
-    // useEffect(() => {
-    //     getPostTitle(post_index).then((title) => {
-    //         setPostTitle(title);
-    //     });
-    //     getViews(post_index).then((view) => {
-    //         setViews(view);
-    //     })
-    //     getThumbs(post_index).then((thumb) => {
-    //         setThumbs(thumb);
-    //     })
-    // }, []);
 
+export default function HotPosts() {
     const posts: [number, string, string, string, string][] = [
         [50, '오사카', '8월 오사카 여행 후기', '3', '10'],
         [51, '도쿄', '도쿄 맛집 추천해주세요!', '1', '15'],
