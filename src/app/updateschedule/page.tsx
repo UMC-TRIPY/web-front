@@ -25,7 +25,10 @@ import { InvitedFriend, ISchedule } from '@/types/user';
 export default function Updateschedule() {
     const color = ['#FFE457', '#57CDFF', '#FF7F57'];
     const lightColor = ['#FFFBE7', '#EEFAFF', '#FFF3EF'];
-    const pid = Number(sessionStorage.getItem('pid'));
+    const pid =
+        typeof window !== 'undefined'
+            ? Number(sessionStorage.getItem('pid'))
+            : null;
     const router = useRouter();
     const [schedule, setSchedule] = useState<IScheduleItem[]>([
         // {
@@ -234,8 +237,7 @@ export default function Updateschedule() {
         const date: any = sessionStorage.getItem('date')?.split('~');
         const startDate = date[0];
         resetEmptyBlockList();
-        console.log(pid);
-        getScheduleData(pid).then((res) => {
+        getScheduleData(pid!).then((res) => {
             res.data.map((item: any, idx: number) => {
                 schedules.push({
                     id: idx + 1,
