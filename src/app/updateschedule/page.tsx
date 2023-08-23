@@ -28,7 +28,7 @@ export default function Updateschedule() {
     const pid =
         typeof window !== 'undefined'
             ? Number(
-                  typeof window! == 'undefined'
+                  typeof window !== 'undefined'
                       ? localStorage.getItem('pid')
                       : null
               )
@@ -239,7 +239,7 @@ export default function Updateschedule() {
     useEffect(() => {
         const schedules: IScheduleItem[] = [];
         const date: any =
-            typeof window! == 'undefined'
+            typeof window !== 'undefined'
                 ? localStorage.getItem('date')?.split('~')
                 : null;
         const startDate = date[0];

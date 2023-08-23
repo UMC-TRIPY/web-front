@@ -27,7 +27,7 @@ export default function BlockSchedule() {
         let tmp: any[] = [];
         let totalTmp: any[] = [];
         const date: any =
-            typeof window! == 'undefined'
+            typeof window !== 'undefined'
                 ? localStorage.getItem('date')?.split('~')
                 : null;
         const s = date[0];
@@ -36,7 +36,7 @@ export default function BlockSchedule() {
         setDiffer(differenceInDays(new Date(e), new Date(s)) + 1);
         checkSchedules(
             Number(
-                typeof window! == 'undefined'
+                typeof window !== 'undefined'
                     ? localStorage.getItem('pid')
                     : null
             )

@@ -21,8 +21,7 @@ const ScheduleAddInnerModal = ({
     schedule,
     setSchedule,
     scheduleId,
-    setScheduleId,
-    pid
+    setScheduleId
 }: any) => {
     const color = ['#FFE457', '#57CDFF', '#FF7F57'];
     const lightColor = ['#FFFBE7', '#EEFAFF', '#FFF3EF'];
@@ -70,6 +69,13 @@ const ScheduleAddInnerModal = ({
         title: title,
         location: place
     };
+
+    let pid: any;
+    if (typeof window !== undefined && typeof pid === `string`) {
+        pid = localStorage.getItem('pid');
+    }
+    // const pid =
+    //     typeof window! == 'undefined' ? localStorage.getItem('pid') : null;
     return (
         <ScheduleAddModal
             setModalState={setIsModal}

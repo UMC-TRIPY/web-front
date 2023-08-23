@@ -23,8 +23,6 @@ export default function Page() {
     const [emptyBlockList, setEmptyBlockList] = useState<number[][]>([]);
     const week = ['일', '월', '화', '수', '목', '금', '토'];
     const days: null | string[] = [];
-    const pid =
-        typeof window! == 'undefined' ? localStorage.getItem('pid') : null;
     if (differ !== null) {
         for (let i = 0; i < differ; i++) {
             let month =
@@ -281,7 +279,6 @@ export default function Page() {
                     setSchedule={setSchedule}
                     scheduleId={scheduleId}
                     setScheduleId={setScheduleId}
-                    pid={pid}
                 />
             )}
         </div>
