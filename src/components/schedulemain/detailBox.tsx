@@ -131,6 +131,7 @@ function DetailBox({ selectedCities, setSelectedCities }: DetailBoxProps) {
         }박 ${difference}일)`;
         sessionStorage.setItem('date', dates);
         sessionStorage.setItem('place', selectedCities);
+
         updateLists({
             cityname: selectedCities,
             departureDate: format(startDate, 'yyyy-MM-dd'),

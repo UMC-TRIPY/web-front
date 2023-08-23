@@ -19,38 +19,38 @@ import { useSetRecoilState } from 'recoil';
 import { isLoggedInState } from '@/states/user';
 import MakeSchedule from '@/components/mypage/MakeSchedule';
 
+import Link from 'next/link';
+import SearchCityModal from '@/components/modal/SearchCityModal';
+import SelectCityModal from '@/components/modal/SelectCityModal';
+import Promotion from '@/components/maincommunity/Promotion';
+
 const dummyItem = <div>abc</div>;
 
 const dummyLocation: ILocation[] = [
     {
         title: '런던',
-        desc: '000개의 리뷰',
-        img: ''
+        desc: '999개의 리뷰',
+        img: '/images/londonPic.jpg'
     },
     {
         title: '도쿄',
-        desc: '000개의 리뷰',
-        img: '/images/tokyo.png'
+        desc: '999개의 리뷰',
+        img: '/images/tokyoPic.jpg'
     },
     {
-        title: '파리',
-        desc: '000개의 리뷰',
-        img: '/images/paris.png'
+        title: '바르셀로나',
+        desc: '999개의 리뷰',
+        img: '/images/barcelonaPic.jpg'
     },
     {
-        title: '뉴욕',
-        desc: '000개의 리뷰',
-        img: 'https://static01.nyt.com/images/2022/09/29/travel/36hours-nyc11/36hours-nyc11-mobileMasterAt3x-v2.jpg'
+        title: '오사카',
+        desc: '999개의 리뷰',
+        img: '/images/osakaPicc.jpg'
     },
     {
-        title: '방콕',
-        desc: '000개의 리뷰',
-        img: ''
-    },
-    {
-        title: '타이페이',
-        desc: '000개의 리뷰',
-        img: ''
+        title: '시드니',
+        desc: '999개의 리뷰',
+        img: '/images/sydneyPic.jpg'
     }
 ];
 
@@ -130,9 +130,61 @@ const dummyCommunity = [
 ];
 
 export default function Home() {
-    const [isAbroad, setIsAbroad] = useState<boolean>(true);
-    const setIsLoggedIn = useSetRecoilState(isLoggedInState);
+    const router = useRouter();
 
+    const [isAbroad, setIsAbroad] = useState<boolean>(true);
+    const [place, setPlace] = useState<string>('');
+    const [isModal, setIsModal] = useState<boolean>(false);
+    const [continent, setContinent] = useState<string>('대륙');
+    const [country, setCountry] = useState<string>('국가');
+    const [city, setCity] = useState<string>('도시');
+
+    const [isContinent, setIsContinent] = useState<boolean>(false);
+    const [isCountry, setIsCountry] = useState<boolean>(false);
+    const [isCity, setIsCity] = useState<boolean>(false);
+
+    const [continentList, setContinentList] = useState<string[]>([
+        '아시아',
+        '유럽',
+        '오세아니아'
+    ]);
+    const [countryList, setCountryList] = useState<string[]>([]);
+    const [cityList, setCityList] = useState<string[]>([]);
+
+    const setIsLoggedIn = useSetRecoilState(isLoggedInState);
+    const datas = require('../../public/data/dummy.json');
+    const travels = datas.travels;
+    const results = travels
+        .filter((t: any) => t[0][0].includes(place[0]))
+        .filter((t: any) => t[0].includes(place.replace(/ /g, '')));
+
+    const selectContinent = () => {
+        setIsContinent(true);
+        setIsCountry(false);
+        setIsCity(false);
+        setCountry('국가');
+        setCity('도시');
+        setCityList([]);
+    };
+    const selectCountry = () => {
+        setIsContinent(false);
+        setIsCountry(true);
+        setIsCity(false);
+        setCity('도시');
+    };
+    const selectCity = () => {
+        setIsContinent(false);
+        setIsCountry(false);
+        setIsCity(true);
+    };
+    const onSearch = () => {
+        if (city === '도시') {
+            alert('도시를 선택해주세요.');
+            return;
+        }
+        const href = travels.filter((t: any) => t.includes(city))[0][1];
+        router.push(`/info/${href}`);
+    };
     return (
         <main className='flex min-h-screen flex-col p-5'>
             <div className='my-5 text-center'>
@@ -140,24 +192,48 @@ export default function Home() {
                     어디로 가고 싶으신가요?
                 </span>
             </div>
-            <div className='flex w-full my-3 justify-center items-center'>
+            <div className='flex items-center flex-row-reverse self-center w-1/2 mb-6'>
                 <input
-                    className='basis-1/2 h-14 py-3.5 pl-6 border-b border-gray-300 outline-none'
+                    className='h-14 w-full py-3.5 border-b border-gray-300 outline-none'
                     type='text'
                     placeholder='보고 싶은 여행지를 입력하세요'
-                    value={''}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
+                    value={place}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setPlace(e.target.value)
+                    }
+                    onClick={() => setIsModal(true)}
                 />
-                <BiSearch
-                    // onClick={() =>
-                    //     place === ''
-                    //         ? alert('1글자 이상 입력해주세요.')
-                    //         : alert(`${place} 검색 중...`)
-                    // }
-                    size='24'
-                    className='hover:cursor-pointer'
-                />
+                <Link
+                    onClick={() => {
+                        if (place === '') {
+                            alert('1글자 이상 입력해주세요.');
+                        }
+
+                        if (results.length !== 1) {
+                            alert('해당 여행지가 없습니다.');
+                        }
+                    }}
+                    href={
+                        place === ''
+                            ? '/info'
+                            : results.length === 1
+                            ? `/info/${results.map(
+                                  (result: [string, string]) => result[1]
+                              )}`
+                            : '/info'
+                    }
+                    className='hover:cursor-pointer absolute'
+                >
+                    <BiSearch size='24' />
+                </Link>
             </div>
+            {isModal && (
+                <SearchCityModal
+                    top='top-[260px]'
+                    setModalState={setIsModal}
+                    results={results}
+                />
+            )}
             <div className='my-5'>
                 <div className='flex flex-row my-3'>
                     <div className='flex flex-col justify-end items-center'>
@@ -177,6 +253,9 @@ export default function Home() {
                                     : 'text-infomenu mx-4 font-bold'
                             }
                             onClick={() => {
+                                setContinent('대륙');
+                                setCountry('국가');
+                                setCity('도시');
                                 setIsAbroad(true);
                             }}
                         >
@@ -200,6 +279,9 @@ export default function Home() {
                                     : 'text-primary mx-4 font-bold'
                             }
                             onClick={() => {
+                                setContinent('아시아');
+                                setCountry('대한민국');
+                                setCity('도시');
                                 setIsAbroad(false);
                             }}
                         >
@@ -208,37 +290,61 @@ export default function Home() {
                     </div>
                 </div>
                 <div className='flex justify-between'>
-                    <input
-                        className='flex basis-1/3 py-3.5 pl-6 mx-1 border border-gray-300 rounded-md outline-none'
-                        type='text'
-                        placeholder='대륙'
-                        value={''}
-                        onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                        ) => {}}
-                    />
-                    <input
-                        className='flex basis-1/3 py-3.5 pl-6 mx-1 border border-gray-300 rounded-md'
-                        type='text'
-                        placeholder='국가'
-                        value={''}
-                        onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                        ) => {}}
-                    />
-                    <input
-                        className='flex basis-1/3 py-3.5 pl-6 mx-1 border border-gray-300 rounded-md'
-                        type='text'
-                        placeholder='도시'
-                        value={''}
-                        onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                        ) => {}}
-                    />
-                    <button className='flex basis-1/12 justify-center items-center rounded-md bg-yellow-300'>
+                    <button
+                        className='flex min-w-[368px] py-3.5 pl-6 mx-1 border border-gray-300 rounded-md text-grey'
+                        onClick={selectContinent}
+                    >
+                        {continent}
+                    </button>
+                    <button
+                        className='flex min-w-[368px] py-3.5 pl-6 mx-1 border border-gray-300 rounded-md text-grey'
+                        onClick={selectCountry}
+                    >
+                        {country}
+                    </button>
+                    <button
+                        className='flex min-w-[368px] py-3.5 pl-6 mx-1 border border-gray-300 rounded-md text-grey'
+                        onClick={selectCity}
+                    >
+                        {city}
+                    </button>
+                    <button
+                        className='flex min-w-[140px] justify-center items-center rounded-md bg-yellow-300'
+                        onClick={onSearch}
+                    >
                         검색
                     </button>
                 </div>
+                {isContinent && (
+                    <SelectCityModal
+                        lists={continentList}
+                        top='top-[425px]'
+                        left='left-[25px] '
+                        setModalState={setIsContinent}
+                        setList={setContinent}
+                        setNext={setCountryList}
+                    />
+                )}
+                {isCountry && (
+                    <SelectCityModal
+                        lists={countryList}
+                        top='top-[425px]'
+                        left='left-[400px]'
+                        setModalState={setIsCountry}
+                        setList={setCountry}
+                        setNext={setCityList}
+                    />
+                )}
+                {isCity && (
+                    <SelectCityModal
+                        lists={cityList}
+                        top='top-[425px]'
+                        left='left-[780px]'
+                        setModalState={setIsCity}
+                        setList={setCity}
+                        setNext={() => {}}
+                    />
+                )}
                 <MakeSchedule />
                 <div className='w-full my-44'>
                     <CardCarousel
@@ -301,10 +407,7 @@ export default function Home() {
                         </tbody>
                     </table>
                 </div>
-                <div className='flex flex-col my-20 p-10 bg-[#E0E0E0]'>
-                    <span className='text-2xl font-bold'>프로모션 제목</span>
-                    <span className='text-xl'>프로모션 부가설명</span>
-                </div>
+                <Promotion />
             </div>
         </main>
     );

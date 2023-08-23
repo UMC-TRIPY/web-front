@@ -10,6 +10,10 @@ import { useRouter } from 'next/navigation';
 import ScheduleTable from '@/components/scheduleTable/ScheduleTable';
 import { getScheduleData } from '@/apis/travellists/update';
 import { differenceInDays } from 'date-fns';
+import { getFriendList, getInvitedFriendList } from '@/apis/user/friend';
+import { useRecoilValue } from 'recoil';
+import { planIDState } from '@/states/schedule';
+import { InvitedFriend, ISchedule } from '@/types/user';
 
 /**
  * Todo
@@ -232,7 +236,7 @@ export default function Updateschedule() {
         resetEmptyBlockList();
         console.log(pid);
         getScheduleData(pid).then((res) => {
-            res.data.map((item, idx) => {
+            res.data.map((item: any, idx: number) => {
                 schedules.push({
                     id: idx + 1,
                     column: differenceInDays(
@@ -250,6 +254,20 @@ export default function Updateschedule() {
         });
     }, []);
 
+    const planID = useRecoilValue(planIDState);
+    const [invitedFriendList, setInvitedFriendList] = useState<InvitedFriend[]>(
+        []
+    );
+
+    useEffect(() => {
+        if (planID !== -1) {
+            getInvitedFriendList(planID).then((data) => {
+                console.log('invitedFriendList:', data);
+                setInvitedFriendList(data);
+            });
+        }
+    }, [planID]);
+
     return (
         <div className='mt-20 py-20'>
             {/* 공통 머리글 */}
@@ -261,7 +279,7 @@ export default function Updateschedule() {
                 top='top-[545px]'
             />
             {/* 친구 목록 */}
-            <FriendList friends={[]} edit={true} />
+            <FriendList friends={invitedFriendList} edit={true} />
             {/* 여행 일정 */}
             <ScheduleTable schedule={schedule} setSchedule={setSchedule} />
             <div className='flex justify-center'>

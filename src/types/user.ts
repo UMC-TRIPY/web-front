@@ -8,5 +8,17 @@ export interface IUser {
     nickname: string;
     email: string;
     nationality: string;
-    profileImg: String;
+    profileImg: string;
+}
+
+export interface ISchedule {
+    city_name: string;
+    departureDate: string;
+    arrivalDate: string;
+    plan_index: number;
+}
+
+export interface InvitedFriend {
+    user_index: number;
+    nickname: string;
 }

@@ -2,24 +2,31 @@ import LabelSchedules from './LabelSchedules';
 import FriendList from './FriendList';
 import OtherSchedule from './OtherSchedule';
 import CommonHeader from './CommonHeader';
-import { scheduleState } from '@/states/schedule';
+import { planIDState, scheduleState } from '@/states/schedule';
 import { useRecoilValue } from 'recoil';
 import BlockSchedule from './BlockSchedule';
-
-const friends: string[] = [
-    '미리',
-    '메이',
-    '루카',
-    '규',
-    '레니',
-    '시미',
-    '초이',
-    '폴',
-    '에그먼'
-];
+import { getInvitedFriendList } from '@/apis/user/friend';
+import { useEffect, useState } from 'react';
+import { InvitedFriend } from '@/types/user';
 
 export default function DetailSchedule() {
     const mode = useRecoilValue(scheduleState);
+
+    const planID = useRecoilValue(planIDState);
+    const [invitedFriendList, setInvitedFriendList] = useState<InvitedFriend[]>(
+        []
+    );
+
+    useEffect(() => {
+        if (planID !== -1) {
+            getInvitedFriendList(planID).then((data) => {
+                console.log('invitedFriendList planID:', planID);
+                console.log('invitedFriendList:', data);
+                setInvitedFriendList(data);
+            });
+        }
+    }, [planID]);
+
     return (
         <div className='mt-20'>
             {/* 공통 머리글 */}
@@ -31,7 +38,7 @@ export default function DetailSchedule() {
                 top='top-[460px]'
             />
             {/* 친구 목록 */}
-            <FriendList friends={friends} edit={false} />
+            <FriendList friends={invitedFriendList} edit={false} />
             {/* 여행 일정 */}
             {mode ? <BlockSchedule /> : <LabelSchedules status='page' />}
         </div>

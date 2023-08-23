@@ -5,9 +5,14 @@ import Link from 'next/link';
 type Props = {
     setModalState: Function;
     results: [string, string][];
+    top: string;
 };
 
-export default function SearchCityModal({ setModalState, results }: Props) {
+export default function SearchCityModal({
+    setModalState,
+    results,
+    top
+}: Props) {
     useEffect(() => {
         document.body.style.overflowX = 'hidden';
     });
@@ -21,7 +26,7 @@ export default function SearchCityModal({ setModalState, results }: Props) {
                     }}
                 ></div>
                 <div
-                    className={`absolute flex flex-col rounded-lg max-h-56 bg-white z-101 shadow-md top-[330px] max-w-[640px] w-1/2 ${
+                    className={`absolute flex flex-col rounded-lg max-h-56 bg-white z-101 shadow-md max-w-[640px] w-1/2 ${top} ${
                         results.length > 4
                             ? 'overflow-y-scroll'
                             : 'overflow-y-hidden'

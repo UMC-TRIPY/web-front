@@ -7,121 +7,215 @@ import Conversation from '@/components/conversation/Conversation';
 import HotPlace from '@/components/hotplace/HotPlace';
 import CardCarousel from '@/components/main/CardCarousel';
 import { useParams } from 'next/navigation';
-import Image from 'next/image';
 import Places from '@/components/hotplace/Places';
+import { useEffect, useState } from 'react';
+import {
+    checkCity,
+    checkCurrency,
+    checkMaeterial
+} from '@/apis/infocity/check';
+import RecoPrep from '@/components/recoprep/RecoPrep';
 
 interface CityProps {
     country: string;
     cityKo: string;
     cityEn: string;
-    currencyKo: string;
-    currencyEn: string;
     mainPhoto: string;
-    zoom: number;
-    location: [
-        {
-            name: string;
-            reviews: string;
-            lat: string;
-            lng: string;
-            image: string;
-        }
-    ];
 }
 
 interface LocationProps {
     name: string;
-    reviews: string;
     lat: string;
     lng: string;
-    image: string;
 }
 
-const items = [
-    {
-        title: '110V 멀티어댑터',
-        desc: '일본은 110V를 사용해요.',
-        img: '/images/prep1.png'
-    },
-    {
-        title: '동전지갑',
-        desc: '현금과 동전을 많이 쓰기 때문에 동전지갑이 편해요.',
-        img: '/images/prep2.png'
-    },
-    {
-        title: '도쿄 서브웨이 티켓',
-        desc: '도쿄에서 시간별로 나눠 지하철 13개 노선의 250여 개 정류장을 사용해요.',
-        img: '/images/prep3.png'
-    },
-    {
-        title: '유니버셜 티켓',
-        desc: '재밌게 놀아봐용.',
-        img: '/images/prep3.png'
-    },
-    {
-        title: '도톤보리',
-        desc: '거리 이쁨.',
-        img: '/images/prep1.png'
-    },
-    {
-        title: '아사히',
-        desc: '맥주 존맛.',
-        img: '/images/prep2.png'
-    },
-    {
-        title: '삿포로',
-        desc: '눈이 예뻐여.',
-        img: '/images/prep2.png'
-    },
-    {
-        title: '오키나와',
-        desc: '오키! 나와.',
-        img: '/images/prep3.png'
-    },
-    {
-        title: '나고야',
-        desc: '사슴 공원.',
-        img: '/images/prep1.png'
-    }
-];
+interface MaterialProps {
+    name: string;
+    desc: string;
+}
+
+interface CurrencyProps {
+    currencyKo: string;
+    currencyEn: string;
+}
+
+// DB에 있는 도시 오사카 1 , 도쿄 2, 런던 7, 바르셀로나 9, 시드니 18
+// 준비물 있는 나라  일본 3 - [1,2] , 영국 9 - [7], 스페인 10 - [9], 호주 11 - [18]
 
 const Page = () => {
     const datas = require('../../../../public/data/dummy.json');
     const travels = datas.travels;
     const para = useParams();
     const cityName: CityProps = datas.datas.filter((data: CityProps) => {
-        const cityName = data.cityEn;
-        return cityName.toLowerCase().replace(/ /g, '') === para.city;
+        const enName = data.cityEn;
+        return enName.toLowerCase().replace(/ /g, '') === para.city;
     })[0];
-    const dummyCity =
-        cityName === undefined
-            ? undefined
-            : cityName.location.map((loc: LocationProps) => {
-                  return { title: loc.name, desc: loc.reviews, img: loc.image };
-              });
+    const [exist, setExist] = useState<boolean>(false);
+    const [currency, setCurrency] = useState<CurrencyProps | undefined>();
+    const [city, setCity] = useState<LocationProps[] | undefined>();
+    const [materials, setMaterials] = useState<MaterialProps[] | undefined>();
+    const [hotPlaceImgs, setHotPlaceImgs] = useState<string[] | undefined>();
+    const [materialImgs, setMaterialImgs] = useState<string[] | undefined>();
+    useEffect(() => {
+        const cityIdx = datas.travels.filter(
+            (t: [string, string, string]) => t[1] === para.city
+        )[0][2];
+        const countryIdx = datas.travels.filter(
+            (t: [string, string, string]) => t[1] === para.city
+        )[0][3];
+        console.log(cityIdx);
+
+        switch (cityIdx) {
+            case 1: {
+                setHotPlaceImgs([
+                    '/images/universalStudio.png',
+                    '/images/osakajo.jpg',
+                    '/images/dotonbori.jpg',
+                    '/images/aquariumkaiyukan.JPEG'
+                ]);
+                break;
+            }
+            case 2: {
+                setHotPlaceImgs([
+                    '/images/tokyoskytree.jpg',
+                    '/images/tokyotower.jpg',
+                    '/images/disneylandtokyo.jpg',
+                    '/images/sensoji.jpg'
+                ]);
+                break;
+            }
+            case 7: {
+                setHotPlaceImgs([
+                    '/images/londoneye.jpg',
+                    '/images/towerbridge.jpg',
+                    '/images/buckingham.jpg',
+                    '/images/bigben.jpg'
+                ]);
+                break;
+            }
+            case 9: {
+                setHotPlaceImgs([
+                    '/images/familia.jpg',
+                    '/images/gaudi.jpg',
+                    '/images/catalunyasquare.jpg',
+                    '/images/casabat.jpg'
+                ]);
+                break;
+            }
+            case 18: {
+                setHotPlaceImgs([
+                    '/images/operahouse.jpg',
+                    '/images/harbourbridge.jpg',
+                    '/images/darlinghabour.jpg',
+                    '/images/botanicgardens.jpg'
+                ]);
+                break;
+            }
+        }
+
+        switch (countryIdx) {
+            case 3: {
+                setMaterialImgs([
+                    '/images/prep1.png',
+                    '/images/prep2.png',
+                    '/images/prep3.png',
+                    '/images/prep3.png'
+                ]);
+                break;
+            }
+            case 9: {
+                setMaterialImgs([
+                    '/images/prep1.png',
+                    '/images/prep2.png',
+                    '/images/prep3.png'
+                ]);
+                break;
+            }
+            case 10: {
+                setMaterialImgs([
+                    '/images/prep1.png',
+                    '/images/prep2.png',
+                    '/images/prep3.png'
+                ]);
+                break;
+            }
+            case 11: {
+                setMaterialImgs([
+                    '/images/prep1.png',
+                    '/images/prep2.png',
+                    '/images/prep3.png',
+                    '/images/prep3.png'
+                ]);
+                break;
+            }
+        }
+
+        checkCurrency(countryIdx)
+            .then((res) => setCurrency(res))
+            .catch((err) => console.log(err));
+
+        checkCity(cityIdx)
+            .then((res) => {
+                let tmp: LocationProps[] = [];
+                res.map(
+                    (
+                        r: {
+                            latitude: string;
+                            longitude: string;
+                            landmark_name: string;
+                        },
+                        idx: number
+                    ) => {
+                        tmp.push({
+                            lat: r.latitude,
+                            lng: r.longitude,
+                            name: r.landmark_name
+                        });
+                    }
+                );
+                if (tmp.length !== 0) {
+                    setExist(true);
+                }
+                setCity(tmp);
+            })
+            .catch((err) => console.log(err));
+
+        checkMaeterial(countryIdx)
+            .then((res) => {
+                let tmp: MaterialProps[] = [];
+                res.data.map(
+                    (
+                        r: {
+                            materials_name: string;
+                            material_description: string;
+                        },
+                        idx: number
+                    ) => {
+                        tmp.push({
+                            name: r.materials_name,
+                            desc: r.material_description
+                        });
+                    }
+                );
+                setMaterials(tmp);
+            })
+            .catch((err) => console.log(err));
+    }, []);
     return (
         <div>
-            {cityName === undefined ? (
+            {!exist ? (
                 <div>해당페이지가 없습니다.</div>
             ) : (
                 <>
                     {/* 화면 위치 및 검색 기능 부분 */}
                     <InfoMenus travels={travels} />
                     {/* 여행 도시 관한 정보 부분 */}
-                    <InfoCity city={cityName} />
-                    {/* 인기 여행지 */}
-                    <HotPlace city={cityName.location} zoom={cityName.zoom} />
-                    <Places cities={cityName.location} />
-                    {/* 추천 준비물 */}
-                    {/* <RecoPrep /> */}
-                    <div className='my-16'>
-                        <CardCarousel
-                            mode={1}
-                            title='추천 준비물'
-                            size={3}
-                            items={items}
-                        />
-                    </div>
+                    <InfoCity city={cityName} currency={currency} />
+                    {/* 인기 여행지, 연동 완료 */}
+                    <HotPlace city={city} />
+                    <Places city={city} hotPlaceImgs={hotPlaceImgs} />
+                    {/* 추천 준비물, 연동 완료 */}
+                    <RecoPrep materials={materials} />
                     <Community cityName={cityName.cityKo} />
                     <Conversation />
                 </>

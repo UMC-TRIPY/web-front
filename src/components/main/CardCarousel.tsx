@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 
 type Props = {
     mode: number;
@@ -12,7 +13,20 @@ type Props = {
 
 const CardCarousel = ({ mode, title, items, size }: Props) => {
     const [curSlide, setCurSlide] = useState<number>(0);
-
+    const router = useRouter();
+    const onMove = (href: string) => {
+        if (href === '오사카') {
+            router.push('/info/osaka');
+        } else if (href === '도쿄') {
+            router.push('/info/tokyo');
+        } else if (href === '런던') {
+            router.push('/info/london');
+        } else if (href === '바르셀로나') {
+            router.push('/info/barcelona');
+        } else if (href === '시드니') {
+            router.push('/info/sydney');
+        }
+    };
     /**
      *
      * @param mode number: 인기여행지 0, 추천준비물 1
@@ -45,7 +59,10 @@ const CardCarousel = ({ mode, title, items, size }: Props) => {
                                     {item.desc}
                                 </span>
                             </div>
-                            <button className='flex w-1/3 h-10 ml-5 justify-center items-center rounded-md opacity-50 bg-white hover:opacity-100'>
+                            <button
+                                className='flex w-1/3 h-10 ml-5 justify-center items-center rounded-md opacity-50 bg-white hover:opacity-100'
+                                onClick={() => onMove(item.title)}
+                            >
                                 둘러보기
                             </button>
                         </div>

@@ -2,82 +2,43 @@
     "datas": [
         {
             "country": "일본",
-            "cityKo": "도쿄",
-            "cityEn": "Tokyo",
-            "currencyKo": "엔",
-            "currencyEn": "JPY",
-            "mainPhoto": "tokyoPic",
-            "zoom": 12,
-            "location": [
-                {
-                    "name": "도쿄 타워",
-                    "reviews": "999개 리뷰",
-                    "lat": "35.658575017433904",
-                    "lng": "139.74543690648335",
-                    "image": "/images/tokyoTower.png"
-                },
-                {
-                    "name": "디즈니랜드도쿄",
-                    "reviews": "999개 리뷰",
-                    "lat": "35.632893129980424",
-                    "lng": "139.88039429993523",
-                    "image": "/images/disneyland.png"
-                },
-                {
-                    "name": "시부야109",
-                    "reviews": "999개 리뷰",
-                    "lat": "35.6595755891205",
-                    "lng": "139.69872974144025",
-                    "image": "/images/shibuya.png"
-                },
-                {
-                    "name": "미타카노모리 지브리미술관",
-                    "reviews": "999개 리뷰",
-                    "lat": "35.69625855715424",
-                    "lng": "139.57043226068475",
-                    "image": "/images/ghibliMuseum.png"
-                }
-            ]
+            "cityKo": "오사카",
+            "cityEn": "Osaka",
+            "mainPhoto": "/images/osakaPicc.jpg"
         },
         {
             "country": "일본",
-            "cityKo": "오사카",
-            "cityEn": "Osaka",
-            "currencyKo": "엔",
-            "currencyEn": "JPY",
-            "mainPhoto": "osakaPic",
-            "zoom": 13,
-            "location": [
-                {
-                    "name": "도톤보리",
-                    "reviews": "999개 리뷰",
-                    "lat": "34.6688500051718",
-                    "lng": "135.50278316819896",
-                    "image": "/images/dotonbori.png"
-                },
-                {
-                    "name": "오사카성",
-                    "reviews": "999개 리뷰",
-                    "lat": "34.68725079622799",
-                    "lng": "135.52586927613112",
-                    "image": "/images/osakajo.png"
-                },
-                {
-                    "name": "유니버설 스튜디오 재팬",
-                    "reviews": "999개 리뷰",
-                    "lat": "34.66542228376301",
-                    "lng": "135.4323451300621",
-                    "image": "/images/universalStudio.png"
-                },
-                {
-                    "name": "우메다 스카이 공원",
-                    "reviews": "999개 리뷰",
-                    "lat": "34.705317244994525",
-                    "lng": "135.4905410800418",
-                    "image": "/images/umedaFloatingGarden.png"
-                }
-            ]
+            "cityKo": "도쿄",
+            "cityEn": "Tokyo",
+            "mainPhoto": "/images/tokyoPic.jpg"
         },
+        {
+            "country": "영국",
+            "cityKo": "런던",
+            "cityEn": "London",
+            "mainPhoto": "/images/londonPic.jpg"
+        },
+        {
+            "country": "스페인",
+            "cityKo": "바르셀로나",
+            "cityEn": "Barcelona",
+            "mainPhoto": "/images/barcelonaPic.jpg"
+        },
+        {
+            "country": "호주",
+            "cityKo": "시드니",
+            "cityEn": "Sydney",
+            "mainPhoto": "/images/sydneyPic.jpg"
+        }
+    ],
+    "travels": [
+        ["오사카", "osaka", 1, 3],
+        ["도쿄", "tokyo", 2, 3],
+        ["런던", "london", 7, 9],
+        ["바르셀로나", "barcelona", 9, 10],
+        ["시드니", "sydney", 18, 11]
+    ],
+    "not-using": [
         {
             "country": "미국",
             "cityKo": "뉴욕",
@@ -117,26 +78,5 @@
                 }
             ]
         }
-    ],
-    "travels": [
-        ["오사카", "osaka"],
-        ["오키나와", "okinawa"],
-        ["오스트리아", "austria"],
-        ["오타쿠", "otaku"],
-        ["오키키", "okay"],
-        ["유나이티드", "united"],
-        ["도쿄", "tokyo"],
-        ["다낭", "danang"],
-        ["싸이판", "saipan"],
-        ["보라카이", "boracay"],
-        ["부다페스트", "budapest"],
-        ["파리", "paris"],
-        ["나폴리", "neapolitan"],
-        ["나트랑", "nhatrang"],
-        ["뉴욕", "newyork"],
-        ["런던", "london"],
-        ["제주도", "jeju"],
-        ["대만", "taiwan"],
-        ["하와이", "hawai"]
     ]
 }

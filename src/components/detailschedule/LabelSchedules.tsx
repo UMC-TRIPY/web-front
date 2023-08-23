@@ -58,23 +58,30 @@ export default function LabelSchedules({ status }: ILabelScheduleProps) {
                 todos: []
             });
         }
-        checkSchedules()
+        console.log(d);
+        checkSchedules(Number(sessionStorage.getItem('pid')))
             .then((res) => {
                 res.map((r: any, idx: number) => {
+                    console.log(r);
                     const today = new Date(r.plan_date.slice(0, 10));
-                    tmp[differenceInDays(today, start)].todos.push({
-                        color: color[Number(r.plan_color) - 1],
-                        startTime: Number(r.start_time.slice(6)),
-                        halfHour: r.plan_halfHour,
-                        content: r.plan_title,
-                        additional:
-                            r.plan_memo === undefined ? '' : r.plan_memo,
-                        place:
-                            r.plan_place === undefined
-                                ? '장소 등록'
-                                : r.plan_place,
-                        checked: false
-                    });
+                    if (
+                        differenceInDays(today, start) <= d &&
+                        differenceInDays(today, start) >= 0
+                    ) {
+                        tmp[differenceInDays(today, start)].todos.push({
+                            color: color[Number(r.plan_color) - 1],
+                            startTime: Number(r.start_time.slice(6)),
+                            halfHour: r.plan_halfHour,
+                            content: r.plan_title,
+                            additional:
+                                r.plan_memo === undefined ? '' : r.plan_memo,
+                            place:
+                                r.plan_place === undefined
+                                    ? '장소 등록'
+                                    : r.plan_place,
+                            checked: false
+                        });
+                    }
                 });
                 setSchedules(tmp);
             })
@@ -104,70 +111,78 @@ export default function LabelSchedules({ status }: ILabelScheduleProps) {
                                               {schedule.date}
                                           </span>
                                       </div>
-                                      {schedule.todos.map(
-                                          (todo: any, idx: number) => {
-                                              return (
-                                                  <div
-                                                      key={`schwrap${idx}`}
-                                                      className='border border-lightgrey border-l-8 rounded-lg pl-9 mb-2'
-                                                      style={{
-                                                          borderLeftColor:
-                                                              todo.color
-                                                      }}
-                                                  >
-                                                      <div
-                                                          key={`schtime${idx}`}
-                                                          className='text-xs text-grey py-2.5'
-                                                      >
-                                                          {formatAMPM(
-                                                              tableToDate(
-                                                                  todo.startTime
-                                                              )
-                                                          )}{' '}
-                                                          ~{' '}
-                                                          {formatAMPM(
-                                                              tableToDate(
-                                                                  todo.startTime +
-                                                                      todo.halfHour
-                                                              )
-                                                          )}
-                                                      </div>
-                                                      <div
-                                                          key={`schcontent${idx}`}
-                                                          className='flex justify-between text-base'
-                                                      >
-                                                          <div
-                                                              key={`schinwrap${idx}`}
-                                                              className='flex'
-                                                          >
-                                                              <div
-                                                                  key={`schdetail${idx}`}
-                                                                  className='mr-10 mb-4'
-                                                              >
-                                                                  {todo.content}
-                                                              </div>
-                                                              <div
-                                                                  key={`schadd${idx}`}
-                                                                  className='text-grey'
-                                                              >
-                                                                  {
-                                                                      todo.additional
-                                                                  }
-                                                              </div>
-                                                          </div>
-                                                          <div className='flex text-base items-center'>
-                                                              <CiLocationOn
-                                                                  size={20}
-                                                              />
-                                                              <span className='ml-2 mr-4'>
-                                                                  {todo.place}
-                                                              </span>
-                                                          </div>
-                                                      </div>
-                                                  </div>
-                                              );
-                                          }
-                                      )}
+                                      {schedule.todos.length === 0
+                                          ? '일정이 없습니다.'
+                                          : schedule.todos.map(
+                                                (todo: any, idx: number) => {
+                                                    return (
+                                                        <div
+                                                            key={`schwrap${idx}`}
+                                                            className='border border-lightgrey border-l-8 rounded-lg pl-9 mb-2'
+                                                            style={{
+                                                                borderLeftColor:
+                                                                    todo.color
+                                                            }}
+                                                        >
+                                                            <div
+                                                                key={`schtime${idx}`}
+                                                                className='text-xs text-grey py-2.5'
+                                                            >
+                                                                {formatAMPM(
+                                                                    tableToDate(
+                                                                        todo.startTime
+                                                                    )
+                                                                )}{' '}
+                                                                ~{' '}
+                                                                {formatAMPM(
+                                                                    tableToDate(
+                                                                        todo.startTime +
+                                                                            todo.halfHour
+                                                                    )
+                                                                )}
+                                                            </div>
+                                                            <div
+                                                                key={`schcontent${idx}`}
+                                                                className='flex justify-between text-base'
+                                                            >
+                                                                <div
+                                                                    key={`schinwrap${idx}`}
+                                                                    className='flex'
+                                                                >
+                                                                    <div
+                                                                        key={`schdetail${idx}`}
+                                                                        className='mr-10 mb-4'
+                                                                    >
+                                                                        {
+                                                                            todo.content
+                                                                        }
+                                                                    </div>
+                                                                    <div
+                                                                        key={`schadd${idx}`}
+                                                                        className='text-grey'
+                                                                    >
+                                                                        {
+                                                                            todo.additional
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                                <div className='flex text-base items-center'>
+                                                                    <CiLocationOn
+                                                                        size={
+                                                                            20
+                                                                        }
+                                                                    />
+                                                                    <span className='ml-2 mr-4'>
+                                                                        {
+                                                                            todo.place
+                                                                        }
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    );
+                                                }
+                                            )}
                                   </div>
                               );
                           })}
