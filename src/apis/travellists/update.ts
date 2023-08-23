@@ -23,7 +23,7 @@ interface ScheduleProps {
 
 export const updateLists = async (list: ListProps) => {
     const uid = localStorage.getItem('uid');
-    await Server.post<ListProps>(`/travel-plans/user/travel/${uid}`, list)
+    await Server.post<ListProps>(`/travel-plans/user/travel/2`, list)
         .then((res: any) => {
             console.log(res);
             sessionStorage.setItem('pid', res.data.plan_index);

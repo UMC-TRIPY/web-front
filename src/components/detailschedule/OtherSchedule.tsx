@@ -45,6 +45,7 @@ export default function OtherSchedule({
         checkLists()
             .then((res) => {
                 let tmp: any[] = [];
+                console.log(res);
                 setPlanID(res[0].plan_index);
                 res.map((d: any, idx: number) => {
                     const departureDate =
@@ -59,8 +60,9 @@ export default function OtherSchedule({
                         arrivalDate,
                         departureDate
                     );
+                    const p = sessionStorage.getItem('pid');
                     tmp.push({
-                        pid: d.plan_index,
+                        pid: p,
                         dates: `${format(
                             departureDate,
                             'yyyy.MM.dd'

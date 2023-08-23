@@ -19,18 +19,10 @@ function ScheduleHeader({
     const refCities: { id: number; place: string }[] = [
         // 자동완성 검색어 원본
         { id: 1, place: '도쿄' },
-        { id: 2, place: '브라질' },
-        { id: 3, place: '방콕' },
-        { id: 4, place: '부산' },
-        { id: 5, place: '베트남' },
-        { id: 6, place: '브루클린' },
-        { id: 7, place: '벨기에' },
-        { id: 8, place: '오사카' },
-        { id: 9, place: '오키나와' },
-        { id: 10, place: '대구' },
-        { id: 11, place: '대전' },
-        { id: 12, place: '다낭' },
-        { id: 13, place: '인천' }
+        { id: 2, place: '오사카' },
+        { id: 3, place: '런던' },
+        { id: 4, place: '바르셀로나' },
+        { id: 5, place: '시드니' }
     ];
 
     function City() {
