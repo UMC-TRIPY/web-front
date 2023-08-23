@@ -32,6 +32,7 @@ interface LocationProps {
 interface MaterialProps {
     name: string;
     desc: string;
+    img: string;
 }
 
 interface CurrencyProps {
@@ -113,43 +114,6 @@ const Page = () => {
             }
         }
 
-        switch (countryIdx) {
-            case 3: {
-                setMaterialImgs([
-                    '/images/prep1.png',
-                    '/images/prep2.png',
-                    '/images/prep3.png',
-                    '/images/prep3.png'
-                ]);
-                break;
-            }
-            case 9: {
-                setMaterialImgs([
-                    '/images/prep1.png',
-                    '/images/prep2.png',
-                    '/images/prep3.png'
-                ]);
-                break;
-            }
-            case 10: {
-                setMaterialImgs([
-                    '/images/prep1.png',
-                    '/images/prep2.png',
-                    '/images/prep3.png'
-                ]);
-                break;
-            }
-            case 11: {
-                setMaterialImgs([
-                    '/images/prep1.png',
-                    '/images/prep2.png',
-                    '/images/prep3.png',
-                    '/images/prep3.png'
-                ]);
-                break;
-            }
-        }
-
         checkCurrency(countryIdx)
             .then((res) => setCurrency(res))
             .catch((err) => console.log(err));
@@ -182,7 +146,45 @@ const Page = () => {
 
         checkMaeterial(countryIdx)
             .then((res) => {
-                let tmp: MaterialProps[] = [];
+                let tmp: any[] = [];
+                let mat: any;
+
+                switch (countryIdx) {
+                    case 3: {
+                        mat = [
+                            '/images/multiadpater.png',
+                            '/images/wallet.png',
+                            '/images/railpass.png',
+                            '/images/freevolt.png'
+                        ];
+                        break;
+                    }
+                    case 9: {
+                        mat = [
+                            '/images/multiadpater.png',
+                            '/images/shower.png',
+                            '/images/acc.png'
+                        ];
+                        break;
+                    }
+                    case 10: {
+                        mat = [
+                            '/images/suncream.png',
+                            '/images/sunglasses.png',
+                            '/images/acc.png'
+                        ];
+                        break;
+                    }
+                    case 11: {
+                        mat = [
+                            '/images/suncream.png',
+                            '/images/sunglasses.png',
+                            '/images/visa.png',
+                            '/images/prep3.png'
+                        ];
+                        break;
+                    }
+                }
                 res.data.map(
                     (
                         r: {
@@ -193,7 +195,8 @@ const Page = () => {
                     ) => {
                         tmp.push({
                             name: r.materials_name,
-                            desc: r.material_description
+                            desc: r.material_description,
+                            img: mat[idx]
                         });
                     }
                 );
