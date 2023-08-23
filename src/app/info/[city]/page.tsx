@@ -32,6 +32,7 @@ interface LocationProps {
 interface MaterialProps {
     name: string;
     desc: string;
+    img: string;
 }
 
 interface CurrencyProps {
@@ -52,6 +53,7 @@ const Page = () => {
     })[0];
     const [exist, setExist] = useState<boolean>(false);
     const [currency, setCurrency] = useState<CurrencyProps | undefined>();
+    const [cur, setCur] = useState<number>(0);
     const [city, setCity] = useState<LocationProps[] | undefined>();
     const [materials, setMaterials] = useState<MaterialProps[] | undefined>();
     const [hotPlaceImgs, setHotPlaceImgs] = useState<string[] | undefined>();
@@ -112,40 +114,21 @@ const Page = () => {
                 break;
             }
         }
-
         switch (countryIdx) {
             case 3: {
-                setMaterialImgs([
-                    '/images/prep1.png',
-                    '/images/prep2.png',
-                    '/images/prep3.png',
-                    '/images/prep3.png'
-                ]);
+                setCur(0.11);
                 break;
             }
             case 9: {
-                setMaterialImgs([
-                    '/images/prep1.png',
-                    '/images/prep2.png',
-                    '/images/prep3.png'
-                ]);
+                setCur(0.0006);
                 break;
             }
             case 10: {
-                setMaterialImgs([
-                    '/images/prep1.png',
-                    '/images/prep2.png',
-                    '/images/prep3.png'
-                ]);
+                setCur(0.0007);
                 break;
             }
             case 11: {
-                setMaterialImgs([
-                    '/images/prep1.png',
-                    '/images/prep2.png',
-                    '/images/prep3.png',
-                    '/images/prep3.png'
-                ]);
+                setCur(0.0007);
                 break;
             }
         }
@@ -182,7 +165,45 @@ const Page = () => {
 
         checkMaeterial(countryIdx)
             .then((res) => {
-                let tmp: MaterialProps[] = [];
+                let tmp: any[] = [];
+                let mat: any;
+
+                switch (countryIdx) {
+                    case 3: {
+                        mat = [
+                            '/images/multiadpater.png',
+                            '/images/wallet.png',
+                            '/images/railpass.png',
+                            '/images/freevolt.png'
+                        ];
+                        break;
+                    }
+                    case 9: {
+                        mat = [
+                            '/images/multiadpater.png',
+                            '/images/shower.png',
+                            '/images/acc.png'
+                        ];
+                        break;
+                    }
+                    case 10: {
+                        mat = [
+                            '/images/suncream.png',
+                            '/images/sunglasses.png',
+                            '/images/acc.png'
+                        ];
+                        break;
+                    }
+                    case 11: {
+                        mat = [
+                            '/images/suncream.png',
+                            '/images/sunglasses.png',
+                            '/images/visa.png',
+                            '/images/prep3.png'
+                        ];
+                        break;
+                    }
+                }
                 res.data.map(
                     (
                         r: {
@@ -193,7 +214,8 @@ const Page = () => {
                     ) => {
                         tmp.push({
                             name: r.materials_name,
-                            desc: r.material_description
+                            desc: r.material_description,
+                            img: mat[idx]
                         });
                     }
                 );
@@ -210,7 +232,7 @@ const Page = () => {
                     {/* 화면 위치 및 검색 기능 부분 */}
                     <InfoMenus travels={travels} />
                     {/* 여행 도시 관한 정보 부분 */}
-                    <InfoCity city={cityName} currency={currency} />
+                    <InfoCity city={cityName} currency={currency} cur={cur} />
                     {/* 인기 여행지, 연동 완료 */}
                     <HotPlace city={city} />
                     <Places city={city} hotPlaceImgs={hotPlaceImgs} />

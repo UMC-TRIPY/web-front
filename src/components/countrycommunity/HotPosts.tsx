@@ -1,5 +1,6 @@
 import PostLists from '../maincommunity/PostLists';
 
+
 export default function HotPosts() {
     const posts: [number, string, string, string, string][] = [
         [50, '오사카', '8월 오사카 여행 후기', '3', '10'],
@@ -13,10 +14,13 @@ export default function HotPosts() {
         ],
         [54, '삿포로', '삿포로 여행 추천합니다', '10', '200'],
     ];
+
     return (
         <div>
-            <div className='text-5xl font-bold mb-10'>일본</div>
-            <span className='text-3xl font-bold mb-8'>일본 인기글 TOP 5</span>
+            <div className='text-5xl font-bold mb-10'>{country}</div>
+            <span className='text-3xl font-bold mb-8'>
+                {country} 인기글 TOP 5
+            </span>
             <PostLists posts={posts} />
         </div>
     );

@@ -210,7 +210,7 @@ const contents: IContent[] = [
     }
 ];
 
-export default function CountryPosts() {
+export default function CountryPosts({ country }: { country: string }) {
     const totalPages = Math.ceil(contents.length / 10);
     const [current, setCurrent] = useState<number>(1);
     const [datas, setDatas] = useState<any>(contents.slice(0, 10));
@@ -223,7 +223,7 @@ export default function CountryPosts() {
     return (
         <div className='flex flex-col mb-[88px]'>
             {/* mb-8 */}
-            <span className='text-3xl font-bold'>일본 전체 글</span>
+            <span className='text-3xl font-bold'>{country} 전체 글</span>
             <div className='flex flex-row-reverse items-center mb-5'>
                 <button
                     className={`text-xl ${
@@ -264,11 +264,11 @@ export default function CountryPosts() {
                     setCurrent={setCurrent}
                 />
                 <div className='absolute self-end'>
-                <Link href="/community/write">
-                    <button className='bg-lightgrey py-3 px-11 mt-10'>
-                        글쓰기
-                    </button>
-                </Link>
+                    <Link href='/community/write'>
+                        <button className='bg-lightgrey py-3 px-11 mt-10'>
+                            글쓰기
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>
