@@ -8,7 +8,8 @@ import {
 
 // 여행 가방 목록 불러오기
 export const getTravelBagList = async () => {
-    const uid = localStorage.getItem('uid');
+    // const uid = localStorage.getItem('uid');
+    const uid = 2;
     const result = await Server.get<IBagReturnType[]>(
         `travel-bag/user/bag/${uid}`
     );
@@ -17,7 +18,8 @@ export const getTravelBagList = async () => {
 
 // 여행가방 만들기
 export const makeNewTravelBag = async (pid: number, bagname: string) => {
-    const uid = localStorage.getItem('uid');
+    // const uid = localStorage.getItem('uid');
+    const uid = 2;
     const result = await Server.post(`travel-bag/user/bag/${uid}/${pid}`, {
         bagname
     });
@@ -95,7 +97,8 @@ export const getPlanBagList = async (pid: number) => {
 };
 
 export const getTravelPlanList = async () => {
-    const uid = localStorage.getItem('uid');
+    // const uid = localStorage.getItem('uid');
+    const uid = 2;
     const result = await Server.get(`travel-plans/user/plans/${uid}`);
     return result.data;
 };

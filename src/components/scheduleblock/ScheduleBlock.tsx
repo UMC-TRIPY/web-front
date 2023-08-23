@@ -21,8 +21,8 @@ const ScheduleBlock = (props: Props) => {
     let { id, column, lineColor, color, startTime, halfHour, title, location } =
         props.item;
 
-    lineColor = lineColors[Number(lineColor)];
-    color = colors[Number(color)];
+    // lineColor = lineColors[Number(lineColor)];
+    // color = colors[Number(color)];
 
     const dragFunction = (event: any, type: any) => {
         event.preventDefault();
