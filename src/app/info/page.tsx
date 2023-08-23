@@ -6,6 +6,7 @@ import SearchCityModal from '@/components/modal/SearchCityModal';
 import Link from 'next/link';
 import { RxCross1 } from 'react-icons/rx';
 import { useRouter } from 'next/navigation';
+import SearchCountries from '@/components/main/SearchCountries';
 
 function City() {
     const searchedCities = [
@@ -113,86 +114,12 @@ const Page = () => {
                 </div>
             </div>
             <div className='mt-2 mb-4'>
-                <div className='flex flex-row my-3'>
-                    <div className='flex flex-col justify-end items-center'>
-                        {isAbroad && (
-                            <Image
-                                className='block'
-                                src='/images/selected.png'
-                                alt='none'
-                                width={15}
-                                height={15}
-                            />
-                        )}
-                        <button
-                            className={
-                                isAbroad
-                                    ? 'text-primary mx-4 font-bold'
-                                    : 'text-infomenu mx-4 font-bold'
-                            }
-                            onClick={() => {
-                                setIsAbroad(true);
-                            }}
-                        >
-                            해외
-                        </button>
-                    </div>
-                    <div className='flex flex-col justify-end items-center'>
-                        {!isAbroad && (
-                            <Image
-                                className='block'
-                                src='/images/selected.png'
-                                alt='none'
-                                width={15}
-                                height={15}
-                            />
-                        )}
-                        <button
-                            className={
-                                isAbroad
-                                    ? 'text-infomenu mx-4 font-bold'
-                                    : 'text-primary mx-4 font-bold'
-                            }
-                            onClick={() => {
-                                setIsAbroad(false);
-                            }}
-                        >
-                            국내
-                        </button>
-                    </div>
-                </div>
-                <div className='flex justify-between'>
-                    <input
-                        className='flex basis-1/3 py-3.5 pl-6 mx-1 border border-gray-300 rounded-md outline-none'
-                        type='text'
-                        placeholder='대륙'
-                        value={''}
-                        onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                        ) => {}}
-                    />
-                    <input
-                        className='flex basis-1/3 py-3.5 pl-6 mx-1 border border-gray-300 rounded-md'
-                        type='text'
-                        placeholder='국가'
-                        value={''}
-                        onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                        ) => {}}
-                    />
-                    <input
-                        className='flex basis-1/3 py-3.5 pl-6 mx-1 border border-gray-300 rounded-md'
-                        type='text'
-                        placeholder='도시'
-                        value={''}
-                        onChange={(
-                            e: React.ChangeEvent<HTMLInputElement>
-                        ) => {}}
-                    />
-                    <button className='flex basis-1/12 justify-center items-center rounded-md bg-yellow-300'>
-                        검색
-                    </button>
-                </div>
+                <SearchCountries
+                    top='top-[590px]'
+                    continentLeft='left-[5px]'
+                    countryLeft='left-[385px]'
+                    cityLeft='left-[765px]'
+                />
             </div>
             <div className='flex flex-col bg-brightgrey rounded-md px-8 py-2.5'>
                 <div className='py-2.5'>인기 검색어</div>
