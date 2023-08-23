@@ -130,12 +130,10 @@ function DetailBox({ selectedCities, setSelectedCities }: DetailBoxProps) {
         const dates: string = `${start} ~ ${end} (${
             difference - 1
         }박 ${difference}일)`;
-        typeof window! == 'undefined'
-            ? localStorage.setItem('date', dates)
-            : null;
-        typeof window! == 'undefined'
-            ? localStorage.setItem('place', selectedCities)
-            : null;
+        if (typeof window! == 'undefined') {
+            localStorage.setItem('date', dates);
+            localStorage.setItem('place', selectedCities);
+        }
 
         updateLists({
             cityname: selectedCities,
