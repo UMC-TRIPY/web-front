@@ -144,6 +144,10 @@ export default function MyTravelList({ option }: { option: string }) {
                                                     ? '/schedule'
                                                     : '/mybag/new'
                                             );
+
+                                            router.push('/updateschedule');
+
+                                            // router.push('/mybag/new');
                                         }}
                                     />
                                 </div>
