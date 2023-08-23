@@ -24,10 +24,12 @@ interface CurrencyProps {
 
 export default function InfoCity({
     city,
-    currency
+    currency,
+    cur
 }: {
     city: CityProps;
     currency: CurrencyProps | undefined;
+    cur: number;
 }) {
     const router = useRouter();
     const [startDate, setStartDate] = useState<Date | null>(null);
@@ -119,6 +121,7 @@ export default function InfoCity({
                             currency === undefined ? '' : currency.currencyEn
                         }
                         country={city.country}
+                        cur={cur}
                     />
                 </div>
                 {/* 날짜 선택 부분 */}

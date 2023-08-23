@@ -53,6 +53,7 @@ const Page = () => {
     })[0];
     const [exist, setExist] = useState<boolean>(false);
     const [currency, setCurrency] = useState<CurrencyProps | undefined>();
+    const [cur, setCur] = useState<number>(0);
     const [city, setCity] = useState<LocationProps[] | undefined>();
     const [materials, setMaterials] = useState<MaterialProps[] | undefined>();
     const [hotPlaceImgs, setHotPlaceImgs] = useState<string[] | undefined>();
@@ -110,6 +111,24 @@ const Page = () => {
                     '/images/darlinghabour.jpg',
                     '/images/botanicgardens.jpg'
                 ]);
+                break;
+            }
+        }
+        switch (countryIdx) {
+            case 3: {
+                setCur(0.11);
+                break;
+            }
+            case 9: {
+                setCur(0.0006);
+                break;
+            }
+            case 10: {
+                setCur(0.0007);
+                break;
+            }
+            case 11: {
+                setCur(0.0007);
                 break;
             }
         }
@@ -213,7 +232,7 @@ const Page = () => {
                     {/* 화면 위치 및 검색 기능 부분 */}
                     <InfoMenus travels={travels} />
                     {/* 여행 도시 관한 정보 부분 */}
-                    <InfoCity city={cityName} currency={currency} />
+                    <InfoCity city={cityName} currency={currency} cur={cur} />
                     {/* 인기 여행지, 연동 완료 */}
                     <HotPlace city={city} />
                     <Places city={city} hotPlaceImgs={hotPlaceImgs} />
