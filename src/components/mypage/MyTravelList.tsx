@@ -90,7 +90,9 @@ export default function MyTravelList({ option }: { option: string }) {
                     {datas === undefined ? (
                         ''
                     ) : datas.length === 0 ? (
-                        <span className='flex justify-center'>Loading...</span>
+                        <span className='flex justify-center'>
+                            여행 일정이 없습니다.
+                        </span>
                     ) : (
                         datas.map((data: ScheduleProps) => (
                             <div

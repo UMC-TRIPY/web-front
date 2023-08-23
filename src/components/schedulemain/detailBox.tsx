@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import SelectedPlaces from './SelectedPlaces';
 import { differenceInDays } from 'date-fns';
 import { updateLists } from '@/apis/travellists/update';
+import SearchCountries from '../main/SearchCountries';
 
 interface MenuProps {
     menu: string;
@@ -141,24 +142,12 @@ function DetailBox({ selectedCities, setSelectedCities }: DetailBoxProps) {
     return (
         <div className='mt-12'>
             {/* 해외, 국내 탭바 */}
-            <div className='flex items-end'>
-                {menus.map((menu, index) => (
-                    <Menu
-                        key={`menu${index}`}
-                        menu={menu[0]}
-                        select={menu[1]}
-                        index={index}
-                        onClick={menuClick}
-                    />
-                ))}
-            </div>
-            {/* 세부 검색창 */}
-            <div className='flex flex-row justify-between mx-2.5'>
-                <RoundBox placeholder='대륙' />
-                <RoundBox placeholder='국가' />
-                <RoundBox placeholder='도시' />
-                <RoundBtn color='lightgrey' label='검색' />
-            </div>
+            <SearchCountries
+                top='top-[605px]'
+                continentLeft='left-[5px]'
+                countryLeft='left-[385px]'
+                cityLeft='left-[765px]'
+            />
             {/* 인기 검색어 */}
             {!!selectedCities ? (
                 <SelectedPlaces
