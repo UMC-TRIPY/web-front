@@ -23,7 +23,8 @@ export default function Page() {
     const [emptyBlockList, setEmptyBlockList] = useState<number[][]>([]);
     const week = ['일', '월', '화', '수', '목', '금', '토'];
     const days: null | string[] = [];
-    const pid = sessionStorage.getItem('pid');
+    const pid =
+        typeof window! == 'undefined' ? sessionStorage.getItem('pid') : null;
     if (differ !== null) {
         for (let i = 0; i < differ; i++) {
             let month =
@@ -34,7 +35,10 @@ export default function Page() {
         }
     }
     useEffect(() => {
-        const date: any = sessionStorage.getItem('date')?.split('~');
+        const date: any =
+            typeof window! == 'undefined'
+                ? sessionStorage.getItem('date')?.split('~')
+                : null;
         const s = date[0];
         const e = date[1].split(' ')[1];
         setStart(new Date(s));

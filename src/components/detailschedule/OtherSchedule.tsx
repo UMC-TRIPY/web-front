@@ -37,8 +37,14 @@ export default function OtherSchedule({
     const setPlanID = useSetRecoilState(planIDState);
 
     useEffect(() => {
-        const d = sessionStorage.getItem('date');
-        const p = sessionStorage.getItem('place');
+        const d =
+            typeof window! == 'undefined'
+                ? sessionStorage.getItem('date')
+                : null;
+        const p =
+            typeof window! == 'undefined'
+                ? sessionStorage.getItem('place')
+                : null;
 
         setDate(!d ? '' : d);
         setPlace(!p ? '' : p);
@@ -60,7 +66,10 @@ export default function OtherSchedule({
                         arrivalDate,
                         departureDate
                     );
-                    const p = sessionStorage.getItem('pid');
+                    const p =
+                        typeof window! == 'undefined'
+                            ? sessionStorage.getItem('pid')
+                            : null;
                     tmp.push({
                         pid: p,
                         dates: `${format(

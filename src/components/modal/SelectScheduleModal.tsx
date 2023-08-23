@@ -61,18 +61,24 @@ export default function SelectScheduleModal({
                                       key={`schedule${idx}`}
                                       className='flex py-4 px-8 border-y border-morelightgrey cursor-pointer'
                                       onClick={() => {
-                                          sessionStorage.setItem(
-                                              'date',
-                                              schedule.dates
-                                          );
-                                          sessionStorage.setItem(
-                                              'place',
-                                              schedule.places
-                                          );
-                                          sessionStorage.setItem(
-                                              'pid',
-                                              schedule.pid.toString()
-                                          );
+                                          typeof window! == 'undefined'
+                                              ? sessionStorage.setItem(
+                                                    'date',
+                                                    schedule.dates
+                                                )
+                                              : null;
+                                          typeof window! == 'undefined'
+                                              ? sessionStorage.setItem(
+                                                    'place',
+                                                    schedule.places
+                                                )
+                                              : null;
+                                          typeof window! == 'undefined'
+                                              ? sessionStorage.setItem(
+                                                    'pid',
+                                                    schedule.pid.toString()
+                                                )
+                                              : null;
                                           setPlanID(schedule.pid);
                                           setDate(schedule.dates);
                                           setPlace(schedule.places);

@@ -3,7 +3,8 @@ import LabelSchedules from '../detailschedule/LabelSchedules';
 import Modal from './Modal';
 
 const ScheduleDetailModal = ({ setIsModal }: any) => {
-    const place = sessionStorage.getItem('place');
+    const place =
+        typeof window! == 'undefined' ? sessionStorage.getItem('place') : null;
     return (
         <Modal
             modalMode={0}

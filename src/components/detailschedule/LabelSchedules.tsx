@@ -43,7 +43,10 @@ export default function LabelSchedules({ status }: ILabelScheduleProps) {
 
     useEffect(() => {
         let tmp: any[] = [];
-        const date: any = sessionStorage.getItem('date')?.split('~');
+        const date: any =
+            typeof window! == 'undefined'
+                ? sessionStorage.getItem('date')?.split('~')
+                : null;
         const s = date[0];
         const e = date[1].split(' ')[1];
         const start = new Date(s);
@@ -59,7 +62,13 @@ export default function LabelSchedules({ status }: ILabelScheduleProps) {
             });
         }
         console.log(d);
-        checkSchedules(Number(sessionStorage.getItem('pid')))
+        checkSchedules(
+            Number(
+                typeof window! == 'undefined'
+                    ? sessionStorage.getItem('pid')
+                    : null
+            )
+        )
             .then((res) => {
                 res.map((r: any, idx: number) => {
                     console.log(r);

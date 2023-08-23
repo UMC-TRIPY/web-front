@@ -65,8 +65,12 @@ export default function InfoCity({
         const dates: string = `${start} ~ ${end} (${
             difference - 1
         }박 ${difference}일)`;
-        sessionStorage.setItem('date', dates);
-        sessionStorage.setItem('place', city.cityKo);
+        typeof window! == 'undefined'
+            ? sessionStorage.setItem('date', dates)
+            : null;
+        typeof window! == 'undefined'
+            ? sessionStorage.setItem('place', city.cityKo)
+            : null;
 
         updateLists({
             cityname: city.cityKo,

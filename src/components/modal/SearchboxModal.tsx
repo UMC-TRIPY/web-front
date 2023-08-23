@@ -25,7 +25,9 @@ function SearchboxModal({
     const onClickCity = (refCity: string) => {
         setIsModal(false);
         setSelectedCities(refCity);
-        sessionStorage.setItem('place', refCity);
+        typeof window! == 'undefined'
+            ? sessionStorage.setItem('place', refCity)
+            : null;
         setIsExpanded(true); // 검색창 확장
     };
 

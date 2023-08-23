@@ -109,18 +109,24 @@ export default function MyBagList() {
                                         label='상세보기'
                                         color='bg-lightgrey'
                                         onClick={() => {
-                                            sessionStorage.setItem(
-                                                'place',
-                                                data.places
-                                            );
-                                            sessionStorage.setItem(
-                                                'date',
-                                                data.dates
-                                            );
-                                            sessionStorage.setItem(
-                                                'pid',
-                                                data.pid.toString()
-                                            );
+                                            typeof window! == 'undefined'
+                                                ? sessionStorage.setItem(
+                                                      'place',
+                                                      data.places
+                                                  )
+                                                : null;
+                                            typeof window! == 'undefined'
+                                                ? sessionStorage.setItem(
+                                                      'date',
+                                                      data.dates
+                                                  )
+                                                : null;
+                                            typeof window! == 'undefined'
+                                                ? sessionStorage.setItem(
+                                                      'pid',
+                                                      data.pid.toString()
+                                                  )
+                                                : null;
                                             setModal(true);
                                         }}
                                     />

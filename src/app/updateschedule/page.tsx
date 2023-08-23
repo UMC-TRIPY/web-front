@@ -27,7 +27,11 @@ export default function Updateschedule() {
     const lightColor = ['#FFFBE7', '#EEFAFF', '#FFF3EF'];
     const pid =
         typeof window !== 'undefined'
-            ? Number(sessionStorage.getItem('pid'))
+            ? Number(
+                  typeof window! == 'undefined'
+                      ? sessionStorage.getItem('pid')
+                      : null
+              )
             : null;
     const router = useRouter();
     const [schedule, setSchedule] = useState<IScheduleItem[]>([
@@ -234,7 +238,10 @@ export default function Updateschedule() {
 
     useEffect(() => {
         const schedules: IScheduleItem[] = [];
-        const date: any = sessionStorage.getItem('date')?.split('~');
+        const date: any =
+            typeof window! == 'undefined'
+                ? sessionStorage.getItem('date')?.split('~')
+                : null;
         const startDate = date[0];
         resetEmptyBlockList();
         getScheduleData(pid!).then((res) => {

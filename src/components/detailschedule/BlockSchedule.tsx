@@ -26,12 +26,21 @@ export default function BlockSchedule() {
     useEffect(() => {
         let tmp: any[] = [];
         let totalTmp: any[] = [];
-        const date: any = sessionStorage.getItem('date')?.split('~');
+        const date: any =
+            typeof window! == 'undefined'
+                ? sessionStorage.getItem('date')?.split('~')
+                : null;
         const s = date[0];
         const e = date[1].split(' ')[1];
         setStart(new Date(s));
         setDiffer(differenceInDays(new Date(e), new Date(s)) + 1);
-        checkSchedules(Number(sessionStorage.getItem('pid')))
+        checkSchedules(
+            Number(
+                typeof window! == 'undefined'
+                    ? sessionStorage.getItem('pid')
+                    : null
+            )
+        )
             .then((res) => {
                 console.log(res);
                 res.map((r: any, idx: number) => {

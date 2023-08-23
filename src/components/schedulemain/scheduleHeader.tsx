@@ -44,7 +44,12 @@ function ScheduleHeader({
                             className='border border-grey rounded-full mr-2 flex px-3 py-2 text-[12px] items-center cursor-pointer'
                             key={index}
                             onClick={() => {
-                                sessionStorage.setItem('place', searchedCity);
+                                typeof window! == 'undefined'
+                                    ? sessionStorage.setItem(
+                                          'place',
+                                          searchedCity
+                                      )
+                                    : null;
                                 setSelectedCities(searchedCity);
                             }}
                         >

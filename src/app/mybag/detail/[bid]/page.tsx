@@ -37,7 +37,10 @@ const BagDetail = () => {
     >([]);
 
     useEffect(() => {
-        const place = sessionStorage.getItem('place');
+        const place =
+            typeof window! == 'undefined'
+                ? sessionStorage.getItem('place')
+                : null;
         if (place) {
             getCityMateriallList(place).then((data) => {
                 setRecommendMaterials(data);
