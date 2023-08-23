@@ -29,7 +29,7 @@ export default function Updateschedule() {
         typeof window !== 'undefined'
             ? Number(
                   typeof window! == 'undefined'
-                      ? sessionStorage.getItem('pid')
+                      ? localStorage.getItem('pid')
                       : null
               )
             : null;
@@ -240,7 +240,7 @@ export default function Updateschedule() {
         const schedules: IScheduleItem[] = [];
         const date: any =
             typeof window! == 'undefined'
-                ? sessionStorage.getItem('date')?.split('~')
+                ? localStorage.getItem('date')?.split('~')
                 : null;
         const startDate = date[0];
         resetEmptyBlockList();

@@ -27,7 +27,7 @@ export const updateLists = async (list: ListProps) => {
         .then((res: any) => {
             console.log(res);
             typeof window! == 'undefined'
-                ? sessionStorage.setItem('pid', res.data.plan_index)
+                ? localStorage.setItem('pid', res.data.plan_index)
                 : null;
         })
         .catch((err) => console.log(err));

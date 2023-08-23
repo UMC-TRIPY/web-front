@@ -4,7 +4,7 @@ import Modal from './Modal';
 
 const ScheduleDetailModal = ({ setIsModal }: any) => {
     const place =
-        typeof window! == 'undefined' ? sessionStorage.getItem('place') : null;
+        typeof window! == 'undefined' ? localStorage.getItem('place') : null;
     return (
         <Modal
             modalMode={0}

@@ -45,7 +45,7 @@ export default function LabelSchedules({ status }: ILabelScheduleProps) {
         let tmp: any[] = [];
         const date: any =
             typeof window! == 'undefined'
-                ? sessionStorage.getItem('date')?.split('~')
+                ? localStorage.getItem('date')?.split('~')
                 : null;
         const s = date[0];
         const e = date[1].split(' ')[1];
@@ -65,7 +65,7 @@ export default function LabelSchedules({ status }: ILabelScheduleProps) {
         checkSchedules(
             Number(
                 typeof window! == 'undefined'
-                    ? sessionStorage.getItem('pid')
+                    ? localStorage.getItem('pid')
                     : null
             )
         )

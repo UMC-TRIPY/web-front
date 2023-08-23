@@ -39,7 +39,7 @@ const BagDetail = () => {
     useEffect(() => {
         const place =
             typeof window! == 'undefined'
-                ? sessionStorage.getItem('place')
+                ? localStorage.getItem('place')
                 : null;
         if (place) {
             getCityMateriallList(place).then((data) => {

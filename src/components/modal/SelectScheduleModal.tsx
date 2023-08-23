@@ -62,19 +62,19 @@ export default function SelectScheduleModal({
                                       className='flex py-4 px-8 border-y border-morelightgrey cursor-pointer'
                                       onClick={() => {
                                           typeof window! == 'undefined'
-                                              ? sessionStorage.setItem(
+                                              ? localStorage.setItem(
                                                     'date',
                                                     schedule.dates
                                                 )
                                               : null;
                                           typeof window! == 'undefined'
-                                              ? sessionStorage.setItem(
+                                              ? localStorage.setItem(
                                                     'place',
                                                     schedule.places
                                                 )
                                               : null;
                                           typeof window! == 'undefined'
-                                              ? sessionStorage.setItem(
+                                              ? localStorage.setItem(
                                                     'pid',
                                                     schedule.pid.toString()
                                                 )

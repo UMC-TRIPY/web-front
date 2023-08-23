@@ -131,10 +131,10 @@ function DetailBox({ selectedCities, setSelectedCities }: DetailBoxProps) {
             difference - 1
         }박 ${difference}일)`;
         typeof window! == 'undefined'
-            ? sessionStorage.setItem('date', dates)
+            ? localStorage.setItem('date', dates)
             : null;
         typeof window! == 'undefined'
-            ? sessionStorage.setItem('place', selectedCities)
+            ? localStorage.setItem('place', selectedCities)
             : null;
 
         updateLists({

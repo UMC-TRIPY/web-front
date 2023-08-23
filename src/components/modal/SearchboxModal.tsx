@@ -26,7 +26,7 @@ function SearchboxModal({
         setIsModal(false);
         setSelectedCities(refCity);
         typeof window! == 'undefined'
-            ? sessionStorage.setItem('place', refCity)
+            ? localStorage.setItem('place', refCity)
             : null;
         setIsExpanded(true); // 검색창 확장
     };

@@ -38,12 +38,10 @@ export default function OtherSchedule({
 
     useEffect(() => {
         const d =
-            typeof window! == 'undefined'
-                ? sessionStorage.getItem('date')
-                : null;
+            typeof window! == 'undefined' ? localStorage.getItem('date') : null;
         const p =
             typeof window! == 'undefined'
-                ? sessionStorage.getItem('place')
+                ? localStorage.getItem('place')
                 : null;
 
         setDate(!d ? '' : d);
@@ -68,7 +66,7 @@ export default function OtherSchedule({
                     );
                     const p =
                         typeof window! == 'undefined'
-                            ? sessionStorage.getItem('pid')
+                            ? localStorage.getItem('pid')
                             : null;
                     tmp.push({
                         pid: p,

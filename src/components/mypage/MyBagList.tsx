@@ -110,19 +110,19 @@ export default function MyBagList() {
                                         color='bg-lightgrey'
                                         onClick={() => {
                                             typeof window! == 'undefined'
-                                                ? sessionStorage.setItem(
+                                                ? localStorage.setItem(
                                                       'place',
                                                       data.places
                                                   )
                                                 : null;
                                             typeof window! == 'undefined'
-                                                ? sessionStorage.setItem(
+                                                ? localStorage.setItem(
                                                       'date',
                                                       data.dates
                                                   )
                                                 : null;
                                             typeof window! == 'undefined'
-                                                ? sessionStorage.setItem(
+                                                ? localStorage.setItem(
                                                       'pid',
                                                       data.pid.toString()
                                                   )

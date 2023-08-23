@@ -45,7 +45,7 @@ function ScheduleHeader({
                             key={index}
                             onClick={() => {
                                 typeof window! == 'undefined'
-                                    ? sessionStorage.setItem(
+                                    ? localStorage.setItem(
                                           'place',
                                           searchedCity
                                       )
