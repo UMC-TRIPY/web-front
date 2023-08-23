@@ -21,6 +21,10 @@ export default function RootLayout({
 }) {
     return (
         <html lang='en'>
+            <meta
+                http-equiv='Content-Security-Policy'
+                content='upgrade-insecure-requests'
+            />
             <Script src='https://developers.kakao.com/sdk/js/kakao.js'></Script>
             <RecoilProvider>
                 <body id='body' className={inter.className}>
