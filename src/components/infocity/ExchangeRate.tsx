@@ -14,6 +14,43 @@ export default function ExchangeRate({
     const [cur, setCur] = useState<number>(0);
     const currencyKey = process.env.NEXT_PUBLIC_EXCHANGE_KEY;
     useEffect(() => {
+        // const currenyKey = process.env.NEXT_PUBLIC_EXCHANGE_KEY;
+        const today = new Date();
+        let date;
+        const loc = today.toString().indexOf(':');
+        const time = Number(today.toString().substring(loc - 2, loc));
+        if (today.getDay() === 6) {
+            date = new Date(today.setDate(today.getDate() - 1));
+        } else if (today.getDay() === 0) {
+            date = new Date(today.setDate(today.getDate() - 2));
+        } else if (time < 11) {
+            date = new Date(today.setDate(today.getDate() - 1));
+        } else {
+            date = today;
+        }
+        const year = date.getFullYear().toString();
+        const tempMonth = (date.getMonth() + 1).toString();
+        const month = tempMonth.length === 1 ? '0' + tempMonth : tempMonth;
+        const day = date.getDate().toString();
+        const dateValue = `${year}${month}${day}`;
+        axios
+            .get(
+                `https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey=${currencyKey}&searchdate=${dateValue}&data=AP01`
+            )
+            .then((res) => {
+                const datas = [...res.data];
+                // 여행페이지에 해당하는 국가 외화 includes 안에 넣어주기
+                const tempCurrency = datas.filter((data) =>
+                    data.cur_unit.includes('JPY')
+                );
+                // 외화 표기에 100 표시 있으면 100으로 나눠줌
+                const other = tempCurrency[0].cur_unit.includes('(100)')
+                    ? Number(tempCurrency[0].kftc_bkpr) / 100
+                    : Number(tempCurrency[0].kftc_bkpr);
+                setCur(1 / other);
+                console.log('환율 정보 : ' + 1 / other);
+            })
+            .catch((err) => console.log(err));
         axios
             .get(`http://data.fixer.io/api/latest?access_key=${currencyKey}`)
             .then((res) => {
