@@ -143,11 +143,11 @@ export default function MyTravelList({ option }: { option: string }) {
                                             );
                                             router.push(
                                                 option === '수정하기'
-                                                    ? '/schedule'
+                                                    ? '/updateschedule'
                                                     : '/mybag/new'
                                             );
 
-                                            router.push('/updateschedule');
+                                            // router.push('/updateschedule');
 
                                             // router.push('/mybag/new');
                                         }}
