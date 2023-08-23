@@ -22,7 +22,8 @@ interface ScheduleProps {
 }
 
 export const updateLists = async (list: ListProps) => {
-    await Server.post<ListProps>(`/travel-plans/user/travel/2`, list)
+    const uid = localStorage.getItem('uid');
+    await Server.post<ListProps>(`/travel-plans/user/travel/${uid}`, list)
         .then((res: any) => {
             console.log(res);
             sessionStorage.setItem('pid', res.data.plan_index);
@@ -31,7 +32,12 @@ export const updateLists = async (list: ListProps) => {
 };
 
 export const updateSchedule = async (schedule: ScheduleProps, pid: number) => {
+    console.log(schedule);
     await Server.post<any>(`/travel-plans/user/plans/detailed/${pid}`, schedule)
         .then((res: any) => console.log(res))
         .catch((err) => console.log(err));
+};
+
+export const getScheduleData = async (pid: number) => {
+    return Server.get<any>(`/travel-plans/user/plans/all/${pid}`);
 };

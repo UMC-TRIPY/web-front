@@ -123,13 +123,7 @@ export default function InfoMenus({
                                 alert('해당 여행지가 없습니다.');
                             }
                         }}
-                        href={
-                            place === ''
-                                ? `/info/${currentLocation}`
-                                : results.length === 1
-                                ? `/info/${results.map((result) => result[1])}`
-                                : `/info/${currentLocation}`
-                        }
+                        href={`/info/${results.map((result) => result[1])}`}
                         className='absolute self-end mr-5 hover:cursor-pointer'
                     >
                         <BiSearch size='24' />

@@ -13,7 +13,7 @@ const MemoSection = () => {
     useEffect(() => {
         if (bid !== undefined) {
             getBagMemo(parseInt(bid)).then((data) => {
-                setMemoText(data);
+                if (data !== null) setMemoText(data);
             });
         }
     }, [bid]);

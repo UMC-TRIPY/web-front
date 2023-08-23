@@ -31,7 +31,7 @@ export default function BlockSchedule() {
         const e = date[1].split(' ')[1];
         setStart(new Date(s));
         setDiffer(differenceInDays(new Date(e), new Date(s)) + 1);
-        checkSchedules()
+        checkSchedules(Number(sessionStorage.getItem('pid')))
             .then((res) => {
                 console.log(res);
                 res.map((r: any, idx: number) => {

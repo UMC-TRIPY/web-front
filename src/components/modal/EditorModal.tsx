@@ -14,15 +14,30 @@ interface EditorModalProps {
     type: string,
     onImageUpload: (images: File[]) => void,
     onFileUpload: (files: File[]) => void,
-    onPlaceUpload: () => void,
+    onPlanUpload: () => void,
     checkedItems?: Array<number>;
     setCheckedItems?: (items: Array<number>) => void;
+    uploadedFiles?: Array<File>;
+    setUploadedFiles?: (files: Array<File>) => void;
+    selectedCities?: Array<number>;
+    setSelectedCities?: (items: Array<number>) => void;
 }
 
-const EditorModal = ({ setIsModal, type, onImageUpload, onFileUpload, onPlaceUpload, checkedItems, setCheckedItems }: EditorModalProps) => {
+const EditorModal = ({ 
+    setIsModal, 
+    type, 
+    onImageUpload, 
+    onFileUpload, 
+    onPlanUpload, 
+    checkedItems, 
+    setCheckedItems,
+    selectedCities,
+    setSelectedCities,
+}: EditorModalProps) => {
     const inputRef = useRef<HTMLInputElement | null>(null);
     const [selectedImages, setSelectedImages] = useState<File[]>([]);
     const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+    const [selectedCity, setSelectedCity] = useState([]);
 
     /** 이미지를 selectedImages 배열에 저장 */
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -48,7 +63,11 @@ const EditorModal = ({ setIsModal, type, onImageUpload, onFileUpload, onPlaceUpl
         setUploadedFiles(uploadedFiles.filter((_, i) => i !== index));
     };
 
-    
+
+
+    function handleSearch() {
+
+    }
 
     const renderContent = () => {
         switch (type) {
@@ -140,7 +159,14 @@ const EditorModal = ({ setIsModal, type, onImageUpload, onFileUpload, onPlaceUpl
                         </div>
                         <div className="flex justify-end">
                             <ConfirmBtn label="취소하기" color="bg-lightgrey" onClick={() => setIsModal(false)}/>
-                            <ConfirmBtn label="업로드" color="bg-primary" onClick={() => {onFileUpload(uploadedFiles), setIsModal(false)}}/>
+                            <ConfirmBtn 
+                                label="업로드" 
+                                color="bg-primary" 
+                                onClick={() => {
+                                    onFileUpload(uploadedFiles), 
+                                    setIsModal(false)
+                                }}
+                                />
                         </div>
                     </div>
                 );        
@@ -157,7 +183,7 @@ const EditorModal = ({ setIsModal, type, onImageUpload, onFileUpload, onPlaceUpl
                             <ConfirmBtn 
                                 label="공유하기" 
                                 color="bg-primary" 
-                                onClick={() => {setIsModal(false), onPlaceUpload()}}
+                                onClick={() => {setIsModal(false), onPlanUpload()}}
                             />
                         </div>
                     </div>
@@ -173,19 +199,17 @@ const EditorModal = ({ setIsModal, type, onImageUpload, onFileUpload, onPlaceUpl
                                 type="text" 
                                 placeholder="원하는 장소를 검색해보세요."
                                 className="w-full outline-none"
+                                onChange={handleSearch}
                             />
                         </div>
                         <div className="h-80 flex border border-lightgrey rounded-xl">
                             <div className="flex flex-col flex-grow">
-                                <div className="h-3/4 border-b border-lightgrey">
-                                    검색한 여행지
-                                </div>
-                                <div>
-                                    추가한 여행지
+                                <div className="h-full p-5">
+                                    
                                 </div>
                             </div>
                             <div className="w-3/5 border border-black rounded-r-lg">
-                                구글맵
+
                             </div>
                         </div>
                         <div className="flex justify-end mt-2">

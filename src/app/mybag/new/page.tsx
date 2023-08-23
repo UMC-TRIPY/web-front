@@ -35,9 +35,11 @@ const NewBag = () => {
     };
 
     useEffect(() => {
-        getScheduleTravelBagList(planID).then((data) => {
-            setBagList(data);
-        });
+        if (planID !== -1) {
+            getScheduleTravelBagList(planID).then((data) => {
+                setBagList(data);
+            });
+        }
     }, [planID]);
 
     return (

@@ -7,20 +7,26 @@ import format from 'date-fns/format';
 import Pagination from '../maincommunity/Pagination';
 import ScheduleDetailModal from '../modal/ScheduleDetailModal';
 
-interface Props {
-    id: number;
+interface TravelListProps {
+    city_name: string;
+    departureDate: string;
+    arrivalDate: string;
+    plan_index: number;
+}
+
+interface ScheduleProps {
+    pid: number;
     dates: string;
     places: string;
 }
 
 export default function MyBagList() {
-    const [contents, setContents] = useState<any>([]);
-    const router = useRouter();
+    const [contents, setContents] = useState<ScheduleProps[] | undefined>();
     const [modal, setModal] = useState<boolean>(false);
     useEffect(() => {
         checkLists().then((res) => {
-            let tmp: any[] = [];
-            res.map((d: any, idx: number) => {
+            let tmp: ScheduleProps[] = [];
+            res.map((d: TravelListProps, idx: number) => {
                 const departureDate =
                     d.departureDate === '0000-00-00'
                         ? new Date()
@@ -31,7 +37,7 @@ export default function MyBagList() {
                         : new Date(d.arrivalDate.slice(0, 10));
                 const difference = differenceInDays(arrivalDate, departureDate);
                 tmp.push({
-                    id: idx + 1,
+                    pid: d.plan_index,
                     dates: `${format(departureDate, 'yyyy.MM.dd')} ~ ${format(
                         arrivalDate,
                         'yyyy.MM.dd'
@@ -48,11 +54,19 @@ export default function MyBagList() {
         });
     }, []);
 
-    const totalPages = Math.ceil(contents.length / 8);
+    const totalPages = Math.ceil(
+        contents === undefined ? 0 : contents.length / 8
+    );
     const [current, setCurrent] = useState<number>(1);
-    const [datas, setDatas] = useState<Props[]>(contents.slice(0, 8));
+    const [datas, setDatas] = useState<ScheduleProps[] | undefined>(
+        contents === undefined ? undefined : contents.slice(0, 8)
+    );
     useEffect(() => {
-        setDatas(contents.slice((current - 1) * 8, current * 8));
+        setDatas(
+            contents === undefined
+                ? undefined
+                : contents.slice((current - 1) * 8, current * 8)
+        );
     }, [current]);
     return (
         <div className='mx-4 mt-16'>
@@ -72,12 +86,14 @@ export default function MyBagList() {
                     </div>
                 </div>
                 <div className='py-5'>
-                    {datas.length === 0 ? (
+                    {datas === undefined ? (
+                        ''
+                    ) : datas.length === 0 ? (
                         <span className='flex justify-center'>Loading...</span>
                     ) : (
-                        datas.map((data: Props) => (
+                        datas.map((data: ScheduleProps) => (
                             <div
-                                key={data.id}
+                                key={data.pid}
                                 className='flex items-center justify-between py-[16.5px]'
                             >
                                 <div className='w-1/3 text-center'>
@@ -98,6 +114,10 @@ export default function MyBagList() {
                                             sessionStorage.setItem(
                                                 'date',
                                                 data.dates
+                                            );
+                                            sessionStorage.setItem(
+                                                'pid',
+                                                data.pid.toString()
                                             );
                                             setModal(true);
                                         }}

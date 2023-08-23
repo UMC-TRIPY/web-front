@@ -76,8 +76,7 @@ export default function Header() {
         ['일정관리', false],
         ['여행가방', false],
         ['커뮤니티', false],
-        ['모아보기', false],
-        ['이용안내', false]
+        ['모아보기', false]
     ]);
 
     const Menu = ({ menu, select, index, onClick }: MenuProps) => {
@@ -120,14 +119,14 @@ export default function Header() {
         setMenus(updatedMenus);
     };
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem('access');
-    //     if (token) setIsLoggedIn(true);
-    //     else {
-    //         setIsLoggedIn(false);
-    //         router.push('/');
-    //     }
-    // });
+    useEffect(() => {
+        const token = localStorage.getItem('access');
+        if (token) setIsLoggedIn(true);
+        else {
+            setIsLoggedIn(false);
+            router.push('/');
+        }
+    });
 
     return (
         <header className='x-0 top-0 z-50 left-0 w-full bg-white border-b border-gray-300'>

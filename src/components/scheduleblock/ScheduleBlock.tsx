@@ -16,16 +16,13 @@ type Props = {
 
 const ScheduleBlock = (props: Props) => {
     const [isDragging, setIsDragging] = useState<boolean>(false);
-    const {
-        id,
-        column,
-        lineColor,
-        color,
-        startTime,
-        halfHour,
-        title,
-        location
-    } = props.item;
+    const colors = ['#FFE457', '#57CDFF', '#FF7F57'];
+    const lineColors = ['#FFFBE7', '#EEFAFF', '#FFF3EF'];
+    let { id, column, lineColor, color, startTime, halfHour, title, location } =
+        props.item;
+
+    lineColor = lineColors[Number(lineColor)];
+    color = colors[Number(color)];
 
     const dragFunction = (event: any, type: any) => {
         event.preventDefault();

@@ -7,7 +7,7 @@ declare global {
     }
 }
 
-export default function HotPlace({ city, zoom }: { city: any; zoom: number }) {
+export default function HotPlace({ city }: { city: any }) {
     const [latMid, setLatMid] = useState(0);
     const [lngMid, setLngMid] = useState(0);
     // 환경변수에서 Map Key 가져옴
@@ -18,10 +18,12 @@ export default function HotPlace({ city, zoom }: { city: any; zoom: number }) {
     // loader에 apiOptions로 mapKey 삽입
     const loader: any = new Loader(apiOptions);
     loader.load().then(() => {
-        console.log('Maps JS API Loaded');
-        const map: any = displayMap();
-        const markers: any = addMarkers(map);
-        addPanToMarker(map, markers);
+        if (city !== undefined) {
+            console.log('Maps JS API Loaded');
+            const map: any = displayMap();
+            const markers: any = addMarkers(map);
+            addPanToMarker(map, markers);
+        }
     });
     function displayMap() {
         // 초기 위치 및 확대 정도 설정
@@ -37,7 +39,7 @@ export default function HotPlace({ city, zoom }: { city: any; zoom: number }) {
         setLngMid(lng);
         const mapOptions = {
             center: { lat: latMid, lng: lngMid },
-            zoom: zoom
+            zoom: 12
         };
         // 지도의 초기 위치 및 확대 정도 적용하여 id='map'인 요소에 적용
         const mapDiv: any = document.getElementById('map');
