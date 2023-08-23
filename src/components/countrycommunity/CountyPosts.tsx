@@ -2,6 +2,7 @@ import ContentList from '../community/ContentList';
 import { useEffect, useState } from 'react';
 import Pagination from '../maincommunity/Pagination';
 import { BiSearch } from 'react-icons/bi';
+import Link from 'next/link';
 
 interface IContent {
     imageSrc: string;
@@ -262,9 +263,13 @@ export default function CountryPosts() {
                     current={current}
                     setCurrent={setCurrent}
                 />
-                <button className='absolute self-end bg-lightgrey py-3 px-11 mt-10'>
-                    글쓰기
-                </button>
+                <div className='absolute self-end'>
+                <Link href="/community/write">
+                    <button className='bg-lightgrey py-3 px-11 mt-10'>
+                        글쓰기
+                    </button>
+                </Link>
+                </div>
             </div>
         </div>
     );

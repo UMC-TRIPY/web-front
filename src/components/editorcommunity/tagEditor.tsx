@@ -1,19 +1,35 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import Image from "next/image";
 import alertCircle from "public/images/alertCircle.svg" 
 import alertCircleRed from "public/images/alertCircleRed.svg"
 import ConfirmBtn from "../layout/confirmBtn";
 
 interface TagEditorProps {
-    onCityEmptyError: () => void;
-    onTitleEmptyError: () => void;
-    onContentsEmptyError: () => void;
+    postData: any;
+    setPostData: (data: any) => void;
+    tagList: string[];
+    setTagList: (data: string[]) => void;
+    tagEmpty: boolean;
+    setTagEmpty: (data: boolean) => void;
 }
 
-export default function TagEditor({onCityEmptyError, onTitleEmptyError, onContentsEmptyError}: TagEditorProps) {
+export default function TagEditor({
+    postData,
+    setPostData,
+    tagList,
+    setTagList,
+    tagEmpty,
+    setTagEmpty,
+}: TagEditorProps) {
     const [tagItem, setTagItem] = useState<string>('');
-    const [tagList, setTagList] = useState<string[]>([]);
-    const [tagEmpty, setTagEmpty] = useState<boolean>(false);
+
+    useEffect(() => {
+        // tagList가 변경될 때마다 postData의 tags를 업데이트
+        setPostData({
+            ...postData,
+            tags: tagList,
+        });
+    }, [tagList]);
 
     /** enter 누르면 submitTagItem 함수 불러옴 */
     function onKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
@@ -24,15 +40,20 @@ export default function TagEditor({onCityEmptyError, onTitleEmptyError, onConten
 
     /** 태그 추가 */
     function submitTagItem() {
-        if (!tagList.includes(tagItem)){ // 중복 태그 추가 안함
-            let updateTagList = [...tagList];
-            updateTagList.push(tagItem);
-            setTagList(updateTagList);
-            setTagItem('');
-        }
-        if (tagList.length === 0){
-            setTagEmpty(false);
-        }
+        // "#안녕" "안녕" 입력시 모두 동일하게 "#안녕"으로 출력
+        const hashTag = tagItem.startsWith('#') ? tagItem.trim() : '#' + tagItem.trim();
+        const noBlankHashTag = hashTag.replace(/\s+/g, ''); // 공백 제거
+        if (noBlankHashTag !== '#'){
+            if (!tagList.includes(noBlankHashTag)){ // 중복 태그 추가 안함
+                let updateTagList = [...tagList];
+                updateTagList.push(noBlankHashTag);
+                setTagList(updateTagList);
+                setTagItem('');
+            }
+            if (tagList.length === 0){
+                setTagEmpty(false);
+            }
+        } 
     }
 
     /** 선택한 태그 삭제 */
@@ -42,15 +63,7 @@ export default function TagEditor({onCityEmptyError, onTitleEmptyError, onConten
         console.log(tagList)
     }
 
-    /** 태그란이 비었을 때 경고메시지 출력 */
-    function handleTagEmptyError() {
-        if (tagList.length === 0){
-            setTagEmpty(true);
-        }
-        else {
-            setTagEmpty(false);
-        }
-    }
+
 
     return (
         <div className="mx-4">
@@ -86,19 +99,6 @@ export default function TagEditor({onCityEmptyError, onTitleEmptyError, onConten
                 <span className={`px-2 ${tagEmpty ? 'text-alertred' : 'text-dark-black'}`}>
                     최소 한 개 이상의 태그를 입력해주세요.
                 </span>
-            </div>
-            <div className="flex justify-center">
-                <ConfirmBtn label="임시저장" color="bg-lightgrey"/>
-                <ConfirmBtn 
-                    label="등록하기" 
-                    color="bg-primary" 
-                    onClick={() => { // 눌렀을 때
-                        onCityEmptyError(); // 도시 게시판 선택했는지
-                        onTitleEmptyError(); // 타이틀이 비었는지
-                        onContentsEmptyError(); // 내용이 비었는지
-                        handleTagEmptyError(); // 태그가 비었는지
-                    }}
-                />
             </div>
         </div>
     )
