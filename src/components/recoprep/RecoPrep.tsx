@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { use, useEffect, useState } from 'react';
 
 export default function RecoPrep({ materials }: { materials: any }) {
@@ -69,7 +70,7 @@ export default function RecoPrep({ materials }: { materials: any }) {
                               >
                                   <div
                                       key={`wrap${index}`}
-                                      className='p-4 bg-brightgrey w-box-width h-box-height rounded-lg'
+                                      className='p-4 bg-brightgrey w-box-width h-box-height rounded-lg overflow-y-hidden'
                                   >
                                       <p
                                           key={`${material.name}${index}`}
@@ -84,9 +85,11 @@ export default function RecoPrep({ materials }: { materials: any }) {
                                           key={`imgwrap${index}`}
                                           className='flex justify-center mt-4'
                                       >
-                                          <img
+                                          <Image
+                                              width={240}
+                                              height={240}
                                               key={`img${index}`}
-                                              src='/images/prep2.png'
+                                              src={material.img}
                                               alt='none'
                                           />
                                       </div>

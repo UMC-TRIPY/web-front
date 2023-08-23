@@ -5,31 +5,33 @@ import axios from 'axios';
 export default function ExchangeRate({
     currencyKo,
     currencyEn,
-    country
+    country,
+    cur
 }: {
     currencyKo: string;
     currencyEn: string;
     country: string;
+    cur: number;
 }) {
-    const [cur, setCur] = useState<number>(0);
+    // const [cur, setCur] = useState<number>(0);
     const currencyKey = process.env.NEXT_PUBLIC_EXCHANGE_KEY;
-    useEffect(() => {
-        axios
-            .get(`http://data.fixer.io/api/latest?access_key=${currencyKey}`)
-            .then((res) => {
-                console.log(res);
-                const ko = res.data.rates.KRW;
-                const otherName = Object.keys(res.data.rates);
-                const otherValue = Object.values(res.data.rates);
-                let other: any;
-                otherName.filter((cur, idx) => {
-                    if (cur === currencyEn) other = otherValue[idx];
-                });
-                setCur(other / ko);
-                console.log('환율 정보 : ' + other / ko);
-            })
-            .catch((err) => console.log(err));
-    }, []);
+    // useEffect(() => {
+    //     axios
+    //         .get(`http://data.fixer.io/api/latest?access_key=${currencyKey}`)
+    //         .then((res) => {
+    //             console.log(res);
+    //             const ko = res.data.rates.KRW;
+    //             const otherName = Object.keys(res.data.rates);
+    //             const otherValue = Object.values(res.data.rates);
+    //             let other: any;
+    //             otherName.filter((cur, idx) => {
+    //                 if (cur === currencyEn) other = otherValue[idx];
+    //             });
+    //             setCur(other / ko);
+    //             console.log('환율 정보 : ' + other / ko);
+    //         })
+    //         .catch((err) => console.log(err));
+    // }, []);
 
     const [before, setBefore] = useState<string>('');
     const [after, setAfter] = useState<string>(before);
