@@ -1,34 +1,15 @@
-## Getting Started
+# 여행의 시작부터 끝까지, 트리피와 함께!
+![트리피 영어로고](https://github.com/UMC-TRIPY/web-front/assets/63959171/e21e4c36-6081-4bae-9d56-1f1e0e54dd4f)
 
-First, run the development server:
+# 서비스 소개
+**쉽고 편리하게 여행을 계획하고 준비하는 서비스**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+- 여행 정보 페이지의 정보가 마음에 들면 바로 저장할 수 있어요!
+- 트리피에서 여행 계획을 세울 수 있어요!
+- 친구와 함께 여행 계획을 공유할 수 있어요!
+- 등록한 여행 일정을 기반으로 여행 가방을 만들 수 있어요!
+- 커뮤니티를 통해 여행자들과 정보를 공유하고, 이야기할 수 있어요!
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# 기능 소개 및 User Flow
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
--   [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
--   [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
-
-> > > > > > > 3d39ec9 (Initial commit from Create Next App)
+![](https://github.com/UMC-TRIPY/web-front/assets/63959171/e18c9ed2-1c16-4bb1-b176-63c346134935)
