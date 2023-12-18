@@ -35,7 +35,7 @@ export default function SearchCityModal({
                     {results.map((result: [string, string], idx: number) => (
                         <Link
                             key={`resultlink${idx}`}
-                            href={`/info/${result[1]}`}
+                            href={`/information/${result[1]}`}
                         >
                             <div
                                 key={`result${idx}`}

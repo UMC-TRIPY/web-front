@@ -171,12 +171,12 @@ export default function Home() {
                     }}
                     href={
                         place === ''
-                            ? '/info'
+                            ? '/information'
                             : results.length === 1
-                            ? `/info/${results.map(
+                            ? `/information/${results.map(
                                   (result: [string, string]) => result[1]
                               )}`
-                            : '/info'
+                            : '/information'
                     }
                     className='hover:cursor-pointer absolute'
                 >

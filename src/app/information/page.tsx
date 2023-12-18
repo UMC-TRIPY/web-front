@@ -44,7 +44,6 @@ function City() {
 }
 
 const Page = () => {
-    const [isAbroad, setIsAbroad] = useState<boolean>(true);
     const [place, setPlace] = useState<string>('');
     const [modal, setIsModal] = useState<boolean>(false);
     const router = useRouter();
@@ -52,13 +51,15 @@ const Page = () => {
     const datas = require('../../../public/data/dummy.json');
     const travels = datas.travels;
     const results = travels
-        .filter((t: any) => t[0][0].includes(place[0]))
-        .filter((t: any) => t[0].includes(place.replace(/ /g, '')));
+        .filter((travel: any) => travel[0][0].includes(place[0]))
+        .filter((filteredTravel: any) =>
+            filteredTravel[0].includes(place.replace(/ /g, ''))
+        );
     const onClick = (city: string) => {
-        const move = travels.filter(
+        const searchResult = travels.filter(
             (travel: [string, string]) => travel[0] === city
         )[0][1];
-        router.push(`/info/${move}`);
+        router.push(`/information/${searchResult}`);
     };
     return (
         <div className='flex flex-col py-20'>
@@ -88,12 +89,12 @@ const Page = () => {
                     }}
                     href={
                         place === ''
-                            ? '/info'
+                            ? '/information'
                             : results.length === 1
-                            ? `/info/${results.map(
+                            ? `/information/${results.map(
                                   (result: [string, string]) => result[1]
                               )}`
-                            : '/info'
+                            : '/information'
                     }
                     className='hover:cursor-pointer absolute'
                 >
