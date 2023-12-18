@@ -20,7 +20,7 @@ export default function InfoMenus({
 }) {
     const router = useRouter();
     const para = useParams();
-    const currentLocation = para.city;
+    const currentLocation = para.city_name;
     const [place, setPlace] = useState<string>('');
     const [modal, setIsModal] = useState<boolean>(false);
     const [menus, setMenus] = useState<
