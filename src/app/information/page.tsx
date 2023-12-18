@@ -1,13 +1,11 @@
 'use client';
-import Image from 'next/image';
-import { BiSearch } from 'react-icons/bi';
+
 import { useState } from 'react';
-import SearchCityModal from '@/components/modal/SearchCityModal';
-import Link from 'next/link';
 import { RxCross1 } from 'react-icons/rx';
 import { useRouter } from 'next/navigation';
 import SearchCountries from '@/components/main/SearchCountries';
 import Title from '@/components/common/Title';
+import SearchCityIcon from '@/components/common/SearchCityIcon';
 
 function City() {
     const searchedCities = [
@@ -46,16 +44,11 @@ function City() {
 
 const Page = () => {
     const [place, setPlace] = useState<string>('');
-    const [modal, setIsModal] = useState<boolean>(false);
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
     const router = useRouter();
     const popularKeyword = ['런던', '제주도', '대만', '도쿄', '하와이'];
     const datas = require('../../../public/data/dummy.json');
     const travels = datas.travels;
-    const results = travels
-        .filter((travel: any) => travel[0][0].includes(place[0]))
-        .filter((filteredTravel: any) =>
-            filteredTravel[0].includes(place.replace(/ /g, ''))
-        );
 
     const handleGoToCity = (city: string) => {
         const searchResult = travels.filter(
@@ -76,39 +69,14 @@ const Page = () => {
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setPlace(e.target.value)
                     }
-                    onClick={() => setIsModal(true)}
+                    onClick={() => setModalOpen(true)}
                 />
-                <Link
-                    onClick={() => {
-                        if (place === '') {
-                            alert('1글자 이상 입력해주세요.');
-                        }
-
-                        if (results.length !== 1) {
-                            alert('해당 여행지가 없습니다.');
-                        }
-                    }}
-                    href={
-                        place === ''
-                            ? '/information'
-                            : results.length === 1
-                            ? `/information/${results.map(
-                                  (result: [string, string]) => result[1]
-                              )}`
-                            : '/information'
-                    }
-                    className='hover:cursor-pointer absolute'
-                >
-                    <BiSearch size='24' />
-                </Link>
+                <SearchCityIcon
+                    place={place}
+                    modalOpen={modalOpen}
+                    setModalOpen={setModalOpen}
+                />
             </div>
-            {modal && (
-                <SearchCityModal
-                    top='top-[330px]'
-                    setModalState={setIsModal}
-                    results={results}
-                />
-            )}
             <div className='flex self-center w-1/2 items-center mb-16'>
                 <span className='mr-2'>최근 검색어</span>
                 <div className='mx-2'>

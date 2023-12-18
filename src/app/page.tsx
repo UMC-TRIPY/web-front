@@ -1,11 +1,6 @@
 'use client';
 
-import react, { useEffect, useState } from 'react';
-import Image from 'next/image';
-import Modal from '@/components/modal/Modal';
-import { BiSearch } from 'react-icons/bi';
-import RecoPrep from '@/components/recoprep/RecoPrep';
-import Community from '@/components/community/Community';
+import React, { useState } from 'react';
 import CardCarousel from '@/components/main/CardCarousel';
 
 import GoogleLoginButton from '@/components/button/GoogleLoginButton';
@@ -19,14 +14,10 @@ import { useSetRecoilState } from 'recoil';
 import { isLoggedInState } from '@/states/user';
 import MakeSchedule from '@/components/mypage/MakeSchedule';
 
-import Link from 'next/link';
-import SearchCityModal from '@/components/modal/SearchCityModal';
-import SelectCityModal from '@/components/modal/SelectCityModal';
 import Promotion from '@/components/maincommunity/Promotion';
 import SearchCountries from '@/components/main/SearchCountries';
 import Title from '@/components/common/Title';
-
-const dummyItem = <div>abc</div>;
+import SearchCityIcon from '@/components/common/SearchCityIcon';
 
 const dummyLocation: ILocation[] = [
     {
@@ -133,15 +124,9 @@ const dummyCommunity = [
 
 export default function Home() {
     const [place, setPlace] = useState<string>('');
-    const [isModal, setIsModal] = useState<boolean>(false);
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
 
     const setIsLoggedIn = useSetRecoilState(isLoggedInState);
-    const datas = require('../../public/data/dummy.json');
-    const travels = datas.travels;
-    const results = travels
-        .filter((t: any) => t[0][0].includes(place[0]))
-        .filter((t: any) => t[0].includes(place.replace(/ /g, '')));
-
     return (
         <main className='flex min-h-screen flex-col py-16'>
             <Title />
@@ -154,39 +139,14 @@ export default function Home() {
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setPlace(e.target.value)
                     }
-                    onClick={() => setIsModal(true)}
+                    onClick={() => setModalOpen(true)}
                 />
-                <Link
-                    onClick={() => {
-                        if (place === '') {
-                            alert('1글자 이상 입력해주세요.');
-                        }
-
-                        if (results.length !== 1) {
-                            alert('해당 여행지가 없습니다.');
-                        }
-                    }}
-                    href={
-                        place === ''
-                            ? '/information'
-                            : results.length === 1
-                            ? `/information/${results.map(
-                                  (result: [string, string]) => result[1]
-                              )}`
-                            : '/information'
-                    }
-                    className='hover:cursor-pointer absolute'
-                >
-                    <BiSearch size='24' />
-                </Link>
+                <SearchCityIcon
+                    place={place}
+                    modalOpen={modalOpen}
+                    setModalOpen={setModalOpen}
+                />
             </div>
-            {isModal && (
-                <SearchCityModal
-                    top='top-[260px]'
-                    setModalState={setIsModal}
-                    results={results}
-                />
-            )}
             <div className='my-5'>
                 <SearchCountries
                     top='top-[425px]'
