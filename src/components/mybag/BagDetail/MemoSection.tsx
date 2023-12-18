@@ -4,19 +4,19 @@ import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 
 const MemoSection = () => {
-    const { bid } = useParams();
+    const { bag_id } = useParams();
     const [memoText, setMemoText] = useState<string>('');
     const handleClickSaveMemo = async () => {
-        await writeBagMemo(parseInt(bid), memoText);
+        await writeBagMemo(parseInt(bag_id), memoText);
     };
 
     useEffect(() => {
-        if (bid !== undefined) {
-            getBagMemo(parseInt(bid)).then((data) => {
+        if (bag_id !== undefined) {
+            getBagMemo(parseInt(bag_id)).then((data) => {
                 if (data !== null) setMemoText(data);
             });
         }
-    }, [bid]);
+    }, [bag_id]);
 
     return (
         <div className='h-2/6 bg-brightgrey'>

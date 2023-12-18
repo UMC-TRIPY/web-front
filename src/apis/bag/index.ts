@@ -45,22 +45,22 @@ export const getCityMateriallList = async (cname: string) => {
 };
 
 // 가방 내부에 메모 작성
-export const writeBagMemo = async (bid: number, memo: string) => {
-    const result = await Server.post(`travel-bag/bag/memo/${bid}`, { memo });
+export const writeBagMemo = async (bag_id: number, memo: string) => {
+    const result = await Server.post(`travel-bag/bag/memo/${bag_id}`, { memo });
     console.log('메모작성:', result.data);
     return result.data;
 };
 
 // 가방 내부 메모 조회
-export const getBagMemo = async (bid: number) => {
-    const result = await Server.get(`travel-bag/user/bag/memo/${bid}`);
+export const getBagMemo = async (bag_id: number) => {
+    const result = await Server.get(`travel-bag/user/bag/memo/${bag_id}`);
     console.log('메모조회:', result.data);
     return result.data[0].bag_memo;
 };
 
 // 가방 내부에 준비물 추가
-export const addMaterial = async (bid: number, material: string) => {
-    const result = await Server.post(`travel-bag/bag/material/${bid}`, {
+export const addMaterial = async (bag_id: number, material: string) => {
+    const result = await Server.post(`travel-bag/bag/material/${bag_id}`, {
         material
     });
     console.log('addMaterial:', result.data);
@@ -76,15 +76,19 @@ export const editMaterialName = async (mid: number, newName: string) => {
 };
 
 // 가방 준비물 삭제
-export const deleteMaterial = async (bid: number, mid: number) => {
-    const result = await Server.delete(`travel-bag/bag/material/${bid}/${mid}`);
+export const deleteMaterial = async (bag_id: number, mid: number) => {
+    const result = await Server.delete(
+        `travel-bag/bag/material/${bag_id}/${mid}`
+    );
     console.log('deleteMaterial:', result);
     return result.data;
 };
 
 // 가방의 준비물 체크표시 상태 변경
-export const changeCheckMaterial = async (bid: number, mid: number) => {
-    const result = await Server.post(`travel-bag/material/check/${bid}/${mid}`);
+export const changeCheckMaterial = async (bag_id: number, mid: number) => {
+    const result = await Server.post(
+        `travel-bag/material/check/${bag_id}/${mid}`
+    );
     return result.data;
 };
 
@@ -116,9 +120,9 @@ export const getScheduleTravelBagList = async (pid: number) => {
 
 /**
  * 가방에 해당하는 준비물 조회
- * @param {number} bid
+ * @param {number} bag_id
  */
-export const getTravelBagMaterialList = async (bid: number) => {
-    const result = await Server.get(`travel-bag/user/bag/materials/${bid}`);
+export const getTravelBagMaterialList = async (bag_id: number) => {
+    const result = await Server.get(`travel-bag/user/bag/materials/${bag_id}`);
     return result.data;
 };

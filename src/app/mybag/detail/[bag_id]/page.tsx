@@ -28,7 +28,7 @@ interface IMaterialProps extends IMaterial {
 
 const BagDetail = () => {
     const router = useRouter();
-    const { bid } = useParams();
+    const { bag_id } = useParams();
 
     const [bagID, setBagID] = useRecoilState(bagIDState);
     const [materials, setMaterials] = useState<IMaterialProps[]>([]);
@@ -46,10 +46,10 @@ const BagDetail = () => {
     }, []);
 
     useEffect(() => {
-        console.log('bid:', bid);
-        if (bid !== undefined) {
-            console.log('bagID:', bid);
-            const id = parseInt(bid);
+        console.log('bag_id:', bag_id);
+        if (bag_id !== undefined) {
+            console.log('bagID:', bag_id);
+            const id = parseInt(bag_id);
             setBagID(id);
             getTravelBagMaterialList(id).then((res: IMaterial[]) => {
                 setMaterials(
@@ -59,7 +59,7 @@ const BagDetail = () => {
                 );
             });
         }
-    }, [bid, setBagID]);
+    }, [bag_id, setBagID]);
 
     const handleClickRecoMaterial = async (id: number) => {
         const MATERIAL_LENGTH = materials.length;
