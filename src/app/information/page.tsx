@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { RxCross1 } from 'react-icons/rx';
 import { useRouter } from 'next/navigation';
 import SearchCountries from '@/components/main/SearchCountries';
+import Title from '@/components/common/Title';
 
 function City() {
     const searchedCities = [
@@ -55,17 +56,17 @@ const Page = () => {
         .filter((filteredTravel: any) =>
             filteredTravel[0].includes(place.replace(/ /g, ''))
         );
-    const onClick = (city: string) => {
+
+    const handleGoToCity = (city: string) => {
         const searchResult = travels.filter(
             (travel: [string, string]) => travel[0] === city
         )[0][1];
         router.push(`/information/${searchResult}`);
     };
+
     return (
-        <div className='flex flex-col py-20'>
-            <div className='mb-11 text-center text-5xl font-bold'>
-                어디로 가고 싶으신가요?
-            </div>
+        <div className='flex flex-col py-16'>
+            <Title />
             <div className='flex items-center flex-row-reverse self-center w-1/2 mb-6'>
                 <input
                     className='h-14 w-full py-3.5 border-b border-gray-300 outline-none'
@@ -128,7 +129,7 @@ const Page = () => {
                     {popularKeyword.map((city, index) => (
                         <div key={index} className='flex items-start py-2.5'>
                             <span className='text-grey mr-4'>{index + 1}</span>
-                            <button onClick={() => onClick(city)}>
+                            <button onClick={() => handleGoToCity(city)}>
                                 {city}
                             </button>
                         </div>

@@ -24,6 +24,7 @@ import SearchCityModal from '@/components/modal/SearchCityModal';
 import SelectCityModal from '@/components/modal/SelectCityModal';
 import Promotion from '@/components/maincommunity/Promotion';
 import SearchCountries from '@/components/main/SearchCountries';
+import Title from '@/components/common/Title';
 
 const dummyItem = <div>abc</div>;
 
@@ -142,12 +143,8 @@ export default function Home() {
         .filter((t: any) => t[0].includes(place.replace(/ /g, '')));
 
     return (
-        <main className='flex min-h-screen flex-col p-5'>
-            <div className='my-5 text-center'>
-                <span className='text-3xl font-bold'>
-                    어디로 가고 싶으신가요?
-                </span>
-            </div>
+        <main className='flex min-h-screen flex-col py-16'>
+            <Title />
             <div className='flex items-center flex-row-reverse self-center w-1/2 mb-6'>
                 <input
                     className='h-14 w-full py-3.5 border-b border-gray-300 outline-none'
