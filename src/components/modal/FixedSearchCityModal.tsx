@@ -25,7 +25,10 @@ export default function FixedSearchCityModal({
                 ></div>
             </Portal>
             {results.map((result: [string, string], idx: number) => (
-                <Link key={`resultlink${idx}`} href={`/info/${result[1]}`}>
+                <Link
+                    key={`resultlink${idx}`}
+                    href={`/information/${result[1]}`}
+                >
                     <div
                         key={`result${idx}`}
                         className='py-4 pl-8 border-y border-morelightgrey cursor-pointer'

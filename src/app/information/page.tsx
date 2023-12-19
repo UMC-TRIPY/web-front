@@ -1,12 +1,11 @@
 'use client';
-import Image from 'next/image';
-import { BiSearch } from 'react-icons/bi';
+
 import { useState } from 'react';
-import SearchCityModal from '@/components/modal/SearchCityModal';
-import Link from 'next/link';
 import { RxCross1 } from 'react-icons/rx';
 import { useRouter } from 'next/navigation';
 import SearchCountries from '@/components/main/SearchCountries';
+import Title from '@/components/common/Title';
+import SearchCityIcon from '@/components/common/SearchCityIcon';
 
 function City() {
     const searchedCities = [
@@ -44,27 +43,23 @@ function City() {
 }
 
 const Page = () => {
-    const [isAbroad, setIsAbroad] = useState<boolean>(true);
     const [place, setPlace] = useState<string>('');
-    const [modal, setIsModal] = useState<boolean>(false);
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
     const router = useRouter();
     const popularKeyword = ['런던', '제주도', '대만', '도쿄', '하와이'];
     const datas = require('../../../public/data/dummy.json');
     const travels = datas.travels;
-    const results = travels
-        .filter((t: any) => t[0][0].includes(place[0]))
-        .filter((t: any) => t[0].includes(place.replace(/ /g, '')));
-    const onClick = (city: string) => {
-        const move = travels.filter(
+
+    const handleGoToCity = (city: string) => {
+        const searchResult = travels.filter(
             (travel: [string, string]) => travel[0] === city
         )[0][1];
-        router.push(`/info/${move}`);
+        router.push(`/information/${searchResult}`);
     };
+
     return (
-        <div className='flex flex-col py-20'>
-            <div className='mb-11 text-center text-5xl font-bold'>
-                어디로 가고 싶으신가요?
-            </div>
+        <div className='flex flex-col py-16'>
+            <Title />
             <div className='flex items-center flex-row-reverse self-center w-1/2 mb-6'>
                 <input
                     className='h-14 w-full py-3.5 border-b border-gray-300 outline-none'
@@ -74,39 +69,14 @@ const Page = () => {
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                         setPlace(e.target.value)
                     }
-                    onClick={() => setIsModal(true)}
+                    onClick={() => setModalOpen(true)}
                 />
-                <Link
-                    onClick={() => {
-                        if (place === '') {
-                            alert('1글자 이상 입력해주세요.');
-                        }
-
-                        if (results.length !== 1) {
-                            alert('해당 여행지가 없습니다.');
-                        }
-                    }}
-                    href={
-                        place === ''
-                            ? '/info'
-                            : results.length === 1
-                            ? `/info/${results.map(
-                                  (result: [string, string]) => result[1]
-                              )}`
-                            : '/info'
-                    }
-                    className='hover:cursor-pointer absolute'
-                >
-                    <BiSearch size='24' />
-                </Link>
+                <SearchCityIcon
+                    place={place}
+                    modalOpen={modalOpen}
+                    setModalOpen={setModalOpen}
+                />
             </div>
-            {modal && (
-                <SearchCityModal
-                    top='top-[330px]'
-                    setModalState={setIsModal}
-                    results={results}
-                />
-            )}
             <div className='flex self-center w-1/2 items-center mb-16'>
                 <span className='mr-2'>최근 검색어</span>
                 <div className='mx-2'>
@@ -127,7 +97,7 @@ const Page = () => {
                     {popularKeyword.map((city, index) => (
                         <div key={index} className='flex items-start py-2.5'>
                             <span className='text-grey mr-4'>{index + 1}</span>
-                            <button onClick={() => onClick(city)}>
+                            <button onClick={() => handleGoToCity(city)}>
                                 {city}
                             </button>
                         </div>

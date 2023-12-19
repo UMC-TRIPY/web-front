@@ -49,7 +49,7 @@ const Page = () => {
     const para = useParams();
     const cityName: CityProps = datas.datas.filter((data: CityProps) => {
         const enName = data.cityEn;
-        return enName.toLowerCase().replace(/ /g, '') === para.city;
+        return enName.toLowerCase().replace(/ /g, '') === para.city_name;
     })[0];
     const [exist, setExist] = useState<boolean>(false);
     const [currency, setCurrency] = useState<CurrencyProps | undefined>();
@@ -60,10 +60,10 @@ const Page = () => {
     const [materialImgs, setMaterialImgs] = useState<string[] | undefined>();
     useEffect(() => {
         const cityIdx = datas.travels.filter(
-            (t: [string, string, string]) => t[1] === para.city
+            (t: [string, string, string]) => t[1] === para.city_name
         )[0][2];
         const countryIdx = datas.travels.filter(
-            (t: [string, string, string]) => t[1] === para.city
+            (t: [string, string, string]) => t[1] === para.city_name
         )[0][3];
         console.log(cityIdx);
 

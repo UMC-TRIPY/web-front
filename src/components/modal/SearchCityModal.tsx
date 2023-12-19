@@ -4,13 +4,13 @@ import Link from 'next/link';
 
 type Props = {
     setModalState: Function;
-    results: [string, string][];
+    filteredDestinations: [string, string][];
     top: string;
 };
 
 export default function SearchCityModal({
     setModalState,
-    results,
+    filteredDestinations,
     top
 }: Props) {
     useEffect(() => {
@@ -27,24 +27,26 @@ export default function SearchCityModal({
                 ></div>
                 <div
                     className={`absolute flex flex-col rounded-lg max-h-56 bg-white z-101 shadow-md max-w-[640px] w-1/2 ${top} ${
-                        results.length > 4
+                        filteredDestinations.length > 4
                             ? 'overflow-y-scroll'
                             : 'overflow-y-hidden'
                     }`}
                 >
-                    {results.map((result: [string, string], idx: number) => (
-                        <Link
-                            key={`resultlink${idx}`}
-                            href={`/info/${result[1]}`}
-                        >
-                            <div
-                                key={`result${idx}`}
-                                className='py-4 pl-8 border-y border-morelightgrey cursor-pointer'
+                    {filteredDestinations.map(
+                        (result: [string, string], idx: number) => (
+                            <Link
+                                key={`resultlink${idx}`}
+                                href={`/information/${result[1]}`}
                             >
-                                {result[0]}
-                            </div>
-                        </Link>
-                    ))}
+                                <div
+                                    key={`result${idx}`}
+                                    className='py-4 pl-8 border-y border-morelightgrey cursor-pointer'
+                                >
+                                    {result[0]}
+                                </div>
+                            </Link>
+                        )
+                    )}
                 </div>
             </div>
         </Portal>

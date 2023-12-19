@@ -59,7 +59,7 @@ export default function SearchCountries({
             return;
         }
         const href = travels.filter((t: any) => t.includes(city))[0][1];
-        router.push(`/info/${href}`);
+        router.push(`/information/${href}`);
     };
     return (
         <>

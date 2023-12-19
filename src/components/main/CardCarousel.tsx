@@ -16,15 +16,15 @@ const CardCarousel = ({ mode, title, items, size }: Props) => {
     const router = useRouter();
     const onMove = (href: string) => {
         if (href === '오사카') {
-            router.push('/info/osaka');
+            router.push('/information/osaka');
         } else if (href === '도쿄') {
-            router.push('/info/tokyo');
+            router.push('/information/tokyo');
         } else if (href === '런던') {
-            router.push('/info/london');
+            router.push('/information/london');
         } else if (href === '바르셀로나') {
-            router.push('/info/barcelona');
+            router.push('/information/barcelona');
         } else if (href === '시드니') {
-            router.push('/info/sydney');
+            router.push('/information/sydney');
         }
     };
     /**
