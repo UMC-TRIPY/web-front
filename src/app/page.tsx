@@ -18,6 +18,7 @@ import Promotion from '@/components/maincommunity/Promotion';
 import SearchCountries from '@/components/main/SearchCountries';
 import Title from '@/components/common/Title';
 import SearchCityIcon from '@/components/common/SearchCityIcon';
+import UnderlineSearchInput from '@/components/common/UnderlineSearchInput';
 
 const dummyLocation: ILocation[] = [
     {
@@ -131,15 +132,10 @@ export default function Home() {
         <main className='flex min-h-screen flex-col py-16'>
             <Title />
             <div className='flex items-center flex-row-reverse self-center w-1/2 mb-6'>
-                <input
-                    className='h-14 w-full py-3.5 border-b border-gray-300 outline-none'
-                    type='text'
-                    placeholder='보고 싶은 여행지를 입력하세요'
-                    value={place}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setPlace(e.target.value)
-                    }
-                    onClick={() => setModalOpen(true)}
+                <UnderlineSearchInput
+                    place={place}
+                    setPlace={setPlace}
+                    setModalOpen={setModalOpen}
                 />
                 <SearchCityIcon
                     place={place}

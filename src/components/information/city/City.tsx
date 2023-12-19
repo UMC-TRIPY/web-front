@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { AiOutlineCalendar } from 'react-icons/ai';
-import InfoWeather from './InfoWeather';
+import Weather from './Weather';
 import ExchangeRate from './ExchangeRate';
 import format from 'date-fns/format';
 import Calendar from './Calendar';
 import Image from 'next/image';
-import LoginModal from '../modal/LoginModal';
+import LoginModal from '../../modal/LoginModal';
 import { useRouter } from 'next/navigation';
 import differenceInDays from 'date-fns/differenceInDays';
 import { updateLists } from '@/apis/travellists/update';
@@ -22,7 +22,7 @@ interface CurrencyProps {
     currencyEn: string;
 }
 
-export default function InfoCity({
+export default function City({
     city,
     currency,
     cur
@@ -97,7 +97,7 @@ export default function InfoCity({
                 {/* 날씨 부분 */}
                 <div>
                     <span className='text-2xl'>날씨</span>
-                    <InfoWeather cityName={city.cityEn} />
+                    <Weather cityName={city.cityEn} />
                 </div>
                 {/* 환율 계산 부분 */}
                 <div>
