@@ -3,10 +3,10 @@ import Portal from './Portal';
 import Link from 'next/link';
 
 export default function FixedSearchCityModal({
-    setIsModal,
+    setModalOpen,
     results
 }: {
-    setIsModal: any;
+    setModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
     results: [string, string][];
 }) {
     useEffect(() => {
@@ -21,7 +21,7 @@ export default function FixedSearchCityModal({
             <Portal selector='#body'>
                 <div
                     className='absolute top-0 left-0 w-screen h-screen'
-                    onClick={() => setIsModal(false)}
+                    onClick={() => setModalOpen(false)}
                 ></div>
             </Portal>
             {results.map((result: [string, string], idx: number) => (

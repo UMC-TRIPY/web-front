@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AiOutlineCalendar } from 'react-icons/ai';
 import format from 'date-fns/format';
 import 'react-datepicker/dist/react-datepicker.css';
-import Calendar from '../infocity/Calendar';
+import Calendar from '../information/city/Calendar';
 import HotSearch from './hotSearch';
 
 import { useRouter } from 'next/navigation';

@@ -13,7 +13,7 @@ interface Informations {
     month: string;
 }
 
-export default function InfoWeather({ cityName }: { cityName: string }) {
+export default function Weather({ cityName }: { cityName: string }) {
     const [today, setToday] = useState<string>('');
     const [temperatures, setTemperatures] = useState<any>([]);
     const [weather, setWeather] = useState<string>('');

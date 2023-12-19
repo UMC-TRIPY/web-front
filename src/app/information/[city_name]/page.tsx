@@ -1,7 +1,7 @@
 'use client';
 
-import InfoMenus from '@/components/infomenu/InfoMenus';
-import InfoCity from '@/components/infocity/InfoCity';
+import MenuBar from '@/components/information/menu/MenuBar';
+import City from '@/components/information/city/City';
 import Community from '@/components/community/Community';
 import Conversation from '@/components/conversation/Conversation';
 import HotPlace from '@/components/hotplace/HotPlace';
@@ -230,9 +230,9 @@ const Page = () => {
             ) : (
                 <>
                     {/* 화면 위치 및 검색 기능 부분 */}
-                    <InfoMenus travels={travels} />
+                    <MenuBar travels={travels} />
                     {/* 여행 도시 관한 정보 부분 */}
-                    <InfoCity city={cityName} currency={currency} cur={cur} />
+                    <City city={cityName} currency={currency} cur={cur} />
                     {/* 인기 여행지, 연동 완료 */}
                     <HotPlace city={city} />
                     <Places city={city} hotPlaceImgs={hotPlaceImgs} />

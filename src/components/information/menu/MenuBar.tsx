@@ -4,7 +4,8 @@ import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 import { useRouter } from 'next/navigation';
-import FixedSearchCityModal from '../modal/FixedSearchCityModal';
+import FixedSearchCityModal from '../../modal/FixedSearchCityModal';
+import OutlineSearchInput from '../../common/OutlineSearchInput';
 
 interface MenuProps {
     menu: string;
@@ -13,16 +14,12 @@ interface MenuProps {
     onClick: (index: number) => void;
 }
 
-export default function InfoMenus({
-    travels
-}: {
-    travels: [string, string][];
-}) {
+export default function MenuBar({ travels }: { travels: [string, string][] }) {
     const router = useRouter();
     const para = useParams();
     const currentLocation = para.city_name;
     const [place, setPlace] = useState<string>('');
-    const [modal, setIsModal] = useState<boolean>(false);
+    const [modalOpen, setModalOpen] = useState<boolean>(false);
     const [menus, setMenus] = useState<
         [string, boolean, { min: number; max: number }][]
     >([
@@ -103,15 +100,10 @@ export default function InfoMenus({
             </div>
             <div className='w-1/3 flex flex-row-reverse items-end'>
                 <div className='flex flex-col justify-center w-full'>
-                    <input
-                        className='border border-grey h-14 rounded-lg py-3.5 pl-6 searchPlace'
-                        type='text'
-                        placeholder='보고 싶은 여행지를 입력하세요'
-                        value={place}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setPlace(e.target.value)
-                        }
-                        onClick={() => setIsModal(true)}
+                    <OutlineSearchInput
+                        place={place}
+                        setPlace={setPlace}
+                        setModalOpen={setModalOpen}
                     />
                     <Link
                         onClick={() => {
@@ -129,9 +121,9 @@ export default function InfoMenus({
                         <BiSearch size='24' />
                     </Link>
                 </div>
-                {modal && (
+                {modalOpen && (
                     <FixedSearchCityModal
-                        setIsModal={setIsModal}
+                        setModalOpen={setModalOpen}
                         results={results}
                     />
                 )}
