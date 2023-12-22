@@ -12,7 +12,7 @@ export default function Page() {
     const [country, setCountry] = useState<string>('');
     const params = useParams();
     useEffect(() => {
-        const location = params.country;
+        const location = params.country_name;
         if (location === 'japan') {
             setCountry('일본');
         } else if (location === 'vietnam') {
