@@ -234,8 +234,7 @@ const Page = () => {
                     {/* 여행 도시 관한 정보 부분 */}
                     <City city={cityName} currency={currency} cur={cur} />
                     {/* 인기 여행지, 연동 완료 */}
-                    <HotPlace city={city} />
-                    <Places city={city} hotPlaceImgs={hotPlaceImgs} />
+                    <HotPlace city={city} hotPlaceImgs={hotPlaceImgs} />
                     {/* 추천 준비물, 연동 완료 */}
                     <RecoPrep materials={materials} />
                     <Community cityName={cityName.cityKo} />
