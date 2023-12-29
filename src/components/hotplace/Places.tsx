@@ -33,7 +33,6 @@ export default function Places({
         }
         setContents(tmp);
     }, []);
-    console.log(contents);
     const City = ({ content }: { content: any }) => {
         return (
             <div className='flex min-w-[305px] h-[400px]'>

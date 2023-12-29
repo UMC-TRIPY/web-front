@@ -1,100 +1,57 @@
-import Image from 'next/image';
 import Link from 'next/link';
-import { useParams } from 'next/navigation';
 import React, { useEffect, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
-import { useRouter } from 'next/navigation';
 import FixedSearchCityModal from '../../modal/FixedSearchCityModal';
 import OutlineSearchInput from '../../common/OutlineSearchInput';
-
-interface MenuProps {
-    menu: string;
-    select: boolean;
-    index: number;
-    onClick: (index: number) => void;
-}
+import interSectionObserver from '@/hooks/intersectionsObserver';
+import { MenuProps } from '@/types/menu';
+import MenuList from './MenuList';
 
 export default function MenuBar({ travels }: { travels: [string, string][] }) {
-    const router = useRouter();
-    const para = useParams();
-    const currentLocation = para.city_name;
     const [place, setPlace] = useState<string>('');
     const [modalOpen, setModalOpen] = useState<boolean>(false);
-    const [menus, setMenus] = useState<
-        [string, boolean, { min: number; max: number }][]
-    >([
-        ['메인', true, { min: 0, max: 800 }],
-        ['명소', false, { min: 800, max: 2025 }],
-        ['준비물', false, { min: 2025, max: 2525 }],
-        ['후기/회화', false, { min: 2525, max: 5000 }]
+    const [loading, setLoading] = useState(true);
+    const [menus, setMenus] = useState<MenuProps[]>([
+        { id: 'main', name: '메인', offsetTop: 0, isIntersected: true },
+        { id: 'hot-place', name: '명소', offsetTop: 0, isIntersected: false },
+        {
+            id: 'materials',
+            name: '준비물',
+            offsetTop: 0,
+            isIntersected: false
+        },
+        {
+            id: 'community',
+            name: '후기/회화',
+            offsetTop: 0,
+            isIntersected: false
+        }
     ]);
 
-    const Menu = ({ menu, select, index, onClick }: MenuProps) => {
-        return (
-            <div className='flex flex-col items-center'>
-                {select && (
-                    <Image
-                        src='/images/selected.png'
-                        alt='none'
-                        width={16}
-                        height={16}
-                    />
-                )}
-                <span
-                    className={
-                        select
-                            ? 'text-primary mx-4 font-bold hover:cursor-pointer'
-                            : 'text-infomenu mx-4 font-bold hover:cursor-pointer'
-                    }
-                    onClick={() => onClick(index)}
-                >
-                    {menu}
-                </span>
-            </div>
-        );
-    };
-
-    const menuClick = (selectedIndex: number) => {
-        const updatedMenus: [string, boolean, { min: number; max: number }][] =
-            menus.map((menu, index) => [
-                menu[0],
-                index === selectedIndex,
-                menu[2]
-            ]);
-        scrollTo({ top: menus[selectedIndex][2].min, behavior: 'smooth' });
-        setMenus(updatedMenus);
-    };
-
-    window.addEventListener('scroll', () => {
-        const updatedMenus: [string, boolean, { min: number; max: number }][] =
-            menus.map((menu) => [
-                menu[0],
-                scrollY >= menu[2].min && scrollY < menu[2].max,
-                menu[2]
-            ]);
-        setMenus(updatedMenus);
-    });
+    useEffect(() => {
+        if (loading) {
+            interSectionObserver({ menus, setMenus });
+        }
+        setLoading(false);
+    }, [loading, menus]);
 
     const results = travels
         .filter((t) => t[0][0].includes(place[0]))
         .filter((t) => t[0].includes(place.replace(/ /g, '')));
 
-    useEffect(() => {}, []);
-
     return (
         <div
-            className={`flex justify-between py-6 sticky top-0 bg-white ${
-                menus[0][1] ? 'z-0' : 'z-10'
-            }`}
+            className='flex justify-between py-6 sticky top-0 bg-white z-10'
+            id='menu'
         >
             <div className='flex items-end'>
-                {menus.map((menu, index) => (
-                    <Menu
-                        key={`menu${index}`}
-                        menu={menu[0]}
-                        select={menu[1]}
-                        index={index}
-                        onClick={menuClick}
+                {menus.map((menu) => (
+                    <MenuList
+                        key={menu.name}
+                        name={menu.name}
+                        offsetTop={menu.offsetTop}
+                        isIntersected={menu.isIntersected}
+                        id=''
                     />
                 ))}
             </div>

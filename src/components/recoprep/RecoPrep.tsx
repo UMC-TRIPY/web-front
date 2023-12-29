@@ -37,7 +37,7 @@ export default function RecoPrep({ materials }: { materials: any }) {
         });
     }
     return (
-        <div className='my-16'>
+        <div className='pb-16' id='materials'>
             <div className='flex justify-between'>
                 <span className='text-3xl font-bold'>추천 준비물</span>
                 <div className='flex'>

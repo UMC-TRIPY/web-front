@@ -179,7 +179,7 @@ const Community = ({ cityName }: { cityName: string }) => {
     };
 
     return (
-        <div>
+        <div id='community' className='pb-16'>
             <div className='flex justify-between'>
                 <div className='text-3xl font-bold'>{cityName} 커뮤니티</div>
                 <div className='flex gap-2 basis-1/2 justify-around item-center bg-white'>

@@ -84,7 +84,7 @@ export default function City({
     };
 
     return (
-        <div className='flex justify-between mt-28'>
+        <div className='flex justify-between pt-28 pb-16' id='main'>
             <Image
                 src={city.mainPhoto}
                 alt='none'
