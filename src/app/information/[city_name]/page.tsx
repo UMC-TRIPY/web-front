@@ -3,7 +3,6 @@
 import MenuBar from '@/components/information/menu/MenuBar';
 import City from '@/components/information/city/City';
 import Community from '@/components/community/Community';
-import Conversation from '@/components/conversation/Conversation';
 import HotPlace from '@/components/hotplace/HotPlace';
 import CardCarousel from '@/components/main/CardCarousel';
 import { useParams } from 'next/navigation';
@@ -238,7 +237,6 @@ const Page = () => {
                     {/* 추천 준비물, 연동 완료 */}
                     <RecoPrep materials={materials} />
                     <Community cityName={cityName.cityKo} />
-                    <Conversation />
                 </>
             )}
         </div>

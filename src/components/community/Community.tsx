@@ -4,6 +4,7 @@ import Dropdown from './Dropdown';
 import InputBox from './InputBox';
 import TabList from './TabList';
 import Pagination from '../maincommunity/Pagination';
+import Conversation from '../conversation/Conversation';
 
 interface ITab {
     id: number;
@@ -199,6 +200,8 @@ const Community = ({ cityName }: { cityName: string }) => {
                 current={current}
                 setCurrent={setCurrent}
             />
+            {/* 회화 페이지 */}
+            <Conversation />
         </div>
     );
 };
