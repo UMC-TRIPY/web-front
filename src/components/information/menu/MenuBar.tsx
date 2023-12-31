@@ -1,39 +1,23 @@
 import Link from 'next/link';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BiSearch } from 'react-icons/bi';
 import FixedSearchCityModal from '../../modal/FixedSearchCityModal';
 import OutlineSearchInput from '../../common/OutlineSearchInput';
-import interSectionObserver from '@/hooks/intersectionsObserver';
+import interSectionObserver from '@/utils/intersectionsObserver';
 import { MenuProps } from '@/types/menu';
 import MenuList from './MenuList';
 
 export default function MenuBar({ travels }: { travels: [string, string][] }) {
     const [place, setPlace] = useState<string>('');
     const [modalOpen, setModalOpen] = useState<boolean>(false);
-    const [loading, setLoading] = useState(true);
-    const [menus, setMenus] = useState<MenuProps[]>([
-        { id: 'main', name: '메인', offsetTop: 0, isIntersected: true },
-        { id: 'hot-place', name: '명소', offsetTop: 0, isIntersected: false },
-        {
-            id: 'materials',
-            name: '준비물',
-            offsetTop: 0,
-            isIntersected: false
-        },
-        {
-            id: 'community',
-            name: '후기/회화',
-            offsetTop: 0,
-            isIntersected: false
-        }
-    ]);
+    const loading = useRef<boolean>(true);
+    const [menus, setMenus] = useState<MenuProps[]>([]);
 
     useEffect(() => {
-        if (loading) {
-            interSectionObserver({ menus, setMenus });
+        if (loading.current) {
+            interSectionObserver({ menus, setMenus, loading });
         }
-        setLoading(false);
-    }, [loading, menus]);
+    }, [menus]);
 
     const results = travels
         .filter((t) => t[0][0].includes(place[0]))
