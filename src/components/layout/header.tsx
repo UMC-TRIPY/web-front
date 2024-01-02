@@ -129,7 +129,10 @@ export default function Header() {
     // });
 
     return (
-        <header className='x-0 top-0 z-50 left-0 w-full bg-white border-b border-gray-300'>
+        <header
+            className='x-0 top-0 z-50 left-0 w-full bg-white border-b border-gray-300'
+            id='header'
+        >
             <div className='container mx-auto my-0.5 h-24 flex justify-between flex-wrap p-5'>
                 <div className='flex space-x-16'>
                     <Link href='/' className='flex'>
