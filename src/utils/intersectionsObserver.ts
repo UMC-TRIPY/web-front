@@ -9,7 +9,7 @@ interface IntersectionObserverProps {
 // 밖으로 빼거나 해야할 듯
 // 해당 파일 추후 전체적인 리팩토링 필요
 const defaultMenus = [
-    { id: 'main', name: '메인', offsetTop: 0, isIntersected: true },
+    { id: 'header', name: '메인', offsetTop: 0, isIntersected: true },
     {
         id: 'hot-place',
         name: '명소',
@@ -38,7 +38,7 @@ const interSectionObserver = ({
     const options = {
         root: null,
         rootMargin: '0px',
-        threshold: 1
+        threshold: 0.5
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -48,7 +48,7 @@ const interSectionObserver = ({
                     id: defaultMenus[idx].id,
                     name: defaultMenus[idx].name,
                     offsetTop: entry.target.offsetTop - 101,
-                    isIntersected: idx === 0 ? true : false
+                    isIntersected: defaultMenus[idx].isIntersected
                 })
             );
             loading.current = false;
@@ -67,7 +67,7 @@ const interSectionObserver = ({
     }, options);
 
     const targets: HTMLElement[] | null = [
-        document.querySelector('#main')!,
+        document.querySelector('#header')!,
         document.querySelector('#hot-place')!,
         document.querySelector('#materials')!,
         document.querySelector('#community')!
