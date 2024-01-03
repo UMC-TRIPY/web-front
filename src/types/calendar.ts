@@ -3,10 +3,13 @@ export interface IDateProps {
     endDate: Date | null;
 }
 
-export interface ICalendarProps extends IDateProps {
-    claName: string;
+export interface IOpenStateProps {
     isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface ICalendarProps extends IDateProps, IOpenStateProps {
+    claName: string;
     setStartDate: React.Dispatch<React.SetStateAction<Date | null>>;
     setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
