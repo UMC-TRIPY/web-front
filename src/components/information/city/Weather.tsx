@@ -72,6 +72,7 @@ export default function Weather({ cityName }: { cityName: string }) {
     const Information = ({ local, korea, month }: Informations) => {
         return (
             <>
+                {/* <span className='text-2xl'>날씨</span> */}
                 <div className='h-4/5 border-r border-lightgrey' />
                 <div className='flex flex-col w-full items-center'>
                     <span className='text-2xl'>
