@@ -2,7 +2,7 @@ import React from 'react';
 import format from 'date-fns/format';
 import { AiOutlineCalendar } from 'react-icons/ai';
 
-const SelectDates = ({
+const SelectDate = ({
     title,
     value,
     isOpen,
@@ -20,10 +20,10 @@ const SelectDates = ({
             }}
             className='flex items-center justify-between px-5 h-16 w-5/12 text-grey border border-lightgrey rounded-l hover:cursor-pointer'
         >
-            {value === null ? title : format(value, 'yyyy.MM.dd')}
+            {!value ? title : format(value, 'yyyy.MM.dd')}
             <AiOutlineCalendar size={24} />
         </div>
     );
 };
 
-export default SelectDates;
+export default SelectDate;

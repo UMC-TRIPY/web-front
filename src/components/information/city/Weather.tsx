@@ -72,7 +72,6 @@ export default function Weather({ cityName }: { cityName: string }) {
     const Information = ({ local, korea, month }: Informations) => {
         return (
             <>
-                {/* <span className='text-2xl'>날씨</span> */}
                 <div className='h-4/5 border-r border-lightgrey' />
                 <div className='flex flex-col w-full items-center'>
                     <span className='text-2xl'>
@@ -87,31 +86,34 @@ export default function Weather({ cityName }: { cityName: string }) {
     };
 
     return (
-        <div className='flex'>
-            <div className='w-20 h-32 mt-3 border border-grey rounded flex flex-col items-center'>
-                <span className='text-xs text-grey my-3'>현지 기온</span>
-                {weather === '' ? 'Loading...' : <WeatherComp />}
-                <span className='my-3 text-lg'>{today}</span>
-            </div>
-            <div className=' h-32 mt-3 border border-grey rounded flex flex-col items-center ml-5 w-full'>
-                <span className='text-xs text-grey my-3'>
-                    일일 현지/대한민국 기온
-                </span>
-                <div className='flex justify-evenly w-full'>
-                    {temperatures.length === 0
-                        ? 'Loading...'
-                        : temperatures.map(
-                              (temperature: any, index: number) => {
-                                  return (
-                                      <Information
-                                          key={`info${index}`}
-                                          korea={temperature[0]}
-                                          local={temperature[1]}
-                                          month={temperature[2]}
-                                      />
-                                  );
-                              }
-                          )}
+        <div className='flex flex-col'>
+            <span className='text-2xl'>날씨</span>
+            <div className='flex'>
+                <div className='w-20 h-32 mt-3 border border-grey rounded flex flex-col items-center'>
+                    <span className='text-xs text-grey my-3'>현지 기온</span>
+                    {weather === '' ? 'Loading...' : <WeatherComp />}
+                    <span className='my-3 text-lg'>{today}</span>
+                </div>
+                <div className=' h-32 mt-3 border border-grey rounded flex flex-col items-center ml-5 w-full'>
+                    <span className='text-xs text-grey my-3'>
+                        일일 현지/대한민국 기온
+                    </span>
+                    <div className='flex justify-evenly w-full'>
+                        {temperatures.length === 0
+                            ? 'Loading...'
+                            : temperatures.map(
+                                  (temperature: any, index: number) => {
+                                      return (
+                                          <Information
+                                              key={`info${index}`}
+                                              korea={temperature[0]}
+                                              local={temperature[1]}
+                                              month={temperature[2]}
+                                          />
+                                      );
+                                  }
+                              )}
+                    </div>
                 </div>
             </div>
         </div>
