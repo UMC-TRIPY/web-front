@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { use, useEffect, useState } from 'react';
 
-export default function RecoPrep({ materials }: { materials: any }) {
+export default function RecommandMaterials({ materials }: { materials: any }) {
     const [add, setAdd] = useState<string[]>([]);
     const [num, setNum] = useState<number>(0);
     const [slideItems, setSlideItems] = useState<any>();

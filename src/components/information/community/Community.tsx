@@ -3,7 +3,7 @@ import ContentList from './ContentList';
 import Dropdown from './Dropdown';
 import InputBox from './InputBox';
 import TabList from './TabList';
-import Pagination from '../maincommunity/Pagination';
+import Pagination from '../../maincommunity/Pagination';
 import Conversation from '../conversation/Conversation';
 
 interface ITab {

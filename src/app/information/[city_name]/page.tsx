@@ -2,19 +2,17 @@
 
 import MenuBar from '@/components/information/menu/MenuBar';
 import City from '@/components/information/city/City';
-import Community from '@/components/community/Community';
-import HotPlace from '@/components/hotplace/HotPlace';
-import CardCarousel from '@/components/main/CardCarousel';
+import Community from '@/components/information/community/Community';
+import HotPlace from '@/components/information/hotplace/HotPlace';
 import { useParams } from 'next/navigation';
-import Places from '@/components/hotplace/Places';
 import { useEffect, useState } from 'react';
 import {
     checkCity,
     checkCurrency,
     checkMaeterial
 } from '@/apis/infocity/check';
-import RecoPrep from '@/components/recoprep/RecoPrep';
 import { ICityProps, ICurrencyProps } from '@/types/city';
+import RecommandMaterials from '@/components/information/recommandmaterials/RecommandMaterials';
 
 interface LocationProps {
     name: string;
@@ -230,7 +228,7 @@ const Page = () => {
                     {/* 인기 여행지, 연동 완료 */}
                     <HotPlace city={city} hotPlaceImgs={hotPlaceImgs} />
                     {/* 추천 준비물, 연동 완료 */}
-                    <RecoPrep materials={materials} />
+                    <RecommandMaterials materials={materials} />
                     <Community cityName={cityName.cityKo} />
                 </>
             )}

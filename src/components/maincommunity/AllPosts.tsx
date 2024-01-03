@@ -1,4 +1,4 @@
-import ContentList from '../community/ContentList';
+import ContentList from '../information/community/ContentList';
 import { useEffect, useState } from 'react';
 import Pagination from './Pagination';
 import { BiSearch } from 'react-icons/bi';
@@ -264,11 +264,11 @@ export default function AllPosts() {
                     setCurrent={setCurrent}
                 />
                 <div className='absolute self-end'>
-                <Link href="/community/write">
-                    <button className='bg-lightgrey py-3 px-11 mt-10'>
-                        글쓰기
-                    </button>
-                </Link>
+                    <Link href='/community/write'>
+                        <button className='bg-lightgrey py-3 px-11 mt-10'>
+                            글쓰기
+                        </button>
+                    </Link>
                 </div>
             </div>
         </div>
