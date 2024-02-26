@@ -1,13 +1,11 @@
 import { MenuProps } from '@/types/menu';
 
 interface IntersectionObserverProps {
-    menus: MenuProps[];
+    menuRef: React.MutableRefObject<MenuProps[]>;
     setMenus: React.Dispatch<React.SetStateAction<MenuProps[]>>;
     loading: React.MutableRefObject<boolean>;
 }
 
-// 밖으로 빼거나 해야할 듯
-// 해당 파일 추후 전체적인 리팩토링 필요
 const defaultMenus = [
     { id: 'header', name: '메인', offsetTop: 0, isIntersected: true },
     {
@@ -31,31 +29,35 @@ const defaultMenus = [
 ];
 
 const interSectionObserver = ({
-    menus,
+    menuRef,
     setMenus,
     loading
 }: IntersectionObserverProps) => {
     const options = {
         root: null,
         rootMargin: '0px',
-        threshold: 0.5
+        threshold: 1
     };
 
     const observer = new IntersectionObserver((entries) => {
         if (loading.current) {
+            const tempMenus: MenuProps[] = [];
             entries.forEach((entry, idx) =>
-                menus.push({
+                tempMenus.push({
                     id: defaultMenus[idx].id,
                     name: defaultMenus[idx].name,
                     offsetTop: entry.target.offsetTop - 101,
                     isIntersected: defaultMenus[idx].isIntersected
                 })
             );
+            setMenus(tempMenus);
+            menuRef.current = tempMenus;
             loading.current = false;
+            return;
         }
         entries.map((entry) => {
             if (entry.isIntersecting) {
-                const result = menus.map((menu: MenuProps) => {
+                const result = menuRef.current.map((menu: MenuProps) => {
                     return {
                         ...menu,
                         isIntersected: entry.target.id === menu.id

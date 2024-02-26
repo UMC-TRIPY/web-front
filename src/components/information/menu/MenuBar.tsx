@@ -12,10 +12,11 @@ export default function MenuBar({ travels }: { travels: [string, string][] }) {
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const loading = useRef<boolean>(true);
     const [menus, setMenus] = useState<MenuProps[]>([]);
+    const menuRef = useRef(menus);
 
     useEffect(() => {
         if (loading.current) {
-            interSectionObserver({ menus, setMenus, loading });
+            interSectionObserver({ menuRef, setMenus, loading });
         }
     }, [menus]);
 
@@ -25,7 +26,7 @@ export default function MenuBar({ travels }: { travels: [string, string][] }) {
 
     return (
         <div
-            className='flex justify-between py-6 sticky top-0 bg-white z-10'
+            className='flex justify-between py-6 sticky top-0 bg-white z-9'
             id='menu'
         >
             <div className='flex items-end'>
