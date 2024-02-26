@@ -15,3 +15,8 @@ export interface ICityInformationProps {
     currencyType: ICurrencyProps | undefined;
     currency: number;
 }
+
+export interface IRecentSearchCityProps {
+    name: string;
+    route: string;
+}
