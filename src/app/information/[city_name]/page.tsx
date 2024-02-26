@@ -12,7 +12,7 @@ import {
     checkMaeterial
 } from '@/apis/infocity/check';
 import { ICityProps, ICurrencyProps } from '@/types/city';
-import RecommandMaterials from '@/components/information/recommandmaterials/RecommandMaterials';
+import CardCarousel from '@/components/main/CardCarousel';
 
 interface LocationProps {
     name: string;
@@ -54,7 +54,6 @@ const Page = () => {
             (t: [string, string, string]) => t[1] === para.city_name
         )[0][3];
         console.log(cityIdx);
-
         switch (cityIdx) {
             case 1: {
                 setHotPlaceImgs([
@@ -120,11 +119,9 @@ const Page = () => {
                 break;
             }
         }
-
         checkCurrency(countryIdx)
             .then((res) => setCurrencyType(res))
             .catch((err) => console.log(err));
-
         checkCity(cityIdx)
             .then((res) => {
                 let tmp: LocationProps[] = [];
@@ -150,12 +147,10 @@ const Page = () => {
                 setCity(tmp);
             })
             .catch((err) => console.log(err));
-
         checkMaeterial(countryIdx)
             .then((res) => {
                 let tmp: any[] = [];
                 let mat: any;
-
                 switch (countryIdx) {
                     case 3: {
                         mat = [
@@ -228,7 +223,14 @@ const Page = () => {
                     {/* 인기 여행지, 연동 완료 */}
                     <HotPlace city={city} hotPlaceImgs={hotPlaceImgs} />
                     {/* 추천 준비물, 연동 완료 */}
-                    <RecommandMaterials materials={materials} />
+                    <div id='materials' className='pb-16'>
+                        <CardCarousel
+                            mode={1}
+                            title='추천 준비물'
+                            items={[]}
+                            size={3}
+                        />
+                    </div>
                     <Community cityName={cityName.cityKo} />
                 </>
             )}

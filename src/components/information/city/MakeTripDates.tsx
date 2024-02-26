@@ -45,11 +45,9 @@ const MakeTripDates = ({
                 <button
                     type='button'
                     onClick={loginOrCreate}
-                    className={
-                        isUser
-                            ? 'w-2/12  bg-primary rounded-r px-4'
-                            : 'w-2/12  bg-black text-white rounded-r px-4'
-                    }
+                    className={`w-2/12 rounded-r px-4  ${
+                        isUser ? 'bg-primary text-black' : 'bg-black text-white'
+                    } `}
                 >
                     {isUser ? '등록하기' : '로그인하기'}
                 </button>
