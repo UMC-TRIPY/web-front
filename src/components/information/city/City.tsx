@@ -25,7 +25,7 @@ export default function City({
                 height={522}
                 className='rounded-lg'
             />
-            <div className='h-11/12  flex flex-col justify-between'>
+            <div className='flex flex-col justify-between'>
                 <div className='text-5xl font-bold'>{city.cityKo}</div>
                 {/* 날씨 부분 */}
                 <Weather cityName={city.cityEn} />

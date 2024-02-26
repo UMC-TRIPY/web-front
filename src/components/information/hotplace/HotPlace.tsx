@@ -91,15 +91,9 @@ export default function HotPlace({
         return markers;
     }
     return (
-        <div className='pb-16'>
-            <div id='hot-place'>
-                <span className='text-2xl font-bold'>인기 여행지</span>
-                <div
-                    id='map'
-                    className='w-full mt-8'
-                    style={{ height: '600px' }}
-                ></div>
-            </div>
+        <div id='hot-place' className='pb-16'>
+            <span className='text-2xl font-bold'>인기 여행지</span>
+            <div id='map' className='w-full mt-8' style={{ height: '600px' }} />
             <Places city={city} hotPlaceImgs={hotPlaceImgs} />
         </div>
     );

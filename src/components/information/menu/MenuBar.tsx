@@ -26,7 +26,7 @@ export default function MenuBar({ travels }: { travels: [string, string][] }) {
 
     return (
         <div
-            className='flex justify-between py-6 sticky top-0 bg-white z-9'
+            className='flex justify-between py-6 sticky top-0 bg-white z-10'
             id='menu'
         >
             <div className='flex items-end'>

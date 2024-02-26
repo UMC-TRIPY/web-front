@@ -19,7 +19,7 @@ export default function Weather({ cityName }: { cityName: string }) {
     const [weather, setWeather] = useState<string>('');
     const weatehrKey = process.env.NEXT_PUBLIC_WEATHER_KEY;
 
-    const WeatherComp = () => {
+    const WeatherIcon = () => {
         if (weather === 'Snow') return <IoSnowOutline size={40} />;
         else if (weather === 'Clear')
             return <IoSunnyOutline size={40} key={`sunnyicon`} />;
@@ -86,12 +86,12 @@ export default function Weather({ cityName }: { cityName: string }) {
     };
 
     return (
-        <div className='flex flex-col'>
+        <div>
             <span className='text-2xl'>날씨</span>
             <div className='flex'>
                 <div className='w-20 h-32 mt-3 border border-grey rounded flex flex-col items-center'>
                     <span className='text-xs text-grey my-3'>현지 기온</span>
-                    {weather === '' ? 'Loading...' : <WeatherComp />}
+                    {weather === '' ? 'Loading...' : <WeatherIcon />}
                     <span className='my-3 text-lg'>{today}</span>
                 </div>
                 <div className=' h-32 mt-3 border border-grey rounded flex flex-col items-center ml-5 w-full'>
@@ -99,19 +99,17 @@ export default function Weather({ cityName }: { cityName: string }) {
                         일일 현지/대한민국 기온
                     </span>
                     <div className='flex justify-evenly w-full'>
-                        {temperatures.length === 0
+                        {!temperatures
                             ? 'Loading...'
                             : temperatures.map(
-                                  (temperature: any, index: number) => {
-                                      return (
-                                          <Information
-                                              key={`info${index}`}
-                                              korea={temperature[0]}
-                                              local={temperature[1]}
-                                              month={temperature[2]}
-                                          />
-                                      );
-                                  }
+                                  (temperature: any, index: number) => (
+                                      <Information
+                                          key={`info${index}`}
+                                          korea={temperature[0]}
+                                          local={temperature[1]}
+                                          month={temperature[2]}
+                                      />
+                                  )
                               )}
                     </div>
                 </div>
