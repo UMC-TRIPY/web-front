@@ -33,7 +33,7 @@ export default function MainEditor({
     });
 
     /** textarea 입력 handle 함수 */
-    const handleContents = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const handleContents = (e: any) => {
         const newContent = e.target.value;
         setContents(newContent);
         setPostData({

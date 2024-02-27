@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getPostTitle, getUserIndex, getViews, getThumbs, getCreatedAt, getUserNickname } from '@/apis/community/posts';
+import { getPostTitle, getUserIndex, getViews, getThumbs, getCreatedAt, getUserNickname } from '@/apis/community/get';
 import Image from 'next/image';
 import thumbsUp from 'public/images/thumbs-up.svg';
 import eye from 'public/images/eye.svg';

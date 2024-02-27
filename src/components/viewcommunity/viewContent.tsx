@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getPostContent } from '@/apis/community/posts';
+import { getPostContent } from '@/apis/community/get';
 
 interface ViewContentProps {
     post_index: string;

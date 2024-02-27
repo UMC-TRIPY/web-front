@@ -3,7 +3,7 @@ import MainEditor from "@/components/editorcommunity/mainEditor";
 import SelectCountry from "@/components/editorcommunity/selectCountry";
 import TagEditor from "@/components/editorcommunity/tagEditor";
 import CommonHeader from "@/components/maincommunity/CommonHeader";
-import { updatePosts } from "@/apis/community/update";
+import { postPosts } from "@/apis/community/update";
 import ConfirmBtn from "../layout/confirmBtn";
 import { useRouter } from "next/navigation";
 
@@ -19,13 +19,12 @@ export default function EditorCommunity() {
 
     /** API 데이터 임시 저장 변수 */
     const [postData, setPostData] = useState({
-        user_index: 2,
         post_title: "",
         post_content: "",
         city_index: 0,
         tags: [],
-        post_image: "",
-        post_file: "",
+        post_image: [],
+        post_file: [],
         plan_index: 0,
     });
 
@@ -54,19 +53,6 @@ export default function EditorCommunity() {
 
     console.log("postData:", postData);
 
-    const register = async () => {
-        const response = await updatePosts({
-            user_index: postData.user_index,
-            post_title: postData.post_title,
-            post_content: postData.post_content,
-            city_index: postData.city_index,
-            tags: postData.tags,
-            post_image: postData.post_image,
-            post_file: postData.post_file,
-            plan_index: postData.plan_index,
-        });
-    };
-
     // 모든 필드가 유효한지 확인하는 함수
     const isFormValid = () => {
         return (
@@ -88,10 +74,17 @@ export default function EditorCommunity() {
     
         // 모든 필드 유효성 검사를 통과하면 register()를 호출
         if (isFormValid()) {
-            await register();
-            router.push("/community/view/2");
+            // TODO : swagger 배포시 알맞는 형식의 데이터로 변경
+            postPosts(postData)
+            .then((result) => {
+                console.log(result);
+                router.push(`/community/view/${result}`);
+            })
+            .catch((error) => {
+                console.log(error);
+            })
         } else {
-            console.log("에러!")
+            console.log("입력란을 채워주세요!")
         }
     };
 

@@ -43,6 +43,7 @@ export default function TagEditor({
         // "#안녕" "안녕" 입력시 모두 동일하게 "#안녕"으로 출력
         const hashTag = tagItem.startsWith('#') ? tagItem.trim() : '#' + tagItem.trim();
         const noBlankHashTag = hashTag.replace(/\s+/g, ''); // 공백 제거
+        console.log("noblank: "+noBlankHashTag);
         if (noBlankHashTag !== '#'){
             if (!tagList.includes(noBlankHashTag)){ // 중복 태그 추가 안함
                 let updateTagList = [...tagList];

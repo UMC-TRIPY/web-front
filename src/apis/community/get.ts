@@ -1,16 +1,13 @@
 import { Server } from "../setting";
+import { PostsProps } from "./types";
 
-export interface PostsProps {
-    user_index: number;
-    post_title: string;
-    post_content: string;
-    city_index: number;
-    tags: string[];
-    post_image: string;
-    post_file: string;
-    plan_index: number;
+/** 게시글 정보 몽땅 가져오기 */
+export const getPost = async (postId: string) => {
+    const result = await Server.get(`/posts/${postId}`);
+    return result.data;
 }
 
+/** 유저 닉네임 가져오기 */
 export const getUserNickname = async (userId: number) => {
     const result = await Server.get(`/mypage/user/${userId}`);
     return result.data.nickname;

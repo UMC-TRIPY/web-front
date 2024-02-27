@@ -49,7 +49,7 @@ export default function ViewComments() {
                     onChange={(e) => setCommentText(e.target.value)}
                 />
                 <ConfirmBtn 
-                    label="답글 달기" 
+                    label="답글 달기"
                     color="bg-lightgrey"
                     onClick={() => {addComment()}}
                 />
@@ -60,7 +60,7 @@ export default function ViewComments() {
                     color="bg-lightgrey"
                     onClick={() => {window.scrollTo(0, 0);}}
                 />
-                <Link href="/community/write">
+                <Link href="/community/add">
                     <ConfirmBtn
                         label="글쓰기" 
                         color="bg-primary"
