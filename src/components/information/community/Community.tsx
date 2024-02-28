@@ -12,7 +12,7 @@ interface ITab {
     clicked: boolean;
 }
 
-interface IContent {
+export interface IContent {
     imageSrc: string;
     nickName: string;
     title: string;
@@ -112,6 +112,7 @@ const Community = ({ cityName }: { cityName: string }) => {
     const [category, setCategory] = useState('전체');
     const totalPages = Math.ceil(contents.length / 10);
     const [current, setCurrent] = useState<number>(1);
+    const [currentTab, setCurrentTab] = useState(1);
     const [datas, setDatas] = useState<IContent[]>(contents.slice(0, 10));
     useEffect(() => {
         setDatas(contents.slice((current - 1) * 10, current * 10));
@@ -169,15 +170,7 @@ const Community = ({ cityName }: { cityName: string }) => {
         }
     ]);
 
-    const handleClickTab = (id: number) => {
-        setTabs(
-            tabs.map((tab: ITab) =>
-                tab.id === id
-                    ? { ...tab, clicked: true }
-                    : { ...tab, clicked: false }
-            )
-        );
-    };
+    const handleClickTab = (id: number) => setCurrentTab(id);
 
     return (
         <div id='community' className='pb-16'>
@@ -193,7 +186,20 @@ const Community = ({ cityName }: { cityName: string }) => {
                     <InputBox />
                 </div>
             </div>
-            <TabList tabs={tabs} handleClickTab={handleClickTab} />
+            <div className='flex'>
+                {tabs.map((tab) => (
+                    <button
+                        key={tab.id}
+                        onClick={() => handleClickTab(tab.id)}
+                        className={`py-4 border-b w-full text-center text-xl border-b-lightgrey text-grey ${
+                            currentTab === tab.id &&
+                            'font-bold border-b-primary text-primary'
+                        }`}
+                    >
+                        {tab.name}
+                    </button>
+                ))}
+            </div>
             <ContentList contents={datas} />
             <Pagination
                 totalPages={totalPages}

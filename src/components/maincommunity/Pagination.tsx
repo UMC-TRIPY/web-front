@@ -7,12 +7,12 @@ export default function Pagination({
     current: number;
     setCurrent: React.Dispatch<React.SetStateAction<number>>;
 }) {
-    let pages = [];
+    const pages = [];
 
     for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
     }
-    let slicingPages = pages.slice(
+    const slicingPages = pages.slice(
         Math.floor((current - 1) / 5) * 5,
         (Math.floor((current - 1) / 5) + 1) * 5
     );
