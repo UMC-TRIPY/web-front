@@ -1,10 +1,14 @@
+import { IContent } from './Community';
 import ContentItem from './ContentItem';
 
-const ContentList = (props: any) => {
-    const { contents } = props;
+interface IContentListProp {
+    contents: IContent[];
+}
+
+const ContentList = ({ contents }: IContentListProp) => {
     return (
-        <div>
-            {contents.map((content: any, idx: number) => (
+        <div className='mt-7 mb-2'>
+            {contents.map((content: IContent, idx: number) => (
                 <ContentItem content={content} key={idx} />
             ))}
         </div>
