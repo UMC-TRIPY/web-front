@@ -1,27 +1,18 @@
 'use client';
 
-import InfoMenus from '@/components/infomenu/InfoMenus';
-import InfoCity from '@/components/infocity/InfoCity';
-import Community from '@/components/community/Community';
-import Conversation from '@/components/conversation/Conversation';
-import HotPlace from '@/components/hotplace/HotPlace';
-import CardCarousel from '@/components/main/CardCarousel';
+import MenuBar from '@/components/information/menu/MenuBar';
+import City from '@/components/information/city/City';
+import Community from '@/components/information/community/Community';
+import HotPlace from '@/components/information/hotplace/HotPlace';
 import { useParams } from 'next/navigation';
-import Places from '@/components/hotplace/Places';
 import { useEffect, useState } from 'react';
 import {
     checkCity,
     checkCurrency,
     checkMaeterial
 } from '@/apis/infocity/check';
-import RecoPrep from '@/components/recoprep/RecoPrep';
-
-interface CityProps {
-    country: string;
-    cityKo: string;
-    cityEn: string;
-    mainPhoto: string;
-}
+import { ICityProps, ICurrencyProps } from '@/types/city';
+import CardCarousel from '@/components/main/CardCarousel';
 
 interface LocationProps {
     name: string;
@@ -35,11 +26,6 @@ interface MaterialProps {
     img: string;
 }
 
-interface CurrencyProps {
-    currencyKo: string;
-    currencyEn: string;
-}
-
 // DB에 있는 도시 오사카 1 , 도쿄 2, 런던 7, 바르셀로나 9, 시드니 18
 // 준비물 있는 나라  일본 3 - [1,2] , 영국 9 - [7], 스페인 10 - [9], 호주 11 - [18]
 
@@ -47,13 +33,15 @@ const Page = () => {
     const datas = require('../../../../public/data/dummy.json');
     const travels = datas.travels;
     const para = useParams();
-    const cityName: CityProps = datas.datas.filter((data: CityProps) => {
+    const cityName: ICityProps = datas.datas.filter((data: ICityProps) => {
         const enName = data.cityEn;
         return enName.toLowerCase().replace(/ /g, '') === para.city_name;
     })[0];
     const [exist, setExist] = useState<boolean>(false);
-    const [currency, setCurrency] = useState<CurrencyProps | undefined>();
-    const [cur, setCur] = useState<number>(0);
+    const [currencyType, setCurrencyType] = useState<
+        ICurrencyProps | undefined
+    >();
+    const [currency, setCurrency] = useState<number>(0);
     const [city, setCity] = useState<LocationProps[] | undefined>();
     const [materials, setMaterials] = useState<MaterialProps[] | undefined>();
     const [hotPlaceImgs, setHotPlaceImgs] = useState<string[] | undefined>();
@@ -66,7 +54,6 @@ const Page = () => {
             (t: [string, string, string]) => t[1] === para.city_name
         )[0][3];
         console.log(cityIdx);
-
         switch (cityIdx) {
             case 1: {
                 setHotPlaceImgs([
@@ -116,27 +103,25 @@ const Page = () => {
         }
         switch (countryIdx) {
             case 3: {
-                setCur(0.11);
+                setCurrency(0.11);
                 break;
             }
             case 9: {
-                setCur(0.0006);
+                setCurrency(0.0006);
                 break;
             }
             case 10: {
-                setCur(0.0007);
+                setCurrency(0.0007);
                 break;
             }
             case 11: {
-                setCur(0.0007);
+                setCurrency(0.0007);
                 break;
             }
         }
-
         checkCurrency(countryIdx)
-            .then((res) => setCurrency(res))
+            .then((res) => setCurrencyType(res))
             .catch((err) => console.log(err));
-
         checkCity(cityIdx)
             .then((res) => {
                 let tmp: LocationProps[] = [];
@@ -162,12 +147,10 @@ const Page = () => {
                 setCity(tmp);
             })
             .catch((err) => console.log(err));
-
         checkMaeterial(countryIdx)
             .then((res) => {
                 let tmp: any[] = [];
                 let mat: any;
-
                 switch (countryIdx) {
                     case 3: {
                         mat = [
@@ -230,16 +213,25 @@ const Page = () => {
             ) : (
                 <>
                     {/* 화면 위치 및 검색 기능 부분 */}
-                    <InfoMenus travels={travels} />
+                    <MenuBar travels={travels} />
                     {/* 여행 도시 관한 정보 부분 */}
-                    <InfoCity city={cityName} currency={currency} cur={cur} />
+                    <City
+                        city={cityName}
+                        currencyType={currencyType}
+                        currency={currency}
+                    />
                     {/* 인기 여행지, 연동 완료 */}
-                    <HotPlace city={city} />
-                    <Places city={city} hotPlaceImgs={hotPlaceImgs} />
+                    <HotPlace city={city} hotPlaceImgs={hotPlaceImgs} />
                     {/* 추천 준비물, 연동 완료 */}
-                    <RecoPrep materials={materials} />
+                    <div id='materials' className='pb-16'>
+                        <CardCarousel
+                            mode={1}
+                            title='추천 준비물'
+                            items={[]}
+                            size={3}
+                        />
+                    </div>
                     <Community cityName={cityName.cityKo} />
-                    <Conversation />
                 </>
             )}
         </div>

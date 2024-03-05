@@ -60,13 +60,13 @@ export default function LoginSignUpModal({
         <Portal selector='#body'>
             <div className='flex justify-center items-center'>
                 <div
-                    className='absolute top-0 left-0 w-screen h-screen bg-gray-500 opacity-50 z-100'
+                    className='absolute top-0 left-0 w-screen h-screen bg-gray-500 opacity-50 z-50'
                     onClick={() => {
                         setModalState(false);
                     }}
                 ></div>
                 <div
-                    className='absolute flex flex-col top-1/3 left-1/3 w-1/3 rounded-lg bg-neutral-50 z-101'
+                    className='absolute flex flex-col top-1/3 left-1/3 w-1/3 rounded-lg bg-neutral-50 z-50'
                     style={{ minHeight: '24rem' }}
                 >
                     <Modal />

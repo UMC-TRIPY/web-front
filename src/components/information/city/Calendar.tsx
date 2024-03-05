@@ -2,17 +2,7 @@ import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { useEffect } from 'react';
 import { ko } from 'date-fns/locale';
-import { subDays } from 'date-fns';
-
-interface Props {
-    claName: string;
-    startDate: Date | null;
-    endDate: Date | null;
-    isOpen: boolean;
-    setStartDate: React.Dispatch<React.SetStateAction<Date | null>>;
-    setEndDate: React.Dispatch<React.SetStateAction<Date | null>>;
-    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import { ICalendarProps } from '@/types/calendar';
 
 export default function Calendar({
     claName,
@@ -22,7 +12,7 @@ export default function Calendar({
     setStartDate,
     setEndDate,
     setIsOpen
-}: Props) {
+}: ICalendarProps) {
     const activeColor = () => {
         let outsideMonth: any = document.getElementsByClassName(
             'react-datepicker__day--outside-month'

@@ -1,5 +1,6 @@
 import { Loader } from '@googlemaps/js-api-loader';
 import { useState } from 'react';
+import Places from './Places';
 
 declare global {
     interface Window {
@@ -7,7 +8,13 @@ declare global {
     }
 }
 
-export default function HotPlace({ city }: { city: any }) {
+export default function HotPlace({
+    city,
+    hotPlaceImgs
+}: {
+    city: any;
+    hotPlaceImgs: any;
+}) {
     const [latMid, setLatMid] = useState(0);
     const [lngMid, setLngMid] = useState(0);
     // 환경변수에서 Map Key 가져옴
@@ -84,13 +91,10 @@ export default function HotPlace({ city }: { city: any }) {
         return markers;
     }
     return (
-        <div className='mt-16'>
+        <div id='hot-place' className='pb-16'>
             <span className='text-2xl font-bold'>인기 여행지</span>
-            <div
-                id='map'
-                className='w-full mt-8'
-                style={{ height: '600px' }}
-            ></div>
+            <div id='map' className='w-full mt-8' style={{ height: '600px' }} />
+            <Places city={city} hotPlaceImgs={hotPlaceImgs} />
         </div>
     );
 }
