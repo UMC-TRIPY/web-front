@@ -9,10 +9,9 @@ import FriendReq from '@/components/mypagefriend/friendReq';
 import MyFriends from '@/components/mypagefriend/myFriends';
 import { getMyInformation } from '@/apis/user/friend';
 import { Friend, IUser } from '@/types/user';
-import MyTravelList from '@/components/mypage/MyTravelList';
 import MakeSchedule from '@/components/mypage/MakeSchedule';
-import MyBagList from '@/components/mypage/MyBagList';
 import { editInformation } from '@/apis/user/login';
+import List from '@/components/common/List';
 
 export default function Mypage() {
     const [activeMenu, setActiveMenu] = useState<string>('정보');
@@ -43,6 +42,8 @@ export default function Mypage() {
         await editInformation(userData.profileImg, userData.nationality);
     };
 
+    const handleDeleteBag = (bagId: number) => {};
+
     let content;
     if (activeMenu === '정보') {
         content = (
@@ -64,14 +65,19 @@ export default function Mypage() {
     } else if (activeMenu === '여행일정') {
         content = (
             <div className='pt-4'>
-                <MyTravelList option='수정하기' />
+                <List mode='travel' items={[]} label='가방 만들기' />
                 <MakeSchedule />
             </div>
         );
     } else if (activeMenu === '내가방') {
         content = (
             <div className='pt-4'>
-                <MyBagList />
+                <List
+                    handleDeleteBag={handleDeleteBag}
+                    mode='bag'
+                    items={[]}
+                    label='삭제하기'
+                />
             </div>
         );
     } else if (activeMenu === '친구관리') {

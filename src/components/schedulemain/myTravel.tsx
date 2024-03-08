@@ -3,8 +3,7 @@ import RoundBtn from '../layout/roundBtn';
 import Pagination from '../maincommunity/Pagination';
 import { checkLists } from '@/apis/travellists/check';
 import { differenceInDays, format } from 'date-fns';
-import { useRouter } from 'next/navigation';
-import MyTravelList from '../mypage/MyTravelList';
+import List from '../common/List';
 
 interface Props {
     id: number;
@@ -20,7 +19,6 @@ interface MyTravelProps {
 
 function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
     const [contents, setContents] = useState<any>([]);
-    const router = useRouter();
     useEffect(() => {
         checkLists().then((res) => {
             console.log(res);
@@ -52,7 +50,7 @@ function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
             setDatas(tmp.slice(0, 8));
         });
     }, []);
-    
+
     /** 모달창에서 체크된 일정들을 checkedItems에 담음 */
     const handleCheckChange = (id: number) => {
         if (status === 'modal' && checkedItems && setCheckedItems) {
@@ -102,7 +100,9 @@ function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
                                         onChange={() =>
                                             handleCheckChange(travel.id)
                                         }
-                                        checked={checkedItems?.includes(travel.id)}
+                                        checked={checkedItems?.includes(
+                                            travel.id
+                                        )}
                                     />
                                     <div className='w-1/3 text-center'>
                                         {travel.dates}
@@ -122,7 +122,7 @@ function MyTravel({ status, checkedItems, setCheckedItems }: MyTravelProps) {
                     </div>
                 </div>
             ) : (
-                <MyTravelList option='수정하기' />
+                <List mode='travel' items={[]} label='가방 만들기' />
             )}
         </>
     );

@@ -2,12 +2,11 @@ import React from 'react';
 import LabelSchedules from '../detailschedule/LabelSchedules';
 import Modal from './Modal';
 
-const ScheduleDetailModal = ({ setIsModal }: any) => {
-    const place = sessionStorage.getItem('place');
+const ScheduleDetailModal = ({ setIsModal, selectedPlace }: any) => {
     return (
         <Modal
             modalMode={0}
-            title={`${place} 일정 상세보기`}
+            title={`${selectedPlace} 일정 상세보기`}
             setModalState={setIsModal}
             onClickCompleteButton={() => setIsModal(false)}
             completeText=''
