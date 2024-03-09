@@ -10,16 +10,16 @@ export interface ListModalProps {
     selectedPlace: string;
 }
 
-export interface ListProps {
+interface CommonListProps {
     mode: 'travel' | 'bag';
-    items: ItemProps[];
     label: '수정하기' | '가방 만들기' | '삭제하기';
     handleDeleteBag?: (bagId: number) => void;
 }
 
-export interface ListItemProps {
+export interface ListProps extends CommonListProps {
+    items: ItemProps[];
+}
+
+export interface ListItemProps extends CommonListProps {
     item: ItemProps;
-    label: '수정하기' | '가방 만들기' | '삭제하기';
-    setModalState: React.Dispatch<React.SetStateAction<ListModalProps>>;
-    handleDeleteBag?: (bagId: number) => void;
 }

@@ -9,7 +9,18 @@ export default function MyBag() {
                 여행 가방을 등록해볼까요?
             </div>
             {/* <HelpBot width='w-[1280px]' /> */}
-            <List mode='travel' items={[]} label='가방 만들기' />
+            <List
+                mode='travel'
+                items={[
+                    {
+                        plan_id: 1,
+                        date: '2023.07.30~2023.08.05 (2박 3일)',
+                        place: '도쿄',
+                        schedule_id: 2
+                    }
+                ]}
+                label='가방 만들기'
+            />
             <List
                 handleDeleteBag={handleDeleteBag}
                 mode='bag'
