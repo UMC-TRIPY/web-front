@@ -1,4 +1,4 @@
-import ContentList from '../community/ContentList';
+import ContentList from '../information/community/ContentList';
 import { useEffect, useState } from 'react';
 import Pagination from './Pagination';
 import { BiSearch } from 'react-icons/bi';

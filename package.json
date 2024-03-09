@@ -12,6 +12,7 @@
     },
     "dependencies": {
         "@googlemaps/js-api-loader": "^1.16.2",
+        "@tanstack/react-query": "^5.24.8",
         "@types/node": "20.3.3",
         "@types/react": "18.2.14",
         "@types/react-datepicker": "^4.11.2",
@@ -44,6 +45,7 @@
         "@storybook/nextjs": "^7.0.25",
         "@storybook/react": "^7.0.25",
         "@storybook/testing-library": "^0.0.14-next.2",
+        "@tanstack/eslint-plugin-query": "^5.20.1",
         "@types/google.maps": "^3.53.6",
         "@types/uuid": "^9.0.2",
         "eslint-plugin-storybook": "^0.6.12",

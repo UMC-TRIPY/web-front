@@ -6,46 +6,20 @@ import { useRouter } from 'next/navigation';
 import SearchCountries from '@/components/main/SearchCountries';
 import Title from '@/components/common/Title';
 import SearchCityIcon from '@/components/common/SearchCityIcon';
-
-function City() {
-    const searchedCities = [
-        // 최근 검색어
-        '부산',
-        '홍콩',
-        '도쿄'
-    ];
-    const onClick = (searchedCity: string) => {
-        alert(`${searchedCity} 삭제 완료!`);
-    };
-
-    return (
-        <div className='flex'>
-            {searchedCities.map((searchedCity, index) => {
-                return (
-                    <div
-                        className='border border-grey rounded-full mr-2'
-                        key={index}
-                    >
-                        <div className='flex px-3 py-2 text-[12px]'>
-                            {searchedCities[index]}
-                            <button
-                                className='pl-2 pb-0.5' // RxCross가 중앙에 위치하기 위해 pb-0.5
-                                onClick={() => onClick(searchedCity)}
-                            >
-                                <RxCross1 size={12} />
-                            </button>
-                        </div>
-                    </div>
-                );
-            })}
-        </div>
-    );
-}
+import UnderlineSearchInput from '@/components/common/UnderlineSearchInput';
+import { IRecentSearchCityProps } from '@/types/city';
 
 const Page = () => {
     const [place, setPlace] = useState<string>('');
     const [modalOpen, setModalOpen] = useState<boolean>(false);
     const router = useRouter();
+    const [recentSearchCities, setRecentSearchCities] = useState<
+        IRecentSearchCityProps[]
+    >([
+        { name: '부산', route: 'busan' },
+        { name: '홍콩', route: 'hong-kong' },
+        { name: '도쿄', route: 'tokyo' }
+    ]);
     const popularKeyword = ['런던', '제주도', '대만', '도쿄', '하와이'];
     const datas = require('../../../public/data/dummy.json');
     const travels = datas.travels;
@@ -57,19 +31,22 @@ const Page = () => {
         router.push(`/information/${searchResult}`);
     };
 
+    const handleDelete = (e: React.MouseEvent, name: string) => {
+        e.stopPropagation();
+        setRecentSearchCities(
+            recentSearchCities.filter((city) => city.name !== name)
+        );
+    };
+    const handleRoute = (name: string) => router.push(`/information/${name}`);
+
     return (
         <div className='flex flex-col py-16'>
             <Title />
             <div className='flex items-center flex-row-reverse self-center w-1/2 mb-6'>
-                <input
-                    className='h-14 w-full py-3.5 border-b border-gray-300 outline-none'
-                    type='text'
-                    placeholder='보고 싶은 여행지를 입력하세요'
-                    value={place}
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                        setPlace(e.target.value)
-                    }
-                    onClick={() => setModalOpen(true)}
+                <UnderlineSearchInput
+                    place={place}
+                    setPlace={setPlace}
+                    setModalOpen={setModalOpen}
                 />
                 <SearchCityIcon
                     place={place}
@@ -77,10 +54,23 @@ const Page = () => {
                     setModalOpen={setModalOpen}
                 />
             </div>
-            <div className='flex self-center w-1/2 items-center mb-16'>
-                <span className='mr-2'>최근 검색어</span>
-                <div className='mx-2'>
-                    <City /> {/* 최근 검색어 map으로 출력 */}
+            <div className='flex w-1/2 items-center mx-auto mb-16 gap-x-5'>
+                <span>최근 검색어</span>
+                <div className='mx-2 flex gap-x-2'>
+                    {recentSearchCities.map((city) => (
+                        <button
+                            className='flex border border-grey rounded-full py-2 px-3 gap-x-2 items-center text-darkgrey'
+                            onClick={() => handleRoute(city.name)}
+                            key={`${city.name}-route-button`}
+                        >
+                            <span key={city.name}>{city.name}</span>
+                            <RxCross1
+                                size={16}
+                                onClick={(e) => handleDelete(e, city.name)}
+                                key={`${city.name}-delete-button`}
+                            />
+                        </button>
+                    ))}
                 </div>
             </div>
             <div className='mt-2 mb-4'>

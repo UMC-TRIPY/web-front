@@ -1,10 +1,7 @@
 import './globals.css';
 import { Inter } from 'next/font/google';
-import Header from '@/components/layout/header';
-import Footer from '@/components/layout/footer';
 import Script from 'next/script';
-import RecoilProvider from './RecoilProvider';
-import Head from 'next/head';
+import GlobalProvider from '@/components/layout/GlobalProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,14 +19,9 @@ export default function RootLayout({
     return (
         <html lang='en'>
             <Script src='https://developers.kakao.com/sdk/js/kakao.js'></Script>
-            <RecoilProvider>
-                <body id='body' className={inter.className}>
-                    {/* <div className='modal absolute top-1/4 left-1/4'></div> */}
-                    <Header />
-                    {children}
-                    <Footer />
-                </body>
-            </RecoilProvider>
+            <body id='body' className={inter.className}>
+                <GlobalProvider>{children}</GlobalProvider>
+            </body>
         </html>
     );
 }

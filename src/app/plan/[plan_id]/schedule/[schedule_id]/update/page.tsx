@@ -1,7 +1,7 @@
 'use client';
-import FriendList from '../../components/detailschedule/FriendList';
-import OtherSchedule from '../../components/detailschedule/OtherSchedule';
-import CommonHeader from '../../components/detailschedule/CommonHeader';
+import FriendList from '../../../../../../components/detailschedule/FriendList';
+import OtherSchedule from '../../../../../../components/detailschedule/OtherSchedule';
+import CommonHeader from '../../../../../../components/detailschedule/CommonHeader';
 import IScheduleItem from '@/models/interface/IScheduleItem';
 import ScheduleBlock from '@/components/scheduleblock/ScheduleBlock';
 import { useCallback, useEffect, useState } from 'react';
