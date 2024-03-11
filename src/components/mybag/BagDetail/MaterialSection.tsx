@@ -16,7 +16,7 @@ const MaterialSection = ({
 
     const handleOpenMaterialList = () => setIsOpen((prev) => !prev);
     return (
-        <div className='p-5 bg-brightgrey'>
+        <div className='p-5 bg-brightgrey rounded-lg'>
             <div className='flex justify-between'>
                 <h1 className='text-2xl font-bold'>여행지별 추천 준비물</h1>
                 <button onClick={handleOpenMaterialList}>
