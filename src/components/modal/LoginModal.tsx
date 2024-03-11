@@ -1,6 +1,6 @@
 import React from 'react';
-import GoogleLoginButton from '../button/GoogleLoginButton';
-import KakaoLoginButton from '../button/KakaoLoginButton';
+import GoogleLoginButton from '../common/button/GoogleLoginButton';
+import KakaoLoginButton from '../common/button/KakaoLoginButton';
 import Modal from './Modal';
 import LoginSignUpModal from './LoginSignUpModal';
 
