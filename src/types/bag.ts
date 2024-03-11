@@ -4,7 +4,7 @@ export interface IBag {
     user_index: number;
 }
 
-export interface IRecoMaterial {
-    materials_index: number;
-    materials_name: string;
+export interface RecommendMaterial {
+    material_index: number;
+    material_name: string;
 }
