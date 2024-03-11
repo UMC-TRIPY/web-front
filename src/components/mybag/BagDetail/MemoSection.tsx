@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'next/navigation';
 
 import { getBagMemo, writeBagMemo } from '@/apis/bag';
+import RoundedButton from '@/components/common/button/RoundedButton';
 
 const MemoSection = () => {
     const { bag_id } = useParams();
@@ -26,12 +27,9 @@ const MemoSection = () => {
         <div className='p-5 bg-brightgrey h-64 rounded-lg'>
             <div className='flex justify-between'>
                 <span className='text-2xl font-bold'>메모</span>
-                <button
-                    className='bg-lightgrey py-2 px-3 rounded-full hover:bg-main-color text-xs text-dark-black'
-                    onClick={handleSaveMemo}
-                >
+                <RoundedButton onClick={handleSaveMemo} smallLabel>
                     저장
-                </button>
+                </RoundedButton>
             </div>
             <textarea
                 className='resize-none text-xl bg-brightgrey placeholder::text-grey mt-3 outline-none w-full h-full'
