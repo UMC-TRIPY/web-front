@@ -32,7 +32,7 @@ const MemoSection = () => {
                 </RoundedButton>
             </div>
             <textarea
-                className='resize-none text-xl bg-brightgrey placeholder::text-grey mt-3 outline-none w-full h-full'
+                className='resize-none text-xl bg-brightgrey placeholder::text-grey mt-3 outline-none w-full'
                 placeholder='메모를 입력하세요.'
                 value={memoText}
                 onChange={handleChangeMemo}

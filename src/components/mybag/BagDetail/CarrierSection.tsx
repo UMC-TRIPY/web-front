@@ -2,13 +2,19 @@
 import { MaterialProps } from '@/app/mybag/detail/[bag_id]/page';
 import RoundedButton from '@/components/common/button/RoundedButton';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { FiEdit } from 'react-icons/fi';
+import CarrierMaterialInput from './CarrierMaterialInput';
 
 interface AddItemProps {
     isEditing: boolean;
     name: string;
+}
+
+export interface EditItemProps {
+    editContent: string;
+    id: number;
 }
 
 interface ICarrierProps {
@@ -21,29 +27,66 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
         isEditing: false,
         name: ''
     });
+    const [editItem, setEditItem] = useState<EditItemProps>({
+        editContent: '',
+        id: -1
+    });
 
-    const handleStartEditing = () => setAddItem({ isEditing: true, name: '' });
+    const handleAddItem = () =>
+        editItem.id !== -1
+            ? handleChangeMaterial(editItem.id, 'content')
+            : setAddItem({ isEditing: true, name: '' });
 
-    const handleStopEditing = () => setAddItem({ isEditing: false, name: '' });
+    const handleStopAddItem = () => setAddItem({ isEditing: false, name: '' });
 
-    const handleAddItem = () => {
-        handleStopEditing();
+    const handleStartEditItem = (material: MaterialProps) =>
+        setEditItem({
+            editContent: material.name,
+            id: material.id
+        });
+
+    const handleStopEditItem = () => setEditItem({ editContent: '', id: -1 });
+
+    const handleCompleteAddItem = () => {
+        if (!addItem.name) {
+            alert('1글자 이상 입력해 주세요.');
+            return;
+        }
+        handleStopAddItem();
         setMaterials([
-            ...materials,
-            { id: materials.length + 1, name: addItem.name, isChecked: false }
+            { id: materials.length + 1, name: addItem.name, isChecked: false },
+            ...materials
         ]);
     };
 
-    const handleCheckMaterial = (material: MaterialProps) => {
+    const handleChangeMaterial = (id: number, mode: 'check' | 'content') => {
         const newMaterials = [...materials];
-        const indexOfMaterial = newMaterials.indexOf(material);
-        newMaterials[indexOfMaterial].isChecked =
-            !newMaterials[indexOfMaterial].isChecked;
+        const indexOfMaterial = newMaterials.findIndex(
+            (material) => material.id === id
+        );
+        if (mode === 'check') {
+            newMaterials[indexOfMaterial].isChecked =
+                !newMaterials[indexOfMaterial].isChecked;
+        } else {
+            newMaterials[indexOfMaterial].name = editItem.editContent;
+            handleStopEditItem();
+        }
         setMaterials(newMaterials);
     };
 
     const handleChangeAddItem = (e: React.ChangeEvent<HTMLInputElement>) =>
         setAddItem({ isEditing: true, name: e.target.value });
+
+    const handleChangeEditItem = (e: React.ChangeEvent<HTMLInputElement>) =>
+        setEditItem({ id: editItem.id, editContent: e.target.value });
+
+    const handleClickEdit = useCallback(
+        (material: MaterialProps) =>
+            editItem.id === material.id
+                ? handleStopEditItem()
+                : handleStartEditItem(material),
+        [editItem.id]
+    );
     return (
         <>
             <div className='flex flex-col items-center'>
@@ -64,43 +107,64 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                 <div className='flex gap-2 justify-end mb-2'>
                     {addItem.isEditing ? (
                         <>
-                            <RoundedButton onClick={handleAddItem} smallLabel>
+                            <RoundedButton
+                                onClick={handleCompleteAddItem}
+                                smallLabel
+                            >
                                 완료
                             </RoundedButton>
                             <RoundedButton
-                                onClick={handleStopEditing}
+                                onClick={handleStopAddItem}
                                 smallLabel
                             >
                                 취소
                             </RoundedButton>
                         </>
                     ) : (
-                        <RoundedButton onClick={handleStartEditing} smallLabel>
-                            추가하기
-                        </RoundedButton>
+                        <>
+                            {editItem.id !== -1 && (
+                                <RoundedButton
+                                    onClick={handleStopEditItem}
+                                    smallLabel
+                                >
+                                    취소
+                                </RoundedButton>
+                            )}
+                            <RoundedButton onClick={handleAddItem} smallLabel>
+                                {editItem.id !== -1 ? '입력완료' : '추가하기'}
+                            </RoundedButton>
+                        </>
                     )}
                 </div>
+                {addItem.isEditing && (
+                    <div className='flex items-center bg-white py-3 px-4 max-w-max rounded-full mb-3 border border-brightgrey'>
+                        <div className='w-5 h-5 rounded-full border border-grey flex items-center justify-center' />
+                        <input
+                            type='text'
+                            value={addItem.name}
+                            onChange={handleChangeAddItem}
+                            className='outline-none text-xs text-dark-black ml-4 placeholder:text-xs placeholder:font-bold placeholder:text-grey'
+                            placeholder='준비물을 입력해 보세요'
+                        />
+                        <button onClick={handleAddItem}>
+                            <AiOutlineClose
+                                className='text-grey font-medium'
+                                size={20}
+                            />
+                        </button>
+                    </div>
+                )}
                 {materials.length > 0 &&
                     materials.map((material) => (
-                        <div className='border border-black' key={material.id}>
-                            <input
-                                type='checkbox'
-                                onChange={() => handleCheckMaterial(material)}
-                                checked={material.isChecked}
-                            />
-                            <span className='text-xs text-dark-black'>
-                                {material.name}
-                            </span>
-                        </div>
+                        <CarrierMaterialInput
+                            key={material.id}
+                            material={material}
+                            editItem={editItem}
+                            handleChangeMaterial={handleChangeMaterial}
+                            handleChangeEditItem={handleChangeEditItem}
+                            handleClickEdit={handleClickEdit}
+                        />
                     ))}
-                {addItem.isEditing && (
-                    <input
-                        type='text'
-                        value={addItem.name}
-                        onChange={handleChangeAddItem}
-                        className='outline-dark-black py-2 px-4 text-xs text-dark-black rounded-full'
-                    />
-                )}
             </div>
         </>
     );
