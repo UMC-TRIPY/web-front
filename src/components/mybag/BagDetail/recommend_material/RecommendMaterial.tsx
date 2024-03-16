@@ -3,15 +3,17 @@ import React, { useState } from 'react';
 
 import { IoIosArrowDown } from 'react-icons/io';
 
-import { RecommendMaterial } from '@/types/bag';
+import { Material } from '@/types/bag';
 
-const MaterialSection = ({
+interface RecommendMaterialProps {
+    recommendMaterials: Material[];
+    handleClickMaterial: (id: number) => void;
+}
+
+export default function RecommendMaterial({
     recommendMaterials,
     handleClickMaterial
-}: {
-    recommendMaterials: RecommendMaterial[];
-    handleClickMaterial: (id: number) => void;
-}) => {
+}: RecommendMaterialProps) {
     const [isOpen, setIsOpen] = useState(false);
 
     const handleOpenMaterialList = () => setIsOpen((prev) => !prev);
@@ -45,6 +47,4 @@ const MaterialSection = ({
             </div>
         </div>
     );
-};
-
-export default MaterialSection;
+}

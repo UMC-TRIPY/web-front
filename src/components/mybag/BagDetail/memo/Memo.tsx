@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation';
 import { getBagMemo, writeBagMemo } from '@/apis/bag';
 import RoundedButton from '@/components/common/button/RoundedButton';
 
-const MemoSection = () => {
+export default function Memo() {
     const { bag_id } = useParams();
     const [memoText, setMemoText] = useState<string>('');
 
@@ -39,6 +39,4 @@ const MemoSection = () => {
             />
         </div>
     );
-};
-
-export default MemoSection;
+}

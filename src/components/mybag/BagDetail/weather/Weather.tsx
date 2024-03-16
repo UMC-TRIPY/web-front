@@ -2,7 +2,7 @@ import { IoIosArrowDown } from 'react-icons/io';
 import { TiWeatherStormy } from 'react-icons/ti';
 import { SlLocationPin } from 'react-icons/sl';
 
-const WeatherSection = () => {
+export default function Weather() {
     return (
         <div className='bg-brightgrey p-5'>
             <h1 className='text-2xl font-bold'>날씨</h1>
@@ -35,6 +35,4 @@ const WeatherSection = () => {
             </div>
         </div>
     );
-};
-
-export default WeatherSection;
+}

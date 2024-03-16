@@ -4,7 +4,7 @@ export interface IBag {
     user_index: number;
 }
 
-export interface RecommendMaterial {
+export interface Material {
     material_index: number;
     material_name: string;
 }

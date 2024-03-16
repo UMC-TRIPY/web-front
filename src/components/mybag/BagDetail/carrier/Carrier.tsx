@@ -1,11 +1,12 @@
 'use client';
+import React, { useCallback, useState } from 'react';
+
 import { MaterialProps } from '@/app/mybag/detail/[bag_id]/page';
 import RoundedButton from '@/components/common/button/RoundedButton';
-import Image from 'next/image';
-import React, { useCallback, useState } from 'react';
-import { AiOutlineClose } from 'react-icons/ai';
-import { FiEdit } from 'react-icons/fi';
-import CarrierMaterialInput from './CarrierMaterialInput';
+
+import CarrierMaterial from './CarrierMaterial';
+import CarrierHandle from './CarrierHandle';
+import CarrierAddMaterial from './CarrierAddMaterial';
 
 interface AddItemProps {
     isEditing: boolean;
@@ -31,9 +32,11 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
         editContent: '',
         id: -1
     });
+    const isEditMode = editItem.id !== -1;
+    const completeButtonLabel = isEditMode ? '입력완료' : '추가하기';
 
     const handleAddItem = () =>
-        editItem.id !== -1
+        isEditMode
             ? handleChangeMaterial(editItem.id, 'content')
             : setAddItem({ isEditing: true, name: '' });
 
@@ -80,6 +83,11 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
     const handleChangeEditItem = (e: React.ChangeEvent<HTMLInputElement>) =>
         setEditItem({ id: editItem.id, editContent: e.target.value });
 
+    const handleDeleteMaterial = (id: number) => {
+        const newMaterials = materials.filter((material) => material.id !== id);
+        setMaterials(newMaterials);
+    };
+
     const handleClickEdit = useCallback(
         (material: MaterialProps) =>
             editItem.id === material.id
@@ -87,82 +95,57 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                 : handleStartEditItem(material),
         [editItem.id]
     );
+
+    const Button = useCallback(
+        () =>
+            addItem.isEditing ? (
+                <>
+                    <RoundedButton onClick={handleCompleteAddItem} smallLabel>
+                        완료
+                    </RoundedButton>
+                    <RoundedButton onClick={handleStopAddItem} smallLabel>
+                        취소
+                    </RoundedButton>
+                </>
+            ) : (
+                <>
+                    {isEditMode && (
+                        <RoundedButton onClick={handleStopEditItem} smallLabel>
+                            취소
+                        </RoundedButton>
+                    )}
+                    <RoundedButton onClick={handleAddItem} smallLabel>
+                        {completeButtonLabel}
+                    </RoundedButton>
+                </>
+            ),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        [addItem.isEditing, completeButtonLabel, isEditMode]
+    );
     return (
         <>
-            <div className='flex flex-col items-center'>
-                <Image
-                    src='/images/carrierHandle.svg'
-                    alt='캐리어 손잡이'
-                    width={226}
-                    height={64}
-                    priority={true}
-                />
-                <span className='absolute text-white text-xl pt-1'>캐리어</span>
-                <div className='flex gap-40'>
-                    <div className='w-7 h-12 bg-lightgrey' />
-                    <div className='w-7 h-12 bg-lightgrey' />
-                </div>
-            </div>
+            <CarrierHandle />
             <div className='flex flex-col p-3 bg-brightgrey h-full'>
                 <div className='flex gap-2 justify-end mb-2'>
-                    {addItem.isEditing ? (
-                        <>
-                            <RoundedButton
-                                onClick={handleCompleteAddItem}
-                                smallLabel
-                            >
-                                완료
-                            </RoundedButton>
-                            <RoundedButton
-                                onClick={handleStopAddItem}
-                                smallLabel
-                            >
-                                취소
-                            </RoundedButton>
-                        </>
-                    ) : (
-                        <>
-                            {editItem.id !== -1 && (
-                                <RoundedButton
-                                    onClick={handleStopEditItem}
-                                    smallLabel
-                                >
-                                    취소
-                                </RoundedButton>
-                            )}
-                            <RoundedButton onClick={handleAddItem} smallLabel>
-                                {editItem.id !== -1 ? '입력완료' : '추가하기'}
-                            </RoundedButton>
-                        </>
-                    )}
+                    <Button />
                 </div>
                 {addItem.isEditing && (
-                    <div className='flex items-center bg-white py-3 px-4 max-w-max rounded-full mb-3 border border-brightgrey'>
-                        <div className='w-5 h-5 rounded-full border border-grey flex items-center justify-center' />
-                        <input
-                            type='text'
-                            value={addItem.name}
-                            onChange={handleChangeAddItem}
-                            className='outline-none text-xs text-dark-black ml-4 placeholder:text-xs placeholder:font-bold placeholder:text-grey'
-                            placeholder='준비물을 입력해 보세요'
-                        />
-                        <button onClick={handleAddItem}>
-                            <AiOutlineClose
-                                className='text-grey font-medium'
-                                size={20}
-                            />
-                        </button>
-                    </div>
+                    <CarrierAddMaterial
+                        name={addItem.name}
+                        handleChangeAddItem={handleChangeAddItem}
+                        handleAddItem={handleAddItem}
+                    />
                 )}
                 {materials.length > 0 &&
                     materials.map((material) => (
-                        <CarrierMaterialInput
+                        <CarrierMaterial
                             key={material.id}
                             material={material}
                             editItem={editItem}
                             handleChangeMaterial={handleChangeMaterial}
                             handleChangeEditItem={handleChangeEditItem}
                             handleClickEdit={handleClickEdit}
+                            handleDeleteMaterial={handleDeleteMaterial}
                         />
                     ))}
             </div>
