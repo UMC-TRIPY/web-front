@@ -51,10 +51,11 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
     const handleStopEditItem = () => setEditItem({ editContent: '', id: -1 });
 
     const handleCompleteAddItem = () => {
-        if (!addItem.name) {
+        if (addItem.name.length === 0) {
             alert('1글자 이상 입력해 주세요.');
             return;
         }
+
         handleStopAddItem();
         setMaterials([
             { id: materials.length + 1, name: addItem.name, isChecked: false },
@@ -77,8 +78,9 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
         setMaterials(newMaterials);
     };
 
-    const handleChangeAddItem = (e: React.ChangeEvent<HTMLInputElement>) =>
+    const handleChangeAddItem = (e: React.ChangeEvent<HTMLInputElement>) => {
         setAddItem({ isEditing: true, name: e.target.value });
+    };
 
     const handleChangeEditItem = (e: React.ChangeEvent<HTMLInputElement>) =>
         setEditItem({ id: editItem.id, editContent: e.target.value });
@@ -95,39 +97,41 @@ const CarrierSection = ({ materials, setMaterials }: ICarrierProps) => {
                 : handleStartEditItem(material),
         [editItem.id]
     );
-
-    const Button = useCallback(
-        () =>
-            addItem.isEditing ? (
-                <>
-                    <RoundedButton onClick={handleCompleteAddItem} smallLabel>
-                        완료
-                    </RoundedButton>
-                    <RoundedButton onClick={handleStopAddItem} smallLabel>
-                        취소
-                    </RoundedButton>
-                </>
-            ) : (
-                <>
-                    {isEditMode && (
-                        <RoundedButton onClick={handleStopEditItem} smallLabel>
-                            취소
-                        </RoundedButton>
-                    )}
-                    <RoundedButton onClick={handleAddItem} smallLabel>
-                        {completeButtonLabel}
-                    </RoundedButton>
-                </>
-            ),
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-        [addItem.isEditing, completeButtonLabel, isEditMode]
-    );
     return (
         <>
             <CarrierHandle />
-            <div className='flex flex-col p-3 bg-brightgrey h-full'>
+            <div className='flex flex-col p-3 bg-brightgrey h-carrier-height'>
                 <div className='flex gap-2 justify-end mb-2'>
-                    <Button />
+                    {addItem.isEditing ? (
+                        <>
+                            <RoundedButton
+                                onClick={handleCompleteAddItem}
+                                smallLabel
+                            >
+                                완료
+                            </RoundedButton>
+                            <RoundedButton
+                                onClick={handleStopAddItem}
+                                smallLabel
+                            >
+                                취소
+                            </RoundedButton>
+                        </>
+                    ) : (
+                        <>
+                            {isEditMode && (
+                                <RoundedButton
+                                    onClick={handleStopEditItem}
+                                    smallLabel
+                                >
+                                    취소
+                                </RoundedButton>
+                            )}
+                            <RoundedButton onClick={handleAddItem} smallLabel>
+                                {completeButtonLabel}
+                            </RoundedButton>
+                        </>
+                    )}
                 </div>
                 {addItem.isEditing && (
                     <CarrierAddMaterial

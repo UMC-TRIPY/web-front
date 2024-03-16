@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'next/navigation';
 
-import { getBagMemo, writeBagMemo } from '@/apis/bag';
+import { writeBagMemo } from '@/apis/bag';
 import RoundedButton from '@/components/common/button/RoundedButton';
 
 export default function Memo() {
@@ -14,14 +14,6 @@ export default function Memo() {
 
     const handleChangeMemo = (e: React.ChangeEvent<HTMLTextAreaElement>) =>
         setMemoText(e.target.value);
-
-    useEffect(() => {
-        if (bag_id !== undefined) {
-            getBagMemo(parseInt(bag_id)).then((data) => {
-                if (data !== null) setMemoText(data);
-            });
-        }
-    }, [bag_id]);
 
     return (
         <div className='p-5 bg-brightgrey h-64 rounded-lg'>

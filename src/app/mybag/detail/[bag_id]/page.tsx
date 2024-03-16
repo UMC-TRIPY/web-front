@@ -1,112 +1,83 @@
 'use client';
+import { IoIosArrowBack } from 'react-icons/io';
 
-import {
-    addMaterial,
-    getCityMateriallList,
-    getTravelBagMaterialList
-} from '@/apis/bag';
-import { getMaterials } from '@/apis/material';
-import CarrierSection from '@/components/mybag/BagDetail/CarrierSection';
-import MaterialSection from '@/components/mybag/BagDetail/MaterialSection';
-import MemoSection from '@/components/mybag/BagDetail/MemoSection';
-import WeatherSection from '@/components/mybag/BagDetail/WeatherSection';
-import { bagIDState } from '@/states/schedule';
-import { IRecoMaterial } from '@/types/bag';
-import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import React, { useEffect, useState } from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import Carrier from '@/components/mybag/BagDetail/carrier/Carrier';
+import RecommendMaterial from '@/components/mybag/BagDetail/recommend_material/RecommendMaterial';
+import Memo from '@/components/mybag/BagDetail/memo/Memo';
+import Weather from '@/components/mybag/BagDetail/weather/Weather';
+import { useParams } from 'next/navigation';
+import React, { useState } from 'react';
+import Link from 'next/link';
 
-interface IMaterial {
-    materials_index: number;
-    materials_name: string;
-    check_box: boolean;
+export interface MaterialProps {
+    id: number;
+    name: string;
+    isChecked: boolean;
 }
 
-interface IMaterialProps extends IMaterial {
-    edited: boolean;
-}
+const recommendMaterials = [
+    { material_index: 10, material_name: '비치웨어' },
+    { material_index: 11, material_name: '칫솔' },
+    { material_index: 12, material_name: '양산' },
+    { material_index: 13, material_name: '선글라스' },
+    { material_index: 14, material_name: '미니 선풍기' },
+    { material_index: 15, material_name: '우산' },
+    { material_index: 16, material_name: '우비' },
+    { material_index: 17, material_name: '부채' },
+    { material_index: 18, material_name: '모자' },
+    { material_index: 19, material_name: '슬리퍼' },
+    { material_index: 20, material_name: '충전기' }
+];
 
 const BagDetail = () => {
-    const router = useRouter();
+    // bag_id를 이용하여 가방 API 요청하기
     const { bag_id } = useParams();
 
-    const [bagID, setBagID] = useRecoilState(bagIDState);
-    const [materials, setMaterials] = useState<IMaterialProps[]>([]);
-    const [recommendMaterials, setRecommendMaterials] = useState<
-        IRecoMaterial[]
-    >([]);
+    const [materials, setMaterials] = useState<MaterialProps[]>([
+        { id: 1, name: '준비물1', isChecked: false },
+        { id: 2, name: '준비물2', isChecked: false },
+        { id: 3, name: '준비물3', isChecked: false }
+    ]);
 
-    useEffect(() => {
-        const place = sessionStorage.getItem('place');
-        if (place) {
-            getCityMateriallList(place).then((data) => {
-                setRecommendMaterials(data);
-            });
-        }
-    }, []);
-
-    useEffect(() => {
-        console.log('bag_id:', bag_id);
-        if (bag_id !== undefined) {
-            console.log('bagID:', bag_id);
-            const id = parseInt(bag_id);
-            setBagID(id);
-            getTravelBagMaterialList(id).then((res: IMaterial[]) => {
-                setMaterials(
-                    res.map((data) => {
-                        return { ...data, edited: false };
-                    })
-                );
-            });
-        }
-    }, [bag_id, setBagID]);
-
-    const handleClickRecoMaterial = async (id: number) => {
-        const MATERIAL_LENGTH = materials.length;
-        const restRecoMaterial = recommendMaterials.filter(
-            (material) => material.materials_index !== id
+    const handleClickMaterial = (name: string) => {
+        const isMaterialExist = materials.find(
+            (material) => material.name === name
         );
-        const clickedMaterial = recommendMaterials.filter(
-            (material) => material.materials_index === id
-        );
-        await addMaterial(bagID, clickedMaterial[0].materials_name);
-        const newMaterial = {
-            materials_index: -1,
-            materials_name: clickedMaterial[0].materials_name,
-            check_box: false,
-            edited: false
-        };
-
-        setRecommendMaterials(restRecoMaterial);
-        setMaterials([newMaterial, ...materials]);
+        if (!isMaterialExist) {
+            setMaterials([
+                { id: materials.length + 1, name, isChecked: false },
+                ...materials
+            ]);
+        }
     };
 
     return (
-        <div className='h-screen'>
-            <div
-                className='flex items-center h-16 text-xl text-dark-black cursor-pointer w-fit'
-                onClick={() => router.push('/mybag/new')}
+        <>
+            <Link
+                href={'/mybag/add'}
+                className='flex items-center gap-2 text-xl py-4'
             >
-                {'<'} 가방 목록 보기
-            </div>
+                <IoIosArrowBack size={24} />
+                가방 목록 보기
+            </Link>
 
-            <div className='flex gap-4 h-full'>
-                <div className='flex flex-col gap-4 h-full w-1/2'>
-                    <WeatherSection />
-                    <MaterialSection
+            <div className='flex gap-5'>
+                <div className='flex flex-col gap-3 flex-1'>
+                    <Weather />
+                    <RecommendMaterial
                         recommendMaterials={recommendMaterials}
-                        handleClickRecoMaterial={handleClickRecoMaterial}
+                        handleClickMaterial={handleClickMaterial}
                     />
-                    <MemoSection />
+                    <Memo />
                 </div>
-                <div className='w-1/2'>
-                    <CarrierSection
+                <div className='flex-1'>
+                    <Carrier
                         materials={materials}
                         setMaterials={setMaterials}
                     />
                 </div>
             </div>
-        </div>
+        </>
     );
 };
 

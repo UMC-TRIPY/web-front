@@ -4,10 +4,11 @@ import React, { useState } from 'react';
 import { IoIosArrowDown } from 'react-icons/io';
 
 import { Material } from '@/types/bag';
+import RoundedButton from '@/components/common/button/RoundedButton';
 
 interface RecommendMaterialProps {
     recommendMaterials: Material[];
-    handleClickMaterial: (id: number) => void;
+    handleClickMaterial: (name: string) => void;
 }
 
 export default function RecommendMaterial({
@@ -34,15 +35,14 @@ export default function RecommendMaterial({
                 }`}
             >
                 {recommendMaterials.map((material) => (
-                    <button
-                        key={material.material_name}
-                        className='bg-lightgrey py-2 px-3 rounded-full hover:bg-main-color max-h-8'
+                    <RoundedButton
+                        key={material.material_index}
                         onClick={() =>
-                            handleClickMaterial(material.material_index)
+                            handleClickMaterial(material.material_name)
                         }
                     >
                         {material.material_name}
-                    </button>
+                    </RoundedButton>
                 ))}
             </div>
         </div>

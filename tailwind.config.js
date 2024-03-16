@@ -34,7 +34,8 @@ module.exports = {
                 'box-width': '412px'
             },
             height: {
-                'box-height': '424px'
+                'box-height': '424px',
+                'carrier-height': 'calc(100% - 112px)'
             }
         }
     },
