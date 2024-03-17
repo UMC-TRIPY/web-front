@@ -1,40 +1,24 @@
-import { bagIDState } from '@/states/schedule';
-import { IBag } from '@/types/bag';
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
 import React from 'react';
-import { useSetRecoilState } from 'recoil';
 
-const BagList = ({ bagList }: { bagList: IBag[] }) => {
-    const router = useRouter();
-    const setBagID = useSetRecoilState(bagIDState);
+import Link from 'next/link';
+import Image from 'next/image';
 
-    const handleClickBag = (e: any) => {
-        const id = parseInt(e.target.id);
-        setBagID(id);
-        router.push(`/mybag/detail/${id}`);
-    };
+import { IBag } from '@/types/bag';
+
+const BagList = ({ bag }: { bag: IBag }) => {
     return (
-        <>
-            {bagList.map((bag: IBag, idx: number) => (
-                <div
-                    className='flex justify-center items-center basis-[25%]'
-                    key={idx}
-                    onClick={(e: any) => handleClickBag(e)}
-                >
-                    <div className='flex flex-col items-center gap-8 cursor-pointer'>
-                        <Image
-                            id={bag.bag_index.toString()}
-                            src='/images/selectedBag.svg'
-                            alt='my-bag'
-                            width={150}
-                            height={150}
-                        />
-                        <div className='py-2'>{bag.bag_name}</div>
-                    </div>
-                </div>
-            ))}
-        </>
+        <Link
+            href={`/mybag/detail/${bag.bag_index}`}
+            className='flex flex-col justify-center items-center gap-8 px-20'
+        >
+            <Image
+                src='/images/selectedBag.svg'
+                alt='my-bag'
+                width={150}
+                height={150}
+            />
+            <span className='py-[6px] text-xl'>{bag.bag_name}</span>
+        </Link>
     );
 };
 

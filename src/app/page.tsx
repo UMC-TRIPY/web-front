@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import CardCarousel from '@/components/main/CardCarousel';
 
-import GoogleLoginButton from '@/components/button/GoogleLoginButton';
-import KakaoLoginButton from '@/components/button/KakaoLoginButton';
+import GoogleLoginButton from '@/components/common/button/GoogleLoginButton';
+import KakaoLoginButton from '@/components/common/button/KakaoLoginButton';
 
 import ILocation from '@/models/interface/ILocation';
 import { FiThumbsUp, FiEye } from 'react-icons/fi';
