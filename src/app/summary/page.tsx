@@ -1,12 +1,19 @@
 'use client';
-import HelpBot from '@/components/mybag/HelpBot';
-import MyTravel from '@/components/summary/MyTravel';
+import List from '@/components/common/List';
 
-export default function Page() {
+export default function SummaryPage() {
     return (
-        <div>
-            <MyTravel />
-            {/* <HelpBot width='w-[1380px]' /> */}
-        </div>
+        <List
+            items={[
+                {
+                    date: '2023.06.30~2023.07.02 (2박 3일)',
+                    place: '부산',
+                    plan_id: 1,
+                    schedule_id: 1
+                }
+            ]}
+            label='모아보기'
+            mode='travel'
+        />
     );
 }
