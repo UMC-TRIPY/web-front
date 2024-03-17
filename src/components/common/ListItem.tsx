@@ -33,6 +33,9 @@ export default function ListItem({
             case '가방 만들기':
                 router.push('mybag/new');
                 return;
+            case '모아보기':
+                router.push('summary/list');
+                return;
             case '삭제하기':
                 handleDeleteBag!(item.plan_id);
                 return;
