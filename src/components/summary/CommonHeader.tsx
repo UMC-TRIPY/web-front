@@ -1,10 +1,11 @@
+import { CommonSummaryParamsProps } from '@/types/summary';
 import OtherSchedule from '../detailschedule/OtherSchedule';
-import Menu from './Menu';
+import SummaryMenu from './menu/SummaryMenu';
 
-export default function CommonHeader({ path }: { path: string }) {
+export default function CommonHeader({ params }: CommonSummaryParamsProps) {
     return (
         <>
-            <Menu path={path} />
+            <SummaryMenu params={params} />
             <OtherSchedule href='summary' register={false} top='top-[285px]' />
         </>
     );

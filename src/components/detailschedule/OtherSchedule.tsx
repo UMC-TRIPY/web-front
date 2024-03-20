@@ -1,11 +1,6 @@
-import { checkLists } from '@/apis/travellists/check';
-import { format } from 'date-fns';
 import { useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import differenceInDays from 'date-fns/differenceInDays';
+import { useState } from 'react';
 import SelectScheduleModal from '../modal/SelectScheduleModal';
-import { useSetRecoilState } from 'recoil';
-import { planIDState } from '@/states/schedule';
 
 interface TravelListProps {
     city_name: string;
@@ -34,48 +29,6 @@ export default function OtherSchedule({
     const [schedules, setSchedules] = useState<ScheduleProps[] | undefined>();
     const [modal, setModal] = useState<boolean>(false);
 
-    const setPlanID = useSetRecoilState(planIDState);
-
-    useEffect(() => {
-        const d = sessionStorage.getItem('date');
-        const p = sessionStorage.getItem('place');
-
-        setDate(!d ? '' : d);
-        setPlace(!p ? '' : p);
-        checkLists()
-            .then((res) => {
-                let tmp: any[] = [];
-                setPlanID(res[0].plan_index);
-                res.map((d: any, idx: number) => {
-                    const departureDate =
-                        d.departureDate === '0000-00-00'
-                            ? new Date()
-                            : new Date(d.departureDate.slice(0, 10));
-                    const arrivalDate =
-                        d.departureDate === '0000-00-00'
-                            ? new Date()
-                            : new Date(d.arrivalDate.slice(0, 10));
-                    const difference = differenceInDays(
-                        arrivalDate,
-                        departureDate
-                    );
-                    tmp.push({
-                        pid: d.plan_index,
-                        dates: `${format(
-                            departureDate,
-                            'yyyy.MM.dd'
-                        )} ~ ${format(arrivalDate, 'yyyy.MM.dd')} (${
-                            difference === 0
-                                ? '당일치기'
-                                : `${difference}박 ${difference + 1}일`
-                        })`,
-                        places: d.city_name === null ? '미정' : d.city_name
-                    });
-                });
-                setSchedules(tmp);
-            })
-            .catch((err) => console.log(err));
-    }, []);
     const router = useRouter();
 
     const onClick = () => {

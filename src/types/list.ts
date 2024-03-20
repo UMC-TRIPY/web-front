@@ -12,7 +12,7 @@ export interface ListModalProps {
 
 interface CommonListProps {
     mode: 'travel' | 'bag';
-    label: '수정하기' | '가방 만들기' | '삭제하기';
+    label: '수정하기' | '가방 만들기' | '삭제하기' | '모아보기';
     handleDeleteBag?: (bagId: number) => void;
 }
 
