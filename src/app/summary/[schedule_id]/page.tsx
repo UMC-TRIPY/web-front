@@ -1,6 +1,7 @@
 'use client';
 import OtherSchedule from '@/components/detailschedule/OtherSchedule';
 import HelpBot from '@/components/mybag/HelpBot';
+import { CommonSummaryParamsProps } from '@/types/summary';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -12,16 +13,10 @@ interface ListProps {
 const lists: ListProps[] = [
     { href: 'link', title: '링크' },
     { href: 'gallery', title: '갤러리' },
-    { href: 'folder', title: '파일' }
+    { href: 'file', title: '파일' }
 ];
 
-interface SummaryListPageProps {
-    params: {
-        schedule_id: number;
-    };
-}
-
-export default function SummaryListPage({ params }: SummaryListPageProps) {
+export default function SummaryListPage({ params }: CommonSummaryParamsProps) {
     const { schedule_id } = params;
 
     return (
@@ -31,7 +26,7 @@ export default function SummaryListPage({ params }: SummaryListPageProps) {
                 {lists.map((list) => (
                     <Link
                         key={list.href}
-                        href={`/summary/list/${list.href}`}
+                        href={`/summary/${schedule_id}/${list.href}`}
                         className='flex flex-col items-center mr-5 text-xl hover:cursor-pointer'
                     >
                         <Image

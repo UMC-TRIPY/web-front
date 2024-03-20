@@ -34,7 +34,7 @@ export default function ListItem({
                 router.push('mybag/new');
                 return;
             case '모아보기':
-                router.push('summary/list');
+                router.push(`summary/${item.schedule_id}`);
                 return;
             case '삭제하기':
                 handleDeleteBag!(item.plan_id);

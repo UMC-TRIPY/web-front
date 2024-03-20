@@ -2,20 +2,15 @@ import FileItem from '@/components/summary/FIleItem';
 import GalleryItem from '@/components/summary/GalleryItem';
 import LinkItem from '@/components/summary/LinkItem';
 import {
+    CommonSummaryParamsProps,
     FolderWithLinkProps,
     ItemWithLinkProps,
     ItemWithoutLinkProps
 } from '@/types/summary';
 
-interface SummaryListItemPageProps {
-    params: {
-        type: 'link' | 'folder' | 'gallery';
-    };
-}
-
 export default function SummaryListItemPage({
     params
-}: SummaryListItemPageProps) {
+}: CommonSummaryParamsProps) {
     const { type } = params;
     const datas: ItemWithLinkProps[] | ItemWithoutLinkProps[] = [];
     return (
@@ -43,7 +38,7 @@ export default function SummaryListItemPage({
                                             item={folder as FolderWithLinkProps}
                                         />
                                     )}
-                                    {type === 'folder' && (
+                                    {type === 'file' && (
                                         <FileItem url={folder as string} />
                                     )}
                                     {type === 'gallery' && (
