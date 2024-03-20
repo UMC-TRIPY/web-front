@@ -2,14 +2,13 @@ interface CommonSummaryListItemProps {
     date: string;
 }
 
-export interface CommonHrefProps {
-    href: string;
+export interface CommonURLProps {
+    url: string;
 }
 
-export type FolderWithLinkProps = {
-    url: string;
+export interface FolderWithLinkProps extends CommonURLProps {
     name: string;
-};
+}
 
 export type ItemWithoutLinkProps = CommonSummaryListItemProps &
     Record<'folder', string[]>;

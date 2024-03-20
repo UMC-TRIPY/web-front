@@ -44,10 +44,10 @@ export default function SummaryListItemPage({
                                         />
                                     )}
                                     {type === 'folder' && (
-                                        <FileItem href={folder as string} />
+                                        <FileItem url={folder as string} />
                                     )}
                                     {type === 'gallery' && (
-                                        <GalleryItem href={folder as string} />
+                                        <GalleryItem url={folder as string} />
                                     )}
                                 </>
                             ))}

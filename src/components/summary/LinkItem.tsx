@@ -1,9 +1,7 @@
 import { FolderWithLinkProps } from '@/types/summary';
 import Image from 'next/image';
 
-interface LinkItemProps {
-    item: FolderWithLinkProps;
-}
+interface LinkItemProps extends Record<'item', FolderWithLinkProps> {}
 
 export default function LinkItem({ item: { url, name } }: LinkItemProps) {
     const getFaviconUrl = () =>
