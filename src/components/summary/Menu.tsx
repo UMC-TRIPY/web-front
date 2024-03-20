@@ -5,7 +5,7 @@ export default function Menu({ path }: { path: string }) {
     const menus: [string, string, boolean][] = [
         ['링크', 'link', '링크' === path],
         ['갤러리', 'gallery', '갤러리' === path],
-        ['파일목록', 'folder', '파일목록' === path]
+        ['파일목록', 'folder', '파일' === path]
     ];
     const router = useRouter();
     const MenuBar = ({ menu }: { menu: [string, string, boolean] }) => {
